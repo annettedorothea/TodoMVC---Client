@@ -1,0 +1,73 @@
+todo
+
+target ES6
+
+actions {
+	init Init executes Init
+	GetTodoList executes GetTodoList
+	CreateTodo executes CreateTodo
+	EditTodo executes EditTodo
+	UpdateTodo executes UpdateTodo
+	ToggleTodo executes ToggleTodo
+	ToggleAll executes ToggleAll
+	DeleteTodo executes DeleteTodo
+	ClearDone executes ClearDone
+}
+
+commands {
+	Init {
+		on all publishes (InitFilter) triggers (GetTodoList)
+		on done publishes (InitFilter) triggers (GetTodoList)
+		on open publishes (InitFilter) triggers (GetTodoList)
+	}
+	GetTodoList {
+		on ok publishes (RenderList)
+		on error
+	}
+	CreateTodo {
+		on ok triggers (GetTodoList)
+		on error triggers (GetTodoList)
+		on empty
+	}
+	EditTodo {
+		on ok publishes (EditTodo)
+	}
+	UpdateTodo {
+		on ok triggers (GetTodoList)
+		on error triggers (GetTodoList)
+		on empty
+	}
+	ToggleTodo {
+		on ok triggers (GetTodoList)
+		on error triggers (GetTodoList)
+	}
+	ToggleAll {
+		on ok triggers (GetTodoList)
+		on error triggers (GetTodoList)
+	}
+	DeleteTodo {
+		on ok triggers (GetTodoList)
+		on error triggers (GetTodoList)
+	}
+	ClearDone {
+		on ok triggers (GetTodoList)
+		on error triggers (GetTodoList)
+	}
+}
+
+events {
+	RenderList listenedToBy ( Todo.list )
+	EditTodo listenedToBy (Todo.edit)
+	InitFilter listenedToBy (Footer.initFilter)
+} 
+
+views {
+	Todo {
+		list
+		edit
+	}
+	Footer {
+		initFilter
+	}
+}
+
