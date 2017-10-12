@@ -16,26 +16,41 @@ class Container extends React.Component {
         return (
             <div>
                 <div className="learn-bar body">
-
                     <aside className="learn">
-                        <header><h3>JavaScript</h3> <span
-                            className="source-links">   <h5>Vanilla JavaScript Example</h5> <a
-                            href="https://github.com/tastejs/todomvc/tree/gh-pages/examples/vanillajs">Source</a>   </span>
+                        <header>
+                            <h3>ACE</h3>
+                            <span className="source-links">
+                                <h5>ACE Example</h5>
+                                <a href="https://github.com/annettedorothea/TodoMVC---Client">Source (Client)</a><br/>
+                                <a href="https://github.com/annettedorothea/TodoMVC---Server">Source (Server)</a>
+                            </span>
                         </header>
                         <hr/>
-                        <blockquote className="quote speech-bubble"><p>JavaScript® (often shortened to JS) is a
-                            lightweight, interpreted,
-                            object-oriented language with first-class functions, most known as the scripting
-                            language for Web pages, but
-                            used in many non-browser environments as well such as node.js or Apache CouchDB.</p>
-                            <footer><a href="http://developer.mozilla.org/en-US/docs/JavaScript">JavaScript</a>
+                        <blockquote className="quote speech-bubble">
+                            <p>
+                                ACE is an architecture that allows you to write an executable timeline during the execution
+                                of your application. ACE stands for Action - Command - Event:
+                            </p>
+                            <ul>
+                                <li>The action captures the user input.</li>
+                                <li>The command contains your business logic and fires events.</li>
+                                <li>Your views listen to these events and update themselves accordingly.</li>
+                            </ul>
+                            <p>
+                                Both client and server are implemented based on the ACE architecture.
+                                The server was written in Java with Dropwizard and the client uses React.
+                            </p>
+                            <footer>
+                                <a href="https://github.com/annettedorothea/com.anfelisa.ace.gen">ACE Code Generator based on Xtext</a>
                             </footer>
                         </blockquote>
                         <footer>
                             <hr/>
-                            <em>If you have other helpful links to share, or find any of the links above no
-                                longer work, please <a
-                                    href="https://github.com/tastejs/todomvc/issues">let us know</a>.</em>
+                            <em>
+                                Client replay does not send requests to the server but uses the captured data in the command.
+                                The E2E replay first resets a replay database, makes all changes up to the desired scenario and
+                                then executes the scenario end-to-end. The replay is delayed by 1000 ms.
+                            </em>
                         </footer>
                     </aside>
 
