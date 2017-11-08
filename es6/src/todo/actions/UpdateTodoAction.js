@@ -1,4 +1,4 @@
-import AbstractUpdateTodoAction from "../../../gen/app/todo/actions/AbstractUpdateTodoAction";
+import AbstractUpdateTodoAction from "../../../gen/todo/actions/AbstractUpdateTodoAction";
 
 export default class UpdateTodoAction extends AbstractUpdateTodoAction {
 

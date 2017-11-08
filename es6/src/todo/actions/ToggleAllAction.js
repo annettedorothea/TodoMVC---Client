@@ -1,4 +1,4 @@
-import AbstractToggleAllAction from "../../../gen/app/todo/actions/AbstractToggleAllAction";
+import AbstractToggleAllAction from "../../../gen/todo/actions/AbstractToggleAllAction";
 
 export default class ToggleAllAction extends AbstractToggleAllAction {
 

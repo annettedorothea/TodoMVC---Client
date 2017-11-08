@@ -1,4 +1,4 @@
-import AbstractRenderListEvent from "../../../gen/app/todo/events/AbstractRenderListEvent";
+import AbstractRenderListEvent from "../../../gen/todo/events/AbstractRenderListEvent";
 
 export default class RenderListEvent extends AbstractRenderListEvent {
     prepareDataForView() {

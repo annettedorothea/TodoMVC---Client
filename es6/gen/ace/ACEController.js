@@ -1,11 +1,12 @@
-import AppUtils from "../../app/AppUtils";
-import ReplayUtils from "../../app/ReplayUtils";
+import AppUtils from "../../src/app/AppUtils";
+import ReplayUtils from "../../src/app/ReplayUtils";
 
 export default class ACEController {
 
     static init() {
         ACEController.timeline = [];
         ACEController.listeners = {};
+		ACEController.factories = {};
         ACEController.registerListener('TriggerAction', ACEController.triggerAction);
         ACEController.actionIsProcessing = false;
         ACEController.actionQueue = [];
@@ -31,6 +32,16 @@ export default class ACEController {
         }
         listenersForEventName = ACEController.listeners[eventName];
         listenersForEventName.push(listener);
+    }
+
+    static registerFactory(actionName, factory) {
+        if (!actionName.trim()) {
+            throw new Error('cannot register factory for empty actionName');
+        }
+        if (!factory) {
+            throw new Error('cannot register undefined factory for action ' + actionName);
+        }
+        ACEController.factories[actionName] = factory;
     }
 
     static addItemToTimeLine(item) {
@@ -124,7 +135,6 @@ export default class ACEController {
     static startReplay(level, pauseInMillis) {
         ACEController.passed = undefined;
         ACEController.actualTimeline = [];
-        ACEController.pauseInMillis = undefined;
         ACEController.execution = level;
         ACEController.pauseInMillis = pauseInMillis;
         
@@ -160,7 +170,7 @@ export default class ACEController {
             let item = ACEController.expectedTimeline[i];
             if (item.action) {
 				const actionParam = item.action.actionParam;
-				let action = eval('new ' + item.action.actionName + '(actionParam)');
+				let action = ACEController.factories[item.action.actionName](actionParam);
                 action.actionData.uuid = item.action.actionData.uuid;
                 actions.push(action);
             }
@@ -175,7 +185,7 @@ export default class ACEController {
         for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
             let item = ACEController.expectedTimeline[i];
             if (item.command && item.command.commandParam.uuid === uuid) {
-                return iHtem.command;
+                return item.command;
             }
         }
     }

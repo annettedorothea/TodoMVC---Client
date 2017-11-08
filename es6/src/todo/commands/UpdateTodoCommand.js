@@ -1,4 +1,4 @@
-import AbstractUpdateTodoCommand from "../../../gen/app/todo/commands/AbstractUpdateTodoCommand";
+import AbstractUpdateTodoCommand from "../../../gen/todo/commands/AbstractUpdateTodoCommand";
 
 export default class UpdateTodoCommand extends AbstractUpdateTodoCommand {
     execute() {

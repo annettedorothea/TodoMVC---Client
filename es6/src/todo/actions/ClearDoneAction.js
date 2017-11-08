@@ -1,4 +1,4 @@
-import AbstractClearDoneAction from "../../../gen/app/todo/actions/AbstractClearDoneAction";
+import AbstractClearDoneAction from "../../../gen/todo/actions/AbstractClearDoneAction";
 
 export default class ClearDoneAction extends AbstractClearDoneAction {
 

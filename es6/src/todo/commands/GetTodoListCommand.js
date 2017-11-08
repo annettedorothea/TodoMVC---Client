@@ -1,4 +1,4 @@
-import AbstractGetTodoListCommand from "../../../gen/app/todo/commands/AbstractGetTodoListCommand";
+import AbstractGetTodoListCommand from "../../../gen/todo/commands/AbstractGetTodoListCommand";
 
 export default class GetTodoListCommand extends AbstractGetTodoListCommand {
     execute() {

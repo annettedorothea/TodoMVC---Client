@@ -1,4 +1,4 @@
-import AbstractEditTodoEvent from "../../../gen/app/todo/events/AbstractEditTodoEvent";
+import AbstractEditTodoEvent from "../../../gen/todo/events/AbstractEditTodoEvent";
 
 export default class EditTodoEvent extends AbstractEditTodoEvent {
     prepareDataForView() {

@@ -1,5 +1,5 @@
 import ACEController from "./ACEController";
-import AppUtils from "../../app/AppUtils";
+import AppUtils from "../../src/app/AppUtils";
 
 export default class Action {
     constructor(actionParam, actionName, isInitAction) {

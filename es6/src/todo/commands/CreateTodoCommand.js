@@ -1,4 +1,4 @@
-import AbstractCreateTodoCommand from "../../../gen/app/todo/commands/AbstractCreateTodoCommand";
+import AbstractCreateTodoCommand from "../../../gen/todo/commands/AbstractCreateTodoCommand";
 
 export default class CreateTodoCommand extends AbstractCreateTodoCommand {
     execute() {

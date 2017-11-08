@@ -1,6 +1,6 @@
 import ACEController from "./ACEController";
-import AppUtils from "../../app/AppUtils";
-import ReplayUtils from "../../app/ReplayUtils";
+import AppUtils from "../../src/app/AppUtils";
+import ReplayUtils from "../../src/app/ReplayUtils";
 
 export default class Command {
     constructor(commandParam, commandName) {
@@ -23,7 +23,11 @@ export default class Command {
                 this.execute().then(() => {
                     ACEController.addItemToTimeLine({command: this});
                     this.publishEvents().then(() => {
-                        ACEController.applyNextActions();
+						if (ACEController.execution === ACEController.LIVE) {
+						    ACEController.applyNextActions();
+						} else {
+						    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+						}
                         resolve();
                     }, (error) => {
                         reject(error + " when publishing events of command " + this.commandName);

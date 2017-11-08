@@ -1,4 +1,4 @@
-import AbstractClearDoneCommand from "../../../gen/app/todo/commands/AbstractClearDoneCommand";
+import AbstractClearDoneCommand from "../../../gen/todo/commands/AbstractClearDoneCommand";
 
 export default class ClearDoneCommand extends AbstractClearDoneCommand {
     execute() {

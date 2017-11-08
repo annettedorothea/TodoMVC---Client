@@ -1,4 +1,4 @@
-import AbstractDeleteTodoCommand from "../../../gen/app/todo/commands/AbstractDeleteTodoCommand";
+import AbstractDeleteTodoCommand from "../../../gen/todo/commands/AbstractDeleteTodoCommand";
 
 export default class DeleteTodoCommand extends AbstractDeleteTodoCommand {
     execute() {

@@ -1,4 +1,4 @@
-import AbstractToggleAllCommand from "../../../gen/app/todo/commands/AbstractToggleAllCommand";
+import AbstractToggleAllCommand from "../../../gen/todo/commands/AbstractToggleAllCommand";
 
 export default class ToggleAllCommand extends AbstractToggleAllCommand {
     execute() {

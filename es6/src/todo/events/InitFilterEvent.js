@@ -1,4 +1,4 @@
-import AbstractInitFilterEvent from "../../../gen/app/todo/events/AbstractInitFilterEvent";
+import AbstractInitFilterEvent from "../../../gen/todo/events/AbstractInitFilterEvent";
 
 export default class InitFilterEvent extends AbstractInitFilterEvent {
     prepareDataForView() {

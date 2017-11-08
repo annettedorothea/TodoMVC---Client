@@ -1,4 +1,4 @@
-import AbstractEditTodoCommand from "../../../gen/app/todo/commands/AbstractEditTodoCommand";
+import AbstractEditTodoCommand from "../../../gen/todo/commands/AbstractEditTodoCommand";
 
 export default class EditTodoCommand extends AbstractEditTodoCommand {
     execute() {

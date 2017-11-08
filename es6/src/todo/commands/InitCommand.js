@@ -1,4 +1,4 @@
-import AbstractInitCommand from "../../../gen/app/todo/commands/AbstractInitCommand";
+import AbstractInitCommand from "../../../gen/todo/commands/AbstractInitCommand";
 
 export default class InitCommand extends AbstractInitCommand {
     execute() {
