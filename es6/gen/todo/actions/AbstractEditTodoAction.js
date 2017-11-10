@@ -11,6 +11,13 @@ export default class AbstractEditTodoAction extends Action {
 			return new EditTodoCommand(this.actionData);
 	}
 
+	
+    preUpdateUI() {
+    }
+
+    postUpdateUI() {
+    }
+
 }
 
 /*       S.D.G.       */

@@ -11,6 +11,13 @@ export default class AbstractInitAction extends Action {
 			return new InitCommand(this.actionData);
 	}
 
+	
+    preUpdateUI() {
+    }
+
+    postUpdateUI() {
+    }
+
 }
 
 /*       S.D.G.       */

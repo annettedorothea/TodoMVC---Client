@@ -1,5 +1,6 @@
 import Action from "../../ace/Action";
 import ToggleAllCommand from "../../../src/todo/commands/ToggleAllCommand";
+import CommonView from "../../../src/todo/views/CommonView";
 
 export default class AbstractToggleAllAction extends Action {
 
@@ -10,6 +11,15 @@ export default class AbstractToggleAllAction extends Action {
 	getCommand() {
 			return new ToggleAllCommand(this.actionData);
 	}
+
+	
+    preUpdateUI() {
+		CommonView.block(this.actionParam);
+    }
+
+    postUpdateUI() {
+		CommonView.unblock(this.actionParam);
+    }
 
 }
 

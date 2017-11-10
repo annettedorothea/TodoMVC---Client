@@ -2,16 +2,18 @@ todo
 
 target ES6 generateModules
 
+
+
 actions {
 	init Init executes Init
-	GetTodoList executes GetTodoList
-	CreateTodo executes CreateTodo
+	GetTodoList preUpdateUI ( Common.block ) executes GetTodoList postUpdateUI (Common.unblock)
+	CreateTodo preUpdateUI ( Common.block ) executes CreateTodo postUpdateUI (Common.unblock)
 	EditTodo executes EditTodo
-	UpdateTodo executes UpdateTodo
-	ToggleTodo executes ToggleTodo
-	ToggleAll executes ToggleAll
-	DeleteTodo executes DeleteTodo
-	ClearDone executes ClearDone
+	UpdateTodo preUpdateUI ( Common.block ) executes UpdateTodo postUpdateUI (Common.unblock)
+	ToggleTodo preUpdateUI ( Common.block ) executes ToggleTodo postUpdateUI (Common.unblock)
+	ToggleAll preUpdateUI ( Common.block ) executes ToggleAll postUpdateUI (Common.unblock)
+	DeleteTodo preUpdateUI ( Common.block ) executes DeleteTodo postUpdateUI (Common.unblock)
+	ClearDone preUpdateUI ( Common.block ) executes ClearDone postUpdateUI (Common.unblock)
 }
 
 commands {
@@ -68,6 +70,10 @@ views {
 	}
 	Footer {
 		initFilter
+	}
+	Common {
+		block
+		unblock
 	}
 }
 

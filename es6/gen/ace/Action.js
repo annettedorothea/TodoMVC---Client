@@ -10,7 +10,7 @@ export default class Action {
         this.actionParam = JSON.parse(JSON.stringify(actionParam));
         this.actionData = {};
         this.isInitAction = isInitAction === true;
-        
+        this.postUpdateUI = this.postUpdateUI.bind(this);
     }
 
     captureActionParam() {
@@ -32,6 +32,7 @@ export default class Action {
 
     applyAction() {
         return new Promise((resolve, reject) => {
+        		this.preUpdateUI();
             if (ACEController.execution === ACEController.LIVE) {
                 this.actionData.uuid = AppUtils.createUUID();
             }
@@ -44,13 +45,15 @@ export default class Action {
             ACEController.addItemToTimeLine({action: this});
             let command = this.getCommand();
             if (command) {
-                command.executeCommand().then(() => {
-                    resolve();
-                },
-                (error) => {
-                    reject(error + " when executing command " + command.commandName);
-                });
+				command.executeCommand(this.postUpdateUI).then(() => {
+					resolve();
+				},
+				(error) => {
+					this.postUpdateUI();
+					reject(error + " when executing command " + command.commandName);
+				});
             } else {
+            		this.postUpdateUI();
                 resolve();
             }
         });

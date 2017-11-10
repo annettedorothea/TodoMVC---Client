@@ -1,5 +1,6 @@
 import Action from "../../ace/Action";
 import ClearDoneCommand from "../../../src/todo/commands/ClearDoneCommand";
+import CommonView from "../../../src/todo/views/CommonView";
 
 export default class AbstractClearDoneAction extends Action {
 
@@ -10,6 +11,15 @@ export default class AbstractClearDoneAction extends Action {
 	getCommand() {
 			return new ClearDoneCommand(this.actionData);
 	}
+
+	
+    preUpdateUI() {
+		CommonView.block(this.actionParam);
+    }
+
+    postUpdateUI() {
+		CommonView.unblock(this.actionParam);
+    }
 
 }
 

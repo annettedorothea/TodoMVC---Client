@@ -17,18 +17,19 @@ export default class Command {
         throw "no publishEvents method defined for " + this.commandName;
     }
 
-    executeCommand() {
+    executeCommand(postUpdateUI) {
         return new Promise((resolve, reject) => {
             if (ACEController.execution !== ACEController.REPLAY) {
                 this.execute().then(() => {
                     ACEController.addItemToTimeLine({command: this});
                     this.publishEvents().then(() => {
+						postUpdateUI();
 						if (ACEController.execution === ACEController.LIVE) {
 						    ACEController.applyNextActions();
 						} else {
 						    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
 						}
-                        resolve();
+						resolve();
                     }, (error) => {
                         reject(error + " when publishing events of command " + this.commandName);
                     });
@@ -40,8 +41,9 @@ export default class Command {
                 this.commandData = timelineCommand.commandData;
                 ACEController.addItemToTimeLine({command: this});
                 this.publishEvents().then(() => {
-                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-                    resolve();
+					postUpdateUI();
+					setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+					resolve();
                 }, (error) => {
                     reject(error + " when publishing events of command " + this.commandName);
                 });

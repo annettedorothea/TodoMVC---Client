@@ -4,6 +4,7 @@ import TodoList from "./TodoList";
 import Footer from "./Footer";
 import Timeline from "./Timeline";
 import ReplayTimeline from "./ReplayTimeline";
+import Spinner from "./Spinner";
 import ToggleAllAction from "../todo/actions/ToggleAllAction";
 
 export default class Container extends React.Component {
@@ -23,6 +24,7 @@ export default class Container extends React.Component {
     render() {
         return (
             <div>
+                <Spinner {...this.state} />
                 <div className="learn-bar body">
                     <aside className="learn">
                         <header>
