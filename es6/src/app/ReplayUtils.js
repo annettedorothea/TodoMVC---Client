@@ -77,7 +77,6 @@ export default class ReplayUtils {
     }
 
     static e2e(pauseInMillis) {
-        console.log("pauseInMillis", pauseInMillis);
         App.container.setState({
             expectedTimeline: ACEController.expectedTimeline,
             actualTimeline: ACEController.actualTimeline
@@ -106,7 +105,17 @@ export default class ReplayUtils {
         reader.readAsText(input.files[0]);
     }
 
+    static saveScenario() {
+        const data = {
+            description: '',
+            data: JSON.stringify(ACEController.expectedTimeline)
+        };
+        return AppUtils.httpPost('api/scenario/create', null, data);
+    }
 
+    static loadScenarios() {
+        return AppUtils.httpGet('api/scenario/all');
+    }
 }
 
 /*       S.D.G.       */

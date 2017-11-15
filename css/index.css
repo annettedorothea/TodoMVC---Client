@@ -409,17 +409,17 @@ pre {
 .replay {
     margin: 50px;
 }
-.replay table {
+.replay table.timeline {
     width: 100%;
 }
-.replay th {
+.replay .timeline th {
     width: 50%;
     text-align: left;
 }
-.replay td {
+.replay .timeline td {
     cursor: pointer;
 }
-.replay tr.failure {
+.replay .timeline tr.failure {
     background-color: lightpink;
 }
 
