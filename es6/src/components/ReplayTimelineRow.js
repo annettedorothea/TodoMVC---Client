@@ -19,7 +19,6 @@ export default class ReplayTimelineRow extends React.Component {
 
     compareItems() {
         return JSON.stringify(this.props.expectedItem, ReplayUtils.itemStringifyReplacer) === JSON.stringify(this.props.actualItem, ReplayUtils.itemStringifyReplacer);
-
     }
 
     render() {

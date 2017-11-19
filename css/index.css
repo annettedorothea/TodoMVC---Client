@@ -419,8 +419,27 @@ pre {
 .replay .timeline td {
     cursor: pointer;
 }
-.replay .timeline tr.failure {
+.replay .timeline tr.failure,
+.replay td.failure {
     background-color: lightpink;
+}
+
+.replay td.success {
+    background-color: lightgreen;
+}
+
+.replay .scenarioDescription {
+    width: 90%;
+    height: 120px;
+    border: 1px solid #cccccc;
+    padding: 5px;
+}
+
+.replay .scenarioDescriptionPreview {
+    width: 90%;
+    border: 1px solid #cccccc;
+    padding: 5px;
+    margin: 10px 0;
 }
 
 /* Absolute Center Spinner */

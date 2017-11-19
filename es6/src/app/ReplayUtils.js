@@ -84,7 +84,22 @@ export default class ReplayUtils {
         ACEController.startReplay(ACEController.E2E, pauseInMillis)
     }
 
-    static finishReplay() {
+    static initFinishReplayCallback(callback) {
+        ReplayUtils.finishReplayCallback = callback;
+    }
+
+    static initFinishE2ECallback(callback) {
+        ReplayUtils.finishE2ECallback = callback;
+    }
+
+    static finishReplay(execution) {
+        const normalized = ReplayUtils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
+        const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
+        if (execution === ACEController.REPLAY && ReplayUtils.finishReplayCallback) {
+            ReplayUtils.finishReplayCallback(result);
+        } else if (execution === ACEController.E2E && ReplayUtils.finishE2ECallback) {
+            ReplayUtils.finishE2ECallback(result);
+        }
     }
 
     static itemStringifyReplacer(key, value) {
@@ -105,12 +120,22 @@ export default class ReplayUtils {
         reader.readAsText(input.files[0]);
     }
 
-    static saveScenario() {
+    static saveScenario(description) {
         const data = {
-            description: '',
+            description: description,
             data: JSON.stringify(ACEController.expectedTimeline)
         };
         return AppUtils.httpPost('api/scenario/create', null, data);
+    }
+
+    static deleteScenario(id) {
+        let queryParams = [
+            {
+                key: "id",
+                value: id
+            }
+        ];
+        return AppUtils.httpDelete('api/scenario/delete', queryParams);
     }
 
     static loadScenarios() {

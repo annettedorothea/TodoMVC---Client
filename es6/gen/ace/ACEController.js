@@ -110,7 +110,7 @@ export default class ACEController {
         } else if (action === undefined) {
             ACEController.actionIsProcessing = false;
             if (ACEController.execution !== ACEController.LIVE) {
-                ReplayUtils.finishReplay();
+                ReplayUtils.finishReplay(ACEController.execution);
 				ACEController.timeline = [];
 				ACEController.actionIsProcessing = false;
 				ACEController.actionQueue = [];
