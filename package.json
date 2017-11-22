@@ -5,8 +5,8 @@
   "scripts": {
     "js": "babel es6/gen/lib es6/app/AppUtils.es6 es6/app/ReplayUtils.es6 es6/gen/ace es6/gen/app es6/src es6/gen/elr es6/app/App.es6 --out-file lib/todo.js",
     "uglify": "uglifyjs lib/todo.js --compress --mangle --output lib/todo.min.js",
-    "build:watch": "watch 'npm run js' .",
-    "start": "watchify es6/src/app/App.js -o lib/todo.js -dv & live-server --host=127.0.0.1 --port=8888 --proxy='/api/':'http://localhost:8080/api/' --proxy='/replay/':'http://localhost:8084/replay/' --browser='Google Chrome' --ignore=/.git/*,.idea/*"
+    "build": "watchify es6/src/app/App.js -o lib/todo.js -dv",
+    "start": "watchify es6/src/app/App.js -o lib/todo.js -dv & live-server --host=127.0.0.1 --port=8888 --proxy='/api/':'http://localhost:8080/api/' --proxy='/replay/':'http://localhost:8084/replay/' --browser='Google Chrome'"
   },
   "author": "Annette Pohl",
   "license": "ISC",

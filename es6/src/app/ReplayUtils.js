@@ -110,20 +110,10 @@ export default class ReplayUtils {
         }
     }
 
-    static uploadTimeline(event) {
-        const input = event.target;
-        const reader = new FileReader();
-        reader.onload = function () {
-            const json = reader.result;
-            ACEController.initTimeline(JSON.parse(json));
-        };
-        reader.readAsText(input.files[0]);
-    }
-
     static saveScenario(description) {
         const data = {
             description: description,
-            data: JSON.stringify(ACEController.expectedTimeline)
+            data: JSON.stringify(ACEController.timeline)
         };
         return AppUtils.httpPost('api/scenario/create', null, data);
     }

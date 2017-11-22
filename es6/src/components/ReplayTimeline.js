@@ -127,46 +127,44 @@ export default class ReplayTimeline extends React.Component {
         if (this.state.scenarios) {
             for (let i = 0; i < this.state.scenarios.length; i++) {
                 scenarios.push(<tr key={this.state.scenarios[i].id}>
-                    <td className={this.state.scenarios[i].replayResult === false ? "failure" : (this.state.scenarios[i].replayResult === true ? "success" : "")} />
-                    <td className={this.state.scenarios[i].e2eResult === false ? "failure" : (this.state.scenarios[i].e2eResult === true ? "success" : "")} />
+                    <td className={this.state.scenarios[i].replayResult === false ? "failure" : (this.state.scenarios[i].replayResult === true ? "success" : "")}/>
+                    <td className={this.state.scenarios[i].e2eResult === false ? "failure" : (this.state.scenarios[i].e2eResult === true ? "success" : "")}/>
                     <td>{this.state.scenarios[i].id}</td>
-                    <td><ReactMarkdown source={this.state.scenarios[i].description} /></td>
+                    <td><ReactMarkdown source={this.state.scenarios[i].description}/></td>
                     <td>{new Date(this.state.scenarios[i].createdDateTime).toLocaleDateString()} {new Date(this.state.scenarios[i].createdDateTime).toLocaleTimeString()}</td>
-                    <td><button onClick={() => this.handleScenarioReplay(this.state.scenarios[i].data, i)}>Client replay</button></td>
-                    <td><button onClick={() => this.handleScenarioE2E(this.state.scenarios[i].data, i)}>E2E replay</button></td>
-                    <td><button onClick={() => this.deleteScenario(this.state.scenarios[i].id)}>Delete</button></td>
+                    <td>
+                        <button onClick={() => this.handleScenarioReplay(this.state.scenarios[i].data, i)}>Client
+                            replay
+                        </button>
+                    </td>
+                    <td>
+                        <button onClick={() => this.handleScenarioE2E(this.state.scenarios[i].data, i)}>E2E replay
+                        </button>
+                    </td>
+                    <td>
+                        <button onClick={() => this.deleteScenario(this.state.scenarios[i].id)}>Delete</button>
+                    </td>
                 </tr>);
             }
         }
 
         return (
             <div className="replay">
-                <h1>Replay Timeline</h1>
-                <button onClick={() => ReplayUtils.replay(this.state.pauseInMillis)}>Client replay</button>
-                <button onClick={() => ReplayUtils.e2e(this.state.pauseInMillis)}>E2E replay</button>
-                <button onClick={ACEController.downloadTimeline}>Download scenario</button>
-                <input type='file' accept='text/json' onChange={ReplayUtils.uploadTimeline}/>
-                <label>Pause in millis</label> <input type='text' onChange={this.changePauseInMillis}
-                                                      value={this.state.pauseInMillis}/>
-
-                <table className="timeline">
-                    <thead>
-                    <tr>
-                        <th>expected</th>
-                        <th>actual</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {items}
-                    </tbody>
-                </table>
-
                 <div>
-                    <textarea onChange={this.changeScenarioDescription} className="scenarioDescription" value={this.state.scenarioDescription} />
-                    <ReactMarkdown className="scenarioDescriptionPreview" source={this.state.scenarioDescription} />
+                    <textarea onChange={this.changeScenarioDescription} className="scenarioDescription"
+                              value={this.state.scenarioDescription}/>
+                    <ReactMarkdown className="scenarioDescriptionPreview" source={this.state.scenarioDescription}/>
                 </div>
 
-                <button onClick={this.saveScenario}>Save executed scenario</button>
+                <div>
+                    <button onClick={this.saveScenario}>Save scenario</button>
+                </div>
+
+                <div>
+                    <label>Pause in millis</label> <input type='text' onChange={this.changePauseInMillis}
+                                                          value={this.state.pauseInMillis}/>
+                </div>
+
 
                 <table>
                     <thead>
@@ -183,6 +181,19 @@ export default class ReplayTimeline extends React.Component {
                     </thead>
                     <tbody>
                     {scenarios}
+                    </tbody>
+                </table>
+
+                <h1>Replay Timeline</h1>
+                <table className="timeline">
+                    <thead>
+                    <tr>
+                        <th>expected</th>
+                        <th>actual</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {items}
                     </tbody>
                 </table>
 

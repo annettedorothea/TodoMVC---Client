@@ -6,7 +6,7 @@ export default class ACEController {
     static init() {
         ACEController.timeline = [];
         ACEController.listeners = {};
-		ACEController.factories = {};
+        ACEController.factories = {};
         ACEController.registerListener('TriggerAction', ACEController.triggerAction);
         ACEController.actionIsProcessing = false;
         ACEController.actionQueue = [];
@@ -69,26 +69,6 @@ export default class ACEController {
         }
     }
 
-    static downloadTimeline() {
-        let timelineJson = JSON.stringify(ACEController.timeline, null, 2);
-
-        let a = window.document.createElement('a');
-        a.href = window.URL.createObjectURL(new Blob([timelineJson], {type: 'text/json'}));
-        a.download = 'scenario.json';
-
-        document.body.appendChild(a);
-        a.click();
-
-        document.body.removeChild(a);
-    }
-
-    static initTimeline(timelineJson) {
-        ACEController.expectedTimeline = timelineJson;
-        ReplayUtils.expectedTimelineChanged(ACEController.expectedTimeline);
-		ACEController.actualTimeline = [];
-		ReplayUtils.actualTimelineChanged([]);
-    }
-
     static addActionToQueue(action) {
         if (ACEController.execution === ACEController.LIVE) {
             ACEController.actionQueue.push(action);
@@ -111,10 +91,10 @@ export default class ACEController {
             ACEController.actionIsProcessing = false;
             if (ACEController.execution !== ACEController.LIVE) {
                 ReplayUtils.finishReplay(ACEController.execution);
-				ACEController.timeline = [];
-				ACEController.actionIsProcessing = false;
-				ACEController.actionQueue = [];
-				ACEController.execution = ACEController.LIVE;
+                ACEController.timeline = [];
+                ACEController.actionIsProcessing = false;
+                ACEController.actionQueue = [];
+                ACEController.execution = ACEController.LIVE;
                 AppUtils.start();
             }
         }
@@ -133,26 +113,25 @@ export default class ACEController {
     }
 
     static startReplay(level, pauseInMillis) {
-        ACEController.passed = undefined;
-        ACEController.actualTimeline = [];
-        ACEController.execution = level;
-        ACEController.pauseInMillis = pauseInMillis;
-        
-        ReplayUtils.actualTimelineChanged([]);
+        return new Promise((resolve, reject) => {
+            ACEController.actualTimeline = [];
+            ACEController.execution = level;
+            ACEController.pauseInMillis = pauseInMillis;
 
-        if (ACEController.execution === ACEController.REPLAY) {
-            ACEController.readTimelineAndCreateReplayActions();
-        } else {
-            ReplayUtils.resetDatabase().then(
-                () => {
+            ReplayUtils.actualTimelineChanged([]);
+
+            if (ACEController.execution === ACEController.REPLAY) {
+                ACEController.readTimelineAndCreateReplayActions();
+                resolve();
+            } else {
+                ReplayUtils.resetDatabase().then(() => {
                     ACEController.readTimelineAndCreateReplayActions();
-                },
-                (error) => {
-                    throw error;
-                }
-            );
-        }
-
+                    resolve();
+                }, (error) => {
+                    reject(error);
+                });
+            }
+        });
     }
 
     static readTimelineAndCreateReplayActions() {
@@ -161,16 +140,16 @@ export default class ACEController {
             for (let i = 0; i < ACEController.timeline.length; i++) {
                 let item = ACEController.timeline[i];
                 ACEController.expectedTimeline.push(item);
-	        	}
+            }
         }
-        
+
         ReplayUtils.expectedTimelineChanged(ACEController.expectedTimeline);
-        
+
         for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
             let item = ACEController.expectedTimeline[i];
             if (item.action) {
-				const actionParam = item.action.actionParam;
-				let action = ACEController.factories[item.action.actionName](actionParam);
+                const actionParam = item.action.actionParam;
+                let action = ACEController.factories[item.action.actionName](actionParam);
                 action.actionData.uuid = item.action.actionData.uuid;
                 actions.push(action);
             }
