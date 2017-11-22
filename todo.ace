@@ -2,8 +2,6 @@ todo
 
 target ES6 generateModules
 
-
-
 actions {
 	init Init executes Init
 	GetTodoList preUpdateUI ( Common.block ) executes GetTodoList postUpdateUI (Common.unblock)
@@ -14,6 +12,7 @@ actions {
 	ToggleAll preUpdateUI ( Common.block ) executes ToggleAll postUpdateUI (Common.unblock)
 	DeleteTodo preUpdateUI ( Common.block ) executes DeleteTodo postUpdateUI (Common.unblock)
 	ClearDone preUpdateUI ( Common.block ) executes ClearDone postUpdateUI (Common.unblock)
+	Bug executes Bug
 }
 
 commands {
@@ -55,15 +54,22 @@ commands {
 		on ok triggers (GetTodoList)
 		on error triggers (GetTodoList)
 	}
+	Bug {
+		on ok publishes (Bug)
+	}
 }
 
 events {
 	RenderList listenedToBy ( Todo.list )
 	EditTodo listenedToBy (Todo.edit)
 	InitFilter listenedToBy (Footer.initFilter)
+	Bug listenedToBy (Bug.start)
 } 
 
 views {
+	Bug {
+		start
+	}
 	Todo {
 		list
 		edit

@@ -69,6 +69,10 @@ export default class ReplayUtils {
     }
 
     static replay(pauseInMillis) {
+        let elements = document.getElementsByClassName('bug');
+        while (elements.length > 0) {
+            elements[0].parentNode.removeChild(elements[0]);
+        }
         App.container.setState({
             expectedTimeline: ACEController.expectedTimeline,
             actualTimeline: ACEController.actualTimeline
@@ -77,6 +81,10 @@ export default class ReplayUtils {
     }
 
     static e2e(pauseInMillis) {
+        let elements = document.getElementsByClassName('bug');
+        while (elements.length > 0) {
+            elements[0].parentNode.removeChild(elements[0]);
+        }
         App.container.setState({
             expectedTimeline: ACEController.expectedTimeline,
             actualTimeline: ACEController.actualTimeline
@@ -95,6 +103,7 @@ export default class ReplayUtils {
     static finishReplay(execution) {
         const normalized = ReplayUtils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
         const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
+
         if (execution === ACEController.REPLAY && ReplayUtils.finishReplayCallback) {
             ReplayUtils.finishReplayCallback(result);
         } else if (execution === ACEController.E2E && ReplayUtils.finishE2ECallback) {

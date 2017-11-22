@@ -33,7 +33,6 @@ export default class ReplayTimeline extends React.Component {
     }
 
     finishReplayCallback(result) {
-        console.log("finishReplayCallback", result);
         const scenarios = this.state.scenarios;
         const index = this.state.currentReplayIndex;
         scenarios[index].replayResult = result;
@@ -43,7 +42,6 @@ export default class ReplayTimeline extends React.Component {
     }
 
     finishE2ECallback(result) {
-        console.log("finishE2ECallback", result);
         const scenarios = this.state.scenarios;
         const index = this.state.currentReplayIndex;
         scenarios[index].e2eResult = result;
@@ -60,7 +58,7 @@ export default class ReplayTimeline extends React.Component {
 
     handleScenarioReplay(timeline, index) {
         ACEController.expectedTimeline = JSON.parse(timeline);
-        ACEController.replay(this.state.pauseInMillis);
+        ReplayUtils.replay(this.state.pauseInMillis);
         this.setState({
             currentReplayIndex: index
         });
@@ -68,7 +66,7 @@ export default class ReplayTimeline extends React.Component {
 
     handleScenarioE2E(timeline, index) {
         ACEController.expectedTimeline = JSON.parse(timeline);
-        ACEController.e2e(this.state.pauseInMillis);
+        ReplayUtils.e2e(this.state.pauseInMillis);
         this.setState({
             currentReplayIndex: index
         });

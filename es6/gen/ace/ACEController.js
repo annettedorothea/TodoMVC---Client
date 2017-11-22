@@ -6,7 +6,7 @@ export default class ACEController {
     static init() {
         ACEController.timeline = [];
         ACEController.listeners = {};
-        ACEController.factories = {};
+		ACEController.factories = {};
         ACEController.registerListener('TriggerAction', ACEController.triggerAction);
         ACEController.actionIsProcessing = false;
         ACEController.actionQueue = [];
@@ -91,10 +91,10 @@ export default class ACEController {
             ACEController.actionIsProcessing = false;
             if (ACEController.execution !== ACEController.LIVE) {
                 ReplayUtils.finishReplay(ACEController.execution);
-                ACEController.timeline = [];
-                ACEController.actionIsProcessing = false;
-                ACEController.actionQueue = [];
-                ACEController.execution = ACEController.LIVE;
+				ACEController.timeline = [];
+				ACEController.actionIsProcessing = false;
+				ACEController.actionQueue = [];
+				ACEController.execution = ACEController.LIVE;
                 AppUtils.start();
             }
         }
@@ -104,34 +104,26 @@ export default class ACEController {
         ACEController.addActionToQueue(action);
     }
 
-    static replay(pauseInMillis) {
-        ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
-    }
-
-    static e2e(pauseInMillis) {
-        ACEController.startReplay(ACEController.E2E, pauseInMillis)
-    }
-
     static startReplay(level, pauseInMillis) {
-        return new Promise((resolve, reject) => {
-            ACEController.actualTimeline = [];
-            ACEController.execution = level;
-            ACEController.pauseInMillis = pauseInMillis;
+        ACEController.actualTimeline = [];
+        ACEController.execution = level;
+        ACEController.pauseInMillis = pauseInMillis;
+        
+        ReplayUtils.actualTimelineChanged([]);
 
-            ReplayUtils.actualTimelineChanged([]);
-
-            if (ACEController.execution === ACEController.REPLAY) {
-                ACEController.readTimelineAndCreateReplayActions();
-                resolve();
-            } else {
-                ReplayUtils.resetDatabase().then(() => {
+        if (ACEController.execution === ACEController.REPLAY) {
+            ACEController.readTimelineAndCreateReplayActions();
+        } else {
+            ReplayUtils.resetDatabase().then(
+                () => {
                     ACEController.readTimelineAndCreateReplayActions();
-                    resolve();
-                }, (error) => {
-                    reject(error);
-                });
-            }
-        });
+                },
+                (error) => {
+                    throw error;
+                }
+            );
+        }
+
     }
 
     static readTimelineAndCreateReplayActions() {
@@ -140,16 +132,16 @@ export default class ACEController {
             for (let i = 0; i < ACEController.timeline.length; i++) {
                 let item = ACEController.timeline[i];
                 ACEController.expectedTimeline.push(item);
-            }
+	        	}
         }
-
+        
         ReplayUtils.expectedTimelineChanged(ACEController.expectedTimeline);
-
+        
         for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
             let item = ACEController.expectedTimeline[i];
             if (item.action) {
-                const actionParam = item.action.actionParam;
-                let action = ACEController.factories[item.action.actionName](actionParam);
+				const actionParam = item.action.actionParam;
+				let action = ACEController.factories[item.action.actionName](actionParam);
                 action.actionData.uuid = item.action.actionData.uuid;
                 actions.push(action);
             }

@@ -8,6 +8,7 @@ import ToggleTodoAction from "../../src/todo/actions/ToggleTodoAction";
 import ToggleAllAction from "../../src/todo/actions/ToggleAllAction";
 import DeleteTodoAction from "../../src/todo/actions/DeleteTodoAction";
 import ClearDoneAction from "../../src/todo/actions/ClearDoneAction";
+import BugAction from "../../src/todo/actions/BugAction";
 
 export default class ActionFactoryRegistrationTodo {
 
@@ -21,6 +22,7 @@ export default class ActionFactoryRegistrationTodo {
 		ACEController.registerFactory('todo.ToggleAllAction', (actionParam) => new ToggleAllAction(actionParam));
 		ACEController.registerFactory('todo.DeleteTodoAction', (actionParam) => new DeleteTodoAction(actionParam));
 		ACEController.registerFactory('todo.ClearDoneAction', (actionParam) => new ClearDoneAction(actionParam));
+		ACEController.registerFactory('todo.BugAction', (actionParam) => new BugAction(actionParam));
 	}
 
 }
