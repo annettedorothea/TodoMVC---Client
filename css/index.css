@@ -406,7 +406,8 @@ pre {
     cursor: pointer;
 }
 
-.replay {
+.replay,
+.bugs {
     margin: 50px;
 }
 .replay table.timeline {
@@ -420,11 +421,13 @@ pre {
     cursor: pointer;
 }
 .replay .timeline tr.failure,
-.replay td.failure {
+.replay td.failure,
+.bugs td.failure{
     background-color: lightpink;
 }
 
-.replay td.success {
+.replay td.success,
+.bugs td.success{
     background-color: lightgreen;
 }
 
@@ -436,6 +439,20 @@ pre {
 }
 
 .replay .scenarioDescriptionPreview {
+    width: 90%;
+    border: 1px solid #cccccc;
+    padding: 5px;
+    margin: 10px 0;
+}
+
+.bugs .bugDescription {
+    width: 90%;
+    height: 120px;
+    border: 1px solid #cccccc;
+    padding: 5px;
+}
+
+.bugs .bugDescriptionPreview {
     width: 90%;
     border: 1px solid #cccccc;
     padding: 5px;

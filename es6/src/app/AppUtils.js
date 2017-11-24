@@ -117,6 +117,40 @@ export default class AppUtils {
         return uuid.v4();
     }
 
+    static saveBug(description, reporter) {
+        const data = {
+            description: description,
+            reporter: reporter,
+            data: JSON.stringify(ACEController.timeline)
+        };
+        return AppUtils.httpPost('api/bug/create', null, data);
+    }
+
+    static deleteBug(id) {
+        let queryParams = [
+            {
+                key: "id",
+                value: id
+            }
+        ];
+        return AppUtils.httpDelete('api/bug/delete', queryParams);
+    }
+
+    static resolveBug(id) {
+        let queryParams = [
+            {
+                key: "id",
+                value: id
+            }
+        ];
+        return AppUtils.httpDelete('api/bug/resolve', queryParams);
+    }
+
+    static loadBugs() {
+        return AppUtils.httpGet('api/bug/all');
+    }
+
+
 }
 
 /*       S.D.G.       */

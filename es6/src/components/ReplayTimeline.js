@@ -28,8 +28,6 @@ export default class ReplayTimeline extends React.Component {
                 scenarios
             });
         });
-        ReplayUtils.initFinishReplayCallback(this.finishReplayCallback);
-        ReplayUtils.initFinishE2ECallback(this.finishE2ECallback);
     }
 
     finishReplayCallback(result) {
@@ -57,6 +55,7 @@ export default class ReplayTimeline extends React.Component {
     }
 
     handleScenarioReplay(timeline, index) {
+        ReplayUtils.initFinishReplayCallback(this.finishReplayCallback);
         ACEController.expectedTimeline = JSON.parse(timeline);
         ReplayUtils.replay(this.state.pauseInMillis);
         this.setState({
@@ -65,6 +64,7 @@ export default class ReplayTimeline extends React.Component {
     }
 
     handleScenarioE2E(timeline, index) {
+        ReplayUtils.initFinishE2ECallback(this.finishE2ECallback);
         ACEController.expectedTimeline = JSON.parse(timeline);
         ReplayUtils.e2e(this.state.pauseInMillis);
         this.setState({

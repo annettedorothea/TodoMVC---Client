@@ -4,6 +4,7 @@ import TodoList from "./TodoList";
 import Footer from "./Footer";
 import Timeline from "./Timeline";
 import ReplayTimeline from "./ReplayTimeline";
+import Bugs from "./Bugs";
 import Spinner from "./Spinner";
 import ToggleAllAction from "../todo/actions/ToggleAllAction";
 import BugAction from "../todo/actions/BugAction";
@@ -100,6 +101,7 @@ export default class Container extends React.Component {
                 </div>
                 <Timeline {...this.state}/>
                 <ReplayTimeline {...this.state}/>
+                <Bugs {...this.state}/>
             </div>
 
         );
