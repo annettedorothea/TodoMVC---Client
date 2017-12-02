@@ -69,10 +69,6 @@ export default class ReplayUtils {
     }
 
     static replay(pauseInMillis) {
-        let elements = document.getElementsByClassName('bug');
-        while (elements.length > 0) {
-            elements[0].parentNode.removeChild(elements[0]);
-        }
         App.container.setState({
             expectedTimeline: ACEController.expectedTimeline,
             actualTimeline: ACEController.actualTimeline
@@ -81,10 +77,6 @@ export default class ReplayUtils {
     }
 
     static e2e(pauseInMillis) {
-        let elements = document.getElementsByClassName('bug');
-        while (elements.length > 0) {
-            elements[0].parentNode.removeChild(elements[0]);
-        }
         App.container.setState({
             expectedTimeline: ACEController.expectedTimeline,
             actualTimeline: ACEController.actualTimeline

@@ -33,6 +33,7 @@ body {
     font-smoothing: antialiased;
     font-weight: 300;
 }
+
 .body {
     min-width: 230px;
     max-width: 550px;
@@ -114,7 +115,7 @@ input[type="checkbox"] {
     padding: 16px 16px 16px 60px;
     border: none;
     background: rgba(0, 0, 0, 0.003);
-    box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
+    box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 }
 
 .main {
@@ -355,7 +356,7 @@ html .clear-completed:active {
 	Hack to remove background from Mobile Safari.
 	Can't use it globally since it destroys checkboxes in Firefox
 */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
     .toggle-all,
     .todo-list li .toggle {
         background: none;
@@ -391,17 +392,30 @@ pre {
     margin: 5px 5px 0 0;
 }
 
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.col {
+    float: left;
+    width: 45%;
+}
 
 .timeline {
     margin: 50px;
 }
+
 .timeline table {
     width: 50%;
 }
+
 .timeline th {
     width: 100%;
     text-align: left;
 }
+
 .timeline td {
     cursor: pointer;
 }
@@ -410,53 +424,69 @@ pre {
 .bugs {
     margin: 50px;
 }
-.replay table.timeline {
+
+.replay table.timelineTable {
     width: 100%;
 }
-.replay .timeline th {
+
+.replay .timelineTable th {
     width: 50%;
     text-align: left;
 }
-.replay .timeline td {
+
+.replay .timelineTable td {
     cursor: pointer;
 }
-.replay .timeline tr.failure,
+
+.replay .timelineTable tr.failure,
 .replay td.failure,
-.bugs td.failure{
+.bugs td.failure {
     background-color: lightpink;
 }
 
 .replay td.success,
-.bugs td.success{
+.bugs td.success {
     background-color: lightgreen;
 }
 
-.replay .scenarioDescription {
-    width: 90%;
-    height: 120px;
-    border: 1px solid #cccccc;
-    padding: 5px;
+.replay th.w-05,
+.bugs th.w-05 {
+    width: 5%;
 }
 
-.replay .scenarioDescriptionPreview {
-    width: 90%;
-    border: 1px solid #cccccc;
-    padding: 5px;
-    margin: 10px 0;
+.replay th.w-10,
+.bugs th.w-10 {
+    width: 10%;
 }
 
+.replay th.w-20,
+.bugs th.w-20 {
+    width: 20%;
+}
+
+.replay th.w-30,
+.bugs th.w-30 {
+    width: 30%;
+}
+
+.replay .scenarioDescription,
 .bugs .bugDescription {
-    width: 90%;
     height: 120px;
-    border: 1px solid #cccccc;
-    padding: 5px;
+    margin: 5px 0 5px 0;
 }
 
-.bugs .bugDescriptionPreview {
-    width: 90%;
+.replay .scenarioDescription textarea,
+.bugs .bugDescription textarea {
+    width: 98%;
+    height: 120px;
     border: 1px solid #cccccc;
-    padding: 5px;
-    margin: 10px 0;
+}
+
+.replay .scenarioDescriptionPreview,
+.bugs .bugDescriptionPreview {
+    border: 1px solid #cccccc;
+    min-height: 120px;
+    margin: 5px 0 5px 0;
 }
 
 /* Absolute Center Spinner */
@@ -482,7 +512,7 @@ pre {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 /* :not(:required) hides these rules from IE9 and below */
@@ -530,6 +560,7 @@ pre {
         transform: rotate(360deg);
     }
 }
+
 @-moz-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -546,6 +577,7 @@ pre {
         transform: rotate(360deg);
     }
 }
+
 @-o-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -562,6 +594,7 @@ pre {
         transform: rotate(360deg);
     }
 }
+
 @keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);

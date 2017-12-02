@@ -139,18 +139,10 @@ export default class Bugs extends React.Component {
                     <td>{new Date(this.state.bugs[i].createdDateTime).toLocaleDateString()} {new Date(this.state.bugs[i].createdDateTime).toLocaleTimeString()}</td>
                     <td>{this.state.bugs[i].updatedDateTime ? new Date(this.state.bugs[i].updatedDateTime).toLocaleDateString() : ''} {this.state.bugs[i].updatedDateTime ? new Date(this.state.bugs[i].updatedDateTime).toLocaleTimeString() : ''}</td>
                     <td>
-                        <button onClick={() => this.handleScenarioReplay(this.state.bugs[i].data, i)}>Client
-                            replay
+                        <button onClick={() => this.handleScenarioReplay(this.state.bugs[i].data, i)}>Client replay
                         </button>
-                    </td>
-                    <td>
-                        <button onClick={() => this.handleScenarioE2E(this.state.bugs[i].data, i)}>E2E replay
-                        </button>
-                    </td>
-                    <td>
+                        <button onClick={() => this.handleScenarioE2E(this.state.bugs[i].data, i)}>E2E replay</button>
                         <button onClick={() => this.resolveBug(this.state.bugs[i].id)}>Resolve</button>
-                    </td>
-                    <td>
                         <button onClick={() => this.deleteBug(this.state.bugs[i].id)}>Delete</button>
                     </td>
                 </tr>);
@@ -159,14 +151,19 @@ export default class Bugs extends React.Component {
 
         return (
             <div className="bugs">
-                <div>
-                    <textarea onChange={this.changeDescription} className="bugDescription"
-                              value={this.state.description}/>
-                    <ReactMarkdown className="bugDescriptionPreview" source={this.state.description}/>
+                <h1>Create bug from current timeline</h1>
+                <div className="row">
+                    <div className="bugDescription col">
+                        <textarea onChange={this.changeDescription}
+                                  value={this.state.description}/>
+                    </div>
+                    <div className="bugDescriptionPreview col">
+                        <ReactMarkdown source={this.state.description}/>
+                    </div>
                 </div>
                 <div>
                     <label>Reporter</label> <input type='text' onChange={this.changeReporter}
-                                                          value={this.state.reporter}/>
+                                                   value={this.state.reporter}/>
                 </div>
 
                 <div>
@@ -179,21 +176,19 @@ export default class Bugs extends React.Component {
                 </div>
 
 
+                <h1>Bugs</h1>
                 <table>
                     <thead>
                     <tr>
-                        <th>client replay</th>
-                        <th>e2e replay</th>
-                        <th>id</th>
-                        <th>status</th>
-                        <th>description</th>
-                        <th>reporter</th>
-                        <th>created</th>
-                        <th>updated</th>
-                        <th/>
-                        <th/>
-                        <th/>
-                        <th/>
+                        <th className="w-05">client replay</th>
+                        <th className="w-05">e2e replay</th>
+                        <th className="w-05">id</th>
+                        <th className="w-05">status</th>
+                        <th className="w-20">description</th>
+                        <th className="w-10">reporter</th>
+                        <th className="w-10">created</th>
+                        <th className="w-10">updated</th>
+                        <th className="w-30"/>
                     </tr>
                     </thead>
                     <tbody>

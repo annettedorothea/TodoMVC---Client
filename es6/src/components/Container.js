@@ -7,7 +7,6 @@ import ReplayTimeline from "./ReplayTimeline";
 import Bugs from "./Bugs";
 import Spinner from "./Spinner";
 import ToggleAllAction from "../todo/actions/ToggleAllAction";
-import BugAction from "../todo/actions/BugAction";
 
 export default class Container extends React.Component {
 
@@ -17,15 +16,10 @@ export default class Container extends React.Component {
             todoList: []
         };
         this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
-        this.onBug = this.onBug.bind(this);
     }
 
     onChangeCheckbox(event) {
         new ToggleAllAction().apply();
-    }
-
-    onBug() {
-        new BugAction().apply();
     }
 
     render() {
@@ -94,7 +88,6 @@ export default class Container extends React.Component {
                         <p>Double-click to edit a todo</p>
                         <p>Created by Annette Pohl</p>
                         <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-                        <p><a onClick={this.onBug}>Bug</a></p>
                     </footer>
 
 

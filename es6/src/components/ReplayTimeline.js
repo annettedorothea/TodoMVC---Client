@@ -134,12 +134,8 @@ export default class ReplayTimeline extends React.Component {
                         <button onClick={() => this.handleScenarioReplay(this.state.scenarios[i].data, i)}>Client
                             replay
                         </button>
-                    </td>
-                    <td>
                         <button onClick={() => this.handleScenarioE2E(this.state.scenarios[i].data, i)}>E2E replay
                         </button>
-                    </td>
-                    <td>
                         <button onClick={() => this.deleteScenario(this.state.scenarios[i].id)}>Delete</button>
                     </td>
                 </tr>);
@@ -148,10 +144,32 @@ export default class ReplayTimeline extends React.Component {
 
         return (
             <div className="replay">
-                <div>
-                    <textarea onChange={this.changeScenarioDescription} className="scenarioDescription"
-                              value={this.state.scenarioDescription}/>
-                    <ReactMarkdown className="scenarioDescriptionPreview" source={this.state.scenarioDescription}/>
+                {items.length > 0 &&
+                    <div>
+                        <h1>Replay Timeline</h1>
+                        <table className="timelineTable">
+                            <thead>
+                            <tr>
+                                <th>expected</th>
+                                <th>actual</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {items}
+                            </tbody>
+                        </table>
+                    </div>
+                }
+
+                <h1>Create scenario from current timeline</h1>
+                <div className="row">
+                    <div className="scenarioDescription col">
+                        <textarea onChange={this.changeScenarioDescription}
+                                  value={this.state.scenarioDescription}/>
+                    </div>
+                    <div className="scenarioDescriptionPreview col">
+                        <ReactMarkdown source={this.state.scenarioDescription}/>
+                    </div>
                 </div>
 
                 <div>
@@ -164,34 +182,20 @@ export default class ReplayTimeline extends React.Component {
                 </div>
 
 
+                <h1>Scenarios</h1>
                 <table>
                     <thead>
                     <tr>
-                        <th>client replay</th>
-                        <th>e2e replay</th>
-                        <th>id</th>
-                        <th>description</th>
-                        <th>time</th>
-                        <th/>
-                        <th/>
-                        <th/>
+                        <th className="w-10">client replay</th>
+                        <th className="w-10">e2e replay</th>
+                        <th className="w-10">id</th>
+                        <th className="w-30">description</th>
+                        <th className="w-10">time</th>
+                        <th className="w-30"/>
                     </tr>
                     </thead>
                     <tbody>
                     {scenarios}
-                    </tbody>
-                </table>
-
-                <h1>Replay Timeline</h1>
-                <table className="timeline">
-                    <thead>
-                    <tr>
-                        <th>expected</th>
-                        <th>actual</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {items}
                     </tbody>
                 </table>
 
