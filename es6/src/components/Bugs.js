@@ -134,8 +134,8 @@ export default class Bugs extends React.Component {
                     <td className={this.state.bugs[i].e2eResult === false ? "failure" : (this.state.bugs[i].e2eResult === true ? "success" : "")}/>
                     <td>{this.state.bugs[i].id}</td>
                     <td>{this.state.bugs[i].resolved === true ? 'resolved' : 'pending'}</td>
-                    <td>{this.state.bugs[i].reporter}</td>
                     <td><ReactMarkdown source={this.state.bugs[i].description}/></td>
+                    <td>{this.state.bugs[i].reporter}</td>
                     <td>{new Date(this.state.bugs[i].createdDateTime).toLocaleDateString()} {new Date(this.state.bugs[i].createdDateTime).toLocaleTimeString()}</td>
                     <td>{this.state.bugs[i].updatedDateTime ? new Date(this.state.bugs[i].updatedDateTime).toLocaleDateString() : ''} {this.state.bugs[i].updatedDateTime ? new Date(this.state.bugs[i].updatedDateTime).toLocaleTimeString() : ''}</td>
                     <td>

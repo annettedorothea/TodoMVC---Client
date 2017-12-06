@@ -32,8 +32,8 @@ export default class Container extends React.Component {
                             <h3>ACE</h3>
                             <span className="source-links">
                                 <h5>ACE Example</h5>
-                                <a href="https://github.com/annettedorothea/TodoMVC---Client">Source (Client)</a><br/>
-                                <a href="https://github.com/annettedorothea/TodoMVC---Server">Source (Server)</a>
+                                <a href="https://github.com/annettedorothea/TodoMVC---Client" target="sourceclient">Source (Client)</a><br/>
+                                <a href="https://github.com/annettedorothea/TodoMVC---Server" target="sourceserver">Source (Server)</a>
                             </span>
                         </header>
                         <hr/>
@@ -49,10 +49,10 @@ export default class Container extends React.Component {
                             </ul>
                             <p>
                                 Both client and server are implemented based on the ACE architecture.
-                                The server was written in Java with Dropwizard and the client uses React.
+                                The server was written in Java with Dropwizard; the client uses React.
                             </p>
                             <footer>
-                                <a href="https://github.com/annettedorothea/com.anfelisa.ace.gen">ACE Code Generator based on Xtext</a>
+                                <a href="https://github.com/annettedorothea/com.anfelisa.ace.gen" target="ace">ACE Code Generator based on Xtext</a>
                             </footer>
                         </blockquote>
                         <footer>
@@ -60,7 +60,7 @@ export default class Container extends React.Component {
                             <em>
                                 Client replay does not send requests to the server but uses the captured data in the command.
                                 The E2E replay first resets a replay database, makes all changes up to the desired scenario and
-                                then executes the scenario end-to-end. The replay is delayed by 1000 ms.
+                                then executes the scenario end-to-end.
                             </em>
                         </footer>
                     </aside>
