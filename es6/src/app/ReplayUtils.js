@@ -4,20 +4,6 @@ import * as App from "./App";
 
 export default class ReplayUtils {
 
-    static actualTimelineChanged(items) {
-        const normalized = ReplayUtils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
-        App.container.setState({
-            expectedTimeline: normalized.expected,
-            actualTimeline: normalized.actual
-        });
-    }
-
-    static expectedTimelineChanged(items) {
-        App.container.setState({
-            expectedTimeline: ACEController.expectedTimeline
-        });
-    }
-
     static normalizeTimelines(expected, actual) {
         let normalizedExpected = [];
         let normalizedActual = [];
@@ -69,39 +55,51 @@ export default class ReplayUtils {
     }
 
     static replay(pauseInMillis) {
-        App.container.setState({
-            expectedTimeline: ACEController.expectedTimeline,
-            actualTimeline: ACEController.actualTimeline
-        });
         ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
     }
 
     static e2e(pauseInMillis) {
-        App.container.setState({
-            expectedTimeline: ACEController.expectedTimeline,
-            actualTimeline: ACEController.actualTimeline
-        });
         ACEController.startReplay(ACEController.E2E, pauseInMillis)
     }
 
-    static initFinishReplayCallback(callback) {
-        ReplayUtils.finishReplayCallback = callback;
-    }
-
-    static initFinishE2ECallback(callback) {
-        ReplayUtils.finishE2ECallback = callback;
-    }
-
-    static finishReplay(execution) {
+    static finishReplay() {
         const normalized = ReplayUtils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
         const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
 
-        if (execution === ACEController.REPLAY && ReplayUtils.finishReplayCallback) {
-            ReplayUtils.finishReplayCallback(result);
-        } else if (execution === ACEController.E2E && ReplayUtils.finishE2ECallback) {
-            ReplayUtils.finishE2ECallback(result);
+        if (normalized.expected && normalized.actual) {
+            const size = normalized.expected.length > normalized.actual.length ? normalized.expected.length : normalized.actual.length;
+            for (let i = 0; i < size; i++) {
+                const expected = normalized.expected[i] ? normalized.expected[i] : null;
+                const actual = normalized.actual[i] ? normalized.actual[i] : null;
+                const result = ReplayUtils.compareItems(expected, actual);
+                const item = {
+                    expected,
+                    actual,
+                    result
+                };
+                if (result === true) {
+                    console.log("%cSUCCESS", "color: green;", item);
+                } else {
+                    console.log("%cFAILURE", "color: red;", item);
+                }
+            }
         }
+        if (result === true) {
+            console.log("%c===============", "color: green;");
+            console.log("%c=== SUCCESS ===", "color: green;");
+            console.log("%c===============", "color: green;");
+        } else {
+            console.log("%c===============", "color: red;");
+            console.log("%c=== FAILURE ===", "color: red;");
+            console.log("%c===============", "color: red;");
+        }
+        ReplayUtils.saveScenarioResult(normalized, result);
     }
+
+    static compareItems(expected, actual) {
+        return JSON.stringify(expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(actual, ReplayUtils.itemStringifyReplacer);
+    }
+
 
     static itemStringifyReplacer(key, value) {
         if (key === 'timestamp') {
@@ -111,10 +109,14 @@ export default class ReplayUtils {
         }
     }
 
-    static saveScenario(description) {
+    static saveScenario(description, creator) {
+        const browser = AppUtils.getBrowserInfo();
         const data = {
-            description: description,
-            data: JSON.stringify(ACEController.timeline)
+            description,
+            timeline: JSON.stringify(ACEController.timeline),
+            creator,
+            clientVersion: AppUtils.getClientVersion(),
+            device: browser.name + " " + browser.version
         };
         return AppUtils.httpPost('api/scenario/create', null, data);
     }
@@ -132,6 +134,32 @@ export default class ReplayUtils {
     static loadScenarios() {
         return AppUtils.httpGet('api/scenario/all');
     }
+
+    static loadScenario(id) {
+        let queryParams = [];
+        queryParams.push({
+            key: "id",
+            value: id
+        });
+        return AppUtils.httpGet('api/scenario/single', queryParams);
+    }
+
+    static saveScenarioResult(normalized, result) {
+        const browser = AppUtils.getBrowserInfo();
+        const data = {
+            description: ReplayUtils.scenarioConfig.description,
+            scenarioId: ReplayUtils.scenarioConfig.scenarioId,
+            timeline: JSON.stringify(normalized),
+            executor: ReplayUtils.scenarioConfig.executor,
+            e2e: ReplayUtils.scenarioConfig.e2e,
+            result,
+            clientVersion: AppUtils.getClientVersion(),
+            device: browser.name + " " + browser.version
+        };
+        return AppUtils.httpPost('api/scenario-result/create', null, data);
+    }
+
+
 }
 
 /*       S.D.G.       */

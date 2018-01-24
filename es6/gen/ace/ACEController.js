@@ -1,5 +1,6 @@
 import AppUtils from "../../src/app/AppUtils";
 import ReplayUtils from "../../src/app/ReplayUtils";
+import {runScenario} from "./Scenario";
 
 export default class ACEController {
 
@@ -62,10 +63,9 @@ export default class ACEController {
                     }
                 }
             }
-            AppUtils.timelineChanged([item]);
+            AppUtils.timelineChanged(item);
         } else {
             ACEController.actualTimeline.push(JSON.parse(JSON.stringify(item)));
-            ReplayUtils.actualTimelineChanged([item]);
         }
     }
 
@@ -90,11 +90,11 @@ export default class ACEController {
         } else if (action === undefined) {
             ACEController.actionIsProcessing = false;
             if (ACEController.execution !== ACEController.LIVE) {
-                ReplayUtils.finishReplay(ACEController.execution);
 				ACEController.timeline = [];
 				ACEController.actionIsProcessing = false;
 				ACEController.actionQueue = [];
 				ACEController.execution = ACEController.LIVE;
+                ReplayUtils.finishReplay();
                 AppUtils.start();
             }
         }
@@ -109,8 +109,6 @@ export default class ACEController {
         ACEController.execution = level;
         ACEController.pauseInMillis = pauseInMillis;
         
-        ReplayUtils.actualTimelineChanged([]);
-
         if (ACEController.execution === ACEController.REPLAY) {
             ACEController.readTimelineAndCreateReplayActions();
         } else {
@@ -134,8 +132,6 @@ export default class ACEController {
                 ACEController.expectedTimeline.push(item);
 	        	}
         }
-        
-        ReplayUtils.expectedTimelineChanged(ACEController.expectedTimeline);
         
         for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
             let item = ACEController.expectedTimeline[i];

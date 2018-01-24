@@ -2,9 +2,6 @@ import React from 'react';
 import NewTodo from "./NewTodo";
 import TodoList from "./TodoList";
 import Footer from "./Footer";
-import Timeline from "./Timeline";
-import ReplayTimeline from "./ReplayTimeline";
-import Bugs from "./Bugs";
 import Spinner from "./Spinner";
 import ToggleAllAction from "../todo/actions/ToggleAllAction";
 
@@ -92,9 +89,6 @@ export default class Container extends React.Component {
 
 
                 </div>
-                <Timeline {...this.state}/>
-                <ReplayTimeline {...this.state}/>
-                <Bugs {...this.state}/>
             </div>
 
         );

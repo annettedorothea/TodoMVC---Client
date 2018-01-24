@@ -5,6 +5,9 @@ import ActionFactoryRegistrationTodo from "../../gen/todo/ActionFactoryRegistrat
 import Container from "../components/Container";
 import ReactDOM from "react-dom";
 
+export * from "../../gen/todo/ActionFunctionExports";
+export * from "../../gen/ace/Scenario";
+
 window.onhashchange = () => {
     new InitAction().apply();
 };
