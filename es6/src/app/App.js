@@ -3,7 +3,9 @@ import AppUtils from './AppUtils';
 import EventListenerRegistrationTodo from "../../gen/todo/EventListenerRegistration";
 import ActionFactoryRegistrationTodo from "../../gen/todo/ActionFactoryRegistration";
 import Container from "../components/Container";
-import ReactDOM from "react-dom";
+
+const React = require('react');
+const ReactDOM = require('react-dom');
 
 export * from "../../gen/todo/ActionFunctionExports";
 export * from "../../gen/ace/Scenario";
