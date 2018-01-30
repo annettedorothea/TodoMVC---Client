@@ -5,6 +5,7 @@ export default class TriggerAction extends Event {
         super(action, 'TriggerAction');
         this.eventData = action;
     }
+
     prepareDataForView() {
     }
 }

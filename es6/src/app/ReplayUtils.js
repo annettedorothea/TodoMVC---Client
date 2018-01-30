@@ -1,6 +1,5 @@
 import ACEController from "../../gen/ace/ACEController";
 import AppUtils from "./AppUtils";
-import * as App from "./App";
 
 export default class ReplayUtils {
 
@@ -78,9 +77,9 @@ export default class ReplayUtils {
                     result
                 };
                 if (result === true) {
-                    console.log("%cSUCCESS", "color: green;", item);
+                    console.log("%cSUCCESS expected " + ReplayUtils.name(item.expected) + " actual " + ReplayUtils.name(item.actual), "color: green;", item);
                 } else {
-                    console.log("%cFAILURE", "color: red;", item);
+                    console.log("%cFAILURE expected " + ReplayUtils.name(item.expected) + " actual " + ReplayUtils.name(item.actual), "color: red;", item);
                 }
             }
         }
@@ -94,6 +93,18 @@ export default class ReplayUtils {
             console.log("%c===============", "color: red;");
         }
         ReplayUtils.saveScenarioResult(normalized, result);
+    }
+
+    static name(item) {
+        if (item.action) {
+            return item.action.actionName;
+        }
+        if (item.command) {
+            return item.command.commandName;
+        }
+        if (item.event) {
+            return item.event.eventName;
+        }
     }
 
     static compareItems(expected, actual) {

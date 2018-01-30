@@ -7,7 +7,7 @@ export default class ACEController {
     static init() {
         ACEController.timeline = [];
         ACEController.listeners = {};
-		ACEController.factories = {};
+        ACEController.factories = {};
         ACEController.registerListener('TriggerAction', ACEController.triggerAction);
         ACEController.actionIsProcessing = false;
         ACEController.actionQueue = [];
@@ -63,7 +63,6 @@ export default class ACEController {
                     }
                 }
             }
-            AppUtils.timelineChanged(item);
         } else {
             ACEController.actualTimeline.push(JSON.parse(JSON.stringify(item)));
         }
@@ -85,15 +84,15 @@ export default class ACEController {
             action.applyAction().then(() => {
             }, (error) => {
                 ACEController.actionIsProcessing = false;
-                throw new Error(error + " when applying action " + action.actionName);
+                console.error(error + " when applying action " + action.actionName);
             });
         } else if (action === undefined) {
             ACEController.actionIsProcessing = false;
             if (ACEController.execution !== ACEController.LIVE) {
-				ACEController.timeline = [];
-				ACEController.actionIsProcessing = false;
-				ACEController.actionQueue = [];
-				ACEController.execution = ACEController.LIVE;
+                ACEController.timeline = [];
+                ACEController.actionIsProcessing = false;
+                ACEController.actionQueue = [];
+                ACEController.execution = ACEController.LIVE;
                 ReplayUtils.finishReplay();
                 AppUtils.start();
             }
@@ -108,7 +107,7 @@ export default class ACEController {
         ACEController.actualTimeline = [];
         ACEController.execution = level;
         ACEController.pauseInMillis = pauseInMillis;
-        
+
         if (ACEController.execution === ACEController.REPLAY) {
             ACEController.readTimelineAndCreateReplayActions();
         } else {
@@ -130,14 +129,14 @@ export default class ACEController {
             for (let i = 0; i < ACEController.timeline.length; i++) {
                 let item = ACEController.timeline[i];
                 ACEController.expectedTimeline.push(item);
-	        	}
+            }
         }
-        
+
         for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
             let item = ACEController.expectedTimeline[i];
             if (item.action) {
-				const actionParam = item.action.actionParam;
-				let action = ACEController.factories[item.action.actionName](actionParam);
+                const actionParam = item.action.actionParam;
+                let action = ACEController.factories[item.action.actionName](actionParam);
                 action.actionData.uuid = item.action.actionData.uuid;
                 actions.push(action);
             }

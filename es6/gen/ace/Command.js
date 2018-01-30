@@ -23,13 +23,13 @@ export default class Command {
                 this.execute().then(() => {
                     ACEController.addItemToTimeLine({command: this});
                     this.publishEvents().then(() => {
-						postUpdateUI();
-						if (ACEController.execution === ACEController.LIVE) {
-						    ACEController.applyNextActions();
-						} else {
-						    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-						}
-						resolve();
+                        postUpdateUI();
+                        if (ACEController.execution === ACEController.LIVE) {
+                            ACEController.applyNextActions();
+                        } else {
+                            setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+                        }
+                        resolve();
                     }, (error) => {
                         reject(error + " when publishing events of command " + this.commandName);
                     });
@@ -41,9 +41,9 @@ export default class Command {
                 this.commandData = timelineCommand.commandData;
                 ACEController.addItemToTimeLine({command: this});
                 this.publishEvents().then(() => {
-					postUpdateUI();
-					setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
-					resolve();
+                    postUpdateUI();
+                    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+                    resolve();
                 }, (error) => {
                     reject(error + " when publishing events of command " + this.commandName);
                 });
