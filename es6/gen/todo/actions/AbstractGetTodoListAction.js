@@ -9,17 +9,16 @@ export default class AbstractGetTodoListAction extends Action {
     }
 
 	getCommand() {
-			return new GetTodoListCommand(this.actionData);
+		return new GetTodoListCommand(this.actionData);
 	}
 
-	
-    preUpdateUI() {
+	preUpdateUI() {
 		CommonView.block(this.actionParam);
-    }
+	}
 
-    postUpdateUI() {
+	postUpdateUI() {
 		CommonView.unblock(this.actionParam);
-    }
+	}
 
 }
 

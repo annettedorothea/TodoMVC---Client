@@ -9,17 +9,16 @@ export default class AbstractUpdateTodoAction extends Action {
     }
 
 	getCommand() {
-			return new UpdateTodoCommand(this.actionData);
+		return new UpdateTodoCommand(this.actionData);
 	}
 
-	
-    preUpdateUI() {
+	preUpdateUI() {
 		CommonView.block(this.actionParam);
-    }
+	}
 
-    postUpdateUI() {
+	postUpdateUI() {
 		CommonView.unblock(this.actionParam);
-    }
+	}
 
 }
 

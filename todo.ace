@@ -1,6 +1,6 @@
 todo
 
-target ES6 generateModules
+target ES6
 
 actions {
 	init Init executes Init

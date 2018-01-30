@@ -9,17 +9,16 @@ export default class AbstractDeleteTodoAction extends Action {
     }
 
 	getCommand() {
-			return new DeleteTodoCommand(this.actionData);
+		return new DeleteTodoCommand(this.actionData);
 	}
 
-	
-    preUpdateUI() {
+	preUpdateUI() {
 		CommonView.block(this.actionParam);
-    }
+	}
 
-    postUpdateUI() {
+	postUpdateUI() {
 		CommonView.unblock(this.actionParam);
-    }
+	}
 
 }
 

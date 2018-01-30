@@ -8,18 +8,17 @@ export default class AbstractClearDoneAction extends Action {
         super(actionParam, 'todo.ClearDoneAction', false);
     }
 
-    getCommand() {
-        return new ClearDoneCommand(this.actionData);
-    }
+	getCommand() {
+		return new ClearDoneCommand(this.actionData);
+	}
 
+	preUpdateUI() {
+		CommonView.block(this.actionParam);
+	}
 
-    preUpdateUI() {
-        CommonView.block(this.actionParam);
-    }
-
-    postUpdateUI() {
-        CommonView.unblock(this.actionParam);
-    }
+	postUpdateUI() {
+		CommonView.unblock(this.actionParam);
+	}
 
 }
 

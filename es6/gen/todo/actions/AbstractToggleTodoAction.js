@@ -9,17 +9,16 @@ export default class AbstractToggleTodoAction extends Action {
     }
 
 	getCommand() {
-			return new ToggleTodoCommand(this.actionData);
+		return new ToggleTodoCommand(this.actionData);
 	}
 
-	
-    preUpdateUI() {
+	preUpdateUI() {
 		CommonView.block(this.actionParam);
-    }
+	}
 
-    postUpdateUI() {
+	postUpdateUI() {
 		CommonView.unblock(this.actionParam);
-    }
+	}
 
 }
 
