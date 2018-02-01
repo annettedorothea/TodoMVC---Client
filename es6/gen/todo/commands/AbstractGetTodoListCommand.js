@@ -6,7 +6,6 @@ export default class AbstractGetTodoListCommand extends Command {
     constructor(commandParam) {
         super(commandParam, "todo.GetTodoListCommand");
         this.ok = "ok";
-        this.error = "error";
     }
 
     publishEvents() {
@@ -15,8 +14,6 @@ export default class AbstractGetTodoListCommand extends Command {
 		switch (this.commandData.outcome) {
 		case this.ok:
 			promises.push(new RenderListEvent(this.commandData).publish());
-			break;
-		case this.error:
 			break;
 		default:
 			throw 'unhandled outcome: ' + this.commandData.outcome;

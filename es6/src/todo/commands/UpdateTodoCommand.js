@@ -2,7 +2,7 @@ import AbstractUpdateTodoCommand from "../../../gen/todo/commands/AbstractUpdate
 
 export default class UpdateTodoCommand extends AbstractUpdateTodoCommand {
     execute() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             if (!this.commandParam.description) {
                 this.commandData.outcome = this.empty;
                 resolve();
@@ -11,9 +11,7 @@ export default class UpdateTodoCommand extends AbstractUpdateTodoCommand {
                     this.commandData.outcome = this.ok;
                     resolve();
                 }, (error) => {
-                    console.error("error when updating todo", error);
-                    this.commandData.outcome = this.error;
-                    resolve();
+                    reject(error);
                 });
             }
         });

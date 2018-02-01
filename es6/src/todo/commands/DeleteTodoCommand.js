@@ -2,7 +2,7 @@ import AbstractDeleteTodoCommand from "../../../gen/todo/commands/AbstractDelete
 
 export default class DeleteTodoCommand extends AbstractDeleteTodoCommand {
     execute() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             let queryParams = [];
             queryParams.push({
                 key: "id",
@@ -12,9 +12,7 @@ export default class DeleteTodoCommand extends AbstractDeleteTodoCommand {
                 this.commandData.outcome = this.ok;
                 resolve();
             }, (error) => {
-                console.error("error when deleting todo", error);
-                this.commandData.outcome = this.error;
-                resolve();
+                reject(error);
             });
         });
     }

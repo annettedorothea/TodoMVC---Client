@@ -2,7 +2,7 @@ import AbstractCreateTodoCommand from "../../../gen/todo/commands/AbstractCreate
 
 export default class CreateTodoCommand extends AbstractCreateTodoCommand {
     execute() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             if (!this.commandParam.description) {
                 this.commandData.outcome = this.empty;
                 resolve();
@@ -11,9 +11,7 @@ export default class CreateTodoCommand extends AbstractCreateTodoCommand {
                     this.commandData.outcome = this.ok;
                     resolve();
                 }, (error) => {
-                    console.error("error when creating todo", error);
-                    this.commandData.outcome = this.error;
-                    resolve();
+                    reject(error);
                 });
             }
         });

@@ -22,11 +22,9 @@ commands {
 	}
 	GetTodoList {
 		on ok publishes (RenderList)
-		on error
 	}
 	CreateTodo {
 		on ok triggers (GetTodoList)
-		on error triggers (GetTodoList)
 		on empty
 	}
 	EditTodo {
@@ -34,24 +32,19 @@ commands {
 	}
 	UpdateTodo {
 		on ok triggers (GetTodoList)
-		on error triggers (GetTodoList)
 		on empty
 	}
 	ToggleTodo {
 		on ok triggers (GetTodoList)
-		on error triggers (GetTodoList)
 	}
 	ToggleAll {
 		on ok triggers (GetTodoList)
-		on error triggers (GetTodoList)
 	}
 	DeleteTodo {
 		on ok triggers (GetTodoList)
-		on error triggers (GetTodoList)
 	}
 	ClearDone {
 		on ok triggers (GetTodoList)
-		on error triggers (GetTodoList)
 	}
 }
 

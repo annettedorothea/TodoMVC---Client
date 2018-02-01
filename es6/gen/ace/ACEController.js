@@ -85,6 +85,7 @@ export default class ACEController {
             }, (error) => {
                 ACEController.actionIsProcessing = false;
                 console.error(error + " when applying action " + action.actionName);
+                AppUtils.displayUnexpectedError(error + " when applying action " + action.actionName);
             });
         } else if (action === undefined) {
             ACEController.actionIsProcessing = false;

@@ -4,6 +4,7 @@ import TodoList from "./TodoList";
 import Footer from "./Footer";
 import Spinner from "./Spinner";
 import ToggleAllAction from "../todo/actions/ToggleAllAction";
+import ErrorMessage from "./ErrorMessage";
 
 export default class Container extends React.Component {
 
@@ -22,6 +23,7 @@ export default class Container extends React.Component {
     render() {
         return (
             <div>
+                <ErrorMessage {...this.state} />
                 <Spinner {...this.state} />
                 <div className="learn-bar body">
                     <aside className="learn">

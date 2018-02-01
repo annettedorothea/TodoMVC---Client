@@ -489,6 +489,18 @@ pre {
     margin: 5px 0 5px 0;
 }
 
+.error {
+    background-color: rgba(175, 47, 47, 0.15);
+    color: #000;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+}
+
 /* Absolute Center Spinner */
 .loading {
     position: fixed;

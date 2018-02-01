@@ -6,7 +6,6 @@ export default class AbstractClearDoneCommand extends Command {
     constructor(commandParam) {
         super(commandParam, "todo.ClearDoneCommand");
         this.ok = "ok";
-        this.error = "error";
     }
 
     publishEvents() {
@@ -14,9 +13,6 @@ export default class AbstractClearDoneCommand extends Command {
 	    	
 		switch (this.commandData.outcome) {
 		case this.ok:
-			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
-			break;
-		case this.error:
 			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
 			break;
 		default:

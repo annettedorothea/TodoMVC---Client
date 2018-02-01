@@ -2,7 +2,7 @@ import AbstractToggleTodoCommand from "../../../gen/todo/commands/AbstractToggle
 
 export default class ToggleTodoCommand extends AbstractToggleTodoCommand {
     execute() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             let queryParams = [];
             queryParams.push({
                 key: "id",
@@ -12,9 +12,7 @@ export default class ToggleTodoCommand extends AbstractToggleTodoCommand {
                 this.commandData.outcome = this.ok;
                 resolve();
             }, (error) => {
-                console.error("error when toggling todo", error);
-                this.commandData.outcome = this.error;
-                resolve();
+                reject(error);
             });
         });
     }

@@ -1,6 +1,7 @@
 import ACEController from "../../gen/ace/ACEController";
 import uuid from "uuid";
 import InitAction from "../todo/actions/InitAction";
+import * as App from "./App";
 
 export default class AppUtils {
 
@@ -30,7 +31,11 @@ export default class AppUtils {
             const request = new Request(completeUrl, options);
 
             fetch(request).then(function (response) {
-                return response.json();
+                if (response.status >= 500) {
+                    throw new Error(`status code ${response.status} and message ${response.statusText}`);
+                } else {
+                    return response.json();
+                }
             }).then(function (data) {
                 if (data.code && data.code >= 400) {
                     throw new Error(`status code ${data.code} and message ${data.message}`);
@@ -62,7 +67,11 @@ export default class AppUtils {
             const request = new Request(completeUrl, options);
 
             fetch(request).then(function (response) {
-                return response.text();
+                if (response.status >= 500) {
+                    throw new Error(`status code ${response.status} and message ${response.statusText}`);
+                } else {
+                    return response.text();
+                }
             }).then(function (data) {
                 if (data.code && data.code >= 400) {
                     throw new Error(`status code ${data.code} and message ${data.message}`);
@@ -168,6 +177,19 @@ export default class AppUtils {
             name: M[0],
             version: M[1]
         };
+    }
+
+    static displayUnexpectedError(error) {
+        clearTimeout(AppUtils.timer);
+        App.container.setState({
+            error: error
+        });
+        AppUtils.timer = setTimeout(function () {
+            App.container.setState({
+                error: undefined
+            });
+        }, 7000);
+
     }
 
 }
