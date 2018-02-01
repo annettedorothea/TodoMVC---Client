@@ -127,7 +127,9 @@ export default class AppUtils {
         const data = {
             description: description,
             reporter: reporter,
-            timeline: JSON.stringify(ACEController.timeline)
+            timeline: JSON.stringify(ACEController.timeline),
+            clientVersion: AppUtils.getClientVersion(),
+            device: browser.name + " " + browser.version
         };
         return AppUtils.httpPost('api/bug/create', null, data);
     }
@@ -154,6 +156,16 @@ export default class AppUtils {
 
     static loadBugs() {
         return AppUtils.httpGet('api/bug/all');
+    }
+
+    static loadBug(id) {
+        let queryParams = [
+            {
+                key: "id",
+                value: id
+            }
+        ];
+        return AppUtils.httpGet('api/bug/single', queryParams);
     }
 
     static getBrowserInfo() {

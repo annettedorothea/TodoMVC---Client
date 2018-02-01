@@ -92,7 +92,9 @@ export default class ReplayUtils {
             console.log("%c=== FAILURE ===", "color: red;");
             console.log("%c===============", "color: red;");
         }
-        ReplayUtils.saveScenarioResult(normalized, result);
+        if (ReplayUtils.scenarioConfig.finishReplay) {
+            ReplayUtils.scenarioConfig.finishReplay(normalized, result);
+        }
     }
 
     static name(item) {

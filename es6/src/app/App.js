@@ -9,6 +9,7 @@ const ReactDOM = require('react-dom');
 
 export * from "../../gen/todo/ActionFunctionExports";
 export * from "../../gen/ace/Scenario";
+export * from "../../gen/ace/Bug";
 
 window.onhashchange = () => {
     new InitAction().apply();
