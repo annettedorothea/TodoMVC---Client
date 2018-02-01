@@ -8,7 +8,7 @@ export function runScenarioE2E(scenarioId, pauseInMillis = 250, description = "u
             scenarioId,
             description,
             e2e: true,
-            finishReplay: ReplayUtils.saveScenarioResult
+			finishReplay: ReplayUtils.saveScenarioResult
         };
         ACEController.expectedTimeline = JSON.parse(scenario.timeline);
         ReplayUtils.e2e(pauseInMillis);
@@ -22,7 +22,7 @@ export function runScenarioReplay(scenarioId, pauseInMillis = 250, description =
             scenarioId,
             description,
             e2e: false,
-            finishReplay: ReplayUtils.saveScenarioResult
+			finishReplay: ReplayUtils.saveScenarioResult
         };
         ACEController.expectedTimeline = JSON.parse(scenario.timeline);
         ReplayUtils.replay(pauseInMillis);

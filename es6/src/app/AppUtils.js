@@ -124,6 +124,7 @@ export default class AppUtils {
     }
 
     static saveBug(description, reporter) {
+        const browser = AppUtils.getBrowserInfo();
         const data = {
             description: description,
             reporter: reporter,
