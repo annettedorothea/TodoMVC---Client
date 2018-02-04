@@ -50,7 +50,7 @@ export default class Action {
                     },
                     (error) => {
                         this.postUpdateUI();
-                        reject(error + " when executing command " + command.commandName);
+                        reject(error + "\n" + command.commandName);
                     });
             } else {
                 this.postUpdateUI();

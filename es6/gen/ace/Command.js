@@ -31,10 +31,10 @@ export default class Command {
                         }
                         resolve();
                     }, (error) => {
-                        reject(error + " when publishing events of command " + this.commandName);
+                        reject(error + "\n" + this.commandName);
                     });
                 }, (error) => {
-                    reject(error + " when executing command " + this.commandName);
+                    reject(error + "\n" + this.commandName);
                 });
             } else {
                 const timelineCommand = ACEController.getCommandByUuid(this.commandParam.uuid);
@@ -45,7 +45,7 @@ export default class Command {
                     setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
                     resolve();
                 }, (error) => {
-                    reject(error + " when publishing events of command " + this.commandName);
+                    reject(error + "\n" + this.commandName);
                 });
             }
         });

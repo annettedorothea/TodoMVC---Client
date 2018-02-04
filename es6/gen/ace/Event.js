@@ -18,7 +18,7 @@ export default class Event {
             Promise.all(this.notifyListeners()).then(() => {
                 resolve();
             }, (error) => {
-                reject(error + " when notifying listeners of event " + this.eventName);
+                reject(error + "\n" + this.eventName);
             });
         });
     }

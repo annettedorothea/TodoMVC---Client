@@ -10,7 +10,7 @@ export default class AppUtils {
     }
 
     static getClientVersion() {
-        return "1.0.0";
+        return "1.1.0";
     }
 
     static httpGet(url, queryParams, commandParam) {
@@ -31,17 +31,13 @@ export default class AppUtils {
             const request = new Request(completeUrl, options);
 
             fetch(request).then(function (response) {
-                if (response.status >= 500) {
+                if (response.status >= 300) {
                     throw new Error(`status code ${response.status} and message ${response.statusText}`);
                 } else {
                     return response.json();
                 }
             }).then(function (data) {
-                if (data.code && data.code >= 400) {
-                    throw new Error(`status code ${data.code} and message ${data.message}`);
-                } else {
-                    resolve(data);
-                }
+                resolve(data);
             }).catch(function (error) {
                 reject(`GET failed with ${error.message}`);
             });
@@ -67,17 +63,13 @@ export default class AppUtils {
             const request = new Request(completeUrl, options);
 
             fetch(request).then(function (response) {
-                if (response.status >= 500) {
+                if (response.status >= 300) {
                     throw new Error(`status code ${response.status} and message ${response.statusText}`);
                 } else {
                     return response.text();
                 }
             }).then(function (data) {
-                if (data.code && data.code >= 400) {
-                    throw new Error(`status code ${data.code} and message ${data.message}`);
-                } else {
-                    resolve(data);
-                }
+                resolve(data);
             }).catch(function (error) {
                 reject(`${methodType} failed with ${error.message}`);
             });

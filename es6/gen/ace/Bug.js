@@ -29,7 +29,9 @@ export function runBugReplay(bugId, pauseInMillis = 250, description = "unknown"
 }
 
 export function saveBug(description, creator) {
-    AppUtils.saveBug(description, creator);
+	AppUtils.saveBug(description, creator).then((id) => {
+	    console.log(`saved bug with id ${id}`);
+	});
 }
 
 export function deleteBug(id) {

@@ -30,7 +30,9 @@ export function runScenarioReplay(scenarioId, pauseInMillis = 250, description =
 }
 
 export function saveScenario(description, creator) {
-    ReplayUtils.saveScenario(description, creator);
+	ReplayUtils.saveScenario(description, creator).then((id) => {
+	    console.log(`saved scenario with id ${id}`);
+	});
 }
 
 export function displayScenarios() {
