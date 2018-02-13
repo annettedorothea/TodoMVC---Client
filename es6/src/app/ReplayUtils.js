@@ -123,55 +123,60 @@ export default class ReplayUtils {
     }
 
     static saveScenario(description, creator) {
-        const browser = AppUtils.getBrowserInfo();
-        const data = {
-            description,
-            timeline: JSON.stringify(ACEController.timeline),
-            creator,
-            clientVersion: AppUtils.getClientVersion(),
-            device: browser.name + " " + browser.version
-        };
-        return AppUtils.httpPost('api/scenario/create', null, data);
-    }
-
-    static deleteScenario(id) {
-        let queryParams = [
-            {
-                key: "id",
-                value: id
-            }
-        ];
-        return AppUtils.httpDelete('api/scenario/delete', queryParams);
-    }
-
-    static loadScenarios() {
-        return AppUtils.httpGet('api/scenario/all');
+        return AppUtils.getServerInfo().then((serverInfo) => {
+            const browser = AppUtils.getBrowserInfo();
+            const uuid = AppUtils.createUUID();
+            const data = {
+                description,
+                timeline: JSON.stringify(ACEController.timeline),
+                creator,
+                clientVersion: AppUtils.getClientVersion(),
+                device: browser.name + " " + browser.version,
+                uuid,
+                apiKey: AppUtils.getApiKey(),
+                serverVersion: serverInfo.serverVersion
+            };
+            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data);
+        });
     }
 
     static loadScenario(id) {
+        const uuid = AppUtils.createUUID();
         let queryParams = [];
         queryParams.push({
             key: "id",
             value: id
         });
-        return AppUtils.httpGet('api/scenario/single', queryParams);
+        queryParams.push({
+            key: "apiKey",
+            value: AppUtils.getApiKey()
+        });
+        queryParams.push({
+            key: "uuid",
+            value: uuid
+        });
+        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', queryParams);
     }
 
     static saveScenarioResult(normalized, result) {
-        const browser = AppUtils.getBrowserInfo();
-        const data = {
-            description: ReplayUtils.scenarioConfig.description,
-            scenarioId: ReplayUtils.scenarioConfig.scenarioId,
-            timeline: JSON.stringify(normalized),
-            executor: ReplayUtils.scenarioConfig.executor,
-            e2e: ReplayUtils.scenarioConfig.e2e,
-            result,
-            clientVersion: AppUtils.getClientVersion(),
-            device: browser.name + " " + browser.version
-        };
-        return AppUtils.httpPost('api/scenario-result/create', null, data);
+        return AppUtils.getServerInfo().then((serverInfo) => {
+            const browser = AppUtils.getBrowserInfo();
+            const uuid = AppUtils.createUUID();
+            const data = {
+                scenarioId: ReplayUtils.scenarioConfig.scenarioId,
+                timeline: JSON.stringify(normalized),
+                executor: ReplayUtils.scenarioConfig.executor,
+                e2e: ReplayUtils.scenarioConfig.e2e,
+                result,
+                uuid,
+                clientVersion: AppUtils.getClientVersion(),
+                device: browser.name + " " + browser.version,
+                apiKey: AppUtils.getApiKey(),
+                serverVersion: serverInfo.serverVersion
+            };
+            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', null, data);
+        });
     }
-
 
 }
 

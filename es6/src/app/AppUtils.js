@@ -13,6 +13,19 @@ export default class AppUtils {
         return "1.1.0";
     }
 
+    static getApiKey() {
+        return "55d758a6-12c4-457a-b83e-be4c0c2e12ee";
+    }
+
+    static getAceScenariosBaseUrl() {
+        return "http://127.0.0.1:8070/";
+    }
+
+    static getServerInfo() {
+        return AppUtils.httpGet('api/server/info');
+
+    }
+
     static httpGet(url, queryParams, commandParam) {
         return new Promise((resolve, reject) => {
             const headers = new Headers();
