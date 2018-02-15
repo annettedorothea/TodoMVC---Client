@@ -19,7 +19,7 @@ export default class AbstractCreateTodoCommand extends Command {
 		case this.empty:
 			break;
 		default:
-			throw 'unhandled outcome: ' + this.commandData.outcome;
+			throw 'CreateTodoCommand unhandled outcome: ' + this.commandData.outcome;
 		}
 		return Promise.all(promises);
     }

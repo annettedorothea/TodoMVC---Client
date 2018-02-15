@@ -16,7 +16,7 @@ export default class AbstractEditTodoCommand extends Command {
 			promises.push(new EditTodoEvent(this.commandData).publish());
 			break;
 		default:
-			throw 'unhandled outcome: ' + this.commandData.outcome;
+			throw 'EditTodoCommand unhandled outcome: ' + this.commandData.outcome;
 		}
 		return Promise.all(promises);
     }

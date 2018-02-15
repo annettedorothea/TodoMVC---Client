@@ -17,13 +17,12 @@ export default class Command {
         throw "no publishEvents method defined for " + this.commandName;
     }
 
-    executeCommand(postUpdateUI) {
+    executeCommand() {
         return new Promise((resolve, reject) => {
             if (ACEController.execution !== ACEController.REPLAY) {
                 this.execute().then(() => {
                     ACEController.addItemToTimeLine({command: this});
                     this.publishEvents().then(() => {
-                        postUpdateUI();
                         if (ACEController.execution === ACEController.LIVE) {
                             ACEController.applyNextActions();
                         } else {
@@ -31,9 +30,19 @@ export default class Command {
                         }
                         resolve();
                     }, (error) => {
+						if (ACEController.execution === ACEController.LIVE) {
+						    ACEController.applyNextActions();
+						} else {
+						    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+						}
                         reject(error + "\n" + this.commandName);
                     });
                 }, (error) => {
+					if (ACEController.execution === ACEController.LIVE) {
+					    ACEController.applyNextActions();
+					} else {
+					    setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
+					}
                     reject(error + "\n" + this.commandName);
                 });
             } else {
@@ -41,10 +50,10 @@ export default class Command {
                 this.commandData = timelineCommand.commandData;
                 ACEController.addItemToTimeLine({command: this});
                 this.publishEvents().then(() => {
-                    postUpdateUI();
                     setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
                     resolve();
                 }, (error) => {
+					setTimeout(ACEController.applyNextActions, ACEController.pauseInMillis);
                     reject(error + "\n" + this.commandName);
                 });
             }

@@ -45,13 +45,16 @@ export default class Action {
             ACEController.addItemToTimeLine({action: this});
             let command = this.getCommand();
             if (command) {
-                command.executeCommand(this.postUpdateUI).then(() => {
-                        resolve();
-                    },
-                    (error) => {
-                        this.postUpdateUI();
-                        reject(error + "\n" + command.commandName);
-                    });
+				command.executeCommand().then(
+				    () => {
+				        this.postUpdateUI();
+				        resolve();
+				    },
+				    (error) => {
+				        this.postUpdateUI();
+				        reject(error + "\n" + command.commandName);
+				    }
+				);
             } else {
                 this.postUpdateUI();
                 resolve();

@@ -16,7 +16,7 @@ export default class AbstractToggleAllCommand extends Command {
 			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
 			break;
 		default:
-			throw 'unhandled outcome: ' + this.commandData.outcome;
+			throw 'ToggleAllCommand unhandled outcome: ' + this.commandData.outcome;
 		}
 		return Promise.all(promises);
     }

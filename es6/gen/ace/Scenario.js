@@ -1,6 +1,5 @@
 import ReplayUtils from "../../src/app/ReplayUtils";
 import ACEController from "./ACEController";
-import AppUtils from "../../src/app/AppUtils";
 
 export function runScenarioE2E(scenarioId, pauseInMillis = 250, executor = "unknown") {
     ReplayUtils.loadScenario(scenarioId).then((scenario) => {
@@ -31,9 +30,17 @@ export function runScenarioReplay(scenarioId, pauseInMillis = 250, executor = "u
 export function saveScenario(description, creator) {
 	ReplayUtils.saveScenario(description, creator).then((id) => {
 	    console.log(`saved scenario with id ${id}`);
-        ACEController.timeline = [];
-        AppUtils.start();
+		ACEController.timeline = [];
+		AppUtils.start();
 	});
+}
+
+export function displayScenarios() {
+    ReplayUtils.loadScenarios().then((scenarios) => {
+        scenarios.forEach((scenario) => {
+            console.log("scenario", scenario)
+        })
+    });
 }
 
 /*       S.D.G.       */

@@ -28,7 +28,7 @@ export default class AbstractInitCommand extends Command {
 			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
 			break;
 		default:
-			throw 'unhandled outcome: ' + this.commandData.outcome;
+			throw 'InitCommand unhandled outcome: ' + this.commandData.outcome;
 		}
 		return Promise.all(promises);
     }
