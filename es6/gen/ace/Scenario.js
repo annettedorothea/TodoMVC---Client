@@ -1,3 +1,4 @@
+import AppUtils from "../../src/app/AppUtils";
 import ReplayUtils from "../../src/app/ReplayUtils";
 import ACEController from "./ACEController";
 
