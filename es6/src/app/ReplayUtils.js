@@ -45,7 +45,7 @@ export default class ReplayUtils {
 
     static prepareAction(uuid) {
         if (ACEController.execution === ACEController.E2E) {
-            return AppUtils.httpPut('replay/database/prepare?uuid=' + uuid);
+            return AppUtils.httpPut('replay/e2e/prepare?uuid=' + uuid);
         } else {
             return new Promise((resolve) => {
                 resolve();
@@ -53,12 +53,16 @@ export default class ReplayUtils {
         }
     }
 
-    static replay(pauseInMillis) {
-        ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
+    static replay(pauseInMillis, serverTimeline) {
+        AppUtils.httpPut('replay/e2e/start', [], JSON.parse(serverTimeline)).then(() => {
+            ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
+        });
     }
 
-    static e2e(pauseInMillis) {
-        ACEController.startReplay(ACEController.E2E, pauseInMillis)
+    static e2e(pauseInMillis, serverTimeline) {
+        AppUtils.httpPut('replay/e2e/start', [], JSON.parse(serverTimeline)).then(() => {
+            ACEController.startReplay(ACEController.E2E, pauseInMillis)
+        });
     }
 
     static finishReplay() {
@@ -94,6 +98,7 @@ export default class ReplayUtils {
         }
         if (ReplayUtils.scenarioConfig.finishReplay) {
             ReplayUtils.scenarioConfig.finishReplay(normalized, result);
+            AppUtils.httpPut('replay/e2e/stop');
         }
     }
 
@@ -123,20 +128,23 @@ export default class ReplayUtils {
     }
 
     static saveScenario(description, creator) {
-        return AppUtils.getServerInfo().then((serverInfo) => {
-            const browser = AppUtils.getBrowserInfo();
-            const uuid = AppUtils.createUUID();
-            const data = {
-                description,
-                timeline: JSON.stringify(ACEController.timeline),
-                creator,
-                clientVersion: AppUtils.getClientVersion(),
-                device: browser.name + " " + browser.version,
-                uuid,
-                apiKey: AppUtils.getApiKey(),
-                serverVersion: serverInfo.serverVersion
-            };
-            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data);
+        return AppUtils.httpGet('api/e2e/timeline').then((serverTimeline) => {
+            return AppUtils.getServerInfo().then((serverInfo) => {
+                const browser = AppUtils.getBrowserInfo();
+                const uuid = AppUtils.createUUID();
+                const data = {
+                    description,
+                    timeline: JSON.stringify(ACEController.timeline),
+                    serverTimeline: JSON.stringify(serverTimeline),
+                    creator,
+                    clientVersion: AppUtils.getClientVersion(),
+                    device: browser.name + " " + browser.version,
+                    uuid,
+                    apiKey: AppUtils.getApiKey(),
+                    serverVersion: serverInfo.serverVersion
+                };
+                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data);
+            });
         });
     }
 

@@ -11,7 +11,7 @@ export function runScenarioE2E(scenarioId, pauseInMillis = 250, executor = "unkn
 			finishReplay: ReplayUtils.saveScenarioResult
         };
         ACEController.expectedTimeline = JSON.parse(scenario.timeline);
-        ReplayUtils.e2e(pauseInMillis);
+        ReplayUtils.e2e(pauseInMillis, scenario.serverTimeline);
     });
 }
 
