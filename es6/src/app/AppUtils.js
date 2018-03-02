@@ -14,16 +14,11 @@ export default class AppUtils {
     }
 
     static getApiKey() {
-        return "a1cc290c-d45b-48a7-8667-a1e67ee3df51";
+        return "33ee2944-bd4b-45dd-baf2-99a58975b710";
     }
 
     static getAceScenariosBaseUrl() {
         return "http://127.0.0.1:8070/";
-    }
-
-    static getServerInfo() {
-        return AppUtils.httpGet('api/server/info');
-
     }
 
     static httpGet(url, queryParams, commandParam) {
@@ -126,75 +121,6 @@ export default class AppUtils {
 
     static createUUID() {
         return uuid.v4();
-    }
-
-    static saveBug(description, reporter) {
-        const browser = AppUtils.getBrowserInfo();
-        const data = {
-            description: description,
-            reporter: reporter,
-            timeline: JSON.stringify(ACEController.timeline),
-            clientVersion: AppUtils.getClientVersion(),
-            device: browser.name + " " + browser.version
-        };
-        return AppUtils.httpPost('api/bug/create', null, data);
-    }
-
-    static deleteBug(id) {
-        let queryParams = [
-            {
-                key: "id",
-                value: id
-            }
-        ];
-        return AppUtils.httpDelete('api/bug/delete', queryParams);
-    }
-
-    static resolveBug(id) {
-        let queryParams = [
-            {
-                key: "id",
-                value: id
-            }
-        ];
-        return AppUtils.httpDelete('api/bug/resolve', queryParams);
-    }
-
-    static loadBugs() {
-        return AppUtils.httpGet('api/bug/all');
-    }
-
-    static loadBug(id) {
-        let queryParams = [
-            {
-                key: "id",
-                value: id
-            }
-        ];
-        return AppUtils.httpGet('api/bug/single', queryParams);
-    }
-
-    static getBrowserInfo() {
-        let ua = navigator.userAgent, tem,
-            M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-        if (/trident/i.test(M[1])) {
-            tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-            return {name: 'IE ', version: (tem[1] || '')};
-        }
-        if (M[1] === 'Chrome') {
-            tem = ua.match(/\bOPR\/(\d+)/)
-            if (tem != null) {
-                return {name: 'Opera', version: tem[1]};
-            }
-        }
-        M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-        if ((tem = ua.match(/version\/(\d+)/i)) != null) {
-            M.splice(1, 1, tem[1]);
-        }
-        return {
-            name: M[0],
-            version: M[1]
-        };
     }
 
     static displayUnexpectedError(error) {

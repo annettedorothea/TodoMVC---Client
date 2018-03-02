@@ -1,6 +1,6 @@
 import ACEController from "./ACEController";
 import AppUtils from "../../src/app/AppUtils";
-import ReplayUtils from "../../src/app/ReplayUtils";
+import Utils from "./Utils";
 
 export default class Command {
     constructor(commandParam, commandName) {
@@ -61,7 +61,7 @@ export default class Command {
     }
 
     httpGet(url, queryParams) {
-        return ReplayUtils.prepareAction(this.commandParam.uuid).then(() => {
+        return Utils.prepareAction(this.commandParam.uuid).then(() => {
             queryParams = this.addUuidToQueryParams(queryParams);
             return AppUtils.httpGet(url, queryParams, this.commandParam);
         }, (error) => {
@@ -70,7 +70,7 @@ export default class Command {
     }
 
     httpPost(url, queryParams, data) {
-        return ReplayUtils.prepareAction(this.commandParam.uuid).then(() => {
+        return Utils.prepareAction(this.commandParam.uuid).then(() => {
             queryParams = this.addUuidToQueryParams(queryParams);
             data = this.addUuidToData(data);
             return AppUtils.httpPost(url, queryParams, data, this.commandParam);
@@ -80,7 +80,7 @@ export default class Command {
     }
 
     httpPut(url, queryParams, data) {
-        return ReplayUtils.prepareAction(this.commandParam.uuid).then(() => {
+        return Utils.prepareAction(this.commandParam.uuid).then(() => {
             queryParams = this.addUuidToQueryParams(queryParams);
             data = this.addUuidToData(data);
             return AppUtils.httpPut(url, queryParams, data, this.commandParam);
@@ -90,7 +90,7 @@ export default class Command {
     }
 
     httpDelete(url, queryParams, data) {
-        return ReplayUtils.prepareAction(this.commandParam.uuid).then(() => {
+        return Utils.prepareAction(this.commandParam.uuid).then(() => {
             queryParams = this.addUuidToQueryParams(queryParams);
             data = this.addUuidToData(data);
             return AppUtils.httpDelete(url, queryParams, data, this.commandParam);

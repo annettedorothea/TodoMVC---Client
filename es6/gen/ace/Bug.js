@@ -1,52 +1,18 @@
 import ReplayUtils from "../../src/app/ReplayUtils";
-import AppUtils from "../../src/app/AppUtils";
 import ACEController from "./ACEController";
+import Utils from "./Utils";
 
-export function runBugE2E(bugId, pauseInMillis = 250, description = "unknown", executor = "unknown") {
-    AppUtils.loadBug(bugId).then((bug) => {
-        ReplayUtils.scenarioConfig = {
-            executor,
-            bugId,
-            description,
-            e2e: true
-        };
-        ACEController.expectedTimeline = JSON.parse(bug.timeline);
-        ReplayUtils.e2e(pauseInMillis);
-    });
-}
-
-export function runBugReplay(bugId, pauseInMillis = 250, description = "unknown", executor = "unknown") {
-    AppUtils.loadBug(bugId).then((bug) => {
-        ReplayUtils.scenarioConfig = {
-            executor,
-            bugId,
-            description,
-            e2e: false
-        };
-        ACEController.expectedTimeline = JSON.parse(bug.timeline);
-        ReplayUtils.replay(pauseInMillis);
+export function runBug(bugId, pauseInMillis = 0) {
+    Utils.loadBug(bugId).then((scenario) => {
+        ReplayUtils.scenarioConfig = {};
+        ACEController.expectedTimeline = JSON.parse(scenario.timeline);
+        Utils.replayServerless(pauseInMillis);
     });
 }
 
 export function saveBug(description, creator) {
-	AppUtils.saveBug(description, creator).then((id) => {
-	    console.log(`saved bug with id ${id}`);
-	});
-}
-
-export function deleteBug(id) {
-    AppUtils.deleteBug(id);
-}
-
-export function resolveBug(id) {
-    AppUtils.resolveBug(id);
-}
-
-export function displayBugs() {
-    AppUtils.loadBugs().then((bugs) => {
-        bugs.forEach((bug) => {
-            console.log("bug", bug)
-        })
+    Utils.saveBug(description, creator).then((id) => {
+        console.log(`saved bug with id ${id}`);
     });
 }
 

@@ -1,6 +1,5 @@
 import AppUtils from "../../src/app/AppUtils";
-import ReplayUtils from "../../src/app/ReplayUtils";
-import {runScenario} from "./Scenario";
+import Utils from "./Utils";
 
 export default class ACEController {
 
@@ -94,7 +93,7 @@ export default class ACEController {
                 ACEController.actionIsProcessing = false;
                 ACEController.actionQueue = [];
                 ACEController.execution = ACEController.LIVE;
-                ReplayUtils.finishReplay();
+                Utils.finishReplay();
                 AppUtils.start();
             }
         }
@@ -108,20 +107,7 @@ export default class ACEController {
         ACEController.actualTimeline = [];
         ACEController.execution = level;
         ACEController.pauseInMillis = pauseInMillis;
-
-        if (ACEController.execution === ACEController.REPLAY) {
-            ACEController.readTimelineAndCreateReplayActions();
-        } else {
-            ReplayUtils.resetDatabase().then(
-                () => {
-                    ACEController.readTimelineAndCreateReplayActions();
-                },
-                (error) => {
-                    throw error;
-                }
-            );
-        }
-
+        ACEController.readTimelineAndCreateReplayActions();
     }
 
     static readTimelineAndCreateReplayActions() {
