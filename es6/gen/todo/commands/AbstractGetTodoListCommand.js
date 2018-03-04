@@ -16,7 +16,7 @@ export default class AbstractGetTodoListCommand extends Command {
 			promises.push(new RenderListEvent(this.commandData).publish());
 			break;
 		default:
-			throw 'GetTodoListCommand unhandled outcome: ' + this.commandData.outcome;
+			return new Promise((resolve, reject) => {reject('GetTodoListCommand unhandled outcome: ' + this.commandData.outcome)});
 		}
 		return Promise.all(promises);
     }

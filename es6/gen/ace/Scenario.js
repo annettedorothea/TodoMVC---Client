@@ -8,10 +8,26 @@ export function runScenario(scenarioId, executor = "unknown", pauseInMillis = 0)
         ReplayUtils.scenarioConfig = {
             executor,
             scenarioId,
-            finishReplay: Utils.saveScenarioResult
+            saveScenarioResult: true
         };
         ACEController.expectedTimeline = JSON.parse(scenario.timeline);
         Utils.replayE2E(pauseInMillis, scenario.serverTimeline);
+    });
+}
+
+export function runAllScenarios(executor = "unknown", pauseInMillis = 0) {
+    Utils.loadNextScenario(-1).then((scenario) => {
+        if (scenario) {
+            ReplayUtils.scenarioConfig = {
+                executor,
+                scenarioId: scenario.id,
+                saveScenarioResult: true,
+                runAllScenarios: true,
+                pauseInMillis
+            };
+            ACEController.expectedTimeline = JSON.parse(scenario.timeline);
+            Utils.replayE2E(pauseInMillis, scenario.serverTimeline);
+        }
     });
 }
 

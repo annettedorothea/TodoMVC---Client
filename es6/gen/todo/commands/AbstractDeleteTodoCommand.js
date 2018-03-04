@@ -16,7 +16,7 @@ export default class AbstractDeleteTodoCommand extends Command {
 			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
 			break;
 		default:
-			throw 'DeleteTodoCommand unhandled outcome: ' + this.commandData.outcome;
+			return new Promise((resolve, reject) => {reject('DeleteTodoCommand unhandled outcome: ' + this.commandData.outcome)});
 		}
 		return Promise.all(promises);
     }

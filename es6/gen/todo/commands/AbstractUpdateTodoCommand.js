@@ -19,7 +19,7 @@ export default class AbstractUpdateTodoCommand extends Command {
 		case this.empty:
 			break;
 		default:
-			throw 'UpdateTodoCommand unhandled outcome: ' + this.commandData.outcome;
+			return new Promise((resolve, reject) => {reject('UpdateTodoCommand unhandled outcome: ' + this.commandData.outcome)});
 		}
 		return Promise.all(promises);
     }

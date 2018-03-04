@@ -105,6 +105,24 @@ export default class Utils {
         return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', queryParams);
     }
 
+    static loadNextScenario(lastId) {
+        const uuid = AppUtils.createUUID();
+        let queryParams = [];
+        queryParams.push({
+            key: "lastId",
+            value: lastId
+        });
+        queryParams.push({
+            key: "apiKey",
+            value: AppUtils.getApiKey()
+        });
+        queryParams.push({
+            key: "uuid",
+            value: uuid
+        });
+        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', queryParams);
+    }
+
     static getBrowserInfo() {
         let ua = navigator.userAgent, tem,
             M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -185,39 +203,50 @@ export default class Utils {
     }
 
     static finishReplay() {
-        const normalized = Utils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
-        const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
+        if (ReplayUtils.scenarioConfig.saveScenarioResult === true) {
+            const normalized = Utils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
+            const result = JSON.stringify(normalized.expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(normalized.actual, ReplayUtils.itemStringifyReplacer);
 
-        if (normalized.expected && normalized.actual) {
-            const size = normalized.expected.length > normalized.actual.length ? normalized.expected.length : normalized.actual.length;
-            for (let i = 0; i < size; i++) {
-                const expected = normalized.expected[i] ? normalized.expected[i] : null;
-                const actual = normalized.actual[i] ? normalized.actual[i] : null;
-                const result = Utils.compareItems(expected, actual);
-                const item = {
-                    expected,
-                    actual,
-                    result
-                };
-                if (result === true) {
-                    console.log("%cSUCCESS expected " + Utils.name(item.expected) + " actual " + Utils.name(item.actual), "color: green;", item);
-                } else {
-                    console.log("%cFAILURE expected " + Utils.name(item.expected) + " actual " + Utils.name(item.actual), "color: red;", item);
+            if (normalized.expected && normalized.actual) {
+                const size = normalized.expected.length > normalized.actual.length ? normalized.expected.length : normalized.actual.length;
+                for (let i = 0; i < size; i++) {
+                    const expected = normalized.expected[i] ? normalized.expected[i] : null;
+                    const actual = normalized.actual[i] ? normalized.actual[i] : null;
+                    const result = Utils.compareItems(expected, actual);
+                    const item = {
+                        expected,
+                        actual,
+                        result
+                    };
+                    if (result === true) {
+                        console.log("%cSUCCESS expected " + Utils.name(item.expected) + " actual " + Utils.name(item.actual), "color: green;", item);
+                    } else {
+                        console.log("%cFAILURE expected " + Utils.name(item.expected) + " actual " + Utils.name(item.actual), "color: red;", item);
+                    }
                 }
             }
-        }
-        if (result === true) {
-            console.log("%c===============", "color: green;");
-            console.log("%c=== SUCCESS ===", "color: green;");
-            console.log("%c===============", "color: green;");
-        } else {
-            console.log("%c===============", "color: red;");
-            console.log("%c=== FAILURE ===", "color: red;");
-            console.log("%c===============", "color: red;");
-        }
-        if (ReplayUtils.scenarioConfig.finishReplay) {
-            ReplayUtils.scenarioConfig.finishReplay(normalized, result);
-            AppUtils.httpPut('replay/e2e/stop');
+            if (result === true) {
+                console.log("%c===============", "color: green;");
+                console.log("%c=== SUCCESS ===", "color: green;");
+                console.log("%c===============", "color: green;");
+            } else {
+                console.log("%c===============", "color: red;");
+                console.log("%c=== FAILURE ===", "color: red;");
+                console.log("%c===============", "color: red;");
+            }
+            Utils.saveScenarioResult(normalized, result);
+            AppUtils.httpPut('replay/e2e/stop').then(() => {
+                if (ReplayUtils.scenarioConfig.runAllScenarios === true) {
+                    console.log("executed scenario with id " + ReplayUtils.scenarioConfig.scenarioId);
+                    Utils.loadNextScenario(ReplayUtils.scenarioConfig.scenarioId).then((scenario) => {
+                        if (scenario.id) {
+                            ReplayUtils.scenarioConfig.scenarioId = scenario.id;
+                            ACEController.expectedTimeline = JSON.parse(scenario.timeline);
+                            Utils.replayE2E(ReplayUtils.scenarioConfig.pauseInMillis, scenario.serverTimeline);
+                        }
+                    });
+                }
+            });
         }
     }
 
@@ -239,4 +268,6 @@ export default class Utils {
 
 
 }
+
+/*       S.D.G.       */
 
