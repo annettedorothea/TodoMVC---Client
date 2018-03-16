@@ -10,15 +10,15 @@ export default class AppUtils {
     }
 
     static getClientVersion() {
-        return "1.1.0";
+        return "2.0.0";
     }
 
     static getApiKey() {
-        return "33ee2944-bd4b-45dd-baf2-99a58975b710";
+        return "32d1a233-0e60-4b4d-a363-d639ac095f34";
     }
 
     static getAceScenariosBaseUrl() {
-        return "http://127.0.0.1:8070/";
+        return "http://ace.anfelisa.com/";
     }
 
     static httpGet(url, queryParams, commandParam) {
