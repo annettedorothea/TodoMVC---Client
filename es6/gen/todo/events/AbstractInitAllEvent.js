@@ -1,8 +1,8 @@
 import Event from "../../../gen/ace/Event";
 
-export default class AbstractEditTodoEvent extends Event {
+export default class AbstractInitAllEvent extends Event {
     constructor(eventParam) {
-        super(eventParam, 'todo.EditTodoEvent');
+        super(eventParam, 'todo.InitAllEvent');
     }
 }
 

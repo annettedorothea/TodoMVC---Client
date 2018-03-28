@@ -38,7 +38,8 @@ export default class Container extends React.Component {
                         <hr/>
                         <blockquote className="quote speech-bubble">
                             <p>
-                                ACE is an architecture that allows you to write an executable timeline during the execution
+                                ACE is an architecture that allows you to write an executable timeline during the
+                                execution
                                 of your application. ACE stands for Action - Command - Event:
                             </p>
                             <ul>
@@ -51,15 +52,22 @@ export default class Container extends React.Component {
                                 The server was written in Java with Dropwizard; the client uses React.
                             </p>
                             <footer>
-                                <a href="https://github.com/annettedorothea/com.anfelisa.ace.gen" target="ace">ACE Code Generator based on Xtext</a>
+                                <a href="https://github.com/annettedorothea/com.anfelisa.ace.gen" target="ace">ACE Code
+                                    Generator based on Xtext</a>
                             </footer>
                         </blockquote>
                         <footer>
                             <hr/>
                             <em>
-                                Client replay does not send requests to the server but uses the captured data in the command.
-                                The E2E replay first resets a replay database, makes all changes up to the desired scenario and
-                                then executes the scenario end-to-end.
+                                These functions can be executed from JavaScript console:
+                                <ul>
+                                    <li>Todo.saveScenario("&lt;description&gt;", "&lt;your name&gt;")</li>
+                                    <li>Todo.runScenario(&lt;scenarioId&gt;, "&lt;your name&gt;", &lt;pauseInMillis (default is 0)&gt;)</li>
+                                    <li>Todo.runAllScenarios("&lt;your name&gt;", &lt;pauseInMillis (default is 0)&gt;)</li>
+                                    <li>Todo.saveBug("&lt;description&gt;", "&lt;your name&gt;")</li>
+                                    <li>Todo.runBug(&lt;scenarioId&gt;, &lt;pauseInMillis (default is 0)&gt;)</li>
+                                </ul>
+                                You can view all bugs, scenarios and their execution results on <a href="http://ace.anfelisa.com" target="ace-scenarios">http://ace.anfelisa.com</a>.
                             </em>
                         </footer>
                     </aside>
@@ -75,7 +83,7 @@ export default class Container extends React.Component {
                                     className="toggle-all"
                                     type="checkbox"
                                     onChange={this.onChangeCheckbox}
-                                    checked={this.state.todoList ? this.state.todoList.filter((todo) => todo.done === false).length === 0 : false }
+                                    checked={this.state.todoList ? this.state.todoList.filter((todo) => todo.done === false).length === 0 : false}
                                 />
                             </section>
                             <TodoList {...this.state}/>

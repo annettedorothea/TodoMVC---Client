@@ -1,13 +1,15 @@
 import ACEController from "../ace/ACEController";
-import TodoView from "../../src/todo/views/TodoView";
 import FooterView from "../../src/todo/views/FooterView";
+import TodoView from "../../src/todo/views/TodoView";
 
 export default class EventListenerRegistrationTodo {
 
 	static init() {
-		ACEController.registerListener('todo.RenderListEvent', TodoView.list);
-		ACEController.registerListener('todo.EditTodoEvent', TodoView.edit);
-		ACEController.registerListener('todo.InitFilterEvent', FooterView.initFilter);
+		ACEController.registerListener('todo.InitAllEvent', FooterView.initFilter);
+		ACEController.registerListener('todo.InitDoneEvent', FooterView.initFilter);
+		ACEController.registerListener('todo.InitOpenEvent', FooterView.initFilter);
+		ACEController.registerListener('todo.GetTodoListOkEvent', TodoView.list);
+		ACEController.registerListener('todo.EditTodoOkEvent', TodoView.edit);
 	}
 
 }

@@ -1,6 +1,6 @@
-import AbstractRenderListEvent from "../../../gen/todo/events/AbstractRenderListEvent";
+import AbstractInitAllEvent from "../../../gen/todo/events/AbstractInitAllEvent";
 
-export default class RenderListEvent extends AbstractRenderListEvent {
+export default class InitAllEvent extends AbstractInitAllEvent {
     prepareDataForView() {
         this.eventData = JSON.parse(JSON.stringify(this.eventParam));
         if (this.eventData.data === undefined) {

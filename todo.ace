@@ -2,57 +2,40 @@ todo
 
 target ES6
 
-actions {
-	init Init executes Init
-	GetTodoList preUpdateUI ( Common.block ) executes GetTodoList postUpdateUI (Common.unblock)
-	CreateTodo preUpdateUI ( Common.block ) executes CreateTodo postUpdateUI (Common.unblock)
-	EditTodo executes EditTodo
-	UpdateTodo preUpdateUI ( Common.block ) executes UpdateTodo postUpdateUI (Common.unblock)
-	ToggleTodo preUpdateUI ( Common.block ) executes ToggleTodo postUpdateUI (Common.unblock)
-	ToggleAll preUpdateUI ( Common.block ) executes ToggleAll postUpdateUI (Common.unblock)
-	DeleteTodo preUpdateUI ( Common.block ) executes DeleteTodo postUpdateUI (Common.unblock)
-	ClearDone preUpdateUI ( Common.block ) executes ClearDone postUpdateUI (Common.unblock)
-}
-
-commands {
-	Init {
-		on all publishes (InitFilter) triggers (GetTodoList)
-		on done publishes (InitFilter) triggers (GetTodoList)
-		on open publishes (InitFilter) triggers (GetTodoList)
+ACE {
+	init Init {
+		on all (Footer.initFilter) triggers (GetTodoList)
+		on done (Footer.initFilter) triggers (GetTodoList)
+		on open (Footer.initFilter) triggers (GetTodoList)
 	}
-	GetTodoList {
-		on ok publishes (RenderList)
+	GetTodoList preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+		on ok (Todo.list)
 	}
-	CreateTodo {
+	CreateTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 		on empty
 	}
 	EditTodo {
-		on ok publishes (EditTodo)
+		on ok (Todo.edit)
 	}
-	UpdateTodo {
+	UpdateTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 		on empty
 	}
-	ToggleTodo {
+	ToggleTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
-	ToggleAll {
+	ToggleAll preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
-	DeleteTodo {
+	DeleteTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
-	ClearDone {
+	ClearDone preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
+	
 }
-
-events {
-	RenderList listenedToBy ( Todo.list )
-	EditTodo listenedToBy (Todo.edit)
-	InitFilter listenedToBy (Footer.initFilter)
-} 
 
 views {
 	Todo {
@@ -67,4 +50,6 @@ views {
 		unblock
 	}
 }
+
+
 

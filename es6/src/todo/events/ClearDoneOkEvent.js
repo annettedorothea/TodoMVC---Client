@@ -1,6 +1,6 @@
-import AbstractInitFilterEvent from "../../../gen/todo/events/AbstractInitFilterEvent";
+import AbstractClearDoneOkEvent from "../../../gen/todo/events/AbstractClearDoneOkEvent";
 
-export default class InitFilterEvent extends AbstractInitFilterEvent {
+export default class ClearDoneOkEvent extends AbstractClearDoneOkEvent {
     prepareDataForView() {
         this.eventData = JSON.parse(JSON.stringify(this.eventParam));
         if (this.eventData.data === undefined) {

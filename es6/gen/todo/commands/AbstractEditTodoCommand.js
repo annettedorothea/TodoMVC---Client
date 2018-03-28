@@ -1,6 +1,6 @@
 import Command from "../../../gen/ace/Command";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import EditTodoEvent from "../../../src/todo/events/EditTodoEvent";
+import EditTodoOkEvent from "../../../src/todo/events/EditTodoOkEvent";
 
 export default class AbstractEditTodoCommand extends Command {
     constructor(commandParam) {
@@ -13,7 +13,7 @@ export default class AbstractEditTodoCommand extends Command {
 	    	
 		switch (this.commandData.outcome) {
 		case this.ok:
-			promises.push(new EditTodoEvent(this.commandData).publish());
+			promises.push(new EditTodoOkEvent(this.commandData).publish());
 			break;
 		default:
 			return new Promise((resolve, reject) => {reject('EditTodoCommand unhandled outcome: ' + this.commandData.outcome)});

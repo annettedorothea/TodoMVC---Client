@@ -1,6 +1,6 @@
 import Command from "../../../gen/ace/Command";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import RenderListEvent from "../../../src/todo/events/RenderListEvent";
+import GetTodoListOkEvent from "../../../src/todo/events/GetTodoListOkEvent";
 
 export default class AbstractGetTodoListCommand extends Command {
     constructor(commandParam) {
@@ -13,7 +13,7 @@ export default class AbstractGetTodoListCommand extends Command {
 	    	
 		switch (this.commandData.outcome) {
 		case this.ok:
-			promises.push(new RenderListEvent(this.commandData).publish());
+			promises.push(new GetTodoListOkEvent(this.commandData).publish());
 			break;
 		default:
 			return new Promise((resolve, reject) => {reject('GetTodoListCommand unhandled outcome: ' + this.commandData.outcome)});
