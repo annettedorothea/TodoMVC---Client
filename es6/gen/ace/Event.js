@@ -1,19 +1,26 @@
 import ACEController from "./ACEController";
+import AppUtils from "../../src/app/AppUtils";
 
 export default class Event {
     constructor(eventParam, eventName) {
         this.eventName = eventName;
-        this.eventParam = eventParam;
+        this.eventParam = AppUtils.deepCopy(eventParam);
     }
 
     prepareDataForView() {
         throw "no prepareDataForView method defined for " + this.eventName;
+    }
 
+    getNotifiedListeners() {
+        return [];
     }
 
     publish() {
         return new Promise((resolve, reject) => {
             this.prepareDataForView();
+			if (this.eventName !== "TriggerAction") {
+			    this.eventData.notifiedListeners = this.getNotifiedListeners();
+			}
             ACEController.addItemToTimeLine({event: this});
             Promise.all(this.notifyListeners()).then(() => {
                 resolve();

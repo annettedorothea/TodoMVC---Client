@@ -1,6 +1,5 @@
 import Command from "../../../gen/ace/Command";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import ToggleAllOkEvent from "../../../src/todo/events/ToggleAllOkEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractToggleAllCommand extends Command {
@@ -14,7 +13,6 @@ export default class AbstractToggleAllCommand extends Command {
 	    	
 		switch (this.commandData.outcome) {
 		case this.ok:
-			promises.push(new ToggleAllOkEvent(this.commandData).publish());
 			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
 			break;
 		default:

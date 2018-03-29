@@ -2,7 +2,7 @@ import AbstractGetTodoListOkEvent from "../../../gen/todo/events/AbstractGetTodo
 
 export default class GetTodoListOkEvent extends AbstractGetTodoListOkEvent {
     prepareDataForView() {
-        this.eventData = JSON.parse(JSON.stringify(this.eventParam));
+        this.eventData = Object.assign({}, this.eventParam);
         if (this.eventData.data === undefined) {
         	this.eventData.data = {};
         }

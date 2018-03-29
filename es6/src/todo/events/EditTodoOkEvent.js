@@ -2,7 +2,7 @@ import AbstractEditTodoOkEvent from "../../../gen/todo/events/AbstractEditTodoOk
 
 export default class EditTodoOkEvent extends AbstractEditTodoOkEvent {
     prepareDataForView() {
-        this.eventData = JSON.parse(JSON.stringify(this.eventParam));
+        this.eventData = Object.assign({}, this.eventParam);
         if (this.eventData.data === undefined) {
         	this.eventData.data = {};
         }

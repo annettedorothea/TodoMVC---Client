@@ -5,7 +5,7 @@ import Utils from "./Utils";
 export default class Command {
     constructor(commandParam, commandName) {
         this.commandName = commandName;
-        this.commandParam = JSON.parse(JSON.stringify(commandParam));
+        this.commandParam = AppUtils.deepCopy(commandParam);
         this.commandData = {};
     }
 

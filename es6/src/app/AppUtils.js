@@ -136,6 +136,10 @@ export default class AppUtils {
 
     }
 
+    static deepCopy(object) {
+        return JSON.parse(JSON.stringify(object));
+    }
+
 }
 
 /*       S.D.G.       */

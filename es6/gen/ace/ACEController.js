@@ -48,7 +48,7 @@ export default class ACEController {
         let timestamp = new Date();
         item.timestamp = timestamp.getTime();
         if (ACEController.execution === ACEController.LIVE) {
-            ACEController.timeline.push(JSON.parse(JSON.stringify(item)));
+            ACEController.timeline.push(AppUtils.deepCopy(item));
             if (ACEController.timeline.length > ACEController.timelineSize) {
                 let i;
                 for (i = 1; i < ACEController.timeline.length; i++) {
@@ -63,7 +63,7 @@ export default class ACEController {
                 }
             }
         } else {
-            ACEController.actualTimeline.push(JSON.parse(JSON.stringify(item)));
+            ACEController.actualTimeline.push(AppUtils.deepCopy(item));
         }
     }
 

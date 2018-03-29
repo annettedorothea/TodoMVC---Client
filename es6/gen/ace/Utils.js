@@ -212,7 +212,7 @@ export default class Utils {
                 for (let i = 0; i < size; i++) {
                     const expected = normalized.expected[i] ? normalized.expected[i] : null;
                     const actual = normalized.actual[i] ? normalized.actual[i] : null;
-                    const result = Utils.compareItems(expected, actual);
+                    const result = ReplayUtils.compareItems(expected, actual);
                     const item = {
                         expected,
                         actual,
@@ -227,17 +227,16 @@ export default class Utils {
             }
             if (result === true) {
                 console.log("%c===============", "color: green;");
-                console.log("%c=== SUCCESS ===", "color: green;");
+                console.log("%c=== SCENARIO " + ReplayUtils.scenarioConfig.scenarioId + " SUCCESS ===", "color: green;");
                 console.log("%c===============", "color: green;");
             } else {
                 console.log("%c===============", "color: red;");
-                console.log("%c=== FAILURE ===", "color: red;");
+                console.log("%c=== SCENARIO " + ReplayUtils.scenarioConfig.scenarioId + " FAILURE ===", "color: red;");
                 console.log("%c===============", "color: red;");
             }
             Utils.saveScenarioResult(normalized, result);
             AppUtils.httpPut('replay/e2e/stop').then(() => {
                 if (ReplayUtils.scenarioConfig.runAllScenarios === true) {
-                    console.log("executed scenario with id " + ReplayUtils.scenarioConfig.scenarioId);
                     Utils.loadNextScenario(ReplayUtils.scenarioConfig.scenarioId).then((scenario) => {
                         if (scenario.id) {
                             ReplayUtils.scenarioConfig.scenarioId = scenario.id;
@@ -261,11 +260,6 @@ export default class Utils {
             return item.event.eventName;
         }
     }
-
-    static compareItems(expected, actual) {
-        return JSON.stringify(expected, ReplayUtils.itemStringifyReplacer) === JSON.stringify(actual, ReplayUtils.itemStringifyReplacer);
-    }
-
 
 }
 

@@ -2,7 +2,7 @@ import AbstractInitOpenEvent from "../../../gen/todo/events/AbstractInitOpenEven
 
 export default class InitOpenEvent extends AbstractInitOpenEvent {
     prepareDataForView() {
-        this.eventData = JSON.parse(JSON.stringify(this.eventParam));
+        this.eventData = Object.assign({}, this.eventParam);
         if (this.eventData.data === undefined) {
         	this.eventData.data = {};
         }

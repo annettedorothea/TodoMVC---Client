@@ -7,7 +7,7 @@ export default class Action {
         if (actionParam === undefined) {
             actionParam = {};
         }
-        this.actionParam = JSON.parse(JSON.stringify(actionParam));
+        this.actionParam = AppUtils.deepCopy(actionParam);
         this.actionData = {};
         this.isInitAction = isInitAction === true;
         this.postUpdateUI = this.postUpdateUI.bind(this);
