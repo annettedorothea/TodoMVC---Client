@@ -13,12 +13,7 @@ export default class ReplayUtils {
     static compareItems(expected, actual) {
         const expectedJson = stringify(expected, { space: '  ', replacer: ReplayUtils.itemStringifyReplacer});
         const actualJson = stringify(actual, { space: '  ', replacer: ReplayUtils.itemStringifyReplacer});
-        const result = expectedJson === actualJson;
-        if (result === false) {
-            console.log(expectedJson);
-            console.log(actualJson);
-        }
-        return result;
+        return expectedJson === actualJson;
     }
 
 }

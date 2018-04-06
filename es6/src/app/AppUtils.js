@@ -10,11 +10,11 @@ export default class AppUtils {
     }
 
     static getClientVersion() {
-        return "2.0.0";
+        return "2.1.0";
     }
 
     static getApiKey() {
-        return "32d1a233-0e60-4b4d-a363-d639ac095f34";
+        return "f928558f-ff97-421e-8376-8949af291c0d";
     }
 
     static getAceScenariosBaseUrl() {
