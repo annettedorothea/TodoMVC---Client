@@ -4,14 +4,13 @@ import EditTodoAction from "../todo/actions/EditTodoAction";
 import ToggleTodoAction from "../todo/actions/ToggleTodoAction";
 import DeleteTodoAction from "../todo/actions/DeleteTodoAction";
 import * as App from "../app/App";
+import NewTodoChangedAction from "../todo/actions/NewTodoChangedAction";
+import EditedTodoChangedAction from "../todo/actions/EditedTodoChangedAction";
 
 export default class Todo extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            value: ''
-        };
         this.onChange = this.onChange.bind(this);
         this.onKeyPress = this.onKeyPress.bind(this);
         this.onEditClick = this.onEditClick.bind(this);
@@ -32,7 +31,13 @@ export default class Todo extends React.Component {
     }
 
     onChange(event) {
-        this.setState({value: event.target.value});
+        const todoList = Object.assign([], this.props.todoList);
+        new EditedTodoChangedAction(
+            {
+                editedTodo: event.target.value,
+                todoList,
+                id: this.props.id
+            }).apply();
     }
 
     onChangeCheckbox(event) {
@@ -47,19 +52,18 @@ export default class Todo extends React.Component {
             new UpdateTodoAction(
                 {
                     id: this.props.id,
-                    description: this.state.value
+                    description: this.props.editedTodo
                 }).apply();
         }
     }
 
     onEditClick() {
-        const todoList = Object.assign([], App.container.state.todoList);
+        const todoList = Object.assign([], this.props.todoList);
         new EditTodoAction(
             {
                 id: this.props.id,
                 todoList
             }).apply();
-        this.setState({value: this.props.description});
     }
 
     onDeleteClick() {
@@ -72,7 +76,7 @@ export default class Todo extends React.Component {
                 <li className='editing'>
                     <input
                         className="edit"
-                        value={this.state.value}
+                        value={this.props.editedTodo}
                         onKeyPress={this.onKeyPress}
                         onChange={this.onChange}
                         onFocus={this.moveCaretAtEnd}

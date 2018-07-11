@@ -8,6 +8,7 @@ export default class CreateTodoCommand extends AbstractCreateTodoCommand {
                 resolve();
             } else {
                 this.httpPost("api/todos/create", [], this.commandData).then(() => {
+                    this.commandData.newTodo = "";
                     this.commandData.outcome = this.ok;
                     resolve();
                 }, (error) => {

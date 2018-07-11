@@ -9,7 +9,9 @@ export default class EventListenerRegistrationTodo {
 		ACEController.registerListener('todo.InitDoneEvent', FooterView.initFilter);
 		ACEController.registerListener('todo.InitOpenEvent', FooterView.initFilter);
 		ACEController.registerListener('todo.GetTodoListOkEvent', TodoView.setTodoList);
+		ACEController.registerListener('todo.NewTodoChangedOkEvent', TodoView.newTodoChanged);
 		ACEController.registerListener('todo.EditTodoOkEvent', TodoView.setTodoList);
+		ACEController.registerListener('todo.EditedTodoChangedOkEvent', TodoView.setTodoList);
 	}
 
 }

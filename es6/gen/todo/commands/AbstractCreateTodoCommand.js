@@ -1,5 +1,6 @@
 import Command from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
+import NewTodoChangedAction from "../../../src/todo/actions/NewTodoChangedAction";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractCreateTodoCommand extends Command {
@@ -14,6 +15,7 @@ export default class AbstractCreateTodoCommand extends Command {
 	    	
 		switch (this.commandData.outcome) {
 		case this.ok:
+			promises.push(new TriggerAction(new NewTodoChangedAction(this.commandData)).publish());
 			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
 			break;
 		case this.empty:

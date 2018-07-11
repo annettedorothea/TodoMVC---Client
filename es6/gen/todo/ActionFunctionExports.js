@@ -1,7 +1,9 @@
 import InitAction from "../../src/todo/actions/InitAction";
 import GetTodoListAction from "../../src/todo/actions/GetTodoListAction";
+import NewTodoChangedAction from "../../src/todo/actions/NewTodoChangedAction";
 import CreateTodoAction from "../../src/todo/actions/CreateTodoAction";
 import EditTodoAction from "../../src/todo/actions/EditTodoAction";
+import EditedTodoChangedAction from "../../src/todo/actions/EditedTodoChangedAction";
 import UpdateTodoAction from "../../src/todo/actions/UpdateTodoAction";
 import ToggleTodoAction from "../../src/todo/actions/ToggleTodoAction";
 import ToggleAllAction from "../../src/todo/actions/ToggleAllAction";
@@ -16,12 +18,20 @@ export function getTodoList(actionData) {
     new GetTodoListAction(actionData).apply();
 }
 
+export function newTodoChanged(actionData) {
+    new NewTodoChangedAction(actionData).apply();
+}
+
 export function createTodo(actionData) {
     new CreateTodoAction(actionData).apply();
 }
 
 export function editTodo(actionData) {
     new EditTodoAction(actionData).apply();
+}
+
+export function editedTodoChanged(actionData) {
+    new EditedTodoChangedAction(actionData).apply();
 }
 
 export function updateTodo(actionData) {

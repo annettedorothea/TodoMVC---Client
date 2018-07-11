@@ -8,6 +8,12 @@ export default class TodoView {
         });
     };
 
+    static newTodoChanged(eventData) {
+        AppUtils.setAppState({
+            newTodo: eventData.newTodo
+        });
+    };
+
 }
 
 /*                    S.D.G.                    */

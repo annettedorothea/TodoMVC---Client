@@ -11,11 +11,17 @@ ACE {
 	async GetTodoList preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok (Todo.setTodoList)
 	}
+	NewTodoChanged {
+		on ok (Todo.newTodoChanged)
+	}
 	async CreateTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
-		on ok triggers (GetTodoList)
+		on ok triggers (NewTodoChanged GetTodoList)
 		on empty
 	}
 	EditTodo {
+		on ok (Todo.setTodoList)
+	}
+	EditedTodoChanged {
 		on ok (Todo.setTodoList)
 	}
 	async UpdateTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
@@ -40,6 +46,7 @@ ACE {
 views {
 	Todo {
 		setTodoList
+		newTodoChanged
 	}
 	Footer {
 		initFilter

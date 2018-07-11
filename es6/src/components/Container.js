@@ -11,7 +11,8 @@ export default class Container extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            todoList: []
+            todoList: [],
+            newTodo: ""
         };
         this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
     }
