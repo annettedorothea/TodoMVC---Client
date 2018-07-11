@@ -1,8 +1,8 @@
-import Event from "../../../gen/ace/Event";
+import Event from "../../../gen/ace/SynchronousEvent";
 
 export default class AbstractInitDoneEvent extends Event {
-    constructor(eventParam) {
-        super(eventParam, 'todo.InitDoneEvent');
+    constructor(eventData) {
+        super(eventData, 'todo.InitDoneEvent');
     }
 	getNotifiedListeners() {
 	    return [ "todo.views.FooterView.initFilter" ];

@@ -12,7 +12,9 @@ export * from "../../gen/ace/Scenario";
 export * from "../../gen/ace/Bug";
 
 window.onhashchange = () => {
-    new InitAction().apply();
+    new InitAction({
+        hash: window.location.hash.substring(1)
+    }).apply();
 };
 
 export const container = ReactDOM.render(

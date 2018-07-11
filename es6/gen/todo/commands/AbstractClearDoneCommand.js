@@ -1,10 +1,10 @@
-import Command from "../../../gen/ace/Command";
+import Command from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractClearDoneCommand extends Command {
-    constructor(commandParam) {
-        super(commandParam, "todo.ClearDoneCommand");
+    constructor(commandData) {
+        super(commandData, "todo.ClearDoneCommand");
         this.ok = "ok";
     }
 

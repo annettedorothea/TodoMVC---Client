@@ -3,35 +3,35 @@ todo
 target ES6
 
 ACE {
-	init Init {
+	Init {
 		on all (Footer.initFilter) triggers (GetTodoList)
 		on done (Footer.initFilter) triggers (GetTodoList)
 		on open (Footer.initFilter) triggers (GetTodoList)
 	}
-	GetTodoList preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
-		on ok (Todo.list)
+	async GetTodoList preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+		on ok (Todo.setTodoList)
 	}
-	CreateTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	async CreateTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 		on empty
 	}
 	EditTodo {
-		on ok (Todo.edit)
+		on ok (Todo.setTodoList)
 	}
-	UpdateTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	async UpdateTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 		on empty
 	}
-	ToggleTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	async ToggleTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
-	ToggleAll preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	async ToggleAll preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
-	DeleteTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	async DeleteTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
-	ClearDone preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	async ClearDone preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
 	
@@ -39,8 +39,7 @@ ACE {
 
 views {
 	Todo {
-		list
-		edit
+		setTodoList
 	}
 	Footer {
 		initFilter

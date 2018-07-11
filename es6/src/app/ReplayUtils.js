@@ -1,4 +1,5 @@
 import stringify from "json-stable-stringify";
+import * as App from "./App";
 
 export default class ReplayUtils {
 
@@ -11,9 +12,23 @@ export default class ReplayUtils {
     }
 
     static compareItems(expected, actual) {
-        const expectedJson = stringify(expected, { space: '  ', replacer: ReplayUtils.itemStringifyReplacer});
-        const actualJson = stringify(actual, { space: '  ', replacer: ReplayUtils.itemStringifyReplacer});
+        const expectedJson = stringify(expected, {space: '  ', replacer: ReplayUtils.itemStringifyReplacer});
+        const actualJson = stringify(actual, {space: '  ', replacer: ReplayUtils.itemStringifyReplacer});
         return expectedJson === actualJson;
+    }
+
+    static prepareReplay() {
+        window.location.hash = "#";
+        App.container.setState({
+            todoList: []
+        });
+    }
+
+    static tearDownReplay() {
+        window.location.hash = "#";
+        App.container.setState({
+            todoList: []
+        });
     }
 
 }

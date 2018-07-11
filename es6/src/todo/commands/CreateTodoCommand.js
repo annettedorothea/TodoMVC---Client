@@ -3,11 +3,11 @@ import AbstractCreateTodoCommand from "../../../gen/todo/commands/AbstractCreate
 export default class CreateTodoCommand extends AbstractCreateTodoCommand {
     execute() {
         return new Promise((resolve, reject) => {
-            if (!this.commandParam.description) {
+            if (!this.commandData.description) {
                 this.commandData.outcome = this.empty;
                 resolve();
             } else {
-                this.httpPost("api/todos/create", [], this.commandParam).then(() => {
+                this.httpPost("api/todos/create", [], this.commandData).then(() => {
                     this.commandData.outcome = this.ok;
                     resolve();
                 }, (error) => {

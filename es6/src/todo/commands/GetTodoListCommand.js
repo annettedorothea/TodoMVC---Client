@@ -5,7 +5,7 @@ export default class GetTodoListCommand extends AbstractGetTodoListCommand {
         return new Promise((resolve, reject) => {
             this.httpGet("api/todos/all").then((data) => {
                 this.commandData.outcome = this.ok;
-                this.commandData.data = data;
+                this.commandData.todoList = data.todoList;
                 resolve();
             }, (error) => {
                 reject(error);

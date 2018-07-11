@@ -1,11 +1,11 @@
-import Event from "../../../gen/ace/Event";
+import Event from "../../../gen/ace/AsynchronousEvent";
 
 export default class AbstractGetTodoListOkEvent extends Event {
-    constructor(eventParam) {
-        super(eventParam, 'todo.GetTodoListOkEvent');
+    constructor(eventData) {
+        super(eventData, 'todo.GetTodoListOkEvent');
     }
 	getNotifiedListeners() {
-	    return [ "todo.views.TodoView.list" ];
+	    return [ "todo.views.TodoView.setTodoList" ];
 	}
 }
 

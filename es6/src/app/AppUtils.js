@@ -6,11 +6,13 @@ import * as App from "./App";
 export default class AppUtils {
 
     static start() {
-        new InitAction().apply();
+        new InitAction({
+            hash: window.location.hash.substring(1)
+        }).apply();
     }
 
     static getClientVersion() {
-        return "2.1.0";
+        return "3.0.0";
     }
 
     static getApiKey() {
@@ -138,6 +140,14 @@ export default class AppUtils {
 
     static deepCopy(object) {
         return JSON.parse(JSON.stringify(object));
+    }
+
+    static getMaxTimelineSize() {
+        return 2000;
+    }
+
+    static setAppState(state) {
+        App.container.setState(state);
     }
 
 }

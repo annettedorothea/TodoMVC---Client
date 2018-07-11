@@ -24,7 +24,6 @@ export default class Container extends React.Component {
         return (
             <div>
                 <ErrorMessage {...this.state} />
-                <Spinner {...this.state} />
                 <div className="learn-bar body">
                     <aside className="learn">
                         <header>
@@ -62,12 +61,17 @@ export default class Container extends React.Component {
                                 These functions can be executed from JavaScript console:
                                 <ul>
                                     <li>Todo.saveScenario("&lt;description&gt;", "&lt;your name&gt;")</li>
-                                    <li>Todo.runScenario(&lt;scenarioId&gt;, "&lt;your name&gt;", &lt;pauseInMillis (default is 0)&gt;)</li>
-                                    <li>Todo.runAllScenarios("&lt;your name&gt;", &lt;pauseInMillis (default is 0)&gt;)</li>
+                                    <li>Todo.runScenario(&lt;scenarioId&gt;, "&lt;your name&gt;", &lt;pauseInMillis
+                                        (default is 0)&gt;)
+                                    </li>
+                                    <li>Todo.runAllScenarios("&lt;your name&gt;", &lt;pauseInMillis (default is
+                                        0)&gt;)
+                                    </li>
                                     <li>Todo.saveBug("&lt;description&gt;", "&lt;your name&gt;")</li>
                                     <li>Todo.runBug(&lt;scenarioId&gt;, &lt;pauseInMillis (default is 0)&gt;)</li>
                                 </ul>
-                                You can view all bugs, scenarios and their execution results on <a href="http://ace.anfelisa.com" target="ace-scenarios">http://ace.anfelisa.com</a>.
+                                You can view all bugs, scenarios and their execution results on <a
+                                href="http://ace.anfelisa.com" target="ace-scenarios">http://ace.anfelisa.com</a>.
                             </em>
                         </footer>
                     </aside>
@@ -75,7 +79,10 @@ export default class Container extends React.Component {
                     <div>
                         <section className="todoapp">
                             <header className="header">
-                                <h1>todos</h1>
+                                <h1>
+                                    <span>todos</span>
+                                    <Spinner {...this.state} />
+                                </h1>
                                 <NewTodo {...this.state}/>
                             </header>
                             <section className="main">

@@ -1,8 +1,9 @@
-import * as App from "../../app/App";
+import AppUtils from "../../app/AppUtils";
 
 export default class FooterView {
+
     static initFilter(eventData) {
-        App.container.setState({
+        AppUtils.setAppState({
             filter: eventData.filter
         });
     };

@@ -1,21 +1,16 @@
-import Action from "../../ace/Action";
+import Action from "../../ace/SynchronousAction";
 import EditTodoCommand from "../../../src/todo/commands/EditTodoCommand";
 
 export default class AbstractEditTodoAction extends Action {
 
-    constructor(actionParam) {
-        super(actionParam, 'todo.EditTodoAction', false);
+    constructor(actionData) {
+        super(actionData, 'todo.EditTodoAction');
     }
 
 	getCommand() {
 		return new EditTodoCommand(this.actionData);
 	}
 
-	preUpdateUI() {
-	}
-
-	postUpdateUI() {
-	}
 
 }
 

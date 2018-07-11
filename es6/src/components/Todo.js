@@ -3,6 +3,7 @@ import UpdateTodoAction from "../todo/actions/UpdateTodoAction";
 import EditTodoAction from "../todo/actions/EditTodoAction";
 import ToggleTodoAction from "../todo/actions/ToggleTodoAction";
 import DeleteTodoAction from "../todo/actions/DeleteTodoAction";
+import * as App from "../app/App";
 
 export default class Todo extends React.Component {
 
@@ -52,7 +53,12 @@ export default class Todo extends React.Component {
     }
 
     onEditClick() {
-        new EditTodoAction({id: this.props.id}).apply();
+        const todoList = Object.assign([], App.container.state.todoList);
+        new EditTodoAction(
+            {
+                id: this.props.id,
+                todoList
+            }).apply();
         this.setState({value: this.props.description});
     }
 

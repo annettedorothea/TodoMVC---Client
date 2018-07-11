@@ -12,15 +12,15 @@ import ClearDoneAction from "../../src/todo/actions/ClearDoneAction";
 export default class ActionFactoryRegistrationTodo {
 
 	static init() {
-		ACEController.registerFactory('todo.InitAction', (actionParam) => new InitAction(actionParam));
-		ACEController.registerFactory('todo.GetTodoListAction', (actionParam) => new GetTodoListAction(actionParam));
-		ACEController.registerFactory('todo.CreateTodoAction', (actionParam) => new CreateTodoAction(actionParam));
-		ACEController.registerFactory('todo.EditTodoAction', (actionParam) => new EditTodoAction(actionParam));
-		ACEController.registerFactory('todo.UpdateTodoAction', (actionParam) => new UpdateTodoAction(actionParam));
-		ACEController.registerFactory('todo.ToggleTodoAction', (actionParam) => new ToggleTodoAction(actionParam));
-		ACEController.registerFactory('todo.ToggleAllAction', (actionParam) => new ToggleAllAction(actionParam));
-		ACEController.registerFactory('todo.DeleteTodoAction', (actionParam) => new DeleteTodoAction(actionParam));
-		ACEController.registerFactory('todo.ClearDoneAction', (actionParam) => new ClearDoneAction(actionParam));
+		ACEController.registerFactory('todo.InitAction', (actionData) => new InitAction(actionData));
+		ACEController.registerFactory('todo.GetTodoListAction', (actionData) => new GetTodoListAction(actionData));
+		ACEController.registerFactory('todo.CreateTodoAction', (actionData) => new CreateTodoAction(actionData));
+		ACEController.registerFactory('todo.EditTodoAction', (actionData) => new EditTodoAction(actionData));
+		ACEController.registerFactory('todo.UpdateTodoAction', (actionData) => new UpdateTodoAction(actionData));
+		ACEController.registerFactory('todo.ToggleTodoAction', (actionData) => new ToggleTodoAction(actionData));
+		ACEController.registerFactory('todo.ToggleAllAction', (actionData) => new ToggleAllAction(actionData));
+		ACEController.registerFactory('todo.DeleteTodoAction', (actionData) => new DeleteTodoAction(actionData));
+		ACEController.registerFactory('todo.ClearDoneAction', (actionData) => new ClearDoneAction(actionData));
 	}
 
 }

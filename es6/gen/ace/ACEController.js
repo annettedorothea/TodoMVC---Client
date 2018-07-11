@@ -16,7 +16,6 @@ export default class ACEController {
         ACEController.execution = ACEController.LIVE;
         ACEController.actualTimeline = [];
         ACEController.expectedTimeline = [];
-        ACEController.timelineSize = 200;
     }
 
     static registerListener(eventName, listener) {
@@ -48,20 +47,11 @@ export default class ACEController {
         let timestamp = new Date();
         item.timestamp = timestamp.getTime();
         if (ACEController.execution === ACEController.LIVE) {
-            ACEController.timeline.push(AppUtils.deepCopy(item));
-            if (ACEController.timeline.length > ACEController.timelineSize) {
-                let i;
-                for (i = 1; i < ACEController.timeline.length; i++) {
-                    if (ACEController.timeline[i].action && ACEController.timeline[i].action.isInitAction) {
-                        break;
-                    }
-                }
-                if (i < ACEController.timeline.length) {
-                    for (let j = 0; j < i; j++) {
-                        ACEController.timeline.shift();
-                    }
-                }
-            }
+            if (ACEController.timeline.length < AppUtils.getMaxTimelineSize()) {
+				ACEController.timeline.push(AppUtils.deepCopy(item));
+			} else {
+				console.debug(`timeline size ${AppUtils.getMaxTimelineSize()} exceeded - item was not added`, item);
+			}
         } else {
             ACEController.actualTimeline.push(AppUtils.deepCopy(item));
         }
@@ -80,12 +70,22 @@ export default class ACEController {
     static applyNextActions() {
         let action = ACEController.actionQueue.shift();
         if (action) {
-            action.applyAction().then(() => {
-            }, (error) => {
-                ACEController.actionIsProcessing = false;
-                console.error(error + "\n" + action.actionName);
-                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
-            });
+        	if (action.asynchronous) {
+	            action.applyAction().then(() => {
+	            }, (error) => {
+	                ACEController.actionIsProcessing = false;
+	                console.error(error + "\n" + action.actionName);
+	                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
+	            });
+	    	} else {
+	    		try {
+	    			action.applyAction();
+	    		} catch(error) {
+	                ACEController.actionIsProcessing = false;
+	                console.error(error + "\n" + action.actionName);
+	                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
+				}
+	    	}
         } else if (action === undefined) {
             ACEController.actionIsProcessing = false;
             if (ACEController.execution !== ACEController.LIVE) {
@@ -122,8 +122,8 @@ export default class ACEController {
         for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
             let item = ACEController.expectedTimeline[i];
             if (item.action) {
-                const actionParam = item.action.actionParam;
-                let action = ACEController.factories[item.action.actionName](actionParam);
+                const actionData = item.action.actionData;
+                let action = ACEController.factories[item.action.actionName](actionData);
                 action.actionData.uuid = item.action.actionData.uuid;
                 actions.push(action);
             }
@@ -137,7 +137,7 @@ export default class ACEController {
     static getCommandByUuid(uuid) {
         for (let i = 0; i < ACEController.expectedTimeline.length; i++) {
             let item = ACEController.expectedTimeline[i];
-            if (item.command && item.command.commandParam.uuid === uuid) {
+            if (item.command && item.command.commandData.uuid === uuid) {
                 return item.command;
             }
         }

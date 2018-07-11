@@ -1,8 +1,9 @@
 import AbstractInitOpenEvent from "../../../gen/todo/events/AbstractInitOpenEvent";
+import AppUtils from "../../app/AppUtils";
 
 export default class InitOpenEvent extends AbstractInitOpenEvent {
     prepareDataForView() {
-        this.eventData = Object.assign({}, this.eventParam);
+        this.eventData = AppUtils.deepCopy(this.eventData);
         if (this.eventData.data === undefined) {
         	this.eventData.data = {};
         }

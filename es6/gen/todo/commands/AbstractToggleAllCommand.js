@@ -1,10 +1,10 @@
-import Command from "../../../gen/ace/Command";
+import Command from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractToggleAllCommand extends Command {
-    constructor(commandParam) {
-        super(commandParam, "todo.ToggleAllCommand");
+    constructor(commandData) {
+        super(commandData, "todo.ToggleAllCommand");
         this.ok = "ok";
     }
 

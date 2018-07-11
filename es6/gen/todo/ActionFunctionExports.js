@@ -8,40 +8,40 @@ import ToggleAllAction from "../../src/todo/actions/ToggleAllAction";
 import DeleteTodoAction from "../../src/todo/actions/DeleteTodoAction";
 import ClearDoneAction from "../../src/todo/actions/ClearDoneAction";
 
-export function init(actionParam) {
-    new InitAction(actionParam).apply();
+export function init(actionData) {
+    new InitAction(actionData).apply();
 }
 
-export function getTodoList(actionParam) {
-    new GetTodoListAction(actionParam).apply();
+export function getTodoList(actionData) {
+    new GetTodoListAction(actionData).apply();
 }
 
-export function createTodo(actionParam) {
-    new CreateTodoAction(actionParam).apply();
+export function createTodo(actionData) {
+    new CreateTodoAction(actionData).apply();
 }
 
-export function editTodo(actionParam) {
-    new EditTodoAction(actionParam).apply();
+export function editTodo(actionData) {
+    new EditTodoAction(actionData).apply();
 }
 
-export function updateTodo(actionParam) {
-    new UpdateTodoAction(actionParam).apply();
+export function updateTodo(actionData) {
+    new UpdateTodoAction(actionData).apply();
 }
 
-export function toggleTodo(actionParam) {
-    new ToggleTodoAction(actionParam).apply();
+export function toggleTodo(actionData) {
+    new ToggleTodoAction(actionData).apply();
 }
 
-export function toggleAll(actionParam) {
-    new ToggleAllAction(actionParam).apply();
+export function toggleAll(actionData) {
+    new ToggleAllAction(actionData).apply();
 }
 
-export function deleteTodo(actionParam) {
-    new DeleteTodoAction(actionParam).apply();
+export function deleteTodo(actionData) {
+    new DeleteTodoAction(actionData).apply();
 }
 
-export function clearDone(actionParam) {
-    new ClearDoneAction(actionParam).apply();
+export function clearDone(actionData) {
+    new ClearDoneAction(actionData).apply();
 }
 
 

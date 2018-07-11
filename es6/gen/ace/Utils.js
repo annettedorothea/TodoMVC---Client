@@ -157,10 +157,12 @@ export default class Utils {
     }
 
     static replayServerless(pauseInMillis) {
+        ReplayUtils.prepareReplay();
         ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
     }
 
     static replayE2E(pauseInMillis, serverTimeline) {
+        ReplayUtils.prepareReplay();
         AppUtils.httpPut('replay/e2e/start', [], JSON.parse(serverTimeline)).then(() => {
             ACEController.startReplay(ACEController.E2E, pauseInMillis)
         });
@@ -203,6 +205,7 @@ export default class Utils {
     }
 
     static finishReplay() {
+    	ReplayUtils.tearDownReplay();
         if (ReplayUtils.scenarioConfig.saveScenarioResult === true) {
             const normalized = Utils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
             const result = ReplayUtils.compareItems(normalized.expected, normalized.actual);
