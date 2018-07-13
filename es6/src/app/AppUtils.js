@@ -20,6 +20,7 @@ export default class AppUtils {
     }
 
     static getAceScenariosBaseUrl() {
+        //return "http://127.0.0.1:8070/";
         return "http://ace.anfelisa.com/";
     }
 
