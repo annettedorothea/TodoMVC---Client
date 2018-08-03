@@ -1,6 +1,6 @@
 import Command from "../../../gen/ace/SynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import EditTodoOkEvent from "../../../src/todo/events/EditTodoOkEvent";
+import EditTodoOkEvent from "../../../gen/todo/events/EditTodoOkEvent";
 
 export default class AbstractEditTodoCommand extends Command {
     constructor(commandData) {

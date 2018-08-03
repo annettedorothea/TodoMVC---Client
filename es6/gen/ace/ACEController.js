@@ -70,22 +70,24 @@ export default class ACEController {
     static applyNextActions() {
         let action = ACEController.actionQueue.shift();
         if (action) {
-        	if (action.asynchronous) {
-	            action.applyAction().then(() => {
-	            }, (error) => {
-	                ACEController.actionIsProcessing = false;
-	                console.error(error + "\n" + action.actionName);
-	                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
-	            });
-	    	} else {
-	    		try {
-	    			action.applyAction();
-	    		} catch(error) {
-	                ACEController.actionIsProcessing = false;
-	                console.error(error + "\n" + action.actionName);
-	                AppUtils.displayUnexpectedError(error + "\n" + action.actionName);
+			const pauseInMillis = ACEController.execution === ACEController.LIVE ? 0 : ACEController.pauseInMillis;
+			if (action.asynchronous) {
+			    action.applyAction().then(() => {
+			        setTimeout(ACEController.applyNextActions, pauseInMillis);
+			    }, (error) => {
+			        ACEController.actionIsProcessing = false;
+			        AppUtils.displayUnexpectedError(error);
+			    });
+			} else {
+				try {
+					action.applyAction();
+			        setTimeout(ACEController.applyNextActions, pauseInMillis);
+				} catch(error) {
+			        ACEController.actionIsProcessing = false;
+			        AppUtils.displayUnexpectedError(error);
+			        setTimeout(ACEController.applyNextActions, pauseInMillis);
 				}
-	    	}
+			}
         } else if (action === undefined) {
             ACEController.actionIsProcessing = false;
             if (ACEController.execution !== ACEController.LIVE) {

@@ -1,8 +1,8 @@
 import Command from "../../../gen/ace/SynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import InitAllEvent from "../../../src/todo/events/InitAllEvent";
-import InitDoneEvent from "../../../src/todo/events/InitDoneEvent";
-import InitOpenEvent from "../../../src/todo/events/InitOpenEvent";
+import InitAllEvent from "../../../gen/todo/events/InitAllEvent";
+import InitDoneEvent from "../../../gen/todo/events/InitDoneEvent";
+import InitOpenEvent from "../../../gen/todo/events/InitOpenEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractInitCommand extends Command {

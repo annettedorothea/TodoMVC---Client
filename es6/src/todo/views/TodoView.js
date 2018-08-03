@@ -1,15 +1,16 @@
 import AppUtils from "../../app/AppUtils";
+import * as App from "../../app/App";
 
 export default class TodoView {
 
     static setTodoList(eventData) {
-        AppUtils.setAppState({
+        App.deepMergeState({
             todoList: eventData.todoList
         });
     };
 
     static newTodoChanged(eventData) {
-        AppUtils.setAppState({
+        App.deepMergeState({
             newTodo: eventData.newTodo
         });
     };

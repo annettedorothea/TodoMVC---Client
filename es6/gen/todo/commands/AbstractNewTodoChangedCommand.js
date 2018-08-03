@@ -1,6 +1,6 @@
 import Command from "../../../gen/ace/SynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import NewTodoChangedOkEvent from "../../../src/todo/events/NewTodoChangedOkEvent";
+import NewTodoChangedOkEvent from "../../../gen/todo/events/NewTodoChangedOkEvent";
 
 export default class AbstractNewTodoChangedCommand extends Command {
     constructor(commandData) {

@@ -14,6 +14,7 @@ export default class AsynchronousAction extends Action {
             this.preUpdateUI();
             if (ACEController.execution === ACEController.LIVE) {
                 this.actionData.uuid = AppUtils.createUUID();
+                this.extendActionData();
             }
             this.initActionData();
             ACEController.addItemToTimeLine({action: this});
@@ -26,7 +27,7 @@ export default class AsynchronousAction extends Action {
                     },
                     (error) => {
                         this.postUpdateUI();
-                        reject(error + "\n" + command.commandName);
+                        reject(error);
                     }
                 );
             } else {

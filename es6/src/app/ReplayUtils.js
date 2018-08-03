@@ -18,17 +18,10 @@ export default class ReplayUtils {
     }
 
     static prepareReplay() {
-        window.location.hash = "#";
-        App.container.setState({
-            todoList: []
-        });
     }
 
     static tearDownReplay() {
         window.location.hash = "#";
-        App.container.setState({
-            todoList: []
-        });
     }
 
 }

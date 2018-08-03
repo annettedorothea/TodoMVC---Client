@@ -5,15 +5,13 @@ import Footer from "./Footer";
 import Spinner from "./Spinner";
 import ToggleAllAction from "../todo/actions/ToggleAllAction";
 import ErrorMessage from "./ErrorMessage";
+import * as App from "../app/App";
 
 export default class Container extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            todoList: [],
-            newTodo: ""
-        };
+        this.state = App.appState;
         this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
     }
 

@@ -1,6 +1,6 @@
 import Command from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import GetTodoListOkEvent from "../../../src/todo/events/GetTodoListOkEvent";
+import GetTodoListOkEvent from "../../../gen/todo/events/GetTodoListOkEvent";
 
 export default class AbstractGetTodoListCommand extends Command {
     constructor(commandData) {

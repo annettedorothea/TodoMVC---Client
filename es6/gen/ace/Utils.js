@@ -22,7 +22,7 @@ export default class Utils {
                 apiKey: AppUtils.getApiKey(),
                 serverVersion: serverInfo.serverVersion
             };
-            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', [], data);
+            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', [], data, false);
         });
     }
 
@@ -41,7 +41,7 @@ export default class Utils {
             key: "uuid",
             value: uuid
         });
-        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', queryParams);
+        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', queryParams, {}, false);
     }
 
     static saveScenario(description, creator) {
@@ -60,7 +60,7 @@ export default class Utils {
                     apiKey: AppUtils.getApiKey(),
                     serverVersion: serverInfo.serverVersion
                 };
-                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data);
+                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data, false);
             });
         });
     }
@@ -82,7 +82,7 @@ export default class Utils {
                     serverVersion: serverInfo.serverVersion,
                     serverTimeline: JSON.stringify(serverTimeline)
                 };
-                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', null, data);
+                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', null, data, false);
             });
         });
     }
@@ -102,7 +102,7 @@ export default class Utils {
             key: "uuid",
             value: uuid
         });
-        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', queryParams);
+        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', queryParams, {}, false);
     }
 
     static loadNextScenario(lastId) {
@@ -120,7 +120,7 @@ export default class Utils {
             key: "uuid",
             value: uuid
         });
-        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', queryParams);
+        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', queryParams, {}, false);
     }
 
     static getBrowserInfo() {

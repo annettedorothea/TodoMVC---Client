@@ -13,6 +13,9 @@ export default class Action {
     initActionData() {
     }
 
+    extendActionData() {
+    }
+
     getCommand() {
         throw "no command defined for " + this.actionName;
     }

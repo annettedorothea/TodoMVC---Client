@@ -1,10 +1,15 @@
 import AppUtils from "../../app/AppUtils";
+import * as App from "../../app/App";
 
 export default class FooterView {
 
     static initFilter(eventData) {
-        AppUtils.setAppState({
-            filter: eventData.filter
+        App.mergeState({
+            filter: eventData.filter,
+            todoList: [],
+            newTodo: "",
+            loading: undefined
+
         });
     };
 

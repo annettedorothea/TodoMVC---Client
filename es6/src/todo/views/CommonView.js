@@ -3,13 +3,13 @@ import AppUtils from "../../app/AppUtils";
 
 export default class CommonView {
     static block() {
-        AppUtils.setAppState({
+        App.deepMergeState({
             loading: true
         });
     };
 
     static unblock() {
-        AppUtils.setAppState({
+        App.deepMergeState({
             loading: false
         });
     };

@@ -16,7 +16,7 @@ export default class AppUtils {
     }
 
     static getApiKey() {
-        return "f928558f-ff97-421e-8376-8949af291c0d";
+        return "695487f7-f97d-460d-b2b4-a42f050254e9";
     }
 
     static getAceScenariosBaseUrl() {
@@ -147,8 +147,38 @@ export default class AppUtils {
         return 2000;
     }
 
-    static setAppState(state) {
-        App.container.setState(state);
+    static getAppState() {
+        const appState = AppUtils.deepCopy(App.appState);
+        delete appState.texts;
+        return appState;
+    }
+
+    static deepMerge(newState, appState) {
+        for (let property in newState) {
+            if (newState.hasOwnProperty(property)) {
+                if (appState[property] === undefined) {
+                    appState[property] = newState[property];
+                } else if (newState[property] === undefined) {
+                    appState[property] = undefined;
+                } else if (Array.isArray(newState[property])) {
+                    appState[property] = newState[property];
+                } else if (typeof newState[property] === 'object') {
+                    AppUtils.deepMerge(newState[property], appState[property]);
+                } else {
+                    appState[property] = newState[property];
+                }
+            }
+        }
+        return appState;
+    }
+
+    static merge(newState, appState) {
+        for (let property in newState) {
+            if (newState.hasOwnProperty(property)) {
+                appState[property] = newState[property];
+            }
+        }
+        return appState;
     }
 
 }

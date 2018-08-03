@@ -7,14 +7,7 @@ export default class TriggerAction extends Event {
         this.eventData = action;
     }
 
-    prepareDataForView() {
-    }
-    
 	publish() {
-	    this.prepareDataForView();
-	    if (this.eventName !== "TriggerAction") {
-	        this.eventData.notifiedListeners = this.getNotifiedListeners();
-	    }
 	    ACEController.addItemToTimeLine({event: this});
 	    this.notifyListeners();
 	}
