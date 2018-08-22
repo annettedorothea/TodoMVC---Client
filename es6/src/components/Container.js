@@ -6,6 +6,7 @@ import Spinner from "./Spinner";
 import ToggleAllAction from "../todo/actions/ToggleAllAction";
 import ErrorMessage from "./ErrorMessage";
 import * as App from "../app/App";
+import AppUtils from "../app/AppUtils";
 
 export default class Container extends React.Component {
 
@@ -70,7 +71,7 @@ export default class Container extends React.Component {
                                     <li>Todo.runBug(&lt;scenarioId&gt;, &lt;pauseInMillis (default is 0)&gt;)</li>
                                 </ul>
                                 You can view all bugs, scenarios and their execution results on <a
-                                href="http://ace.anfelisa.com" target="ace-scenarios">http://ace.anfelisa.com</a>.
+                                href={`${AppUtils.getAceScenariosBaseUrl()}/#/${AppUtils.getAceScenariosApiKey()}/scenarios`} target="ace-scenarios">ace.anfelisa.com</a>.
                             </em>
                         </footer>
                     </aside>

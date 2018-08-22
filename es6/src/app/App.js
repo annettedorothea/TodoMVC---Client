@@ -27,8 +27,6 @@ export function deepMergeState(newAppState) {
 }
 
 export function mergeState(newAppState) {
-    console.log("newAppState", newAppState);
-    console.log("appState", appState);
     appState = AppUtils.merge(newAppState, appState);
     container.setState(appState);
 }

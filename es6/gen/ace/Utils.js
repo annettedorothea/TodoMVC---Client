@@ -19,7 +19,7 @@ export default class Utils {
                 clientVersion: AppUtils.getClientVersion(),
                 device: browser.name + " " + browser.version,
                 uuid,
-                apiKey: AppUtils.getApiKey(),
+                apiKey: AppUtils.getAceScenariosApiKey(),
                 serverVersion: serverInfo.serverVersion
             };
             return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', [], data, false);
@@ -35,7 +35,7 @@ export default class Utils {
         });
         queryParams.push({
             key: "apiKey",
-            value: AppUtils.getApiKey()
+            value: AppUtils.getAceScenariosApiKey()
         });
         queryParams.push({
             key: "uuid",
@@ -57,7 +57,7 @@ export default class Utils {
                     clientVersion: AppUtils.getClientVersion(),
                     device: browser.name + " " + browser.version,
                     uuid,
-                    apiKey: AppUtils.getApiKey(),
+                    apiKey: AppUtils.getAceScenariosApiKey(),
                     serverVersion: serverInfo.serverVersion
                 };
                 return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data, false);
@@ -78,7 +78,7 @@ export default class Utils {
                     uuid,
                     clientVersion: AppUtils.getClientVersion(),
                     device: browser.name + " " + browser.version,
-                    apiKey: AppUtils.getApiKey(),
+                    apiKey: AppUtils.getAceScenariosApiKey(),
                     serverVersion: serverInfo.serverVersion,
                     serverTimeline: JSON.stringify(serverTimeline)
                 };
@@ -96,7 +96,7 @@ export default class Utils {
         });
         queryParams.push({
             key: "apiKey",
-            value: AppUtils.getApiKey()
+            value: AppUtils.getAceScenariosApiKey()
         });
         queryParams.push({
             key: "uuid",
@@ -114,7 +114,7 @@ export default class Utils {
         });
         queryParams.push({
             key: "apiKey",
-            value: AppUtils.getApiKey()
+            value: AppUtils.getAceScenariosApiKey()
         });
         queryParams.push({
             key: "uuid",

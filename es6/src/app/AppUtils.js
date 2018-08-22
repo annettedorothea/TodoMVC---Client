@@ -6,22 +6,53 @@ import * as App from "./App";
 export default class AppUtils {
 
     static start() {
-        new InitAction({
-            hash: window.location.hash.substring(1)
-        }).apply();
+        AppUtils.loadSettings().then((settings) => {
+            AppUtils.settings = settings;
+            new InitAction({
+                hash: window.location.hash.substring(1)
+            }).apply();
+        });
+    }
+
+    static loadSettings() {
+        return new Promise((resolve, reject) => {
+            const headers = new Headers();
+            headers.append("Content-Type", "application/json");
+            headers.append("Accept", "application/json");
+
+            const options = {
+                method: 'GET',
+                headers: headers,
+                mode: 'cors',
+                cache: 'no-cache'
+            };
+
+            const request = new Request("settings.json", options);
+
+            fetch(request).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                resolve(data);
+            }).catch(function (error) {
+                reject(error);
+            });
+        });
     }
 
     static getClientVersion() {
-        return "3.0.0";
+        return AppUtils.settings ? AppUtils.settings.clientVersion : "";
     }
 
-    static getApiKey() {
-        return "695487f7-f97d-460d-b2b4-a42f050254e9";
+    static isDevelopment() {
+        return AppUtils.settings ? AppUtils.settings.development : false;
+    }
+
+    static getAceScenariosApiKey() {
+        return AppUtils.settings ? AppUtils.settings.aceScenariosApiKey : "";
     }
 
     static getAceScenariosBaseUrl() {
-        //return "http://127.0.0.1:8070/";
-        return "http://ace.anfelisa.com/";
+        return AppUtils.settings ? AppUtils.settings.aceScenariosBaseUrl : "";
     }
 
     static httpGet(url, queryParams, commandParam) {
@@ -160,6 +191,8 @@ export default class AppUtils {
                     appState[property] = newState[property];
                 } else if (newState[property] === undefined) {
                     appState[property] = undefined;
+                } else if (newState[property] === null) {
+                    appState[property] = null;
                 } else if (Array.isArray(newState[property])) {
                     appState[property] = newState[property];
                 } else if (typeof newState[property] === 'object') {
