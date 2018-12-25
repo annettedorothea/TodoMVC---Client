@@ -6,18 +6,18 @@ export default class AbstractToggleTodoAction extends Action {
 
     constructor(actionData) {
         super(actionData, 'todo.ToggleTodoAction');
-		this.postUpdateUI = this.postUpdateUI.bind(this);
+		this.postCall = this.postCall.bind(this);
     }
 
 	getCommand() {
 		return new ToggleTodoCommand(this.actionData);
 	}
 
-		preUpdateUI() {
+		preCall() {
 			CommonView.block(this.actionData);
 		}
 	
-		postUpdateUI() {
+		postCall() {
 			CommonView.unblock(this.actionData);
 		}
 

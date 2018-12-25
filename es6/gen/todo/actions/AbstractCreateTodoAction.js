@@ -6,18 +6,18 @@ export default class AbstractCreateTodoAction extends Action {
 
     constructor(actionData) {
         super(actionData, 'todo.CreateTodoAction');
-		this.postUpdateUI = this.postUpdateUI.bind(this);
+		this.postCall = this.postCall.bind(this);
     }
 
 	getCommand() {
 		return new CreateTodoCommand(this.actionData);
 	}
 
-		preUpdateUI() {
+		preCall() {
 			CommonView.block(this.actionData);
 		}
 	
-		postUpdateUI() {
+		postCall() {
 			CommonView.unblock(this.actionData);
 		}
 

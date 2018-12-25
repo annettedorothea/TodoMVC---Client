@@ -3,6 +3,7 @@
 	<name>com.anfelisa.react</name>
 	<comment></comment>
 	<projects>
+		<project>todo-mvc.server</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

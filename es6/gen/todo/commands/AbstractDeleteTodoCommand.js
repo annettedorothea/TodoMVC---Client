@@ -20,6 +20,23 @@ export default class AbstractDeleteTodoCommand extends Command {
 		}
 		return Promise.all(promises);
     }
+    
+	execute() {
+	    return new Promise((resolve, reject) => {
+	    	let queryParams = [];
+	    	queryParams.push({
+	    		key: "id",
+	    		value: this.commandData.id
+	    	});
+			this.httpDelete("/api/todos/delete", false, queryParams).then((data) => {
+				this.handleResponse(data);
+			    resolve();
+			}, (error) => {
+			    reject(error);
+			});
+	    });
+	}
+
 }
 
 /*       S.D.G.       */

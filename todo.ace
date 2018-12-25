@@ -1,6 +1,7 @@
+ES6 
+
 todo
 
-target ES6
 
 ACE {
 	Init {
@@ -8,13 +9,19 @@ ACE {
 		on done (Footer.initFilter) triggers (GetTodoList)
 		on open (Footer.initFilter) triggers (GetTodoList)
 	}
-	async GetTodoList preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	GetTodoList 
+			preCall ( Common.block ) 
+			call ( com.anfelisa.todo.GetAllTodos ) 
+			postCall (Common.unblock) {
 		on ok (Todo.setTodoList)
 	}
 	NewTodoChanged {
 		on ok (Todo.newTodoChanged)
 	}
-	async CreateTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	CreateTodo 
+			preCall ( Common.block ) 
+			call (com.anfelisa.todo.CreateTodo)
+			postCall (Common.unblock)  {
 		on ok triggers (NewTodoChanged GetTodoList)
 		on empty
 	}
@@ -24,20 +31,35 @@ ACE {
 	EditedTodoChanged {
 		on ok (Todo.setTodoList)
 	}
-	async UpdateTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	UpdateTodo 
+			preCall ( Common.block ) 
+			call (com.anfelisa.todo.UpdateTodo)
+			postCall (Common.unblock) {
 		on ok triggers (GetTodoList)
 		on empty
 	}
-	async ToggleTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	ToggleTodo 
+			preCall ( Common.block ) 
+			call (com.anfelisa.todo.ToggleTodo)
+			postCall (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
-	async ToggleAll preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	ToggleAll 
+			preCall ( Common.block ) 
+			call (com.anfelisa.todo.ToggleAll) 
+			postCall (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
-	async DeleteTodo preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	DeleteTodo 
+			preCall ( Common.block ) 
+			call (com.anfelisa.todo.DeleteTodo) 
+			postCall (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
-	async ClearDone preUpdateUI ( Common.block ) postUpdateUI (Common.unblock) {
+	ClearDone 
+			preCall ( Common.block ) 
+			call (com.anfelisa.todo.ClearDone) 
+			postCall (Common.unblock) {
 		on ok triggers (GetTodoList)
 	}
 	

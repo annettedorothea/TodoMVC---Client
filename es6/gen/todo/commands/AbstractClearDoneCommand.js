@@ -20,6 +20,19 @@ export default class AbstractClearDoneCommand extends Command {
 		}
 		return Promise.all(promises);
     }
+    
+	execute() {
+	    return new Promise((resolve, reject) => {
+	    	let queryParams = [];
+			this.httpDelete("/api/todos/clear-done", false, queryParams).then((data) => {
+				this.handleResponse(data);
+			    resolve();
+			}, (error) => {
+			    reject(error);
+			});
+	    });
+	}
+
 }
 
 /*       S.D.G.       */

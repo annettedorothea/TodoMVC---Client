@@ -6,18 +6,18 @@ export default class AbstractDeleteTodoAction extends Action {
 
     constructor(actionData) {
         super(actionData, 'todo.DeleteTodoAction');
-		this.postUpdateUI = this.postUpdateUI.bind(this);
+		this.postCall = this.postCall.bind(this);
     }
 
 	getCommand() {
 		return new DeleteTodoCommand(this.actionData);
 	}
 
-		preUpdateUI() {
+		preCall() {
 			CommonView.block(this.actionData);
 		}
 	
-		postUpdateUI() {
+		postCall() {
 			CommonView.unblock(this.actionData);
 		}
 

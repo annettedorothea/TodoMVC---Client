@@ -25,6 +25,19 @@ export default class AbstractCreateTodoCommand extends Command {
 		}
 		return Promise.all(promises);
     }
+    
+	execute() {
+	    return new Promise((resolve, reject) => {
+	    	let queryParams = [];
+			this.httpPost("/api/todos/create", false, queryParams, this.commandData).then((data) => {
+				this.handleResponse(data);
+			    resolve();
+			}, (error) => {
+			    reject(error);
+			});
+	    });
+	}
+
 }
 
 /*       S.D.G.       */

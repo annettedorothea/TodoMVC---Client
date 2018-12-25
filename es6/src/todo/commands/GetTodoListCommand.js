@@ -1,16 +1,14 @@
 import AbstractGetTodoListCommand from "../../../gen/todo/commands/AbstractGetTodoListCommand";
 
 export default class GetTodoListCommand extends AbstractGetTodoListCommand {
-    execute() {
-        return new Promise((resolve, reject) => {
-            this.httpGet("api/todos/all").then((data) => {
-                this.commandData.outcome = this.ok;
-                this.commandData.todoList = data.todoList;
-                resolve();
-            }, (error) => {
-                reject(error);
-            });
-        });
+
+    isCommandDataValid() {
+    	return true;
+    }
+
+    handleResponse(data) {
+        this.commandData.todoList = data.todoList;
+    	this.commandData.outcome = this.ok;
     }
 }
 

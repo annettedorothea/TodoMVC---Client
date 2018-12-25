@@ -6,18 +6,18 @@ export default class AbstractGetTodoListAction extends Action {
 
     constructor(actionData) {
         super(actionData, 'todo.GetTodoListAction');
-		this.postUpdateUI = this.postUpdateUI.bind(this);
+		this.postCall = this.postCall.bind(this);
     }
 
 	getCommand() {
 		return new GetTodoListCommand(this.actionData);
 	}
 
-		preUpdateUI() {
+		preCall() {
 			CommonView.block(this.actionData);
 		}
 	
-		postUpdateUI() {
+		postCall() {
 			CommonView.unblock(this.actionData);
 		}
 

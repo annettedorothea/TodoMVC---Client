@@ -20,6 +20,19 @@ export default class AbstractToggleAllCommand extends Command {
 		}
 		return Promise.all(promises);
     }
+    
+	execute() {
+	    return new Promise((resolve, reject) => {
+	    	let queryParams = [];
+			this.httpPut("/api/todos/toggle-all", false, queryParams).then((data) => {
+				this.handleResponse(data);
+			    resolve();
+			}, (error) => {
+			    reject(error);
+			});
+	    });
+	}
+
 }
 
 /*       S.D.G.       */

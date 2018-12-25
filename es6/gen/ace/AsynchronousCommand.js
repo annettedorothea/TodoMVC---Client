@@ -7,13 +7,17 @@ export default class AsynchronousCommand extends Command {
     executeCommand() {
         return new Promise((resolve, reject) => {
 			if (ACEController.execution !== ACEController.REPLAY) {
-			    this.execute().then(() => {
-			        ACEController.addItemToTimeLine({command: this});
-			        this.publishEvents();
-			        resolve();
-			    }, (error) => {
-			        reject(error);
-			    });
+				if (this.isCommandDataValid() === true) {
+				    this.execute().then(() => {
+				        ACEController.addItemToTimeLine({command: this});
+				        this.publishEvents();
+				        resolve();
+				    }, (error) => {
+				        reject(error);
+				    });
+				} else {
+					resolve();
+				}
 			} else {
 			    const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
 			    this.commandData = timelineCommand.commandData;
@@ -24,40 +28,40 @@ export default class AsynchronousCommand extends Command {
         });
     }
 
-    httpGet(url, queryParams) {
+    httpGet(url, authorize, queryParams) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
             queryParams = this.addUuidToQueryParams(queryParams);
-            return AppUtils.httpGet(url, queryParams, this.commandData);
+            return AppUtils.httpGet(url, authorize, queryParams, this.commandData);
         }, (error) => {
             reject(error);
         });
     }
 
-    httpPost(url, queryParams, data) {
+    httpPost(url, authorize, queryParams, data) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
             queryParams = this.addUuidToQueryParams(queryParams);
             data = this.addUuidToData(data);
-            return AppUtils.httpPost(url, queryParams, data);
+            return AppUtils.httpPost(url, authorize, queryParams, data);
         }, (error) => {
             reject(error);
         });
     }
 
-    httpPut(url, queryParams, data) {
+    httpPut(url, authorize, queryParams, data) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
             queryParams = this.addUuidToQueryParams(queryParams);
             data = this.addUuidToData(data);
-            return AppUtils.httpPut(url, queryParams, data);
+            return AppUtils.httpPut(url, authorize, queryParams, data);
         }, (error) => {
             reject(error);
         });
     }
 
-    httpDelete(url, queryParams, data) {
+    httpDelete(url, authorize, queryParams, data) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
             queryParams = this.addUuidToQueryParams(queryParams);
             data = this.addUuidToData(data);
-            return AppUtils.httpDelete(url, queryParams, data);
+            return AppUtils.httpDelete(url, authorize, queryParams, data);
         }, (error) => {
             reject(error);
         });

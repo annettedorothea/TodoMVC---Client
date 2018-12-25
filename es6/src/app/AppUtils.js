@@ -55,7 +55,7 @@ export default class AppUtils {
         return AppUtils.settings ? AppUtils.settings.aceScenariosBaseUrl : "";
     }
 
-    static httpGet(url, queryParams, commandParam) {
+    static httpGet(url, authorize, queryParams, commandParam) {
         return new Promise((resolve, reject) => {
             const headers = new Headers();
             headers.append("Content-Type", "application/json");
@@ -86,7 +86,7 @@ export default class AppUtils {
         });
     }
 
-    static httpChange(methodType, url, queryParams, data, commandParam) {
+    static httpChange(methodType, url, authorize, queryParams, data, commandParam) {
         return new Promise((resolve, reject) => {
             const headers = new Headers();
             headers.append("Content-Type", "application/json");
@@ -118,16 +118,16 @@ export default class AppUtils {
         });
     }
 
-    static httpPost(url, queryParams, data, commandParam) {
-        return AppUtils.httpChange("POST", url, queryParams, data, commandParam);
+    static httpPost(url, authorize, queryParams, data, commandParam) {
+        return AppUtils.httpChange("POST", url, authorize, queryParams, data, commandParam);
     }
 
-    static httpPut(url, queryParams, data, commandParam) {
-        return AppUtils.httpChange("PUT", url, queryParams, data, commandParam);
+    static httpPut(url, authorize, queryParams, data, commandParam) {
+        return AppUtils.httpChange("PUT", url, authorize, queryParams, data, commandParam);
     }
 
-    static httpDelete(url, queryParams, data, commandParam) {
-        return AppUtils.httpChange("DELETE", url, queryParams, data, commandParam);
+    static httpDelete(url, authorize, queryParams, data, commandParam) {
+        return AppUtils.httpChange("DELETE", url, authorize, queryParams, data, commandParam);
     }
 
     static queryParamString(url, queryParams) {

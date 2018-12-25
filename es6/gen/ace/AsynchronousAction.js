@@ -11,7 +11,7 @@ export default class AsynchronousAction extends Action {
 	
     applyAction() {
         return new Promise((resolve, reject) => {
-            this.preUpdateUI();
+            this.preCall();
             if (ACEController.execution === ACEController.LIVE) {
                 this.actionData.uuid = AppUtils.createUUID();
                 this.extendActionData();
@@ -22,16 +22,16 @@ export default class AsynchronousAction extends Action {
             if (command) {
                 command.executeCommand().then(
                     () => {
-                        this.postUpdateUI();
+                        this.postCall();
                         resolve();
                     },
                     (error) => {
-                        this.postUpdateUI();
+                        this.postCall();
                         reject(error);
                     }
                 );
             } else {
-                this.postUpdateUI();
+                this.postCall();
                 resolve();
             }
         });
