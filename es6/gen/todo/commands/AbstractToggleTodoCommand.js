@@ -28,7 +28,7 @@ export default class AbstractToggleTodoCommand extends Command {
 	    		key: "id",
 	    		value: this.commandData.id
 	    	});
-			this.httpPut("/api/todos/toggle", false, queryParams).then((data) => {
+			this.httpPut("/api/todos/toggle", false, queryParams, this.commandData).then((data) => {
 				this.handleResponse(data);
 			    resolve();
 			}, (error) => {
