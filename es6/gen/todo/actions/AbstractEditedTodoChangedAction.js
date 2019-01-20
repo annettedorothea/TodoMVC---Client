@@ -3,10 +3,10 @@ import EditedTodoChangedCommand from "../../../src/todo/commands/EditedTodoChang
 
 export default class AbstractEditedTodoChangedAction extends Action {
 
-    constructor(actionData) {
-        super(actionData, 'todo.EditedTodoChangedAction');
+    constructor( editedDescription) {
+        super({editedDescription}, 'todo.EditedTodoChangedAction');
     }
-
+    
 	getCommand() {
 		return new EditedTodoChangedCommand(this.actionData);
 	}

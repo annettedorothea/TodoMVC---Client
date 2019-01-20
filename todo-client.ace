@@ -1,0 +1,65 @@
+ES6 
+
+todo
+
+ACE 
+	Init <hash>
+		on ok (set state.State.filter) triggers (GetTodoList)
+	
+	GetTodoList 
+			call com.anfelisa.todo.GetAllTodos  
+			loadingFlag state.State.loading 
+		on ok (set state.State.todoList)
+	
+	NewTodoChanged <newTodo>
+		on ok (set state.State.newTodo)
+	
+	CreateTodo <description>
+			call com.anfelisa.todo.CreateTodo
+			loadingFlag state.State.loading 
+		on ok (set state.State.newTodo) triggers ( GetTodoList)
+		on empty
+		
+	EditTodo <id>
+		on ok ( set state.State.editedTodo)
+	
+	EditedTodoChanged <editedDescription>
+		on ok ( set state.State.editedTodo.EditedTodo.editedDescription)
+	
+	UpdateTodo
+			call com.anfelisa.todo.UpdateTodo
+			loadingFlag state.State.loading 
+		on ok (reset state.State.editedTodo) triggers (GetTodoList)
+		on empty (reset state.State.editedTodo)
+	
+	ToggleTodo <id>
+			call com.anfelisa.todo.ToggleTodo
+			loadingFlag state.State.loading 
+		on ok triggers (GetTodoList)
+	
+	ToggleAll 
+			call com.anfelisa.todo.ToggleAll 
+			loadingFlag state.State.loading 
+		on ok triggers (GetTodoList)
+	
+	DeleteTodo <id>
+			call com.anfelisa.todo.DeleteTodo 
+			loadingFlag state.State.loading 
+		on ok triggers (GetTodoList)
+	
+	ClearDone 
+			call com.anfelisa.todo.ClearDone 
+			loadingFlag state.State.loading 
+		on ok triggers (GetTodoList)
+	
+appState state : State {
+	filter
+	newTodo
+	loading
+	todoList list 
+	editedTodo : EditedTodo {
+		editedDescription
+		id
+		description
+	}
+}

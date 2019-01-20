@@ -1,25 +1,25 @@
 import Action from "../../ace/AsynchronousAction";
 import ToggleTodoCommand from "../../../src/todo/commands/ToggleTodoCommand";
-import CommonView from "../../../src/todo/views/CommonView";
+import * as AppState from "../../ace/AppState";
 
 export default class AbstractToggleTodoAction extends Action {
 
-    constructor(actionData) {
-        super(actionData, 'todo.ToggleTodoAction');
+    constructor( id) {
+        super({id}, 'todo.ToggleTodoAction');
 		this.postCall = this.postCall.bind(this);
     }
-
+    
 	getCommand() {
 		return new ToggleTodoCommand(this.actionData);
 	}
 
-		preCall() {
-			CommonView.block(this.actionData);
-		}
+	preCall() {
+		AppState.set_state_State_loading({loading: true});
+	}
 	
-		postCall() {
-			CommonView.unblock(this.actionData);
-		}
+	postCall() {
+		AppState.set_state_State_loading({loading: false});
+	}
 
 }
 

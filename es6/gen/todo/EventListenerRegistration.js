@@ -1,17 +1,17 @@
 import ACEController from "../ace/ACEController";
-import FooterView from "../../src/todo/views/FooterView";
-import TodoView from "../../src/todo/views/TodoView";
+import * as AppState from "../ace/AppState";
 
 export default class EventListenerRegistrationTodo {
 
 	static init() {
-		ACEController.registerListener('todo.InitAllEvent', FooterView.initFilter);
-		ACEController.registerListener('todo.InitDoneEvent', FooterView.initFilter);
-		ACEController.registerListener('todo.InitOpenEvent', FooterView.initFilter);
-		ACEController.registerListener('todo.GetTodoListOkEvent', TodoView.setTodoList);
-		ACEController.registerListener('todo.NewTodoChangedOkEvent', TodoView.newTodoChanged);
-		ACEController.registerListener('todo.EditTodoOkEvent', TodoView.setTodoList);
-		ACEController.registerListener('todo.EditedTodoChangedOkEvent', TodoView.setTodoList);
+		ACEController.registerListener('todo.InitOkEvent', AppState.set_state_State_filter);
+		ACEController.registerListener('todo.GetTodoListOkEvent', AppState.set_state_State_todoList);
+		ACEController.registerListener('todo.NewTodoChangedOkEvent', AppState.set_state_State_newTodo);
+		ACEController.registerListener('todo.CreateTodoOkEvent', AppState.set_state_State_newTodo);
+		ACEController.registerListener('todo.EditTodoOkEvent', AppState.set_state_State_editedTodo);
+		ACEController.registerListener('todo.EditedTodoChangedOkEvent', AppState.set_state_State_editedTodo_EditedTodo_editedDescription);
+		ACEController.registerListener('todo.UpdateTodoOkEvent', AppState.reset_state_State_editedTodo);
+		ACEController.registerListener('todo.UpdateTodoEmptyEvent', AppState.reset_state_State_editedTodo);
 	}
 
 }

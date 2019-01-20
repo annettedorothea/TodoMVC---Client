@@ -2,12 +2,17 @@ import AbstractToggleAllCommand from "../../../gen/todo/commands/AbstractToggleA
 
 export default class ToggleAllCommand extends AbstractToggleAllCommand {
 
-    isCommandDataValid() {
+    initCommandData() {
+    	//add from appState to commandData
     	return true;
     }
 
-    handleResponse(data) {
+    handleResponse(resolve, reject) {
     	this.commandData.outcome = this.ok;
+    	resolve();
+    }
+    handleError(resolve, reject) {
+    	reject(this.commandData.error);
     }
 }
 

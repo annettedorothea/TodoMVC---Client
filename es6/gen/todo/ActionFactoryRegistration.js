@@ -14,17 +14,28 @@ import ClearDoneAction from "../../src/todo/actions/ClearDoneAction";
 export default class ActionFactoryRegistrationTodo {
 
 	static init() {
-		ACEController.registerFactory('todo.InitAction', (actionData) => new InitAction(actionData));
-		ACEController.registerFactory('todo.GetTodoListAction', (actionData) => new GetTodoListAction(actionData));
-		ACEController.registerFactory('todo.NewTodoChangedAction', (actionData) => new NewTodoChangedAction(actionData));
-		ACEController.registerFactory('todo.CreateTodoAction', (actionData) => new CreateTodoAction(actionData));
-		ACEController.registerFactory('todo.EditTodoAction', (actionData) => new EditTodoAction(actionData));
-		ACEController.registerFactory('todo.EditedTodoChangedAction', (actionData) => new EditedTodoChangedAction(actionData));
-		ACEController.registerFactory('todo.UpdateTodoAction', (actionData) => new UpdateTodoAction(actionData));
-		ACEController.registerFactory('todo.ToggleTodoAction', (actionData) => new ToggleTodoAction(actionData));
-		ACEController.registerFactory('todo.ToggleAllAction', (actionData) => new ToggleAllAction(actionData));
-		ACEController.registerFactory('todo.DeleteTodoAction', (actionData) => new DeleteTodoAction(actionData));
-		ACEController.registerFactory('todo.ClearDoneAction', (actionData) => new ClearDoneAction(actionData));
+		ACEController.registerFactory('todo.InitAction', 
+			(actionData) => new InitAction(actionData.hash));
+		ACEController.registerFactory('todo.GetTodoListAction', 
+			(actionData) => new GetTodoListAction());
+		ACEController.registerFactory('todo.NewTodoChangedAction', 
+			(actionData) => new NewTodoChangedAction(actionData.newTodo));
+		ACEController.registerFactory('todo.CreateTodoAction', 
+			(actionData) => new CreateTodoAction(actionData.description));
+		ACEController.registerFactory('todo.EditTodoAction', 
+			(actionData) => new EditTodoAction(actionData.id));
+		ACEController.registerFactory('todo.EditedTodoChangedAction', 
+			(actionData) => new EditedTodoChangedAction(actionData.editedDescription));
+		ACEController.registerFactory('todo.UpdateTodoAction', 
+			(actionData) => new UpdateTodoAction());
+		ACEController.registerFactory('todo.ToggleTodoAction', 
+			(actionData) => new ToggleTodoAction(actionData.id));
+		ACEController.registerFactory('todo.ToggleAllAction', 
+			(actionData) => new ToggleAllAction());
+		ACEController.registerFactory('todo.DeleteTodoAction', 
+			(actionData) => new DeleteTodoAction(actionData.id));
+		ACEController.registerFactory('todo.ClearDoneAction', 
+			(actionData) => new ClearDoneAction());
 	}
 
 }

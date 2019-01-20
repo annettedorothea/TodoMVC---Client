@@ -1,18 +1,26 @@
 import AbstractUpdateTodoCommand from "../../../gen/todo/commands/AbstractUpdateTodoCommand";
+import {get_state_State_editedTodo} from "../../../gen/ace/AppState"
 
 export default class UpdateTodoCommand extends AbstractUpdateTodoCommand {
 
-    isCommandDataValid() {
-        if (!this.commandData.description) {
+    initCommandData() {
+        const editedTodo = get_state_State_editedTodo();
+        if (!editedTodo.editedDescription) {
             this.commandData.outcome = this.empty;
             return false;
         } else {
+            this.commandData.id = editedTodo.id;
+            this.commandData.description = editedTodo.editedDescription;
             return true;
         }
     }
 
-    handleResponse(data) {
+    handleResponse(resolve, reject) {
         this.commandData.outcome = this.ok;
+    	resolve();
+    }
+    handleError(resolve, reject) {
+    	reject(this.commandData.error);
     }
 }
 

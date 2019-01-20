@@ -21,7 +21,7 @@ export default class TodoList extends React.Component {
 
     render() {
         const todoList = this.props.todoList ? this.props.todoList.filter((todo) => this.filter(todo, this.props.filter)).map((todo) => {
-            return <Todo key={todo.id} {...todo} todoList={this.props.todoList}/>
+            return <Todo key={todo.id} {...todo} editedTodo={this.props.editedTodo}/>
         }) : [];
         return (
             <div>

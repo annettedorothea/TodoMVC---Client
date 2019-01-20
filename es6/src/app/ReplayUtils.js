@@ -1,5 +1,4 @@
 import stringify from "json-stable-stringify";
-import * as App from "./App";
 
 export default class ReplayUtils {
 

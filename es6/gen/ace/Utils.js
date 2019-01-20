@@ -22,7 +22,7 @@ export default class Utils {
                 apiKey: AppUtils.getAceScenariosApiKey(),
                 serverVersion: serverInfo.serverVersion
             };
-            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', [], data, false);
+            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', false, [], data, false);
         });
     }
 
@@ -41,7 +41,7 @@ export default class Utils {
             key: "uuid",
             value: uuid
         });
-        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', queryParams, {}, false);
+        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', false, queryParams, false);
     }
 
     static saveScenario(description, creator) {
@@ -60,7 +60,7 @@ export default class Utils {
                     apiKey: AppUtils.getAceScenariosApiKey(),
                     serverVersion: serverInfo.serverVersion
                 };
-                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', [], data, false);
+                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, [], data, false);
             });
         });
     }
@@ -82,7 +82,7 @@ export default class Utils {
                     serverVersion: serverInfo.serverVersion,
                     serverTimeline: JSON.stringify(serverTimeline)
                 };
-                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', null, data, false);
+                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', false, [], data, false);
             });
         });
     }
@@ -102,7 +102,7 @@ export default class Utils {
             key: "uuid",
             value: uuid
         });
-        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', queryParams, {}, false);
+        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', false, queryParams, false);
     }
 
     static loadNextScenario(lastId) {
@@ -120,7 +120,7 @@ export default class Utils {
             key: "uuid",
             value: uuid
         });
-        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', queryParams, {}, false);
+        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', false, queryParams, false);
     }
 
     static getBrowserInfo() {
@@ -131,7 +131,7 @@ export default class Utils {
             return {name: 'IE ', version: (tem[1] || '')};
         }
         if (M[1] === 'Chrome') {
-            tem = ua.match(/\bOPR\/(\d+)/)
+            tem = ua.match(/\bOPR\/(\d+)/);
             if (tem != null) {
                 return {name: 'Opera', version: tem[1]};
             }
@@ -163,7 +163,7 @@ export default class Utils {
 
     static replayE2E(pauseInMillis, serverTimeline) {
         ReplayUtils.prepareReplay();
-        AppUtils.httpPut('replay/e2e/start', [], JSON.parse(serverTimeline)).then(() => {
+        AppUtils.httpPut('replay/e2e/start', false, [], JSON.parse(serverTimeline)).then(() => {
             ACEController.startReplay(ACEController.E2E, pauseInMillis)
         });
     }

@@ -1,16 +1,15 @@
 import ACEController from "../../gen/ace/ACEController";
 import uuid from "uuid";
-import InitAction from "../todo/actions/InitAction";
 import * as App from "./App";
+import * as AppState from "../../gen/ace/AppState";
+import {init} from "../../gen/todo/ActionFunctions";
 
 export default class AppUtils {
 
     static start() {
         AppUtils.loadSettings().then((settings) => {
             AppUtils.settings = settings;
-            new InitAction({
-                hash: window.location.hash.substring(1)
-            }).apply();
+            init(window.location.hash.substring(1));
         });
     }
 
@@ -55,7 +54,23 @@ export default class AppUtils {
         return AppUtils.settings ? AppUtils.settings.aceScenariosBaseUrl : "";
     }
 
-    static httpGet(url, authorize, queryParams, commandParam) {
+    static createInitialAppState() {
+        const initialAppState = {
+            filter: "all",
+            newTodo: "",
+            loading: false,
+            todoList: [],
+            editedTodo: null,
+            error: null
+        };
+        AppState.setInitialState(initialAppState);
+    }
+
+    static renderNewState() {
+        App.render(AppState.getState());
+    }
+
+    static httpGet(url, authorize, queryParams) {
         return new Promise((resolve, reject) => {
             const headers = new Headers();
             headers.append("Content-Type", "application/json");
@@ -86,7 +101,7 @@ export default class AppUtils {
         });
     }
 
-    static httpChange(methodType, url, authorize, queryParams, data, commandParam) {
+    static httpChange(methodType, url, authorize, queryParams, data) {
         return new Promise((resolve, reject) => {
             const headers = new Headers();
             headers.append("Content-Type", "application/json");
@@ -164,7 +179,7 @@ export default class AppUtils {
         });
         AppUtils.timer = setTimeout(function () {
             App.container.setState({
-                error: undefined
+                error: null
             });
         }, 7000);
 
@@ -176,42 +191,6 @@ export default class AppUtils {
 
     static getMaxTimelineSize() {
         return 2000;
-    }
-
-    static getAppState() {
-        const appState = AppUtils.deepCopy(App.appState);
-        delete appState.texts;
-        return appState;
-    }
-
-    static deepMerge(newState, appState) {
-        for (let property in newState) {
-            if (newState.hasOwnProperty(property)) {
-                if (appState[property] === undefined) {
-                    appState[property] = newState[property];
-                } else if (newState[property] === undefined) {
-                    appState[property] = undefined;
-                } else if (newState[property] === null) {
-                    appState[property] = null;
-                } else if (Array.isArray(newState[property])) {
-                    appState[property] = newState[property];
-                } else if (typeof newState[property] === 'object') {
-                    AppUtils.deepMerge(newState[property], appState[property]);
-                } else {
-                    appState[property] = newState[property];
-                }
-            }
-        }
-        return appState;
-    }
-
-    static merge(newState, appState) {
-        for (let property in newState) {
-            if (newState.hasOwnProperty(property)) {
-                appState[property] = newState[property];
-            }
-        }
-        return appState;
     }
 
 }

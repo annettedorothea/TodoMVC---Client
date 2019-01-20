@@ -7,7 +7,7 @@ export default class AsynchronousCommand extends Command {
     executeCommand() {
         return new Promise((resolve, reject) => {
 			if (ACEController.execution !== ACEController.REPLAY) {
-				if (this.isCommandDataValid() === true) {
+				if (this.initCommandData()) {
 				    this.execute().then(() => {
 				        ACEController.addItemToTimeLine({command: this});
 				        this.publishEvents();
@@ -16,6 +16,8 @@ export default class AsynchronousCommand extends Command {
 				        reject(error);
 				    });
 				} else {
+			        ACEController.addItemToTimeLine({command: this});
+			        this.publishEvents();
 					resolve();
 				}
 			} else {
@@ -28,12 +30,16 @@ export default class AsynchronousCommand extends Command {
         });
     }
 
+    initCommandData() {
+    	return true;
+    }
+
     httpGet(url, authorize, queryParams) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
             queryParams = this.addUuidToQueryParams(queryParams);
-            return AppUtils.httpGet(url, authorize, queryParams, this.commandData);
+            return AppUtils.httpGet(url, authorize, queryParams);
         }, (error) => {
-            reject(error);
+            throw error;
         });
     }
 
@@ -43,7 +49,7 @@ export default class AsynchronousCommand extends Command {
             data = this.addUuidToData(data);
             return AppUtils.httpPost(url, authorize, queryParams, data);
         }, (error) => {
-            reject(error);
+            throw error;
         });
     }
 
@@ -53,7 +59,7 @@ export default class AsynchronousCommand extends Command {
             data = this.addUuidToData(data);
             return AppUtils.httpPut(url, authorize, queryParams, data);
         }, (error) => {
-            reject(error);
+            throw error;
         });
     }
 
@@ -63,7 +69,7 @@ export default class AsynchronousCommand extends Command {
             data = this.addUuidToData(data);
             return AppUtils.httpDelete(url, authorize, queryParams, data);
         }, (error) => {
-            reject(error);
+            throw error;
         });
     }
 

@@ -2,7 +2,7 @@ import AbstractCreateTodoCommand from "../../../gen/todo/commands/AbstractCreate
 
 export default class CreateTodoCommand extends AbstractCreateTodoCommand {
 
-    isCommandDataValid() {
+    initCommandData() {
         if (!this.commandData.description) {
             this.commandData.outcome = this.empty;
             return false;
@@ -11,9 +11,13 @@ export default class CreateTodoCommand extends AbstractCreateTodoCommand {
         }
     }
 
-    handleResponse(data) {
-        this.commandData.newTodo = "";
+    handleResponse(resolve, reject) {
         this.commandData.outcome = this.ok;
+        this.commandData.newTodo = "";
+    	resolve();
+    }
+    handleError(resolve, reject) {
+    	reject(this.commandData.error);
     }
 }
 

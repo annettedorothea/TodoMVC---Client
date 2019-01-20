@@ -1,6 +1,6 @@
 import Command from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import NewTodoChangedAction from "../../../src/todo/actions/NewTodoChangedAction";
+import CreateTodoOkEvent from "../../../gen/todo/events/CreateTodoOkEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractCreateTodoCommand extends Command {
@@ -15,8 +15,8 @@ export default class AbstractCreateTodoCommand extends Command {
 	    	
 		switch (this.commandData.outcome) {
 		case this.ok:
-			promises.push(new TriggerAction(new NewTodoChangedAction(this.commandData)).publish());
-			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
+			promises.push(new CreateTodoOkEvent(this.commandData).publish());
+			promises.push(new TriggerAction(new GetTodoListAction()).publish());
 			break;
 		case this.empty:
 			break;
@@ -28,12 +28,16 @@ export default class AbstractCreateTodoCommand extends Command {
     
 	execute() {
 	    return new Promise((resolve, reject) => {
-	    	let queryParams = [];
-			this.httpPost("/api/todos/create", false, queryParams, this.commandData).then((data) => {
-				this.handleResponse(data);
-			    resolve();
+			let queryParams = [];
+	        let payload = {	
+	        	description : this.commandData.description,
+	        	};
+
+			this.httpPost(`/api/todos/create`, false, queryParams, payload).then((data) => {
+				this.handleResponse(resolve, reject);
 			}, (error) => {
-			    reject(error);
+				this.commandData.error = error;
+				this.handleError(resolve, reject);
 			});
 	    });
 	}

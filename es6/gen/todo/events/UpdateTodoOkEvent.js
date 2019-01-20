@@ -1,8 +1,8 @@
 import Event from "../../../gen/ace/Event";
 
-export default class InitOpenEvent extends Event {
+export default class UpdateTodoOkEvent extends Event {
     constructor(eventData) {
-        super(eventData, 'todo.InitOpenEvent');
+        super(eventData, 'todo.UpdateTodoOkEvent');
     }
 }
 

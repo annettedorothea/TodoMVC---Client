@@ -23,12 +23,14 @@ export default class AbstractGetTodoListCommand extends Command {
     
 	execute() {
 	    return new Promise((resolve, reject) => {
-	    	let queryParams = [];
-			this.httpGet("/api/todos/all", false, queryParams).then((data) => {
-				this.handleResponse(data);
-			    resolve();
+			let queryParams = [];
+	        
+			this.httpGet(`/api/todos/all`, false, queryParams).then((data) => {
+				this.commandData.todoList = data.todoList;
+				this.handleResponse(resolve, reject);
 			}, (error) => {
-			    reject(error);
+				this.commandData.error = error;
+				this.handleError(resolve, reject);
 			});
 	    });
 	}

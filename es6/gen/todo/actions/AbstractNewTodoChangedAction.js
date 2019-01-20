@@ -3,10 +3,10 @@ import NewTodoChangedCommand from "../../../src/todo/commands/NewTodoChangedComm
 
 export default class AbstractNewTodoChangedAction extends Action {
 
-    constructor(actionData) {
-        super(actionData, 'todo.NewTodoChangedAction');
+    constructor( newTodo) {
+        super({newTodo}, 'todo.NewTodoChangedAction');
     }
-
+    
 	getCommand() {
 		return new NewTodoChangedCommand(this.actionData);
 	}

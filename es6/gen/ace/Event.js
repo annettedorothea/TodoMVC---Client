@@ -9,7 +9,6 @@ export default class Event {
 
     publish() {
         this.notifyListeners();
-        this.eventData.appState = AppUtils.getAppState();
 		ACEController.addItemToTimeLine({event: this});
     }
 

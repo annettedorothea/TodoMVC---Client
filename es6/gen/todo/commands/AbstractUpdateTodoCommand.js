@@ -1,5 +1,7 @@
 import Command from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
+import UpdateTodoOkEvent from "../../../gen/todo/events/UpdateTodoOkEvent";
+import UpdateTodoEmptyEvent from "../../../gen/todo/events/UpdateTodoEmptyEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractUpdateTodoCommand extends Command {
@@ -14,9 +16,11 @@ export default class AbstractUpdateTodoCommand extends Command {
 	    	
 		switch (this.commandData.outcome) {
 		case this.ok:
-			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
+			promises.push(new UpdateTodoOkEvent(this.commandData).publish());
+			promises.push(new TriggerAction(new GetTodoListAction()).publish());
 			break;
 		case this.empty:
+			promises.push(new UpdateTodoEmptyEvent(this.commandData).publish());
 			break;
 		default:
 			return new Promise((resolve, reject) => {reject('UpdateTodoCommand unhandled outcome: ' + this.commandData.outcome)});
@@ -26,12 +30,17 @@ export default class AbstractUpdateTodoCommand extends Command {
     
 	execute() {
 	    return new Promise((resolve, reject) => {
-	    	let queryParams = [];
-			this.httpPut("/api/todos/update", false, queryParams, this.commandData).then((data) => {
-				this.handleResponse(data);
-			    resolve();
+			let queryParams = [];
+	        let payload = {	
+	        	id : this.commandData.id,
+	        	description : this.commandData.description,
+	        	};
+
+			this.httpPut(`/api/todos/update`, false, queryParams, payload).then((data) => {
+				this.handleResponse(resolve, reject);
 			}, (error) => {
-			    reject(error);
+				this.commandData.error = error;
+				this.handleError(resolve, reject);
 			});
 	    });
 	}

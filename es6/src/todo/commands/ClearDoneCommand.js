@@ -2,12 +2,17 @@ import AbstractClearDoneCommand from "../../../gen/todo/commands/AbstractClearDo
 
 export default class ClearDoneCommand extends AbstractClearDoneCommand {
 
-    isCommandDataValid() {
+    initCommandData() {
+    	//add from appState to commandData
     	return true;
     }
 
-    handleResponse(data) {
+    handleResponse(resolve, reject) {
     	this.commandData.outcome = this.ok;
+    	resolve();
+    }
+    handleError(resolve, reject) {
+    	reject(this.commandData.error);
     }
 }
 

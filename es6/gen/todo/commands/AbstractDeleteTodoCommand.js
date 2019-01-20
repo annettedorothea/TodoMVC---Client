@@ -13,7 +13,7 @@ export default class AbstractDeleteTodoCommand extends Command {
 	    	
 		switch (this.commandData.outcome) {
 		case this.ok:
-			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
+			promises.push(new TriggerAction(new GetTodoListAction()).publish());
 			break;
 		default:
 			return new Promise((resolve, reject) => {reject('DeleteTodoCommand unhandled outcome: ' + this.commandData.outcome)});
@@ -23,16 +23,14 @@ export default class AbstractDeleteTodoCommand extends Command {
     
 	execute() {
 	    return new Promise((resolve, reject) => {
-	    	let queryParams = [];
-	    	queryParams.push({
-	    		key: "id",
-	    		value: this.commandData.id
-	    	});
-			this.httpDelete("/api/todos/delete", false, queryParams).then((data) => {
-				this.handleResponse(data);
-			    resolve();
+			let queryParams = [];
+		    queryParams.push({key: "id",value: this.commandData.id});
+	        
+			this.httpDelete(`/api/todos/delete`, false, queryParams).then((data) => {
+				this.handleResponse(resolve, reject);
 			}, (error) => {
-			    reject(error);
+				this.commandData.error = error;
+				this.handleError(resolve, reject);
 			});
 	    });
 	}

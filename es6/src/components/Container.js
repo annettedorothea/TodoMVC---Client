@@ -3,21 +3,16 @@ import NewTodo from "./NewTodo";
 import TodoList from "./TodoList";
 import Footer from "./Footer";
 import Spinner from "./Spinner";
-import ToggleAllAction from "../todo/actions/ToggleAllAction";
 import ErrorMessage from "./ErrorMessage";
-import * as App from "../app/App";
+import * as AppState from "../../gen/ace/AppState";
 import AppUtils from "../app/AppUtils";
+import {toggleAll} from "../../gen/todo/ActionFunctions";
 
 export default class Container extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = App.appState;
-        this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
-    }
-
-    onChangeCheckbox(event) {
-        new ToggleAllAction().apply();
+        this.state = AppState.getState();
     }
 
     render() {
@@ -89,7 +84,7 @@ export default class Container extends React.Component {
                                 <input
                                     className="toggle-all"
                                     type="checkbox"
-                                    onChange={this.onChangeCheckbox}
+                                    onChange={() => toggleAll()}
                                     checked={this.state.todoList ? this.state.todoList.filter((todo) => todo.done === false).length === 0 : false}
                                 />
                             </section>
@@ -101,7 +96,6 @@ export default class Container extends React.Component {
                     <footer className="info">
                         <p>Double-click to edit a todo</p>
                         <p>Created by Annette Pohl</p>
-                        <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
                     </footer>
 
 

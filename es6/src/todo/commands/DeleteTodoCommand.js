@@ -2,12 +2,17 @@ import AbstractDeleteTodoCommand from "../../../gen/todo/commands/AbstractDelete
 
 export default class DeleteTodoCommand extends AbstractDeleteTodoCommand {
 
-    isCommandDataValid() {
+    initCommandData() {
+    	//add from appState to commandData
     	return true;
     }
 
-    handleResponse(data) {
+    handleResponse(resolve, reject) {
     	this.commandData.outcome = this.ok;
+    	resolve();
+    }
+    handleError(resolve, reject) {
+    	reject(this.commandData.error);
     }
 }
 

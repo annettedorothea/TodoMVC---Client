@@ -3,10 +3,10 @@ import InitCommand from "../../../src/todo/commands/InitCommand";
 
 export default class AbstractInitAction extends Action {
 
-    constructor(actionData) {
-        super(actionData, 'todo.InitAction');
+    constructor( hash) {
+        super({hash}, 'todo.InitAction');
     }
-
+    
 	getCommand() {
 		return new InitCommand(this.actionData);
 	}

@@ -2,9 +2,6 @@ import AbstractNewTodoChangedAction from "../../../gen/todo/actions/AbstractNewT
 
 export default class NewTodoChangedAction extends AbstractNewTodoChangedAction {
 
-    initActionData() {
-    }
-
 }
 
 /*       S.D.G.       */

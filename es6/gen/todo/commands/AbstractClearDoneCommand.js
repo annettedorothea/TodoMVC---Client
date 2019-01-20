@@ -13,7 +13,7 @@ export default class AbstractClearDoneCommand extends Command {
 	    	
 		switch (this.commandData.outcome) {
 		case this.ok:
-			promises.push(new TriggerAction(new GetTodoListAction(this.commandData)).publish());
+			promises.push(new TriggerAction(new GetTodoListAction()).publish());
 			break;
 		default:
 			return new Promise((resolve, reject) => {reject('ClearDoneCommand unhandled outcome: ' + this.commandData.outcome)});
@@ -23,12 +23,13 @@ export default class AbstractClearDoneCommand extends Command {
     
 	execute() {
 	    return new Promise((resolve, reject) => {
-	    	let queryParams = [];
-			this.httpDelete("/api/todos/clear-done", false, queryParams).then((data) => {
-				this.handleResponse(data);
-			    resolve();
+			let queryParams = [];
+	        
+			this.httpDelete(`/api/todos/clear-done`, false, queryParams).then((data) => {
+				this.handleResponse(resolve, reject);
 			}, (error) => {
-			    reject(error);
+				this.commandData.error = error;
+				this.handleError(resolve, reject);
 			});
 	    });
 	}
