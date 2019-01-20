@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "json-stable-stringify": "^1.0.1",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "uuid": "^3.1.0"
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -33,11 +33,11 @@
     "babelify": "^8.0.0",
     "browserify": "^14.5.0",
     "http-proxy-middleware": "^0.17.4",
-    "live-server": "^1.2.0",
-    "node-sass": "^4.5.3",
-    "serve": "^6.4.1",
-    "uglify-js": "^3.1.6",
+    "live-server": "^1.2.1",
+    "node-sass": "^4.11.0",
+    "serve": "^6.5.8",
+    "uglify-js": "^3.4.9",
     "watch": "^1.0.2",
-    "watchify": "^3.9.0"
+    "watchify": "^3.11.0"
   }
 }
