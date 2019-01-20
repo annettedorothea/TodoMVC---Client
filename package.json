@@ -35,7 +35,7 @@
     "http-proxy-middleware": "^0.17.4",
     "live-server": "^1.2.1",
     "node-sass": "^4.11.0",
-    "serve": "^6.5.8",
+    "serve": "^7.0.0",
     "uglify-js": "^3.4.9",
     "watch": "^1.0.2",
     "watchify": "^3.11.0"
