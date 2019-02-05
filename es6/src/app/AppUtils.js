@@ -1,5 +1,4 @@
 import ACEController from "../../gen/ace/ACEController";
-import uuid from "uuid";
 import * as App from "./App";
 import * as AppState from "../../gen/ace/AppState";
 import {init} from "../../gen/todo/ActionFunctions";
@@ -169,7 +168,12 @@ export default class AppUtils {
     }
 
     static createUUID() {
-        return uuid.v4();
+        let d = new Date().getTime();
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
     }
 
     static displayUnexpectedError(error) {

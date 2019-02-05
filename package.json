@@ -23,8 +23,7 @@
   "dependencies": {
     "json-stable-stringify": "^1.0.1",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "uuid": "^3.3.2"
+    "react-dom": "^16.7.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
