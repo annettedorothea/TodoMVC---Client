@@ -26,7 +26,7 @@ export default class AbstractDeleteTodoCommand extends Command {
 			let queryParams = [];
 		    queryParams.push({key: "id",value: this.commandData.id});
 	        
-			this.httpDelete(`/api/todos/delete`, false, queryParams).then((data) => {
+			this.httpDelete(this.adjustedUrl(`/api/todos/delete`), false, queryParams).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

@@ -1,6 +1,6 @@
 import Action from "../../ace/AsynchronousAction";
 import GetTodoListCommand from "../../../src/todo/commands/GetTodoListCommand";
-import * as AppState from "../../ace/AppState";
+import * as AppState from "../../ace/WriteAppState";
 
 export default class AbstractGetTodoListAction extends Action {
 

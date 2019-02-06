@@ -1,6 +1,6 @@
 import Action from "../../ace/AsynchronousAction";
 import ToggleAllCommand from "../../../src/todo/commands/ToggleAllCommand";
-import * as AppState from "../../ace/AppState";
+import * as AppState from "../../ace/WriteAppState";
 
 export default class AbstractToggleAllAction extends Action {
 

@@ -1,5 +1,5 @@
 import AbstractEditTodoCommand from "../../../gen/todo/commands/AbstractEditTodoCommand";
-import {get_state_State_todoList} from "../../../gen/ace/AppState"
+import {get_state_State_todoList} from "../../../gen/ace/ReadAppState"
 
 export default class EditTodoCommand extends AbstractEditTodoCommand {
     execute() {

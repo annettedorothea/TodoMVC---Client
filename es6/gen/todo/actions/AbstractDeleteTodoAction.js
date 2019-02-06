@@ -1,6 +1,6 @@
 import Action from "../../ace/AsynchronousAction";
 import DeleteTodoCommand from "../../../src/todo/commands/DeleteTodoCommand";
-import * as AppState from "../../ace/AppState";
+import * as AppState from "../../ace/WriteAppState";
 
 export default class AbstractDeleteTodoAction extends Action {
 

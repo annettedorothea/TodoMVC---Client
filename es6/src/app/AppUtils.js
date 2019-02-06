@@ -1,6 +1,7 @@
 import ACEController from "../../gen/ace/ACEController";
 import * as App from "./App";
-import * as AppState from "../../gen/ace/AppState";
+import * as WriteAppState from "../../gen/ace/WriteAppState";
+import * as ReadAppState from "../../gen/ace/ReadAppState";
 import {init} from "../../gen/todo/ActionFunctions";
 
 export default class AppUtils {
@@ -62,11 +63,11 @@ export default class AppUtils {
             editedTodo: null,
             error: null
         };
-        AppState.setInitialState(initialAppState);
+        WriteAppState.setInitialState(initialAppState);
     }
 
     static renderNewState() {
-        App.render(AppState.getState());
+        App.render(ReadAppState.getState());
     }
 
     static httpGet(url, authorize, queryParams) {
@@ -104,7 +105,7 @@ export default class AppUtils {
         return new Promise((resolve, reject) => {
             const headers = new Headers();
             headers.append("Content-Type", "application/json");
-            headers.append("Accept", "text/plain");
+            headers.append("Accept", "application/json");
 
             const options = {
                 method: methodType,

@@ -25,7 +25,7 @@ export default class AbstractClearDoneCommand extends Command {
 	    return new Promise((resolve, reject) => {
 			let queryParams = [];
 	        
-			this.httpDelete(`/api/todos/clear-done`, false, queryParams).then((data) => {
+			this.httpDelete(this.adjustedUrl(`/api/todos/clear-done`), false, queryParams).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

@@ -34,6 +34,14 @@ export default class AsynchronousCommand extends Command {
     	return true;
     }
 
+    adjustedUrl(url) {
+        if (ACEController.execution !== ACEController.E2E) {
+            return url;
+        } else {
+            return url.replace('api', 'replay');
+        }
+    }
+
     httpGet(url, authorize, queryParams) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
             queryParams = this.addUuidToQueryParams(queryParams);

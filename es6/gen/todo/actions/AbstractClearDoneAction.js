@@ -1,6 +1,6 @@
 import Action from "../../ace/AsynchronousAction";
 import ClearDoneCommand from "../../../src/todo/commands/ClearDoneCommand";
-import * as AppState from "../../ace/AppState";
+import * as AppState from "../../ace/WriteAppState";
 
 export default class AbstractClearDoneAction extends Action {
 

@@ -1,6 +1,6 @@
 import Action from "../../ace/AsynchronousAction";
 import UpdateTodoCommand from "../../../src/todo/commands/UpdateTodoCommand";
-import * as AppState from "../../ace/AppState";
+import * as AppState from "../../ace/WriteAppState";
 
 export default class AbstractUpdateTodoAction extends Action {
 

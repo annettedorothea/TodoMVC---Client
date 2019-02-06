@@ -36,7 +36,7 @@ export default class AbstractUpdateTodoCommand extends Command {
 	        	description : this.commandData.description,
 	        	};
 
-			this.httpPut(`/api/todos/update`, false, queryParams, payload).then((data) => {
+			this.httpPut(this.adjustedUrl(`/api/todos/update`), false, queryParams, payload).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

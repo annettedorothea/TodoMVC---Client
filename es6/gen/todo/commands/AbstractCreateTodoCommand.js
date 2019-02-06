@@ -33,7 +33,7 @@ export default class AbstractCreateTodoCommand extends Command {
 	        	description : this.commandData.description,
 	        	};
 
-			this.httpPost(`/api/todos/create`, false, queryParams, payload).then((data) => {
+			this.httpPost(this.adjustedUrl(`/api/todos/create`), false, queryParams, payload).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

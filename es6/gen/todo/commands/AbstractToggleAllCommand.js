@@ -25,7 +25,7 @@ export default class AbstractToggleAllCommand extends Command {
 	    return new Promise((resolve, reject) => {
 			let queryParams = [];
 	        
-			this.httpPut(`/api/todos/toggle-all`, false, queryParams).then((data) => {
+			this.httpPut(this.adjustedUrl(`/api/todos/toggle-all`), false, queryParams).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

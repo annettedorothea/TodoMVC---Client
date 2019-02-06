@@ -4,7 +4,7 @@ import TodoList from "./TodoList";
 import Footer from "./Footer";
 import Spinner from "./Spinner";
 import ErrorMessage from "./ErrorMessage";
-import * as AppState from "../../gen/ace/AppState";
+import * as ReadAppState from "../../gen/ace/ReadAppState";
 import AppUtils from "../app/AppUtils";
 import {toggleAll} from "../../gen/todo/ActionFunctions";
 
@@ -12,7 +12,7 @@ export default class Container extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = AppState.getState();
+        this.state = ReadAppState.getState();
     }
 
     render() {
