@@ -1,9 +1,9 @@
 {
   "name": "todo",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "",
   "scripts": {
-    "server": "watchify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.4.1.js -dv & live-server --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'"
+    "server": "watchify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.0.js -dv & live-server --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'"
   },
   "author": "Annette Pohl",
   "license": "ISC",
