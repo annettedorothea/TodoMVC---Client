@@ -66,7 +66,7 @@ export default class Container extends React.Component {
                                     <li>Todo.runBug(&lt;scenarioId&gt;, &lt;pauseInMillis (default is 0)&gt;)</li>
                                 </ul>
                                 You can view all bugs, scenarios and their execution results on <a
-                                href={`${AppUtils.getAceScenariosBaseUrl()}#/${AppUtils.getAceScenariosApiKey()}/scenarios`} target="ace-scenarios">ace.anfelisa.com</a>.
+                                href={`${AppUtils.getAceScenariosBaseUrl()}#/${AppUtils.getAceScenariosApiKey()}/scenarios`} target="acegen">acegen.de</a>.
                             </em>
                         </footer>
                     </aside>

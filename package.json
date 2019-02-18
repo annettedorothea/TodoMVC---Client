@@ -1,9 +1,10 @@
 {
   "name": "todo",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "",
   "scripts": {
-    "server": "watchify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.0.js -dv & live-server --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'"
+    "server": "watchify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.1.js -d & live-server --watch='lib/todo.acegen.js' --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'",
+    "build": "browserify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.1.js -d"
   },
   "author": "Annette Pohl",
   "license": "ISC",
@@ -22,8 +23,8 @@
   },
   "dependencies": {
     "json-stable-stringify": "^1.0.1",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -31,11 +32,7 @@
     "babel-preset-react": "^6.24.1",
     "babelify": "^8.0.0",
     "browserify": "^14.5.0",
-    "http-proxy-middleware": "^0.17.4",
     "live-server": "^1.2.1",
-    "node-sass": "^4.11.0",
-    "serve": "^7.0.0",
-    "uglify-js": "^3.4.9",
     "watch": "^1.0.2",
     "watchify": "^3.11.0"
   }
