@@ -3,8 +3,11 @@
   "version": "0.5.1",
   "description": "",
   "scripts": {
-    "server": "watchify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.1.js -d & live-server --watch='lib/todo.acegen.js' --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'",
-    "build": "browserify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.1.js -d"
+    "server": "watchify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.1.js -dv & live-server --watch='lib/todo.0.5.1.js' --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'",
+    "dev-win": "start npm run watch && start npm run start-server",
+    "watch": "watchify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.1.js -dv",
+    "build": "browserify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.1.js",
+    "start-server": "live-server --watch=lib/todo.0.5.1.js --host=127.0.0.1 --port=9999 --proxy=/api/:http://127.0.0.1:8096/api/ --proxy=/replay/:http://127.0.0.1:8098/replay/"
   },
   "author": "Annette Pohl",
   "license": "ISC",
