@@ -1,6 +1,6 @@
 # TodoMVC---Client
 
-This is the server for the acegen TodoMVC sample.
+This is the client for the acegen TodoMVC sample.
 
 See [TodoMVC](https://todo.acegen.de/#).
 
@@ -16,7 +16,7 @@ See [TodoMVC---Server](https://github.com/annettedorothea/TodoMVC---Server) for 
 - Create a settings.json file in the root directory of the project:
 ```
 {
-  "aceScenariosApiKey": "2202ddf3-0f76-4e1a-9766-acea7edb17ab",
+  "aceScenariosApiKey": "336ace6-a52f-11e8-98d0-529269fb1489",
   "aceScenariosBaseUrl": "https://acegen.de/",
   "clientVersion": "<version>",
   "development": true | false,
