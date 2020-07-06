@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020, Annette Pohl, Koblenz, Germany
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -12,6 +12,9 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ * generated with de.acegen 0.9.2
+ *
  */
 
 
@@ -19,6 +22,9 @@
 
 import Command from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
+import Utils from "../../ace/Utils";
+import ACEController from "../../ace/ACEController";
+import * as AppState from "../../ace/AppState";
 import CreateTodoOkEvent from "../../../gen/todo/events/CreateTodoOkEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
@@ -47,12 +53,12 @@ export default class AbstractCreateTodoCommand extends Command {
     
 	execute() {
 	    return new Promise((resolve, reject) => {
-			let queryParams = [];
-	        let payload = {	
-	        	description : this.commandData.description,
-	        	};
-
-			this.httpPost(this.adjustedUrl(`/api/todos/create`), false, queryParams, payload).then((data) => {
+	    	let payload = {
+	    		uuid : this.commandData.uuid,
+	    		description : this.commandData.description
+	    	};
+	
+			this.httpPost(`/${Utils.getRootPath()}/todos/create?uuid=${this.commandData.uuid}`, false, payload).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

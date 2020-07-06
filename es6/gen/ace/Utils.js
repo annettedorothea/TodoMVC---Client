@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020, Annette Pohl, Koblenz, Germany
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -12,6 +12,9 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ * generated with de.acegen 0.9.2
+ *
  */
 
 
@@ -24,47 +27,88 @@ import ReplayUtils from "../../src/app/ReplayUtils";
 export default class Utils {
 
     static getServerInfo() {
-        return AppUtils.httpGet('api/server/info');
+        return AppUtils.httpGet(Utils.getRootPath() + '/server/info');
+    }
+
+    static loadSettings() {
+        return new Promise((resolve, reject) => {
+            const headers = new Headers();
+            headers.append("Content-Type", "application/json");
+            headers.append("Accept", "application/json");
+
+            const options = {
+                method: 'GET',
+                headers: headers,
+                mode: 'cors',
+                cache: 'no-cache'
+            };
+
+            const request = new Request("settings.json", options);
+
+            fetch(request).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                resolve(data);
+            }).catch(function (error) {
+                reject(error);
+            });
+        });
+    }
+
+    static getClientVersion() {
+        return Utils.settings ? Utils.settings.clientVersion : "";
+    }
+
+    static isDevelopment() {
+        return Utils.settings ? Utils.settings.development : false;
+    }
+
+    static getAceScenariosApiKey() {
+        return Utils.settings ? Utils.settings.aceScenariosApiKey : "";
+    }
+
+    static getAceScenariosBaseUrl() {
+        return Utils.settings ? Utils.settings.aceScenariosBaseUrl : "";
+    }
+
+    static getRootPath() {
+        return Utils.settings ? (ACEController.execution !== ACEController.E2E ? Utils.settings.rootPath :  Utils.settings.replayRootPath) : "";
+    }
+
+    static getTimelineSize() {
+        return Utils.settings ? Utils.settings.timelineSize : 0;
     }
 
     static saveBug(description, creator) {
         return Utils.getServerInfo().then((serverInfo) => {
             const browser = Utils.getBrowserInfo();
             const uuid = AppUtils.createUUID();
+            const filteredTimeline = ACEController.timeline.filter((item, index) => {
+                if (index === 0) {
+                    return true;
+                }
+                return (!item.appState);
+            });
             const data = {
                 description,
-                timeline: JSON.stringify(ACEController.timeline),
+                timeline: JSON.stringify(filteredTimeline),
                 creator,
-                clientVersion: AppUtils.getClientVersion(),
+                clientVersion: Utils.getClientVersion(),
                 device: browser.name + " " + browser.version,
                 uuid,
-                apiKey: AppUtils.getAceScenariosApiKey(),
+                apiKey: Utils.getAceScenariosApiKey(),
                 serverVersion: serverInfo.serverVersion
             };
-            return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/create', false, [], data);
+            return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/bugs/create', false, data);
         });
     }
 
     static loadBug(id) {
-        const uuid = AppUtils.createUUID();
-        let queryParams = [];
-        queryParams.push({
-            key: "id",
-            value: id
-        });
-        queryParams.push({
-            key: "apiKey",
-            value: AppUtils.getAceScenariosApiKey()
-        });
-        queryParams.push({
-            key: "uuid",
-            value: uuid
-        });
-        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/bugs/get', false, queryParams);
+        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/bugs/get?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
     }
 
     static saveScenario(description, creator) {
-        return AppUtils.httpGet('api/e2e/timeline').then((serverTimeline) => {
+        return AppUtils.httpGet(Utils.getRootPath() + '/e2e/timeline').then((serverTimeline) => {
             return Utils.getServerInfo().then((serverInfo) => {
                 const browser = Utils.getBrowserInfo();
                 const uuid = AppUtils.createUUID();
@@ -73,13 +117,13 @@ export default class Utils {
                     timeline: JSON.stringify(ACEController.timeline),
                     serverTimeline: JSON.stringify(serverTimeline),
                     creator,
-                    clientVersion: AppUtils.getClientVersion(),
+                    clientVersion: Utils.getClientVersion(),
                     device: browser.name + " " + browser.version,
                     uuid,
-                    apiKey: AppUtils.getAceScenariosApiKey(),
+                    apiKey: Utils.getAceScenariosApiKey(),
                     serverVersion: serverInfo.serverVersion
                 };
-                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, [], data);
+                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, data);
             });
         });
     }
@@ -95,51 +139,23 @@ export default class Utils {
                     executor: ReplayUtils.scenarioConfig.executor,
                     result,
                     uuid,
-                    clientVersion: AppUtils.getClientVersion(),
+                    clientVersion: Utils.getClientVersion(),
                     device: browser.name + " " + browser.version,
-                    apiKey: AppUtils.getAceScenariosApiKey(),
+                    apiKey: Utils.getAceScenariosApiKey(),
                     serverVersion: serverInfo.serverVersion,
                     serverTimeline: JSON.stringify(serverTimeline)
                 };
-                return AppUtils.httpPost(AppUtils.getAceScenariosBaseUrl() + 'api/results/create', false, [], data);
+                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/results/create', false, data);
             });
         });
     }
 
     static loadScenario(id) {
-        const uuid = AppUtils.createUUID();
-        let queryParams = [];
-        queryParams.push({
-            key: "id",
-            value: id
-        });
-        queryParams.push({
-            key: "apiKey",
-            value: AppUtils.getAceScenariosApiKey()
-        });
-        queryParams.push({
-            key: "uuid",
-            value: uuid
-        });
-        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/get', false, queryParams);
+        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/get?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
     }
 
     static loadNextScenario(lastId) {
-        const uuid = AppUtils.createUUID();
-        let queryParams = [];
-        queryParams.push({
-            key: "lastId",
-            value: lastId
-        });
-        queryParams.push({
-            key: "apiKey",
-            value: AppUtils.getAceScenariosApiKey()
-        });
-        queryParams.push({
-            key: "uuid",
-            value: uuid
-        });
-        return AppUtils.httpGet(AppUtils.getAceScenariosBaseUrl() + 'api/scenarios/next', false, queryParams);
+        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/next?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
     }
 
     static getBrowserInfo() {
@@ -177,12 +193,14 @@ export default class Utils {
 
     static replayServerless(pauseInMillis) {
         ReplayUtils.prepareReplay();
+        AppUtils.createInitialAppState();
         ACEController.startReplay(ACEController.REPLAY, pauseInMillis)
     }
 
     static replayE2E(pauseInMillis, serverTimeline) {
         ReplayUtils.prepareReplay();
-        AppUtils.httpPut('replay/e2e/start', false, [], JSON.parse(serverTimeline)).then(() => {
+        AppUtils.createInitialAppState();
+        AppUtils.httpPut('replay/e2e/start', false, JSON.parse(serverTimeline)).then(() => {
             ACEController.startReplay(ACEController.E2E, pauseInMillis)
         });
     }
@@ -225,6 +243,7 @@ export default class Utils {
 
     static finishReplay() {
     	ReplayUtils.tearDownReplay();
+    	AppUtils.createInitialAppState();
         if (ReplayUtils.scenarioConfig.saveScenarioResult === true) {
             const normalized = Utils.normalizeTimelines(ACEController.expectedTimeline, ACEController.actualTimeline);
             const result = ReplayUtils.compareItems(normalized.expected, normalized.actual);

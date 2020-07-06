@@ -13,47 +13,6 @@ export default class AppUtils {
         });
     }
 
-    static loadSettings() {
-        return new Promise((resolve, reject) => {
-            const headers = new Headers();
-            headers.append("Content-Type", "application/json");
-            headers.append("Accept", "application/json");
-
-            const options = {
-                method: 'GET',
-                headers: headers,
-                mode: 'cors',
-                cache: 'no-cache'
-            };
-
-            const request = new Request("settings.json", options);
-
-            fetch(request).then(function (response) {
-                return response.json();
-            }).then(function (data) {
-                resolve(data);
-            }).catch(function (error) {
-                reject(error);
-            });
-        });
-    }
-
-    static getClientVersion() {
-        return AppUtils.settings ? AppUtils.settings.clientVersion : "";
-    }
-
-    static isDevelopment() {
-        return AppUtils.settings ? AppUtils.settings.development : false;
-    }
-
-    static getAceScenariosApiKey() {
-        return AppUtils.settings ? AppUtils.settings.aceScenariosApiKey : "";
-    }
-
-    static getAceScenariosBaseUrl() {
-        return AppUtils.settings ? AppUtils.settings.aceScenariosBaseUrl : "";
-    }
-
     static createInitialAppState() {
         const initialAppState = {
             filter: "all",
@@ -192,10 +151,6 @@ export default class AppUtils {
 
     static deepCopy(object) {
         return JSON.parse(JSON.stringify(object));
-    }
-
-    static getMaxTimelineSize() {
-        return 2000;
     }
 
 }

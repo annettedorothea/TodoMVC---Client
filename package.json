@@ -3,40 +3,26 @@
   "version": "0.5.1",
   "description": "",
   "scripts": {
-    "server": "watchify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.1.js -dv & live-server --watch='lib/todo.0.5.1.js' --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'",
-    "dev-win": "start npm run watch && start npm run start-server",
-    "watch": "watchify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.1.js -dv",
-    "build": "browserify ./es6/src/app/App.js --standalone Todo -o lib/todo.0.5.1.js",
-    "start-server": "live-server --watch=lib/todo.0.5.1.js --host=127.0.0.1 --port=9999 --proxy=/api/:http://127.0.0.1:8096/api/ --proxy=/replay/:http://127.0.0.1:8098/replay/"
+    "uglify": "uglifyjs lib/todo.0.5.1.js --compress --mangle --output lib/todo.0.5.1.min.js",
+    "build": "browserify --entry es6/src/app/App.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --outfile lib/todo.0.5.1.js --debug --standalone Todo",
+    "start": "watchify --entry es6/src/app/App.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --outfile lib/todo.0.5.1js --debug --standalone Todo & live-server --watch=lib/todo.0.5.1.js --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'",
+    "start-spring": "watchify --entry es6/src/app/App.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --outfile lib/todo.0.5.1js --debug --standalone Todo & live-server --watch=lib/todo.0.5.1.js --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8042/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'"
   },
   "author": "Annette Pohl",
   "license": "ISC",
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "presets": [
-            "es2015",
-            "react"
-          ]
-        }
-      ]
-    ]
-  },
   "dependencies": {
     "json-stable-stringify": "^1.0.1",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.24.1",
-    "babelify": "^8.0.0",
-    "browserify": "^14.5.0",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babelify": "^10.0.0",
+    "browserify": "^16.5.1",
     "live-server": "^1.2.1",
-    "watch": "^1.0.2",
-    "watchify": "^3.11.0"
+    "uglify-js": "^3.9.0",
+    "watchify": "^3.11.1"
   }
 }

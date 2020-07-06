@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020, Annette Pohl, Koblenz, Germany
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -12,6 +12,9 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ * generated with de.acegen 0.9.2
+ *
  */
 
 
@@ -23,7 +26,7 @@ import ACEController from "./ACEController";
 import Utils from "./Utils";
 
 export function runScenario(scenarioId, executor = "unknown", pauseInMillis = 0) {
-    if (AppUtils.isDevelopment() === false) {
+    if (Utils.isDevelopment() === false) {
         console.error("runScenario is only available during development");
     } else {
         Utils.loadScenario(scenarioId).then((scenario) => {
@@ -39,7 +42,7 @@ export function runScenario(scenarioId, executor = "unknown", pauseInMillis = 0)
 }
 
 export function runAllScenarios(executor = "unknown", pauseInMillis = 0) {
-    if (AppUtils.isDevelopment() === false) {
+    if (Utils.isDevelopment() === false) {
         console.error("runAllScenarios is only available during development");
     } else {
         Utils.loadNextScenario(null).then((scenario) => {
@@ -59,7 +62,7 @@ export function runAllScenarios(executor = "unknown", pauseInMillis = 0) {
 }
 
 export function saveScenario(description, creator) {
-    if (AppUtils.isDevelopment() === false) {
+    if (Utils.isDevelopment() === false) {
         console.error("saveScenario is only available during development");
     } else {
         Utils.saveScenario(description, creator).then((id) => {

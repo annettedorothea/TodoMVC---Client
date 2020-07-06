@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020, Annette Pohl, Koblenz, Germany
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -12,6 +12,9 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ * generated with de.acegen 0.9.2
+ *
  */
 
 
@@ -19,6 +22,9 @@
 
 import Command from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
+import Utils from "../../ace/Utils";
+import ACEController from "../../ace/ACEController";
+import * as AppState from "../../ace/AppState";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractClearDoneCommand extends Command {
@@ -42,9 +48,11 @@ export default class AbstractClearDoneCommand extends Command {
     
 	execute() {
 	    return new Promise((resolve, reject) => {
-			let queryParams = [];
-	        
-			this.httpDelete(this.adjustedUrl(`/api/todos/clear-done`), false, queryParams).then((data) => {
+	    	let payload = {
+	    		uuid : this.commandData.uuid
+	    	};
+	
+			this.httpDelete(`/${Utils.getRootPath()}/todos/clear-done?uuid=${this.commandData.uuid}`, false).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

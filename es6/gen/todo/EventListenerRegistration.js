@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020, Annette Pohl, Koblenz, Germany
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -12,25 +12,28 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ * generated with de.acegen 0.9.2
+ *
  */
 
 
 
 
 import ACEController from "../ace/ACEController";
-import * as AppState from "../ace/WriteAppState";
+import * as AppState from "../ace/AppState";
 
 export default class EventListenerRegistrationTodo {
 
 	static init() {
-		ACEController.registerListener('todo.InitOkEvent', AppState.set_state_State_filter);
-		ACEController.registerListener('todo.GetTodoListOkEvent', AppState.set_state_State_todoList);
-		ACEController.registerListener('todo.NewTodoChangedOkEvent', AppState.set_state_State_newTodo);
-		ACEController.registerListener('todo.CreateTodoOkEvent', AppState.set_state_State_newTodo);
-		ACEController.registerListener('todo.EditTodoOkEvent', AppState.set_state_State_editedTodo);
-		ACEController.registerListener('todo.EditedTodoChangedOkEvent', AppState.set_state_State_editedTodo_EditedTodo_editedDescription);
-		ACEController.registerListener('todo.UpdateTodoOkEvent', AppState.reset_state_State_editedTodo);
-		ACEController.registerListener('todo.UpdateTodoEmptyEvent', AppState.reset_state_State_editedTodo);
+		ACEController.registerListener('todo.InitOkEvent', AppState.set_filter);
+		ACEController.registerListener('todo.GetTodoListOkEvent', AppState.set_todoList);
+		ACEController.registerListener('todo.NewTodoChangedOkEvent', AppState.set_newTodo);
+		ACEController.registerListener('todo.CreateTodoOkEvent', AppState.set_newTodo);
+		ACEController.registerListener('todo.EditTodoOkEvent', AppState.set_editedTodo);
+		ACEController.registerListener('todo.EditedTodoChangedOkEvent', AppState.set_editedTodo_editedDescription);
+		ACEController.registerListener('todo.UpdateTodoOkEvent', AppState.reset_editedTodo);
+		ACEController.registerListener('todo.UpdateTodoEmptyEvent', AppState.reset_editedTodo);
 	}
 
 }

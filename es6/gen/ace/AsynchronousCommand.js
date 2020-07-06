@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
+ * Copyright (c) 2020, Annette Pohl, Koblenz, Germany
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -12,6 +12,9 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ * generated with de.acegen 0.9.2
+ *
  */
 
 
@@ -26,12 +29,13 @@ export default class AsynchronousCommand extends Command {
     executeCommand() {
         return new Promise((resolve, reject) => {
 			if (ACEController.execution !== ACEController.REPLAY) {
-				if (this.initCommandData()) {
+				if (this.validateCommandData()) {
 				    this.execute().then(() => {
 				        ACEController.addItemToTimeLine({command: this});
 				        this.publishEvents();
 				        resolve();
 				    }, (error) => {
+				    	ACEController.addItemToTimeLine({command: this});
 				        reject(error);
 				    });
 				} else {
@@ -40,87 +44,57 @@ export default class AsynchronousCommand extends Command {
 					resolve();
 				}
 			} else {
-			    const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
-			    this.commandData = timelineCommand.commandData;
-			    ACEController.addItemToTimeLine({command: this});
-		        this.publishEvents();
-		        resolve();
+				const timelineCommand = ACEController.getCommandByUuid(this.commandData.uuid);
+				if (timelineCommand) {
+				    if (timelineCommand.commandData.error) {
+				        reject(timelineCommand.commandData.error);
+				    } else {
+				        this.commandData = timelineCommand.commandData;
+				        ACEController.addItemToTimeLine({command: this});
+				        this.publishEvents();
+				        resolve();
+				    }
+				} else {
+				    resolve();
+				}
 			}
         });
     }
 
-    initCommandData() {
+    validateCommandData() {
     	return true;
     }
 
-    adjustedUrl(url) {
-        if (ACEController.execution !== ACEController.E2E) {
-            return url;
-        } else {
-            return url.replace('api', 'replay');
-        }
-    }
-
-    httpGet(url, authorize, queryParams) {
+    httpGet(url, authorize) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
-            queryParams = this.addUuidToQueryParams(queryParams);
-            return AppUtils.httpGet(url, authorize, queryParams);
+            return AppUtils.httpGet(url, authorize);
         }, (error) => {
             throw error;
         });
     }
 
-    httpPost(url, authorize, queryParams, data) {
+    httpPost(url, authorize, data) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
-            queryParams = this.addUuidToQueryParams(queryParams);
-            data = this.addUuidToData(data);
-            return AppUtils.httpPost(url, authorize, queryParams, data);
+            return AppUtils.httpPost(url, authorize, data);
         }, (error) => {
             throw error;
         });
     }
 
-    httpPut(url, authorize, queryParams, data) {
+    httpPut(url, authorize, data) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
-            queryParams = this.addUuidToQueryParams(queryParams);
-            data = this.addUuidToData(data);
-            return AppUtils.httpPut(url, authorize, queryParams, data);
+            return AppUtils.httpPut(url, authorize, data);
         }, (error) => {
             throw error;
         });
     }
 
-    httpDelete(url, authorize, queryParams, data) {
+    httpDelete(url, authorize, data) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
-            queryParams = this.addUuidToQueryParams(queryParams);
-            data = this.addUuidToData(data);
-            return AppUtils.httpDelete(url, authorize, queryParams, data);
+            return AppUtils.httpDelete(url, authorize, data);
         }, (error) => {
             throw error;
         });
-    }
-
-    addUuidToQueryParams(queryParams) {
-        if (!queryParams) {
-            queryParams = [];
-        }
-        if (this.commandData.uuid) {
-            queryParams.push({
-                key: "uuid",
-                value: this.commandData.uuid
-            });
-        }
-        return queryParams;
-    }
-
-    addUuidToData(data) {
-        if (!data) {
-            data = {};
-        }
-        if (this.commandData.uuid) {
-            data.uuid = this.commandData.uuid;
-        }
-        return data;
     }
 
 }
