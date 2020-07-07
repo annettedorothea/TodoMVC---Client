@@ -1,14 +1,20 @@
-import ACEController from "../../gen/ace/ACEController";
 import * as App from "./App";
-import * as WriteAppState from "../../gen/ace/WriteAppState";
-import * as ReadAppState from "../../gen/ace/ReadAppState";
+import * as AppState from "../../gen/ace/AppState";
 import {init} from "../../gen/todo/ActionFunctions";
+import EventListenerRegistrationTodo from "../../gen/todo/EventListenerRegistration";
+import ActionFactoryRegistrationTodo from "../../gen/todo/ActionFactoryRegistration";
+import Utils from "../../gen/ace/Utils";
 
 export default class AppUtils {
 
+    static initEventListenersAndActionFactories() {
+        EventListenerRegistrationTodo.init();
+        ActionFactoryRegistrationTodo.init();
+    }
+
     static start() {
-        AppUtils.loadSettings().then((settings) => {
-            AppUtils.settings = settings;
+        Utils.loadSettings().then((settings) => {
+            Utils.settings = settings;
             init(window.location.hash.substring(1));
         });
     }
@@ -22,14 +28,14 @@ export default class AppUtils {
             editedTodo: null,
             error: null
         };
-        WriteAppState.setInitialState(initialAppState);
+        AppState.setInitialAppState(initialAppState);
     }
 
     static renderNewState() {
-        App.render(ReadAppState.getState());
+        App.render(AppState.getAppState());
     }
 
-    static httpGet(url, authorize, queryParams) {
+    static httpGet(url, authorize) {
         return new Promise((resolve, reject) => {
             const headers = new Headers();
             headers.append("Content-Type", "application/json");
@@ -42,25 +48,40 @@ export default class AppUtils {
                 cache: 'no-cache'
             };
 
-            const adjustedUrl = AppUtils.url(url);
-            const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
-            const request = new Request(completeUrl, options);
+            const request = new Request(url, options);
 
+            let status;
+            let statusText;
             fetch(request).then(function (response) {
-                if (response.status >= 300) {
-                    throw new Error(`status code ${response.status} and message ${response.statusText}`);
+                status = response.status;
+                statusText = response.statusText;
+                if (status >= 300) {
+                    return response.text();
                 } else {
                     return response.json();
                 }
             }).then(function (data) {
-                resolve(data);
+                if (status >= 300) {
+                    const error = {
+                        code: status,
+                        text: statusText,
+                        errorKey: data
+                    };
+                    reject(error);
+                } else {
+                    resolve(data);
+                }
             }).catch(function (error) {
-                reject(`GET failed with ${error.message}`);
+                const status = {
+                    code: error.name,
+                    text: error.message
+                };
+                reject(status);
             });
         });
     }
 
-    static httpChange(methodType, url, authorize, queryParams, data) {
+    static httpChange(methodType, url, authorize, data) {
         return new Promise((resolve, reject) => {
             const headers = new Headers();
             headers.append("Content-Type", "application/json");
@@ -74,65 +95,54 @@ export default class AppUtils {
                 body: JSON.stringify(data)
             };
 
-            const adjustedUrl = AppUtils.url(url);
-            const completeUrl = adjustedUrl + AppUtils.queryParamString(adjustedUrl, queryParams);
-            const request = new Request(completeUrl, options);
+            const request = new Request(url, options);
 
+            let status;
+            let statusText;
             fetch(request).then(function (response) {
-                if (response.status >= 300) {
-                    throw new Error(`status code ${response.status} and message ${response.statusText}`);
-                } else {
-                    return response.text();
-                }
+                status = response.status;
+                statusText = response.statusText;
+                return response.text();
             }).then(function (data) {
-                resolve(data);
+                if (status >= 300) {
+                    const error = {
+                        code: status,
+                        text: statusText,
+                        errorKey: data
+                    };
+                    reject(error);
+                } else {
+                    resolve(data);
+                }
             }).catch(function (error) {
-                reject(`${methodType} failed with ${error.message}`);
+                const status = {
+                    code: error.name,
+                    text: error.message
+                };
+                reject(status);
             });
         });
     }
 
-    static httpPost(url, authorize, queryParams, data, commandParam) {
-        return AppUtils.httpChange("POST", url, authorize, queryParams, data, commandParam);
+    static httpPost(url, authorize, data) {
+        return AppUtils.httpChange("POST", url, authorize, data);
     }
 
-    static httpPut(url, authorize, queryParams, data, commandParam) {
-        return AppUtils.httpChange("PUT", url, authorize, queryParams, data, commandParam);
+    static httpPut(url, authorize, data) {
+        return AppUtils.httpChange("PUT", url, authorize, data);
     }
 
-    static httpDelete(url, authorize, queryParams, data, commandParam) {
-        return AppUtils.httpChange("DELETE", url, authorize, queryParams, data, commandParam);
+    static httpDelete(url, authorize, data) {
+        return AppUtils.httpChange("DELETE", url, authorize, data);
     }
 
-    static queryParamString(url, queryParams) {
-        let queryString = "";
-        if (queryParams && queryParams.length > 0) {
-            for (let i = 0; i < queryParams.length; i++) {
-                if (url.indexOf('?') < 0 && i === 0) {
-                    queryString += '?'
-                } else {
-                    queryString += '&'
-                }
-                queryString += queryParams[i].key + "=" + queryParams[i].value;
-            }
-        }
-        return queryString;
-    }
-
-    static url(url) {
-        if (ACEController.execution !== ACEController.E2E) {
-            return url;
-        } else {
-            return url.replace('api', 'replay');
-        }
-    }
 
     static createUUID() {
         let d = new Date().getTime();
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = (d + Math.random() * 16) % 16 | 0;
+            let r = (d + Math.random() * 16) % 16 | 0;
             d = Math.floor(d / 16);
-            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
         });
     }
 

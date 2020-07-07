@@ -3,7 +3,6 @@ import AbstractGetTodoListCommand from "../../../gen/todo/commands/AbstractGetTo
 export default class GetTodoListCommand extends AbstractGetTodoListCommand {
 
     initCommandData() {
-    	//add from appState to commandData
     	return true;
     }
 

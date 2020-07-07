@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * generated with de.acegen 0.9.2
+ * generated with de.acegen 0.9.5
  *
  */
 
@@ -155,7 +155,7 @@ export default class Utils {
     }
 
     static loadNextScenario(lastId) {
-        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/next?id=${id}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
+        return AppUtils.httpGet(Utils.getAceScenariosBaseUrl() + `api/scenarios/next?lastId=${lastId}&apiKey=${Utils.getAceScenariosApiKey()}&uuid=${AppUtils.createUUID()}`, false);
     }
 
     static getBrowserInfo() {
@@ -242,6 +242,7 @@ export default class Utils {
     }
 
     static finishReplay() {
+        console.log("replay finished");
     	ReplayUtils.tearDownReplay();
     	AppUtils.createInitialAppState();
         if (ReplayUtils.scenarioConfig.saveScenarioResult === true) {
@@ -300,8 +301,9 @@ export default class Utils {
         if (item.event) {
             return item.event.eventName;
         }
+		return "AppState";
     }
-
+    
 }
 
 

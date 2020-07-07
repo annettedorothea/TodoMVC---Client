@@ -21,12 +21,14 @@ ACE
 		on empty
 		
 	EditTodo (id)
+		fromAppState ( todoList )
 		on ok ( set editedTodo)
 	
 	EditedTodoChanged (editedDescription)
 		on ok ( set editedTodo.editedDescription)
 	
 	UpdateTodo
+		fromAppState ( editedTodo )
 			call com.anfelisa.todo.UpdateTodo
 			loadingFlag loading 
 		on ok (reset editedTodo) triggers (GetTodoList)

@@ -4,15 +4,16 @@ import TodoList from "./TodoList";
 import Footer from "./Footer";
 import Spinner from "./Spinner";
 import ErrorMessage from "./ErrorMessage";
-import * as ReadAppState from "../../gen/ace/ReadAppState";
+import * as AppState from "../../gen/ace/AppState";
 import AppUtils from "../app/AppUtils";
 import {toggleAll} from "../../gen/todo/ActionFunctions";
+import Utils from "../../gen/ace/Utils";
 
 export default class Container extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = ReadAppState.getState();
+        this.state = AppState.getAppState();
     }
 
     render() {
@@ -66,7 +67,8 @@ export default class Container extends React.Component {
                                     <li>Todo.runBug(&lt;scenarioId&gt;, &lt;pauseInMillis (default is 0)&gt;)</li>
                                 </ul>
                                 You can view all bugs, scenarios and their execution results on <a
-                                href={`${AppUtils.getAceScenariosBaseUrl()}#/${AppUtils.getAceScenariosApiKey()}/scenarios`} target="acegen">acegen.de</a>.
+                                href={`${Utils.getAceScenariosBaseUrl()}#/${Utils.getAceScenariosApiKey()}/scenarios`}
+                                target="acegen">acegen.de</a>.
                             </em>
                         </footer>
                     </aside>

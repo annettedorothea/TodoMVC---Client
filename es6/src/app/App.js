@@ -1,6 +1,4 @@
 import AppUtils from './AppUtils';
-import EventListenerRegistrationTodo from "../../gen/todo/EventListenerRegistration";
-import ActionFactoryRegistrationTodo from "../../gen/todo/ActionFactoryRegistration";
 import Container from "../components/Container";
 import {init} from "../../gen/todo/ActionFunctions";
 
@@ -25,8 +23,7 @@ window.onhashchange = () => {
     init(window.location.hash.substring(1));
 };
 
-EventListenerRegistrationTodo.init();
-ActionFactoryRegistrationTodo.init();
+AppUtils.initEventListenersAndActionFactories();
 AppUtils.start();
 
 /*       S.D.G.       */

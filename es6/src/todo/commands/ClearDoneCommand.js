@@ -3,7 +3,6 @@ import AbstractClearDoneCommand from "../../../gen/todo/commands/AbstractClearDo
 export default class ClearDoneCommand extends AbstractClearDoneCommand {
 
     initCommandData() {
-    	//add from appState to commandData
     	return true;
     }
 
