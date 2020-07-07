@@ -41,7 +41,7 @@ a server in dev and a server in replay mode  is running:
 - Todo.runScenario("scenarioId", "your name", pauseInMillis (default is 0))
 - Todo.runAllScenarios("your name", pauseInMillis (default is 0))
 - Todo.saveBug("description", "your name")
-- Todo.runBug("bugId, pauseInMillis (default is 0))
+- Todo.runBug("bugId", pauseInMillis (default is 0))
 
 You can view all bugs, scenarios and their execution results on 
 [acegen.de](https://acegen.de/#/336ace6-a52f-11e8-98d0-529269fb1489/scenarios).
