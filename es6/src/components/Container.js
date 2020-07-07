@@ -57,14 +57,14 @@ export default class Container extends React.Component {
                                 These functions can be executed from JavaScript console:
                                 <ul>
                                     <li>Todo.saveScenario("&lt;description&gt;", "&lt;your name&gt;")</li>
-                                    <li>Todo.runScenario(&lt;scenarioId&gt;, "&lt;your name&gt;", &lt;pauseInMillis
+                                    <li>Todo.runScenario("&lt;scenarioId&gt;", "&lt;your name&gt;", &lt;pauseInMillis
                                         (default is 0)&gt;)
                                     </li>
                                     <li>Todo.runAllScenarios("&lt;your name&gt;", &lt;pauseInMillis (default is
                                         0)&gt;)
                                     </li>
                                     <li>Todo.saveBug("&lt;description&gt;", "&lt;your name&gt;")</li>
-                                    <li>Todo.runBug(&lt;scenarioId&gt;, &lt;pauseInMillis (default is 0)&gt;)</li>
+                                    <li>Todo.runBug("&lt;bugId&gt;", &lt;pauseInMillis (default is 0)&gt;)</li>
                                 </ul>
                                 You can view all bugs, scenarios and their execution results on <a
                                 href={`${Utils.getAceScenariosBaseUrl()}#/${Utils.getAceScenariosApiKey()}/scenarios`}
