@@ -41,7 +41,7 @@ export function set_filter(eventData) {
 }
 
 export function reset_filter() {
-	appState.filter = null;
+	appState.filter = undefined;
 }
 
 export function get_newTodo() {
@@ -53,7 +53,7 @@ export function set_newTodo(eventData) {
 }
 
 export function reset_newTodo() {
-	appState.newTodo = null;
+	appState.newTodo = undefined;
 }
 
 export function get_loading() {
@@ -65,7 +65,7 @@ export function set_loading(eventData) {
 }
 
 export function reset_loading() {
-	appState.loading = null;
+	appState.loading = undefined;
 }
 
 export function get_todoList() {
@@ -77,7 +77,7 @@ export function set_todoList(eventData) {
 }
 
 export function reset_todoList() {
-	appState.todoList = null;
+	appState.todoList = undefined;
 }
 
 export function get_list() {
@@ -89,10 +89,13 @@ export function set_list(eventData) {
 }
 
 export function reset_list() {
-	appState.list = null;
+	appState.list = undefined;
 }
 
 export function get_editedTodo() {
+	if (!appState.editedTodo) {
+		return undefined;
+	}
 	return AppUtils.deepCopy(appState.editedTodo);
 }
 
@@ -101,7 +104,7 @@ export function set_editedTodo(eventData) {
 }
 
 export function reset_editedTodo() {
-	appState.editedTodo = null;
+	appState.editedTodo = undefined;
 }
 
 export function merge_editedTodo(eventData) {
@@ -137,7 +140,7 @@ export function reset_editedTodo_editedDescription() {
 	if (!appState.editedTodo) {
 		return;
 	}
-	appState.editedTodo.editedDescription = null;
+	appState.editedTodo.editedDescription = undefined;
 }
 
 export function get_editedTodo_id() {
@@ -158,7 +161,7 @@ export function reset_editedTodo_id() {
 	if (!appState.editedTodo) {
 		return;
 	}
-	appState.editedTodo.id = null;
+	appState.editedTodo.id = undefined;
 }
 
 export function get_editedTodo_description() {
@@ -179,6 +182,6 @@ export function reset_editedTodo_description() {
 	if (!appState.editedTodo) {
 		return;
 	}
-	appState.editedTodo.description = null;
+	appState.editedTodo.description = undefined;
 }
 
