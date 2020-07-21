@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * generated with de.acegen 0.9.6
+ * generated with de.acegen 0.9.7
  *
  */
 
@@ -83,15 +83,9 @@ export default class Utils {
         return Utils.getServerInfo().then((serverInfo) => {
             const browser = Utils.getBrowserInfo();
             const uuid = AppUtils.createUUID();
-            const filteredTimeline = ACEController.timeline.filter((item, index) => {
-                if (index === 0) {
-                    return true;
-                }
-                return (!item.appState);
-            });
             const data = {
                 description,
-                timeline: JSON.stringify(filteredTimeline),
+                timeline: JSON.stringify(ACEController.timeline),
                 creator,
                 clientVersion: Utils.getClientVersion(),
                 device: browser.name + " " + browser.version,
