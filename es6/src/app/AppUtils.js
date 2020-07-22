@@ -112,7 +112,7 @@ export default class AppUtils {
                     };
                     reject(error);
                 } else {
-                    resolve(data);
+                    resolve(JSON.parse(data));
                 }
             }).catch(function (error) {
                 const status = {

@@ -65,8 +65,8 @@ export function saveScenario(description, creator) {
     if (Utils.isDevelopment() === false) {
         console.error("saveScenario is only available during development");
     } else {
-        Utils.saveScenario(description, creator).then((id) => {
-            console.log(`saved scenario with id ${id}`);
+        Utils.saveScenario(description, creator).then((data) => {
+            console.log(`saved scenario with id ${data.id}`);
             ACEController.timeline = [];
             AppUtils.start();
         });
