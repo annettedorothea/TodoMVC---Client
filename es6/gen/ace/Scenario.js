@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * generated with de.acegen 0.9.7
+ * generated with de.acegen 0.9.8
  *
  */
 
@@ -65,8 +65,8 @@ export function saveScenario(description, creator) {
     if (Utils.isDevelopment() === false) {
         console.error("saveScenario is only available during development");
     } else {
-        Utils.saveScenario(description, creator).then((data) => {
-            console.log(`saved scenario with id ${data.id}`);
+        Utils.saveScenario(description, creator).then((id) => {
+            console.log(`saved scenario with id ${id}`);
             ACEController.timeline = [];
             AppUtils.start();
         });
