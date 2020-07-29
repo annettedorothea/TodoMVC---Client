@@ -55,28 +55,17 @@ export default class AppUtils {
             fetch(request).then(function (response) {
                 status = response.status;
                 statusText = response.statusText;
-                if (status >= 300) {
-                    return response.text();
-                } else {
+                if (status < 300) {
                     return response.json();
                 }
             }).then(function (data) {
                 if (status >= 300) {
-                    const error = {
-                        code: status,
-                        text: statusText,
-                        errorKey: data
-                    };
-                    reject(error);
+                    reject(statusText);
                 } else {
                     resolve(data);
                 }
             }).catch(function (error) {
-                const status = {
-                    code: error.name,
-                    text: error.message
-                };
-                reject(status);
+                reject(error + " in GET of " + url);
             });
         });
     }
@@ -102,24 +91,14 @@ export default class AppUtils {
             fetch(request).then(function (response) {
                 status = response.status;
                 statusText = response.statusText;
-                return response.text();
-            }).then(function (data) {
+            }).then(function () {
                 if (status >= 300) {
-                    const error = {
-                        code: status,
-                        text: statusText,
-                        errorKey: data
-                    };
-                    reject(error);
+                    reject(statusText);
                 } else {
-                    resolve(JSON.parse(data));
+                    resolve();
                 }
             }).catch(function (error) {
-                const status = {
-                    code: error.name,
-                    text: error.message
-                };
-                reject(status);
+                reject(error + " in " + methodType + " of " + url);
             });
         });
     }

@@ -13,8 +13,9 @@ export default class UpdateTodoCommand extends AbstractUpdateTodoCommand {
         }
     }
 
-    handleResponse(resolve, reject) {
+    handleResponse(resolve) {
         this.commandData.outcome = this.ok;
+        this.commandData.editedTodo = {};
     	resolve();
     }
     handleError(resolve, reject) {

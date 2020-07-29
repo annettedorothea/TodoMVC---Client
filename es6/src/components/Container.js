@@ -5,7 +5,6 @@ import Footer from "./Footer";
 import Spinner from "./Spinner";
 import ErrorMessage from "./ErrorMessage";
 import * as AppState from "../../gen/ace/AppState";
-import AppUtils from "../app/AppUtils";
 import {toggleAll} from "../../gen/todo/ActionFunctions";
 import Utils from "../../gen/ace/Utils";
 

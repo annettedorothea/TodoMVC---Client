@@ -28,11 +28,18 @@ ACE
 		on ok ( set editedTodo.editedDescription)
 	
 	UpdateTodo
-		fromAppState ( editedTodo )
+		fromAppState ( 
+			editedTodo.id as id, 
+			editedTodo.editedDescription as description
+		)
 			call com.anfelisa.todo.UpdateTodo
 			loadingFlag loading 
-		on ok (reset editedTodo) triggers (GetTodoList)
-		on empty (reset editedTodo)
+		on ok (
+			set editedTodo 
+		) triggers (GetTodoList)
+		on empty (
+			set editedTodo 
+		)
 	
 	ToggleTodo (id)
 			call com.anfelisa.todo.ToggleTodo
