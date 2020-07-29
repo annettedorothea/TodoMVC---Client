@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * generated with de.acegen 0.9.7
+ * generated with de.acegen 0.9.8
  *
  */
 
@@ -93,7 +93,11 @@ export default class Utils {
                 apiKey: Utils.getAceScenariosApiKey(),
                 serverVersion: serverInfo.serverVersion
             };
-            return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/bugs/create', false, data);
+            return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/bugs/create', false, data).then(() => {
+                return new Promise((resolve) => {
+                    resolve(uuid);
+                });
+            });
         });
     }
 
@@ -117,7 +121,11 @@ export default class Utils {
                     apiKey: Utils.getAceScenariosApiKey(),
                     serverVersion: serverInfo.serverVersion
                 };
-                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, data);
+                return AppUtils.httpPost(Utils.getAceScenariosBaseUrl() + 'api/scenarios/create', false, data).then(() => {
+                    return new Promise((resolve) => {
+                        resolve(uuid);
+                    });
+                });
             });
         });
     }

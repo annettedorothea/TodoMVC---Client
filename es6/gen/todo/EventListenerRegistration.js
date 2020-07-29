@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * generated with de.acegen 0.9.7
+ * generated with de.acegen 0.9.8
  *
  */
 
@@ -32,8 +32,8 @@ export default class EventListenerRegistrationTodo {
 		ACEController.registerListener('todo.CreateTodoOkEvent', AppState.set_newTodo);
 		ACEController.registerListener('todo.EditTodoOkEvent', AppState.set_editedTodo);
 		ACEController.registerListener('todo.EditedTodoChangedOkEvent', AppState.set_editedTodo_editedDescription);
-		ACEController.registerListener('todo.UpdateTodoOkEvent', AppState.reset_editedTodo);
-		ACEController.registerListener('todo.UpdateTodoEmptyEvent', AppState.reset_editedTodo);
+		ACEController.registerListener('todo.UpdateTodoOkEvent', AppState.set_editedTodo);
+		ACEController.registerListener('todo.UpdateTodoEmptyEvent', AppState.set_editedTodo);
 	}
 
 }

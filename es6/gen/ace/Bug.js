@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * generated with de.acegen 0.9.7
+ * generated with de.acegen 0.9.8
  *
  */
 
@@ -33,8 +33,8 @@ export function runBug(bugId, pauseInMillis = 0) {
 }
 
 export function saveBug(description, creator) {
-    Utils.saveBug(description, creator).then((data) => {
-        console.log(`saved bug with id ${data.id}`);
+    Utils.saveBug(description, creator).then((id) => {
+        console.log(`saved bug with id ${id}`);
     });
 }
 

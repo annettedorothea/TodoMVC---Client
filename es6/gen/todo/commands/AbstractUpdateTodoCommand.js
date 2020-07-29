@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * generated with de.acegen 0.9.7
+ * generated with de.acegen 0.9.8
  *
  */
 
@@ -34,7 +34,8 @@ export default class AbstractUpdateTodoCommand extends Command {
         super(commandData, "todo.UpdateTodoCommand");
         this.ok = "ok";
         this.empty = "empty";
-        this.commandData.editedTodo = AppState.get_editedTodo();
+        this.commandData.id = AppState.get_editedTodo_id();
+        this.commandData.description = AppState.get_editedTodo_editedDescription();
     }
 
     publishEvents() {
