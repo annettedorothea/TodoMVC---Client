@@ -27,10 +27,7 @@ See [TodoMVC---Server](https://github.com/annettedorothea/TodoMVC---Server) for 
 ```
 - Run ```npm install```. 
 - Start the server with ```npm start```.
-
-If you want to use the [de.acegen](https://github.com/annettedorothea/de.acegen) 
-Eclpise plugin, see [TodoMVC---Server](https://github.com/annettedorothea/TodoMVC---Server)
-for instructions.
+- Install the [de.acegen](https://github.com/annettedorothea/de.acegen) Ecplise plugin from [http://acegen.de](http://acegen.de).
 
 ## Replay
 
