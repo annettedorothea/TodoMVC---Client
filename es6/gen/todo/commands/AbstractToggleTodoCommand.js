@@ -36,7 +36,7 @@ export default class AbstractToggleTodoCommand extends AbstractAsynchronousComma
 	    	let payload = {
 	    	};
 	
-			this.doHttpPut(`/${Utils.getRootPath()}/todos/toggle?id=${this.commandData.id}`, false).then((data) => {
+			this.httpPut(`/${Utils.getRootPath()}/todos/toggle?id=${this.commandData.id}`, false).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

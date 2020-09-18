@@ -47,7 +47,7 @@ export default class AbstractUpdateTodoCommand extends AbstractAsynchronousComma
 	    		description : this.commandData.description
 	    	};
 	
-			this.doHttpPut(`/${Utils.getRootPath()}/todos/update`, false, payload).then((data) => {
+			this.httpPut(`/${Utils.getRootPath()}/todos/update`, false, payload).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

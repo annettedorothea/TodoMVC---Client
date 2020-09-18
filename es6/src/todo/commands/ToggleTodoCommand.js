@@ -11,7 +11,7 @@ export default class ToggleTodoCommand extends AbstractToggleTodoCommand {
     	resolve();
     }
     handleError(resolve, reject) {
-    	reject(this.commandData.error);
+        reject(this.commandData.error);
     }
 }
 

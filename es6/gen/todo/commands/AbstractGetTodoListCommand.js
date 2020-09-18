@@ -34,7 +34,7 @@ export default class AbstractGetTodoListCommand extends AbstractAsynchronousComm
 	execute() {
 	    return new Promise((resolve, reject) => {
 	
-			this.doHttpGet(`/${Utils.getRootPath()}/todos/all`, false).then((data) => {
+			this.httpGet(`/${Utils.getRootPath()}/todos/all`, false).then((data) => {
 				this.commandData.todoList = data.todoList;
 				this.handleResponse(resolve, reject);
 			}, (error) => {

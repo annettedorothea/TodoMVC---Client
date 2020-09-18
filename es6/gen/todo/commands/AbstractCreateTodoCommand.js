@@ -42,7 +42,7 @@ export default class AbstractCreateTodoCommand extends AbstractAsynchronousComma
 	    		description : this.commandData.description
 	    	};
 	
-			this.doHttpPost(`/${Utils.getRootPath()}/todos/create`, false, payload).then((data) => {
+			this.httpPost(`/${Utils.getRootPath()}/todos/create`, false, payload).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

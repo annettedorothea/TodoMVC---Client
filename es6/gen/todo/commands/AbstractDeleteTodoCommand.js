@@ -36,7 +36,7 @@ export default class AbstractDeleteTodoCommand extends AbstractAsynchronousComma
 	    	let payload = {
 	    	};
 	
-			this.doHttpDelete(`/${Utils.getRootPath()}/todos/delete?id=${this.commandData.id}`, false).then((data) => {
+			this.httpDelete(`/${Utils.getRootPath()}/todos/delete?id=${this.commandData.id}`, false).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

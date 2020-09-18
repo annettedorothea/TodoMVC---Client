@@ -36,7 +36,7 @@ export default class AbstractClearDoneCommand extends AbstractAsynchronousComman
 	    	let payload = {
 	    	};
 	
-			this.doHttpDelete(`/${Utils.getRootPath()}/todos/clear-done`, false).then((data) => {
+			this.httpDelete(`/${Utils.getRootPath()}/todos/clear-done`, false).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

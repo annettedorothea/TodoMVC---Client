@@ -6,11 +6,11 @@
 
 
 import ACEController from "./ACEController";
-import AsynchronousCommand from "../../src/ace/AsynchronousCommand";
 import AppUtils from "../../src/app/AppUtils";
 import Utils from "./Utils";
+import Command from "./Command";
 
-export default class AbstractAsynchronousCommand extends AsynchronousCommand {
+export default class AbstractAsynchronousCommand extends Command {
     executeCommand() {
         return new Promise((resolve, reject) => {
 			if (ACEController.execution !== ACEController.REPLAY) {
@@ -50,33 +50,33 @@ export default class AbstractAsynchronousCommand extends AsynchronousCommand {
     	return true;
     }
 
-    doHttpGet(url, authorize) {
+    httpGet(url, authorize) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
-            return this.httpGet(url, authorize);
+            return AppUtils.httpGet(url, this.commandData.uuid, authorize);
         }, (error) => {
             throw error;
         });
     }
 
-    doHttpPost(url, authorize, data) {
+    httpPost(url, authorize, data) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
-            return this.httpPost(url, authorize, data);
+            return AppUtils.httpPost(url, this.commandData.uuid, authorize, data);
         }, (error) => {
             throw error;
         });
     }
 
-    doHttpPut(url, authorize, data) {
+    httpPut(url, authorize, data) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
-            return this.httpPut(url, authorize, data);
+            return AppUtils.httpPut(url, this.commandData.uuid, authorize, data);
         }, (error) => {
             throw error;
         });
     }
 
-    doHttpDelete(url, authorize, data) {
+    httpDelete(url, authorize, data) {
         return Utils.prepareAction(this.commandData.uuid).then(() => {
-            return this.httpDelete(url, authorize, data);
+            return AppUtils.httpDelete(url, this.commandData.uuid, authorize, data);
         }, (error) => {
             throw error;
         });

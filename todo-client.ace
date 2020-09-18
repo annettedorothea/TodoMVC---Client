@@ -2,8 +2,10 @@ HttpClient
 
 todo
 
+
 ACE 
 	Init(hash)
+		UIEvent "onLoad" 
 		on ok (set filter) triggers (GetTodoList)
 	
 	GetTodoList 
@@ -12,11 +14,13 @@ ACE
 		on ok (set todoList)
 	
 	NewTodoChanged (newTodo)
+		UIEvent "onChange" ID "newTodoInput"
 		on ok (set newTodo)
 	
 	CreateTodo (description)
 			call com.anfelisa.todo.CreateTodo
 			loadingFlag loading 
+		UIEvent "onKeyPress" ID "newTodoInput"
 		on ok (set newTodo) triggers ( GetTodoList)
 		on empty
 		
