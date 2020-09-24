@@ -8,7 +8,7 @@
 import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
-import ACEController from "../../ace/ACEController";
+import AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
 import UpdateTodoOkEvent from "../../../gen/todo/events/UpdateTodoOkEvent";
 import UpdateTodoEmptyEvent from "../../../gen/todo/events/UpdateTodoEmptyEvent";
@@ -47,7 +47,7 @@ export default class AbstractUpdateTodoCommand extends AbstractAsynchronousComma
 	    		description : this.commandData.description
 	    	};
 	
-			this.httpPut(`/${Utils.getRootPath()}/todos/update`, false, payload).then((data) => {
+			AppUtils.httpPut(`${Utils.settings.rootPath}/todos/update`, this.commandData.uuid, false, payload).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

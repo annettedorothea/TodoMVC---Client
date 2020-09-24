@@ -2,14 +2,13 @@ import AbstractUpdateTodoCommand from "../../../gen/todo/commands/AbstractUpdate
 
 export default class UpdateTodoCommand extends AbstractUpdateTodoCommand {
 
-    initCommandData() {
-        if (!this.commandData.editedTodo.editedDescription) {
-            this.commandData.outcome = this.empty;
-            return false;
-        } else {
-            this.commandData.id = this.commandData.editedTodo.id;
-            this.commandData.description = this.commandData.editedTodo.editedDescription;
+    validateCommandData() {
+        if (this.commandData.description) {
             return true;
+        } else {
+            this.commandData.outcome = this.empty;
+            this.commandData.editedTodo = null;
+            return false;
         }
     }
 

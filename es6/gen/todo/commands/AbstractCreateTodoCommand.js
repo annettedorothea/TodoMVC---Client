@@ -8,8 +8,7 @@
 import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
-import ACEController from "../../ace/ACEController";
-import * as AppState from "../../ace/AppState";
+import AppUtils from "../../../src/app/AppUtils";
 import CreateTodoOkEvent from "../../../gen/todo/events/CreateTodoOkEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
@@ -42,7 +41,7 @@ export default class AbstractCreateTodoCommand extends AbstractAsynchronousComma
 	    		description : this.commandData.description
 	    	};
 	
-			this.httpPost(`/${Utils.getRootPath()}/todos/create`, false, payload).then((data) => {
+			AppUtils.httpPost(`${Utils.settings.rootPath}/todos/create`, this.commandData.uuid, false, payload).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

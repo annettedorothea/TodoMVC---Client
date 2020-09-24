@@ -6,14 +6,12 @@
 
 
 import ACEController from "./ACEController";
-import AppUtils from "../../src/app/AppUtils";
-import Utils from "./Utils";
 import Command from "./Command";
 
 export default class AbstractAsynchronousCommand extends Command {
     executeCommand() {
         return new Promise((resolve, reject) => {
-			if (ACEController.execution !== ACEController.REPLAY) {
+			if (ACEController.execution === ACEController.UI) {
 				if (this.validateCommandData()) {
 				    this.execute().then(() => {
 				        ACEController.addItemToTimeLine({command: this});
@@ -48,38 +46,6 @@ export default class AbstractAsynchronousCommand extends Command {
 
     validateCommandData() {
     	return true;
-    }
-
-    httpGet(url, authorize) {
-        return Utils.prepareAction(this.commandData.uuid).then(() => {
-            return AppUtils.httpGet(url, this.commandData.uuid, authorize);
-        }, (error) => {
-            throw error;
-        });
-    }
-
-    httpPost(url, authorize, data) {
-        return Utils.prepareAction(this.commandData.uuid).then(() => {
-            return AppUtils.httpPost(url, this.commandData.uuid, authorize, data);
-        }, (error) => {
-            throw error;
-        });
-    }
-
-    httpPut(url, authorize, data) {
-        return Utils.prepareAction(this.commandData.uuid).then(() => {
-            return AppUtils.httpPut(url, this.commandData.uuid, authorize, data);
-        }, (error) => {
-            throw error;
-        });
-    }
-
-    httpDelete(url, authorize, data) {
-        return Utils.prepareAction(this.commandData.uuid).then(() => {
-            return AppUtils.httpDelete(url, this.commandData.uuid, authorize, data);
-        }, (error) => {
-            throw error;
-        });
     }
 
 }

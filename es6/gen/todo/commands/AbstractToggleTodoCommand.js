@@ -8,8 +8,7 @@
 import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
-import ACEController from "../../ace/ACEController";
-import * as AppState from "../../ace/AppState";
+import AppUtils from "../../../src/app/AppUtils";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractToggleTodoCommand extends AbstractAsynchronousCommand {
@@ -36,7 +35,7 @@ export default class AbstractToggleTodoCommand extends AbstractAsynchronousComma
 	    	let payload = {
 	    	};
 	
-			this.httpPut(`/${Utils.getRootPath()}/todos/toggle?id=${this.commandData.id}`, false).then((data) => {
+			AppUtils.httpPut(`${Utils.settings.rootPath}/todos/toggle?id=${this.commandData.id}`, this.commandData.uuid, false).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

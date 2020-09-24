@@ -5,6 +5,7 @@
 
 
 
+import AppUtils from "../../src/app/AppUtils";
 import ReplayUtils from "../../src/app/ReplayUtils";
 import ACEController from "./ACEController";
 import Utils from "./Utils";
@@ -13,7 +14,9 @@ export function runBug(bugId, pauseInMillis = 0) {
     Utils.loadBug(bugId).then((scenario) => {
         ReplayUtils.scenarioConfig = {};
         ACEController.expectedTimeline = JSON.parse(scenario.timeline);
-        Utils.replayServerless(pauseInMillis);
+        ReplayUtils.prepareReplay();
+        AppUtils.createInitialAppState();
+        ACEController.startReplay(pauseInMillis)
     });
 }
 

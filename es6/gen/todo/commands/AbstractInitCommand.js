@@ -7,7 +7,6 @@
 
 import AbstractSynchronousCommand from "../../../gen/ace/AbstractSynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import * as AppState from "../../ace/AppState";
 import InitOkEvent from "../../../gen/todo/events/InitOkEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 

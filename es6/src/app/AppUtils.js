@@ -13,8 +13,7 @@ export default class AppUtils {
     }
 
     static start() {
-        Utils.loadSettings().then((settings) => {
-            Utils.settings = settings;
+        Utils.loadSettings().then(() => {
             init(window.location.hash.substring(1));
         });
     }
@@ -141,7 +140,7 @@ export default class AppUtils {
                     };
                     reject(error);
                 } else {
-                    if (data) {
+                    if (data && typeof data === "object") {
                         resolve(JSON.parse(data));
                     } else {
                         resolve();
@@ -186,7 +185,12 @@ export default class AppUtils {
     static displayUnexpectedError(error) {
         console.error("unexpected error ", error);
         clearTimeout(AppUtils.timer);
-        let errorMessage = "unexpected error " + JSON.stringify(error);
+        let errorMessage;
+        if (typeof error === "object") {
+            errorMessage = "unexpected error " + JSON.stringify(error);
+        } else {
+            errorMessage = error;
+        }
         if (errorMessage.length > 50) {
             errorMessage = errorMessage.slice(0, 50) + "...";
         }

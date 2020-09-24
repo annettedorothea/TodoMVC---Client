@@ -8,8 +8,7 @@
 import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
-import ACEController from "../../ace/ACEController";
-import * as AppState from "../../ace/AppState";
+import AppUtils from "../../../src/app/AppUtils";
 import GetTodoListOkEvent from "../../../gen/todo/events/GetTodoListOkEvent";
 
 export default class AbstractGetTodoListCommand extends AbstractAsynchronousCommand {
@@ -34,7 +33,7 @@ export default class AbstractGetTodoListCommand extends AbstractAsynchronousComm
 	execute() {
 	    return new Promise((resolve, reject) => {
 	
-			this.httpGet(`/${Utils.getRootPath()}/todos/all`, false).then((data) => {
+			AppUtils.httpGet(`${Utils.settings.rootPath}/todos/all`, this.commandData.uuid, false).then((data) => {
 				this.commandData.todoList = data.todoList;
 				this.handleResponse(resolve, reject);
 			}, (error) => {

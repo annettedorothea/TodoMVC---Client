@@ -7,7 +7,6 @@
 
 import AbstractSynchronousCommand from "../../../gen/ace/AbstractSynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import * as AppState from "../../ace/AppState";
 import NewTodoChangedOkEvent from "../../../gen/todo/events/NewTodoChangedOkEvent";
 
 export default class AbstractNewTodoChangedCommand extends AbstractSynchronousCommand {

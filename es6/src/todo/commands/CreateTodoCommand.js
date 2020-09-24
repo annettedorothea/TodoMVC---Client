@@ -2,12 +2,12 @@ import AbstractCreateTodoCommand from "../../../gen/todo/commands/AbstractCreate
 
 export default class CreateTodoCommand extends AbstractCreateTodoCommand {
 
-    initCommandData() {
-        if (!this.commandData.description) {
+    validateCommandData() {
+        if (this.commandData.description) {
+            return true;
+        } else {
             this.commandData.outcome = this.empty;
             return false;
-        } else {
-            return true;
         }
     }
 

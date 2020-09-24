@@ -2,10 +2,6 @@ import AbstractGetTodoListCommand from "../../../gen/todo/commands/AbstractGetTo
 
 export default class GetTodoListCommand extends AbstractGetTodoListCommand {
 
-    initCommandData() {
-    	return true;
-    }
-
     handleResponse(resolve, reject) {
     	this.commandData.outcome = this.ok;
     	resolve();

@@ -6,6 +6,7 @@
 
 
 import AppUtils from "../../src/app/AppUtils";
+import ReplayUtils from "../../src/app/ReplayUtils";
 import Utils from "./Utils";
 import * as AppState from "./AppState";
 
@@ -20,10 +21,7 @@ export default class ACEController {
         ACEController.actionQueue = [];
         ACEController.UI = 1;
         ACEController.REPLAY = 2;
-        ACEController.E2E = 3;
         ACEController.execution = ACEController.UI;
-        ACEController.actualTimeline = [];
-        ACEController.expectedTimeline = [];
     }
 
     static registerListener(eventName, listener) {
@@ -54,16 +52,16 @@ export default class ACEController {
     static addItemToTimeLine(item) {
         let timestamp = new Date();
         item.timestamp = timestamp.getTime();
-		if (ACEController.execution === ACEController.UI && Utils.isDevelopment() && Utils.getTimelineSize() > 0) {
+		if (ACEController.execution === ACEController.UI && Utils.settings.timelineSize > 0) {
 		    ACEController.timeline.push(AppUtils.deepCopy(item));
-		    if (ACEController.timeline.length > Utils.getTimelineSize()) {
+		    if (ACEController.timeline.length > Utils.settings.timelineSize) {
                 ACEController.timeline.shift();
 		        while (ACEController.timeline.length > 0 && ACEController.timeline.length > 0 && !ACEController.timeline[0].appState) {
                     ACEController.timeline.shift();
                 }
 		    }
-		} else if (ACEController.execution !== ACEController.UI) {
-		    ACEController.actualTimeline.push(AppUtils.deepCopy(item));
+		} else if (ACEController.execution === ACEController.REPLAY) {
+			console.log("replayed", item);
 		}
     }
 
@@ -99,12 +97,14 @@ export default class ACEController {
 			}
         } else if (action === undefined) {
             ACEController.actionIsProcessing = false;
-            if (ACEController.execution !== ACEController.UI) {
+            if (ACEController.execution === ACEController.REPLAY) {
+		    	console.log("replay finished");
                 ACEController.timeline = [];
                 ACEController.actionIsProcessing = false;
                 ACEController.actionQueue = [];
                 ACEController.execution = ACEController.UI;
-                Utils.finishReplay();
+		    	ReplayUtils.tearDownReplay();
+		    	AppUtils.createInitialAppState();
                 AppUtils.start();
             }
         }
@@ -122,9 +122,8 @@ export default class ACEController {
         ACEController.addActionToQueue(action);
     }
 
-    static startReplay(level, pauseInMillis) {
-        ACEController.actualTimeline = [];
-        ACEController.execution = level;
+    static startReplay(pauseInMillis) {
+        ACEController.execution = ACEController.REPLAY;
         ACEController.pauseInMillis = pauseInMillis;
         ACEController.readTimelineAndCreateReplayActions();
     }

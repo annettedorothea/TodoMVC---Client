@@ -5,7 +5,6 @@ import {init} from "../../gen/todo/ActionFunctions";
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-export * from "../../gen/ace/Scenario";
 export * from "../../gen/ace/Bug";
 
 AppUtils.createInitialAppState();

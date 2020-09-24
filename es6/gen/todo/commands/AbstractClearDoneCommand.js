@@ -8,8 +8,7 @@
 import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
-import ACEController from "../../ace/ACEController";
-import * as AppState from "../../ace/AppState";
+import AppUtils from "../../../src/app/AppUtils";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractClearDoneCommand extends AbstractAsynchronousCommand {
@@ -36,7 +35,7 @@ export default class AbstractClearDoneCommand extends AbstractAsynchronousComman
 	    	let payload = {
 	    	};
 	
-			this.httpDelete(`/${Utils.getRootPath()}/todos/clear-done`, false).then((data) => {
+			AppUtils.httpDelete(`${Utils.settings.rootPath}/todos/clear-done`, this.commandData.uuid, false).then((data) => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;
