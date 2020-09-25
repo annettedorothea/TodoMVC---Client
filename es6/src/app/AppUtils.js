@@ -2,14 +2,14 @@ import * as App from "./App";
 import * as AppState from "../../gen/ace/AppState";
 import {init} from "../../gen/todo/ActionFunctions";
 import EventListenerRegistrationTodo from "../../gen/todo/EventListenerRegistration";
-import ActionFactoryRegistrationTodo from "../../gen/todo/ActionFactoryRegistration";
+import EventFactoryRegistrationTodo from "../../gen/todo/EventFactoryRegistration";
 import Utils from "../../gen/ace/Utils";
 
 export default class AppUtils {
 
     static initEventListenersAndActionFactories() {
         EventListenerRegistrationTodo.init();
-        ActionFactoryRegistrationTodo.init();
+        EventFactoryRegistrationTodo.init();
     }
 
     static start() {
