@@ -12,7 +12,7 @@ export default class AbstractInitAction extends Action {
 
     constructor( hash) {
         super({hash}, 'todo.InitAction');
-		}
+	}
 		
 	getCommand() {
 		return new InitCommand(this.actionData);

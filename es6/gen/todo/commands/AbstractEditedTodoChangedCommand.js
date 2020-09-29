@@ -5,11 +5,10 @@
 
 
 
-import AbstractSynchronousCommand from "../../../gen/ace/AbstractSynchronousCommand";
-import TriggerAction from "../../../gen/ace/TriggerAction";
+import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
 import EditedTodoChangedOkEvent from "../../../gen/todo/events/EditedTodoChangedOkEvent";
 
-export default class AbstractEditedTodoChangedCommand extends AbstractSynchronousCommand {
+export default class AbstractEditedTodoChangedCommand extends SynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.EditedTodoChangedCommand");
         this.ok = "ok";

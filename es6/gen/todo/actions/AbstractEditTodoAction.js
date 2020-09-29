@@ -12,7 +12,7 @@ export default class AbstractEditTodoAction extends Action {
 
     constructor( id) {
         super({id}, 'todo.EditTodoAction');
-		}
+	}
 		
 	getCommand() {
 		return new EditTodoCommand(this.actionData);

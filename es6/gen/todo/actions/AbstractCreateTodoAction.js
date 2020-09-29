@@ -14,7 +14,7 @@ export default class AbstractCreateTodoAction extends Action {
     constructor( description) {
         super({description}, 'todo.CreateTodoAction');
 		this.postCall = this.postCall.bind(this);
-		}
+	}
 		
 	getCommand() {
 		return new CreateTodoCommand(this.actionData);

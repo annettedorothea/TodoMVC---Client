@@ -5,7 +5,7 @@
 
 
 
-import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
+import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
 import AppUtils from "../../../src/app/AppUtils";
@@ -14,7 +14,7 @@ import UpdateTodoOkEvent from "../../../gen/todo/events/UpdateTodoOkEvent";
 import UpdateTodoEmptyEvent from "../../../gen/todo/events/UpdateTodoEmptyEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
-export default class AbstractUpdateTodoCommand extends AbstractAsynchronousCommand {
+export default class AbstractUpdateTodoCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.UpdateTodoCommand");
         this.ok = "ok";
@@ -47,7 +47,7 @@ export default class AbstractUpdateTodoCommand extends AbstractAsynchronousComma
 	    		description : this.commandData.description
 	    	};
 	
-			AppUtils.httpPut(`${Utils.settings.rootPath}/todos/update`, this.commandData.uuid, false, payload).then((data) => {
+			AppUtils.httpPut(`${Utils.settings.rootPath}/todos/update`, this.commandData.uuid, false, payload).then(() => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

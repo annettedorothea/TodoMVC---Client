@@ -11,7 +11,7 @@ export default class CreateTodoCommand extends AbstractCreateTodoCommand {
         }
     }
 
-    handleResponse(resolve, reject) {
+    handleResponse(resolve) {
         this.commandData.outcome = this.ok;
         this.commandData.newTodo = "";
     	resolve();

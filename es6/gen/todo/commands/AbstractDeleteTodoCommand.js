@@ -5,13 +5,13 @@
 
 
 
-import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
+import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
 import AppUtils from "../../../src/app/AppUtils";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
-export default class AbstractDeleteTodoCommand extends AbstractAsynchronousCommand {
+export default class AbstractDeleteTodoCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.DeleteTodoCommand");
         this.ok = "ok";
@@ -32,10 +32,8 @@ export default class AbstractDeleteTodoCommand extends AbstractAsynchronousComma
     
 	execute() {
 	    return new Promise((resolve, reject) => {
-	    	let payload = {
-	    	};
 	
-			AppUtils.httpDelete(`${Utils.settings.rootPath}/todos/delete?id=${this.commandData.id}`, this.commandData.uuid, false).then((data) => {
+			AppUtils.httpDelete(`${Utils.settings.rootPath}/todos/delete?id=${this.commandData.id}`, this.commandData.uuid, false).then(() => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

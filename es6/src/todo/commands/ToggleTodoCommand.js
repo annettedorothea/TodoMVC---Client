@@ -2,7 +2,7 @@ import AbstractToggleTodoCommand from "../../../gen/todo/commands/AbstractToggle
 
 export default class ToggleTodoCommand extends AbstractToggleTodoCommand {
 
-    handleResponse(resolve, reject) {
+    handleResponse(resolve) {
     	this.commandData.outcome = this.ok;
     	resolve();
     }

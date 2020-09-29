@@ -16,37 +16,33 @@ export default class AsynchronousAction extends Action {
     	   this.asynchronous = true;
     }
 	
-	   applyAction() {
-	       return new Promise((resolve, reject) => {
-	           if (this.preCall) {
-	           	this.preCall();
-	           }
-	           AppUtils.renderNewState();
-	           if (ACEController.execution === ACEController.UI) {
-	               this.actionData.uuid = AppUtils.createUUID();
-	               this.initActionData();
-	           }
-	           ACEController.addItemToTimeLine({action: this});
-	           let command = this.getCommand();
-			command.executeCommand().then(
-			    () => {
-			           if (this.postCall) {
-			           	this.postCall();
-			           }
-			        AppUtils.renderNewState();
-			        resolve();
-			    },
-			    (error) => {
-			           if (this.postCall) {
-			           	this.postCall();
-			           }
-			        AppUtils.renderNewState();
-			        reject(error);
-			    }
-			);
-			     });
-			 }
 
+    applyAction() {
+        return new Promise((resolve, reject) => {
+            if (this.preCall) {
+                this.preCall();
+            }
+            AppUtils.renderNewState();
+            this.actionData.uuid = AppUtils.createUUID();
+            this.actionData.clientSystemTime = new Date();
+            this.initActionData();
+            ACEController.addItemToTimeLine({action: this});
+            let command = this.getCommand();
+            command.executeCommand().then(() => {
+			    if (this.postCall) {
+			        this.postCall();
+			    }
+			    AppUtils.renderNewState();
+			    resolve();
+			}, (error) => {
+			    if (this.postCall) {
+			        this.postCall();
+			    }
+			    AppUtils.renderNewState();
+			    reject(error);
+			});
+        });
+    }
 }
 
 

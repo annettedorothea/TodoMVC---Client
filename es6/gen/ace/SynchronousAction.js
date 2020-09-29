@@ -17,14 +17,13 @@ export default class SynchronousAction extends Action {
     }
 
     applyAction() {
-    if (ACEController.execution === ACEController.UI) {
         this.actionData.uuid = AppUtils.createUUID();
+		this.actionData.clientSystemTime = new Date();
         this.initActionData();
-    }
-    ACEController.addItemToTimeLine({action: this});
-    let command = this.getCommand();
-    command.executeCommand();
-    AppUtils.renderNewState();
+	    ACEController.addItemToTimeLine({action: this});
+	    let command = this.getCommand();
+	    command.executeCommand();
+	    AppUtils.renderNewState();
     }
 }
 

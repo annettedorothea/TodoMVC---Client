@@ -5,14 +5,14 @@
 
 
 
-import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
+import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
 import AppUtils from "../../../src/app/AppUtils";
 import CreateTodoOkEvent from "../../../gen/todo/events/CreateTodoOkEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
-export default class AbstractCreateTodoCommand extends AbstractAsynchronousCommand {
+export default class AbstractCreateTodoCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.CreateTodoCommand");
         this.ok = "ok";
@@ -42,6 +42,9 @@ export default class AbstractCreateTodoCommand extends AbstractAsynchronousComma
 	    	};
 	
 			AppUtils.httpPost(`${Utils.settings.rootPath}/todos/create`, this.commandData.uuid, false, payload).then((data) => {
+				this.commandData.id = data.id;
+				this.commandData.createdDateTime = data.createdDateTime;
+				this.commandData.description = data.description;
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

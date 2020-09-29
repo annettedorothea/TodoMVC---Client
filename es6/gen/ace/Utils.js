@@ -7,66 +7,44 @@
 
 import AppUtils from "../../src/app/AppUtils";
 import ACEController from "./ACEController";
-import ReplayUtils from "../../src/app/ReplayUtils";
 
 export default class Utils {
 
     static getServerInfo() {
         return AppUtils.httpGet(Utils.settings.rootPath + '/server/info');
     }
+    
+	static loadSettings() {
+	    return AppUtils.httpRequest("GET", "settings.json").then((settings) => {
+	        Utils.settings = settings;
+	        if (!Utils.settings.development) {
+	            Utils.settings.development = false;
+	        }
+	        if (!Utils.settings.clientVersion) {
+	            Utils.settings.clientVersion = "";
+	        }
+	        if (!Utils.settings.aceScenariosApiKey) {
+	            Utils.settings.aceScenariosApiKey = "";
+	        }
+	        if (!Utils.settings.aceScenariosBaseUrl) {
+	            Utils.settings.aceScenariosBaseUrl = "";
+	        }
+	        if (!Utils.settings.rootPath) {
+	            Utils.settings.rootPath = "";
+	        }
+	        if (!Utils.settings.timelineSize) {
+	            Utils.settings.timelineSize = 0;
+	        }
+	        if (Utils.settings.rootPath.startsWith("/")) {
+	            Utils.settings.rootPath = Utils.settings.rootPath.substring(1);
+	        }
+	        if (Utils.settings.rootPath.endsWith("/")) {
+	            Utils.settings.rootPath = Utils.settings.rootPath.substring(0, Utils.settings.rootPath.length - 1);
+	        }
+	    });
+	}
 
-    static loadSettings() {
-        return new Promise((resolve, reject) => {
-            const headers = new Headers();
-            headers.append("Content-Type", "application/json");
-            headers.append("Accept", "application/json");
-
-            const options = {
-                method: 'GET',
-                headers: headers,
-                mode: 'cors',
-                cache: 'no-cache'
-            };
-
-            const request = new Request("settings.json", options);
-
-            fetch(request).then(function (response) {
-                return response.json();
-            }).then(function (settings) {
-                Utils.settings = settings;
-                if (!Utils.settings.development) {
-                    Utils.settings.development = false;
-                }
-                if (!Utils.settings.clientVersion) {
-                    Utils.settings.clientVersion = "";
-                }
-                if (!Utils.settings.aceScenariosApiKey) {
-                    Utils.settings.aceScenariosApiKey = "";
-                }
-                if (!Utils.settings.aceScenariosBaseUrl) {
-                    Utils.settings.aceScenariosBaseUrl = "";
-                }
-                if (!Utils.settings.rootPath) {
-                    Utils.settings.rootPath = "";
-                }
-                if (!Utils.settings.timelineSize) {
-                    Utils.settings.timelineSize = 0;
-                }
-                if (Utils.settings.rootPath.startsWith("/")) {
-                    Utils.settings.rootPath = Utils.settings.rootPath.substring(1);
-                }
-                if (Utils.settings.rootPath.endsWith("/")) {
-                    Utils.settings.rootPath = Utils.settings.rootPath.substring(0, Utils.settings.rootPath.length - 1);
-                }
-                resolve();
-            }).catch(function (error) {
-                reject(error);
-            });
-		
-        });
-    }
-
-    static saveBug(description, creator) {
+    static saveTimeline(description, creator) {
         return Utils.getServerInfo().then((serverInfo) => {
             const browser = Utils.getBrowserInfo();
             const uuid = AppUtils.createUUID();
@@ -79,7 +57,7 @@ export default class Utils {
                 apiKey: Utils.settings.aceScenariosApiKey,
                 serverVersion: serverInfo.serverVersion
             };
-            return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + 'api/bugs/create', uuid, false, data).then(() => {
+            return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + 'api/timelines/create', uuid, false, data).then(() => {
                 return new Promise((resolve) => {
                     resolve(uuid);
                 });
@@ -87,8 +65,8 @@ export default class Utils {
         });
     }
 
-    static loadBug(id) {
-        return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/bugs/get?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
+    static loadTimeline(id) {
+        return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/timelines/get?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
     }
 
     static getBrowserInfo() {
@@ -114,19 +92,6 @@ export default class Utils {
         };
     }
 
-    static name(item) {
-        if (item.action) {
-            return item.action.actionName;
-        }
-        if (item.command) {
-            return item.command.commandName;
-        }
-        if (item.event) {
-            return item.event.eventName;
-        }
-		return "AppState";
-    }
-    
 }
 
 

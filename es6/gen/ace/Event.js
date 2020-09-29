@@ -16,15 +16,19 @@ export default class Event {
 
     publish() {
         this.notifyListeners();
+        AppUtils.renderNewState();
 		ACEController.addItemToTimeLine({event: this});
+    }
+
+    replay() {
+        this.notifyListeners();
+        AppUtils.renderNewState();
     }
 
     notifyListeners() {
         let i, listener;
         if (this.eventName !== undefined) {
-            console.log("notifyListeners for ", this.eventName);
             const listenersForEvent = ACEController.listeners[this.eventName];
-            console.log("notifyListeners listenersForEvent ", listenersForEvent);
             if (listenersForEvent !== undefined) {
                 for (i = 0; i < listenersForEvent.length; i += 1) {
                     listener = listenersForEvent[i];

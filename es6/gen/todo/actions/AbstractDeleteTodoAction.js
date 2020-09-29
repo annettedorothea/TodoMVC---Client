@@ -14,7 +14,7 @@ export default class AbstractDeleteTodoAction extends Action {
     constructor( id) {
         super({id}, 'todo.DeleteTodoAction');
 		this.postCall = this.postCall.bind(this);
-		}
+	}
 		
 	getCommand() {
 		return new DeleteTodoCommand(this.actionData);

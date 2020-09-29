@@ -5,13 +5,12 @@
 
 
 
-import AbstractAsynchronousCommand from "../../../gen/ace/AbstractAsynchronousCommand";
-import TriggerAction from "../../../gen/ace/TriggerAction";
+import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
 import Utils from "../../ace/Utils";
 import AppUtils from "../../../src/app/AppUtils";
 import GetTodoListOkEvent from "../../../gen/todo/events/GetTodoListOkEvent";
 
-export default class AbstractGetTodoListCommand extends AbstractAsynchronousCommand {
+export default class AbstractGetTodoListCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.GetTodoListCommand");
         this.ok = "ok";

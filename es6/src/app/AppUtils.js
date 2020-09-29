@@ -4,6 +4,7 @@ import {init} from "../../gen/todo/ActionFunctions";
 import EventListenerRegistrationTodo from "../../gen/todo/EventListenerRegistration";
 import EventFactoryRegistrationTodo from "../../gen/todo/EventFactoryRegistration";
 import Utils from "../../gen/ace/Utils";
+import {container} from "./App";
 
 export default class AppUtils {
 
@@ -18,7 +19,6 @@ export default class AppUtils {
         });
     }
 
-
     static createInitialAppState() {
         const initialAppState = {
             filter: "all",
@@ -32,59 +32,64 @@ export default class AppUtils {
     }
 
     static renderNewState() {
-        App.render(AppState.getAppState());
+        container.setState(AppState.getAppState());
     }
 
-    static httpGet(url, uuid, authorize) {
+    static createHeaders(authorize) {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Accept", "application/json");
+        if (authorize === true) {
+            let authorization = AppUtils.basicAuth();
+            if (authorization !== undefined) {
+                headers.append("Authorization", authorization);
+            }
+        }
+        return headers;
+    }
+
+    static addUuidToUrl(url, uuid) {
+        if (uuid) {
+            if (url.indexOf("?") < 0) {
+                url += "?uuid=" + uuid;
+            } else {
+                url += "&uuid=" + uuid;
+            }
+        }
+        return url;
+    }
+
+    static httpRequest(methodType, url, uuid, authorize, data) {
         return new Promise((resolve, reject) => {
-            const headers = new Headers();
-            headers.append("Content-Type", "application/json");
-            headers.append("Accept", "application/json");
-            if (authorize === true) {
-                let authorization = AppUtils.basicAuth();
-                if (authorization !== undefined) {
-                    headers.append("Authorization", authorization);
-                }
-            }
-
-            if (uuid) {
-                if (url.indexOf("?") < 0) {
-                    url += "?uuid=" + uuid;
-                } else {
-                    url += "&uuid=" + uuid;
-                }
-            }
-
             const options = {
-                method: 'GET',
-                headers: headers,
+                method: methodType,
+                headers: AppUtils.createHeaders(authorize),
                 mode: 'cors',
                 cache: 'no-cache'
             };
-
+            if (data && methodType !== "GET") {
+                options.body = JSON.stringify(data);
+            }
+            url = AppUtils.addUuidToUrl(url, uuid);
             const request = new Request(url, options);
 
-            let status;
-            let statusText;
             fetch(request).then(function (response) {
-                status = response.status;
-                statusText = response.statusText;
-                if (status >= 300) {
-                    return response.text();
-                } else {
-                    return response.json();
-                }
-            }).then(function (data) {
-                if (status >= 300) {
-                    const error = {
-                        code: status,
-                        text: statusText,
-                        errorKey: data
-                    };
-                    reject(error);
-                } else {
-                    resolve(data);
-                }
+                response.text().then((text) => {
+                    if (response.status >= 300) {
+                        const error = {
+                            code: response.status,
+                            text: response.statusText,
+                            key: text
+                        };
+                        reject(error);
+                    } else {
+                        let data = {};
+                        if (text.length > 0) {
+                            data = JSON.parse(text);
+                        }
+                        resolve(data);
+                    }
+                });
             }).catch(function (error) {
                 const status = {
                     code: error.name,
@@ -95,83 +100,25 @@ export default class AppUtils {
         });
     }
 
-    static httpChange(methodType, url, uuid, authorize, data) {
-        return new Promise((resolve, reject) => {
-            const headers = new Headers();
-            headers.append("Content-Type", "application/json");
-            headers.append("Accept", "application/json");
-            if (authorize === true) {
-                let authorization = AppUtils.basicAuth();
-                if (authorization !== undefined) {
-                    headers.append("Authorization", authorization);
-                }
-            }
-
-            if (uuid) {
-                if (url.indexOf("?") < 0) {
-                    url += "?uuid=" + uuid;
-                } else {
-                    url += "&uuid=" + uuid;
-                }
-            }
-
-            const options = {
-                method: methodType,
-                headers: headers,
-                mode: 'cors',
-                cache: 'no-cache',
-                body: JSON.stringify(data)
-            };
-
-            const request = new Request(url, options);
-
-            let status;
-            let statusText;
-            fetch(request).then(function (response) {
-                status = response.status;
-                statusText = response.statusText;
-                return response.text();
-            }).then(function (data) {
-                if (status >= 300) {
-                    const error = {
-                        code: status,
-                        text: statusText,
-                        errorKey: data
-                    };
-                    reject(error);
-                } else {
-                    if (data && typeof data === "object") {
-                        resolve(JSON.parse(data));
-                    } else {
-                        resolve();
-                    }
-                }
-            }).catch(function (error) {
-                const status = {
-                    code: error.name,
-                    text: error.message
-                };
-                reject(status);
-            });
-        });
+    static httpGet(url, uuid, authorize) {
+        return AppUtils.httpRequest("GET", url, uuid, authorize, null);
     }
 
     static httpPost(url, uuid, authorize, data) {
-        return AppUtils.httpChange("POST", url, uuid, authorize, data);
+        return AppUtils.httpRequest("POST", url, uuid, authorize, data);
     }
 
     static httpPut(url, uuid, authorize, data) {
-        return AppUtils.httpChange("PUT", url, uuid, authorize, data);
+        return AppUtils.httpRequest("PUT", url, uuid, authorize, data);
     }
 
     static httpDelete(url, uuid, authorize, data) {
-        return AppUtils.httpChange("DELETE", url, uuid, authorize, data);
+        return AppUtils.httpRequest("DELETE", url, uuid, authorize, data);
     }
 
     static basicAuth() {
         return "<your authorization>";
     }
-
 
     static createUUID() {
         let d = new Date().getTime();
@@ -185,9 +132,13 @@ export default class AppUtils {
     static displayUnexpectedError(error) {
         console.error("unexpected error ", error);
         clearTimeout(AppUtils.timer);
-        let errorMessage;
+        let errorMessage = "";
         if (typeof error === "object") {
-            errorMessage = "unexpected error " + JSON.stringify(error);
+            if (error.code && error.text) {
+                errorMessage += error.code + " (" + error.text + ") " + error.key;
+            } else {
+                errorMessage = "unexpected error " + JSON.stringify(error);
+            }
         } else {
             errorMessage = error;
         }

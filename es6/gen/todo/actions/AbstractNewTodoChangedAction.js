@@ -12,7 +12,7 @@ export default class AbstractNewTodoChangedAction extends Action {
 
     constructor( newTodo) {
         super({newTodo}, 'todo.NewTodoChangedAction');
-		}
+	}
 		
 	getCommand() {
 		return new NewTodoChangedCommand(this.actionData);

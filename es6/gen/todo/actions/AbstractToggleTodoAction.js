@@ -14,7 +14,7 @@ export default class AbstractToggleTodoAction extends Action {
     constructor( id) {
         super({id}, 'todo.ToggleTodoAction');
 		this.postCall = this.postCall.bind(this);
-		}
+	}
 		
 	getCommand() {
 		return new ToggleTodoCommand(this.actionData);

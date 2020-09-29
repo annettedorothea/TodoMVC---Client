@@ -15,22 +15,13 @@ export default class TriggerAction extends Event {
     }
 
 	publish() {
-	    ACEController.addItemToTimeLine({event: this});
 	    this.notifyListeners();
+	    ACEController.addItemToTimeLine({event: this});
 	}
 	
-	notifyListeners() {
-	    let i, listener;
-	    if (this.eventName !== undefined) {
-	        const listenersForEvent = ACEController.listeners[this.eventName];
-	        if (listenersForEvent !== undefined) {
-	            for (i = 0; i < listenersForEvent.length; i += 1) {
-	                listener = listenersForEvent[i];
-	                listener(this.eventData);
-	            }
-	        }
-	    }
+	replay() {
 	}
+	
 }
 
 

@@ -14,7 +14,7 @@ export default class AbstractGetTodoListAction extends Action {
     constructor() {
         super({}, 'todo.GetTodoListAction');
 		this.postCall = this.postCall.bind(this);
-		}
+	}
 		
 	getCommand() {
 		return new GetTodoListCommand(this.actionData);

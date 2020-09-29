@@ -8,15 +8,7 @@ export default class TodoList extends React.Component {
     }
 
     filter(todo, filter) {
-        if (filter === 'all') {
-            return true;
-        } else if (filter === 'done' && todo.done === true) {
-            return true;
-        } else if (filter === 'open' && todo.done === false) {
-            return true;
-        } else {
-            return false;
-        }
+        return filter === 'all' || filter === 'done' && todo.done === true || filter === 'open' && todo.done === false;
     }
 
     render() {

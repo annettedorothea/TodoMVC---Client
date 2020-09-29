@@ -12,7 +12,7 @@ export default class AbstractEditedTodoChangedAction extends Action {
 
     constructor( editedDescription) {
         super({editedDescription}, 'todo.EditedTodoChangedAction');
-		}
+	}
 		
 	getCommand() {
 		return new EditedTodoChangedCommand(this.actionData);
