@@ -57,7 +57,7 @@ export default class Utils {
                 apiKey: Utils.settings.aceScenariosApiKey,
                 serverVersion: serverInfo.serverVersion
             };
-            return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + 'api/timelines/create', uuid, false, data).then(() => {
+            return AppUtils.httpPost(Utils.settings.aceScenariosBaseUrl + 'api/client-timeline/create', uuid, false, data).then(() => {
                 return new Promise((resolve) => {
                     resolve(uuid);
                 });
@@ -66,7 +66,7 @@ export default class Utils {
     }
 
     static loadTimeline(id) {
-        return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/timelines/get?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
+        return AppUtils.httpGet(Utils.settings.aceScenariosBaseUrl + `api/timeline?id=${id}&apiKey=${Utils.settings.aceScenariosApiKey}`, AppUtils.createUUID(), false);
     }
 
     static getBrowserInfo() {
