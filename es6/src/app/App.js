@@ -6,6 +6,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 export * from "../../gen/ace/Timeline";
+export { dumpAppState } from "./AppUtils";
 
 AppUtils.createInitialAppState();
 

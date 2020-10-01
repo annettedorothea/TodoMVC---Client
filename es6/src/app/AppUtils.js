@@ -6,6 +6,10 @@ import EventFactoryRegistrationTodo from "../../gen/todo/EventFactoryRegistratio
 import Utils from "../../gen/ace/Utils";
 import {container} from "./App";
 
+export function dumpAppState() {
+    console.log(AppState.getAppState());
+}
+
 export default class AppUtils {
 
     static initEventListenersAndActionFactories() {

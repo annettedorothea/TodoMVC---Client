@@ -37,9 +37,9 @@ export default class Container extends React.Component {
                                 of your application. ACE stands for Action - Command - Event:
                             </p>
                             <ul>
-                                <li>The action captures the user input.</li>
-                                <li>The command contains your business logic and fires events.</li>
-                                <li>Your views listen to these events and update themselves accordingly.</li>
+                                <li>The action initializes non-deterministic data.</li>
+                                <li>The command contains the business logic and fires events.</li>
+                                <li>The views listen to these events and update themselves accordingly.</li>
                             </ul>
                             <p>
                                 Both client and server are implemented based on the ACE architecture.
@@ -55,18 +55,13 @@ export default class Container extends React.Component {
                             <em>
                                 These functions can be executed from JavaScript console:
                                 <ul>
-                                    <li>Todo.saveScenario("&lt;description&gt;", "&lt;your name&gt;")</li>
-                                    <li>Todo.runScenario("&lt;scenarioId&gt;", "&lt;your name&gt;", &lt;pauseInMillis
-                                        (default is 0)&gt;)
-                                    </li>
-                                    <li>Todo.runAllScenarios("&lt;your name&gt;", &lt;pauseInMillis (default is
-                                        0)&gt;)
-                                    </li>
-                                    <li>Todo.saveBug("&lt;description&gt;", "&lt;your name&gt;")</li>
-                                    <li>Todo.runBug("&lt;bugId&gt;", &lt;pauseInMillis (default is 0)&gt;)</li>
+                                    <li>Todo.saveTimeline("&lt;description&gt;", "&lt;your name&gt;")</li>
+                                    <li>Todo.replayTimeline("&lt;id&gt;", &lt;pauseInMillis (default is 0)&gt;)</li>
+                                    <li>Todo.dumpTimeline()</li>
+                                    <li>Todo.dumpAppState()</li>
                                 </ul>
-                                You can view all bugs, scenarios and their execution results on <a
-                                href={`${Utils.settings ? Utils.settings.aceScenariosBaseUrl : ""}#/${Utils.settings ? Utils.settings.aceScenariosApiKey : ""}/scenarios`}
+                                You can view all saved timelines on <a
+                                href={`${Utils.settings ? Utils.settings.aceScenariosBaseUrl : ""}#/${Utils.settings ? Utils.settings.aceScenariosApiKey : ""}`}
                                 target="acegen">acegen.de</a>.
                             </em>
                         </footer>

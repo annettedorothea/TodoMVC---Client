@@ -17,9 +17,6 @@ export default class Utils {
 	static loadSettings() {
 	    return AppUtils.httpRequest("GET", "settings.json").then((settings) => {
 	        Utils.settings = settings;
-	        if (!Utils.settings.development) {
-	            Utils.settings.development = false;
-	        }
 	        if (!Utils.settings.clientVersion) {
 	            Utils.settings.clientVersion = "";
 	        }

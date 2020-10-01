@@ -19,9 +19,7 @@ See [TodoMVC---Server](https://github.com/annettedorothea/TodoMVC---Server) for 
   "aceScenariosApiKey": "336ace6-a52f-11e8-98d0-529269fb1489",
   "aceScenariosBaseUrl": "https://acegen.de/",
   "clientVersion": "<version>",
-  "development": true | false,
   "rootPath": "<root path as configured in your dropwizard yml file of the server, e.g. api>",
-  "replayRootPath": "<root path as configured in your dropwizard yml file of the server, e.g. replay>",
   "timelineSize": <timeline size, e.g. 32>
 }
 ```
@@ -31,16 +29,14 @@ See [TodoMVC---Server](https://github.com/annettedorothea/TodoMVC---Server) for 
 
 ## Replay
 
-These functions can be executed from JavaScript console when the app and 
-a server in dev and a server in replay mode  is running:
+These functions can be executed from JavaScript console:
 
-- Todo.saveScenario("description", "your name")
-- Todo.runScenario("scenarioId", "your name", pauseInMillis (default is 0))
-- Todo.runAllScenarios("your name", pauseInMillis (default is 0))
-- Todo.saveBug("description", "your name")
-- Todo.runBug("bugId", pauseInMillis (default is 0))
+- Todo.saveTimeline("&lt;description&gt;", "&lt;your name&gt;")
+- Todo.replayTimeline("&lt;id&gt;", &lt;pauseInMillis (default is 0)&gt;)
+- Todo.dumpTimeline()
+- Todo.dumpAppState()
 
-You can view all bugs, scenarios and their execution results on 
+You can view all saved timelines on 
 [acegen.de](https://acegen.de/#/336ace6-a52f-11e8-98d0-529269fb1489/scenarios).
 
 ## License
