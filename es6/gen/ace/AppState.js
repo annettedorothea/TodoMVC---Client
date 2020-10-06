@@ -25,20 +25,12 @@ export function set_filter(eventData) {
 	appState.filter = eventData.filter;
 }
 
-export function reset_filter() {
-	appState.filter = undefined;
-}
-
 export function get_newTodo() {
 	return appState.newTodo;
 }
 
 export function set_newTodo(eventData) {
 	appState.newTodo = eventData.newTodo;
-}
-
-export function reset_newTodo() {
-	appState.newTodo = undefined;
 }
 
 export function get_loading() {
@@ -49,10 +41,6 @@ export function set_loading(eventData) {
 	appState.loading = eventData.loading;
 }
 
-export function reset_loading() {
-	appState.loading = undefined;
-}
-
 export function get_todoList() {
 	return appState.todoList;
 }
@@ -61,20 +49,12 @@ export function set_todoList(eventData) {
 	appState.todoList = eventData.todoList;
 }
 
-export function reset_todoList() {
-	appState.todoList = undefined;
-}
-
 export function get_list() {
 	return appState.list;
 }
 
 export function set_list(eventData) {
 	appState.list = eventData.list;
-}
-
-export function reset_list() {
-	appState.list = undefined;
 }
 
 export function get_editedTodo() {
@@ -86,10 +66,6 @@ export function get_editedTodo() {
 
 export function set_editedTodo(eventData) {
 	appState.editedTodo = eventData.editedTodo;
-}
-
-export function reset_editedTodo() {
-	appState.editedTodo = undefined;
 }
 
 export function merge_editedTodo(eventData) {
@@ -121,13 +97,6 @@ export function set_editedTodo_editedDescription(eventData) {
 	appState.editedTodo.editedDescription = eventData.editedDescription;
 }
 
-export function reset_editedTodo_editedDescription() {
-	if (!appState.editedTodo) {
-		return;
-	}
-	appState.editedTodo.editedDescription = undefined;
-}
-
 export function get_editedTodo_id() {
 	if (!appState.editedTodo) {
 		return undefined;
@@ -142,13 +111,6 @@ export function set_editedTodo_id(eventData) {
 	appState.editedTodo.id = eventData.id;
 }
 
-export function reset_editedTodo_id() {
-	if (!appState.editedTodo) {
-		return;
-	}
-	appState.editedTodo.id = undefined;
-}
-
 export function get_editedTodo_description() {
 	if (!appState.editedTodo) {
 		return undefined;
@@ -161,12 +123,5 @@ export function set_editedTodo_description(eventData) {
 		appState.editedTodo = {};
 	}
 	appState.editedTodo.description = eventData.description;
-}
-
-export function reset_editedTodo_description() {
-	if (!appState.editedTodo) {
-		return;
-	}
-	appState.editedTodo.description = undefined;
 }
 

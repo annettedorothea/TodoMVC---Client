@@ -17,10 +17,18 @@ export default class AppUtils {
         EventFactoryRegistrationTodo.init();
     }
 
-    static start() {
+    static startApp() {
+        window.onhashchange = () => {
+            init(window.location.hash.substring(1));
+        };
         Utils.loadSettings().then(() => {
             init(window.location.hash.substring(1));
         });
+    }
+
+    static startReplay() {
+        window.onhashchange = () => {
+        };
     }
 
     static createInitialAppState() {

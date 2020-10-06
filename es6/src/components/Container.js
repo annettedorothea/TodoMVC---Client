@@ -56,7 +56,7 @@ export default class Container extends React.Component {
                                 These functions can be executed from JavaScript console:
                                 <ul>
                                     <li>Todo.saveTimeline("&lt;description&gt;", "&lt;your name&gt;")</li>
-                                    <li>Todo.replayTimeline("&lt;id&gt;", &lt;pauseInMillis (default is 0)&gt;)</li>
+                                    <li>Todo.replayTimeline("&lt;id&gt;", &lt;pauseInMillis (default and minimum are 100)&gt;)</li>
                                     <li>Todo.dumpTimeline()</li>
                                     <li>Todo.dumpAppState()</li>
                                 </ul>

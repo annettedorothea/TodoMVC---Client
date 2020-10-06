@@ -9,7 +9,10 @@ import AppUtils from "../../src/app/AppUtils";
 import ACEController from "./ACEController";
 import Utils from "./Utils";
 
-export function replayTimeline(timelineId, pauseInMillis = 0) {
+export function replayTimeline(timelineId, pauseInMillis = 100) {
+	if (pauseInMillis < 100) {
+		pauseInMillis = 100;
+	}
     Utils.loadTimeline(timelineId).then((scenario) => {
         AppUtils.createInitialAppState();
         ACEController.startReplay(JSON.parse(scenario.timeline), pauseInMillis)

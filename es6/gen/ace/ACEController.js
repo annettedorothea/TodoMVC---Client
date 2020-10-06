@@ -91,6 +91,8 @@ export default class ACEController {
     }
 
     static startReplay(timeline, pauseInMillis) {
+	    AppUtils.startReplay();
+
         let events = [];
 		
 		let appStateWasSet = false;
@@ -126,7 +128,7 @@ export default class ACEController {
 	    ACEController.timeline = [];
 	    ACEController.actionQueue = [];
 	    AppUtils.createInitialAppState();
-	    AppUtils.start();
+	    AppUtils.startApp();
 	}
 
 

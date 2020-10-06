@@ -1,6 +1,5 @@
 import AppUtils from './AppUtils';
 import Container from "../components/Container";
-import {init} from "../../gen/todo/ActionFunctions";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -15,11 +14,7 @@ export const container = ReactDOM.render(
     document.getElementById('root')
 );
 
-window.onhashchange = () => {
-    init(window.location.hash.substring(1));
-};
-
 AppUtils.initEventListenersAndActionFactories();
-AppUtils.start();
+AppUtils.startApp();
 
 /*       S.D.G.       */
