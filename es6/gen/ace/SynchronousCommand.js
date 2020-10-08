@@ -10,8 +10,8 @@ import Command from "./Command";
 
 export default class SynchronousCommand extends Command {
     executeCommand() {
-	    this.execute();
 		ACEController.addItemToTimeLine({command: this});
+	    this.execute();
 		this.publishEvents();
     }
 

@@ -15,8 +15,8 @@ export default class TriggerAction extends Event {
     }
 
 	publish() {
-	    this.notifyListeners();
 	    ACEController.addItemToTimeLine({event: this});
+	    this.notifyListeners();
 	}
 	
 	replay() {
