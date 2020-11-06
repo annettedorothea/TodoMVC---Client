@@ -22,6 +22,7 @@ export default class NewTodo extends React.Component {
                 onKeyPress={this.onKeyPress}
                 onChange={(event) => newTodoChanged(event.target.value)}
                 className="new-todo"
+                id="newTodoInput"
             />
         );
     }

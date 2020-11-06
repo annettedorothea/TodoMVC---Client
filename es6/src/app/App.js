@@ -19,6 +19,8 @@ AppUtils.initEventListenersAndActionFactories();
 AppUtils.startApp();
 
 AppUtils.renderNewState = () => {
+    localStorage.setItem("appState", JSON.stringify(AppState.getAppState()));
+    console.log(localStorage.getItem("appState"));
     container.setState(AppState.getAppState());
 }
 

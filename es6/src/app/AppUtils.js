@@ -3,7 +3,6 @@ import {displayError, init} from "../../gen/todo/ActionFunctions";
 import EventListenerRegistrationTodo from "../../gen/todo/EventListenerRegistration";
 import EventFactoryRegistrationTodo from "../../gen/todo/EventFactoryRegistration";
 import Utils from "../../gen/ace/Utils";
-import 'whatwg-fetch';
 
 export function dumpAppState() {
     console.log(AppState.getAppState());
@@ -80,9 +79,7 @@ export default class AppUtils {
             url = AppUtils.addUuidToUrl(url, uuid);
             const request = new Request(url, options);
 
-            console.log("httpRequest");
             return fetch(request).then((response) => {
-                console.log("response httpRequest", response);
                 return response.text().then((text) => {
                     if (response.status >= 300) {
                         const error = {
