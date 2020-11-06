@@ -18,8 +18,6 @@ export default class SynchronousAction extends Action {
 
     applyAction() {
 	    ACEController.addItemToTimeLine({action: this});
-        this.actionData.uuid = AppUtils.createUUID();
-		this.actionData.clientSystemTime = new Date();
         this.initActionData();
 	    let command = this.getCommand();
 	    command.executeCommand();

@@ -13,13 +13,13 @@ ACE
 		on ok (set todoList)
 	
 	NewTodoChanged (newTodo)
-		UIEvent "onChange" ID "newTodoInput"
+		UIEvent "onChange" 
 		on ok (set newTodo)
 	
 	CreateTodo (description)
 			call com.anfelisa.todo.CreateTodo
 			loadingFlag loading 
-		UIEvent "onKeyPress" ID "newTodoInput"
+		UIEvent "onKeyPress" 
 		on ok (set newTodo) triggers ( GetTodoList)
 		on empty
 		
@@ -68,14 +68,20 @@ ACE
 		on ok (set error)
 	
 appState {
-	filter
-	newTodo
-	loading
-	List todoList
-	error
+	String filter
+	String newTodo
+	Boolean loading
+	List todoList {
+		String id
+		String description
+		Boolean done
+		DateTime createdDateTime
+		DateTime updatedDateTime
+	}
+	String error
 	editedTodo {
-		editedDescription
-		id
-		description
+		String editedDescription
+		String id
+		String description
 	}
 }

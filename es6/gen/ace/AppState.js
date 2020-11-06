@@ -42,11 +42,35 @@ export function set_loading(eventData) {
 }
 
 export function get_todoList() {
-	return appState.todoList;
+	if (!appState.todoList) {
+		return undefined;
+	}
+	return AppUtils.deepCopy(appState.todoList);
 }
 
 export function set_todoList(eventData) {
 	appState.todoList = eventData.todoList;
+}
+
+export function merge_todoList(eventData) {
+	if (!appState.todoList) {
+		appState.todoList = {};
+	}
+	if (eventData.id !== undefined) {
+		appState.todoList.id = eventData.id;
+	}
+	if (eventData.description !== undefined) {
+		appState.todoList.description = eventData.description;
+	}
+	if (eventData.done !== undefined) {
+		appState.todoList.done = eventData.done;
+	}
+	if (eventData.createdDateTime !== undefined) {
+		appState.todoList.createdDateTime = eventData.createdDateTime;
+	}
+	if (eventData.updatedDateTime !== undefined) {
+		appState.todoList.updatedDateTime = eventData.updatedDateTime;
+	}
 }
 
 export function get_error() {

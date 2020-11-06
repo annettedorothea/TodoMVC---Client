@@ -1,0 +1,22 @@
+HttpClient 
+
+todoscenarios
+
+scenarios 
+
+	InitAll
+		WHEN
+			todo.Init(hash: "#")
+			uuid "lala"
+			systemTime "10.10.2020"
+			nonDeterministic createdDateTime : "123"
+		THEN
+			expectedState 
+				setFilter todo.todoList shouldBe [
+					{
+						
+					}
+				]
+				todoLost todo.editedTodo shouldBe {
+					
+				}

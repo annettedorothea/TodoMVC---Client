@@ -32,6 +32,9 @@ export default class Utils {
 	        if (!Utils.settings.timelineSize) {
 	            Utils.settings.timelineSize = 0;
 	        }
+			if (!Utils.settings.mode) {
+			    Utils.settings.mode = "live";
+			}
 	        if (Utils.settings.rootPath.startsWith("/")) {
 	            Utils.settings.rootPath = Utils.settings.rootPath.substring(1);
 	        }

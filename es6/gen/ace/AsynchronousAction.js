@@ -22,8 +22,6 @@ export default class AsynchronousAction extends Action {
             ACEController.addItemToTimeLine({action: this});
         	this.preCall();
             AppUtils.renderNewState();
-            this.actionData.uuid = AppUtils.createUUID();
-            this.actionData.clientSystemTime = new Date();
             this.initActionData();
             let command = this.getCommand();
             command.executeCommand().then(() => {
