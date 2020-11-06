@@ -6,16 +6,16 @@
 
 
 import Action from "../../ace/SynchronousAction";
-import InitCommand from "../../../src/todo/commands/InitCommand";
+import DisplayErrorCommand from "../../../src/todo/commands/DisplayErrorCommand";
 
-export default class AbstractInitAction extends Action {
+export default class AbstractDisplayErrorAction extends Action {
 
-    constructor( hash) {
-        super({hash}, 'todo.InitAction');
+    constructor( error) {
+        super({error}, 'todo.DisplayErrorAction');
 	}
 		
 	getCommand() {
-		return new InitCommand(this.actionData);
+		return new DisplayErrorCommand(this.actionData);
 	}
 
 

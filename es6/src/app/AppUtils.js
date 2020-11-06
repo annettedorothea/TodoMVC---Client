@@ -1,10 +1,9 @@
-import * as App from "./App";
 import * as AppState from "../../gen/ace/AppState";
-import {init} from "../../gen/todo/ActionFunctions";
+import {displayError, init} from "../../gen/todo/ActionFunctions";
 import EventListenerRegistrationTodo from "../../gen/todo/EventListenerRegistration";
 import EventFactoryRegistrationTodo from "../../gen/todo/EventFactoryRegistration";
 import Utils from "../../gen/ace/Utils";
-import {container} from "./App";
+import 'whatwg-fetch';
 
 export function dumpAppState() {
     console.log(AppState.getAppState());
@@ -41,10 +40,6 @@ export default class AppUtils {
             error: null
         };
         AppState.setInitialAppState(initialAppState);
-    }
-
-    static renderNewState() {
-        container.setState(AppState.getAppState());
     }
 
     static createHeaders(authorize) {
@@ -85,8 +80,10 @@ export default class AppUtils {
             url = AppUtils.addUuidToUrl(url, uuid);
             const request = new Request(url, options);
 
-            fetch(request).then(function (response) {
-                response.text().then((text) => {
+            console.log("httpRequest");
+            return fetch(request).then((response) => {
+                console.log("response httpRequest", response);
+                return response.text().then((text) => {
                     if (response.status >= 300) {
                         const error = {
                             code: response.status,
@@ -157,13 +154,9 @@ export default class AppUtils {
         if (errorMessage.length > 50) {
             errorMessage = errorMessage.slice(0, 50) + "...";
         }
-        App.container.setState({
-            error: errorMessage
-        });
+        displayError(errorMessage);
         AppUtils.timer = setTimeout(function () {
-            App.container.setState({
-                error: null
-            });
+            displayError(null);
         }, 7000);
     }
 

@@ -2,6 +2,7 @@
   "name": "todo",
   "version": "0.6.7",
   "description": "",
+  "repository": "https://github.com/annettedorothea/TodoMVC---Client",
   "scripts": {
     "uglify": "uglifyjs lib/todo.0.6.7.js --compress --mangle --output lib/todo.0.6.7.min.js",
     "build": "browserify --entry es6/src/app/App.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --outfile lib/todo.0.6.7.js --debug --standalone Todo",
@@ -11,17 +12,17 @@
   "license": "ISC",
   "dependencies": {
     "json-stable-stringify": "^1.0.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/preset-react": "^7.10.4",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
     "babelify": "^10.0.0",
     "browserify": "^16.5.2",
     "live-server": "^1.2.1",
-    "uglify-js": "^3.11.1",
+    "uglify-js": "^3.11.5",
     "watchify": "^3.11.1"
   }
 }

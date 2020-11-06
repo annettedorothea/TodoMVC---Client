@@ -6,23 +6,21 @@
 
 
 import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
-import * as AppState from "../../ace/AppState";
-import EditTodoOkEvent from "../../../gen/todo/events/EditTodoOkEvent";
+import DisplayErrorOkEvent from "../../../gen/todo/events/DisplayErrorOkEvent";
 
-export default class AbstractEditTodoCommand extends SynchronousCommand {
+export default class AbstractDisplayErrorCommand extends SynchronousCommand {
     constructor(commandData) {
-        super(commandData, "todo.EditTodoCommand");
+        super(commandData, "todo.DisplayErrorCommand");
         this.ok = "ok";
-        this.commandData.todoList = AppState.get_todoList();
     }
 
     publishEvents() {
 		switch (this.commandData.outcome) {
 		case this.ok:
-			new EditTodoOkEvent(this.commandData).publish();
+			new DisplayErrorOkEvent(this.commandData).publish();
 			break;
 		default:
-			throw 'EditTodoCommand unhandled outcome: ' + this.commandData.outcome;
+			throw 'DisplayErrorCommand unhandled outcome: ' + this.commandData.outcome;
 		}
     }
 }

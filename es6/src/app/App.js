@@ -1,5 +1,6 @@
 import AppUtils from './AppUtils';
 import Container from "../components/Container";
+import * as AppState from "../../gen/ace/AppState";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -16,5 +17,9 @@ export const container = ReactDOM.render(
 
 AppUtils.initEventListenersAndActionFactories();
 AppUtils.startApp();
+
+AppUtils.renderNewState = () => {
+    container.setState(AppState.getAppState());
+}
 
 /*       S.D.G.       */

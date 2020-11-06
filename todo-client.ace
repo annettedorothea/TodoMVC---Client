@@ -63,12 +63,16 @@ ACE
 			call com.anfelisa.todo.ClearDone 
 			loadingFlag loading 
 		on ok triggers (GetTodoList)
+		
+	DisplayError (error)
+		on ok (set error)
 	
 appState {
 	filter
 	newTodo
 	loading
-	todoList list 
+	List todoList
+	error
 	editedTodo {
 		editedDescription
 		id
