@@ -12,9 +12,9 @@ import AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
-export default class AbstractClearDoneCommand extends AsynchronousCommand {
+export default class AbstractCreateCategoryCommand extends AsynchronousCommand {
     constructor(commandData) {
-        super(commandData, "todo.ClearDoneCommand");
+        super(commandData, "todo.CreateCategoryCommand");
         this.ok = "ok";
         this.commandData.categoryId = AppState.get_categoryId();
     }
@@ -27,15 +27,18 @@ export default class AbstractClearDoneCommand extends AsynchronousCommand {
 			promises.push(new TriggerAction(new GetTodoListAction()).publish());
 			break;
 		default:
-			return new Promise((resolve, reject) => {reject('ClearDoneCommand unhandled outcome: ' + this.commandData.outcome)});
+			return new Promise((resolve, reject) => {reject('CreateCategoryCommand unhandled outcome: ' + this.commandData.outcome)});
 		}
 		return Promise.all(promises);
     }
     
 	execute() {
 	    return new Promise((resolve, reject) => {
+	    	let payload = {
+	    		categoryId : this.commandData.categoryId
+	    	};
 	
-			AppUtils.httpDelete(`${Utils.settings.rootPath}/todos/clear-done?categoryId=${this.commandData.categoryId}`, this.commandData.uuid, false).then(() => {
+			AppUtils.httpPost(`${Utils.settings.rootPath}/category/create`, this.commandData.uuid, false, payload).then(() => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

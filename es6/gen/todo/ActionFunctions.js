@@ -6,6 +6,7 @@
 
 
 import InitAction from "../../src/todo/actions/InitAction";
+import CreateCategoryAction from "../../src/todo/actions/CreateCategoryAction";
 import GetTodoListAction from "../../src/todo/actions/GetTodoListAction";
 import NewTodoChangedAction from "../../src/todo/actions/NewTodoChangedAction";
 import CreateTodoAction from "../../src/todo/actions/CreateTodoAction";
@@ -20,6 +21,10 @@ import DisplayErrorAction from "../../src/todo/actions/DisplayErrorAction";
 
 export function init(hash) {
     new InitAction(hash).apply();
+}
+
+export function createCategory() {
+    new CreateCategoryAction().apply();
 }
 
 export function getTodoList() {

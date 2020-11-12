@@ -4,22 +4,31 @@ todo
 
 ACE 
 	Init(hash)
-		UIEvent "onLoad" 
-		on ok (set filter) triggers (GetTodoList)
+		on ok (
+			set filter 
+			set categoryId
+		) triggers (GetTodoList)
+	
+	CreateCategory
+		fromAppState(categoryId)
+			call com.anfelisa.todo.CreateCategory
+			loadingFlag loading 
+		on ok triggers ( GetTodoList )
 	
 	GetTodoList 
+		fromAppState(categoryId)
 			call com.anfelisa.todo.GetAllTodos  
 			loadingFlag loading 
 		on ok (set todoList)
+		on categoryDoesNotExist triggers (CreateCategory)
 	
 	NewTodoChanged (newTodo)
-		UIEvent "onChange" 
 		on ok (set newTodo)
 	
 	CreateTodo (description)
+		fromAppState(categoryId)
 			call com.anfelisa.todo.CreateTodo
 			loadingFlag loading 
-		UIEvent "onKeyPress" 
 		on ok (set newTodo) triggers ( GetTodoList)
 		on empty
 		
@@ -50,6 +59,7 @@ ACE
 		on ok triggers (GetTodoList)
 	
 	ToggleAll 
+		fromAppState(categoryId)
 			call com.anfelisa.todo.ToggleAll 
 			loadingFlag loading 
 		on ok triggers (GetTodoList)
@@ -59,7 +69,8 @@ ACE
 			loadingFlag loading 
 		on ok triggers (GetTodoList)
 	
-	ClearDone 
+	ClearDone
+		fromAppState(categoryId) 
 			call com.anfelisa.todo.ClearDone 
 			loadingFlag loading 
 		on ok triggers (GetTodoList)
@@ -71,6 +82,7 @@ appState {
 	String filter
 	String newTodo
 	Boolean loading
+	String categoryId
 	List todoList {
 		String id
 		String description

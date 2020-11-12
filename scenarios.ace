@@ -8,15 +8,15 @@ scenarios
 		WHEN
 			todo.Init(hash: "#")
 			uuid "lala"
-			systemTime "10.10.2020"
-			nonDeterministic createdDateTime : "123"
+			clientSystemTime "10.10.2020"
 		THEN
 			expectedState 
 				setFilter todo.todoList shouldBe [
 					{
-						
+						 id: "${testId}"
 					}
 				]
 				todoLost todo.editedTodo shouldBe {
 					
 				}
+			

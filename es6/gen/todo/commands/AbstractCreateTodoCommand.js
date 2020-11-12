@@ -9,6 +9,7 @@ import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
 import AppUtils from "../../../src/app/AppUtils";
+import * as AppState from "../../ace/AppState";
 import CreateTodoOkEvent from "../../../gen/todo/events/CreateTodoOkEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
@@ -17,6 +18,7 @@ export default class AbstractCreateTodoCommand extends AsynchronousCommand {
         super(commandData, "todo.CreateTodoCommand");
         this.ok = "ok";
         this.empty = "empty";
+        this.commandData.categoryId = AppState.get_categoryId();
     }
 
     publishEvents() {
@@ -38,13 +40,15 @@ export default class AbstractCreateTodoCommand extends AsynchronousCommand {
 	execute() {
 	    return new Promise((resolve, reject) => {
 	    	let payload = {
-	    		description : this.commandData.description
+	    		description : this.commandData.description,
+	    		categoryId : this.commandData.categoryId
 	    	};
 	
 			AppUtils.httpPost(`${Utils.settings.rootPath}/todos/create`, this.commandData.uuid, false, payload).then((data) => {
 				this.commandData.id = data.id;
 				this.commandData.createdDateTime = data.createdDateTime;
 				this.commandData.description = data.description;
+				this.commandData.categoryId = data.categoryId;
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

@@ -3,7 +3,11 @@ import AbstractGetTodoListCommand from "../../../gen/todo/commands/AbstractGetTo
 export default class GetTodoListCommand extends AbstractGetTodoListCommand {
 
     handleResponse(resolve) {
-    	this.commandData.outcome = this.ok;
+        if (!this.commandData.todoList) {
+            this.commandData.outcome = this.categoryDoesNotExist;
+        } else {
+            this.commandData.outcome = this.ok;
+        }
     	resolve();
     }
     handleError(resolve, reject) {

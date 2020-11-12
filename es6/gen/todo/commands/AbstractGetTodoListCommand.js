@@ -6,14 +6,19 @@
 
 
 import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
+import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
 import AppUtils from "../../../src/app/AppUtils";
+import * as AppState from "../../ace/AppState";
 import GetTodoListOkEvent from "../../../gen/todo/events/GetTodoListOkEvent";
+import CreateCategoryAction from "../../../src/todo/actions/CreateCategoryAction";
 
 export default class AbstractGetTodoListCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.GetTodoListCommand");
         this.ok = "ok";
+        this.categoryDoesNotExist = "categoryDoesNotExist";
+        this.commandData.categoryId = AppState.get_categoryId();
     }
 
     publishEvents() {
@@ -22,6 +27,9 @@ export default class AbstractGetTodoListCommand extends AsynchronousCommand {
 		switch (this.commandData.outcome) {
 		case this.ok:
 			promises.push(new GetTodoListOkEvent(this.commandData).publish());
+			break;
+		case this.categoryDoesNotExist:
+			promises.push(new TriggerAction(new CreateCategoryAction()).publish());
 			break;
 		default:
 			return new Promise((resolve, reject) => {reject('GetTodoListCommand unhandled outcome: ' + this.commandData.outcome)});
@@ -32,7 +40,7 @@ export default class AbstractGetTodoListCommand extends AsynchronousCommand {
 	execute() {
 	    return new Promise((resolve, reject) => {
 	
-			AppUtils.httpGet(`${Utils.settings.rootPath}/todos/all`, this.commandData.uuid, false).then((data) => {
+			AppUtils.httpGet(`${Utils.settings.rootPath}/todos/all?categoryId=${this.commandData.categoryId}`, this.commandData.uuid, false).then((data) => {
 				this.commandData.todoList = data.todoList;
 				this.handleResponse(resolve, reject);
 			}, (error) => {

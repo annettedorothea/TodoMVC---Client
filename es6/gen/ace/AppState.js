@@ -41,6 +41,14 @@ export function set_loading(eventData) {
 	appState.loading = eventData.loading;
 }
 
+export function get_categoryId() {
+	return appState.categoryId;
+}
+
+export function set_categoryId(eventData) {
+	appState.categoryId = eventData.categoryId;
+}
+
 export function get_todoList() {
 	if (!appState.todoList) {
 		return undefined;

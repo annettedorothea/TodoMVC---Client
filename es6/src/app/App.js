@@ -4,6 +4,7 @@ import * as AppState from "../../gen/ace/AppState";
 
 import React from "react";
 import ReactDOM from "react-dom";
+import Utils from "../../gen/ace/Utils";
 
 export * from "../../gen/ace/Timeline";
 export { dumpAppState } from "./AppUtils";
@@ -19,8 +20,9 @@ AppUtils.initEventListenersAndActionFactories();
 AppUtils.startApp();
 
 AppUtils.renderNewState = () => {
-    localStorage.setItem("appState", JSON.stringify(AppState.getAppState()));
-    console.log(localStorage.getItem("appState"));
+    if (Utils.settings.mode === "dev") {
+        localStorage.setItem("appState", JSON.stringify(AppState.getAppState()));
+    }
     container.setState(AppState.getAppState());
 }
 
