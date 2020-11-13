@@ -44,11 +44,7 @@ export default class AbstractCreateTodoCommand extends AsynchronousCommand {
 	    		categoryId : this.commandData.categoryId
 	    	};
 	
-			AppUtils.httpPost(`${Utils.settings.rootPath}/todos/create`, this.commandData.uuid, false, payload).then((data) => {
-				this.commandData.id = data.id;
-				this.commandData.createdDateTime = data.createdDateTime;
-				this.commandData.description = data.description;
-				this.commandData.categoryId = data.categoryId;
+			AppUtils.httpPost(`${Utils.settings.rootPath}/todos/create`, this.commandData.uuid, false, payload).then(() => {
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;
