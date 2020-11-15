@@ -4,19 +4,40 @@ todoscenarios
 
 scenarios 
 
-	InitAll
-		WHEN
-			todo.Init(hash: "#")
-			uuid "lala"
-			clientSystemTime "10.10.2020"
+	InitAllWithCreateCategory 
+		WHEN 
+			todo.Init(hash: "#/category_${testId}")
 		THEN
 			expectedState 
-				setFilter todo.todoList shouldBe [
-					{
-						 id: "${testId}"
-					}
-				]
-				todoLost todo.editedTodo shouldBe {
-					
-				}
+				filterWasSet todo.filter shouldBe "all"
+				categoryWasSet todo.categoryId shouldBe "category_${testId}"
+				emptyTodoListWasFetched todo.todoList shouldBe []
+			
+	InitActive
+		GIVEN InitAllWithCreateCategory
+		WHEN 
+			todo.Init(hash: "#/category_${testId}/active")
+		THEN
+			expectedState 
+				filterWasSet todo.filter shouldBe "active"
+				categoryWasSet todo.categoryId shouldBe "category_${testId}"
+				emptyTodoListWasFetched todo.todoList shouldBe []
+			
+	InitActiveWithCreateCategory 
+		WHEN 
+			todo.Init(hash: "#/category_${testId}/active")
+		THEN
+			expectedState 
+				filterWasSet todo.filter shouldBe "open"
+				categoryWasSet todo.categoryId shouldBe "category_${testId}"
+				emptyTodoListWasFetched todo.todoList shouldBe []
+			
+	InitCompletedWithCreateCategory 
+		WHEN 
+			todo.Init(hash: "#/category_${testId}/completed")
+		THEN
+			expectedState 
+				filterWasSet todo.filter shouldBe "done"
+				categoryWasSet todo.categoryId shouldBe "category_${testId}"
+				emptyTodoListWasFetched todo.todoList shouldBe []
 			

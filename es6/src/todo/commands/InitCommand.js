@@ -7,7 +7,7 @@ export default class InitCommand extends AbstractInitCommand {
         this.commandData.categoryId = "defaultCategory";
         if (this.commandData.hash !== undefined) {
             let hashes = this.commandData.hash.split("/");
-            if (hashes.length === 2) {
+            if (hashes.length >= 2) {
                 this.commandData.categoryId = hashes[1];
             }
             if (hashes.length === 3) {
