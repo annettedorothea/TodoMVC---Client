@@ -6,15 +6,14 @@
 
 
 import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
-import TriggerAction from "../../../gen/ace/TriggerAction";
 import Utils from "../../ace/Utils";
 import AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
-import GetTodoListWithoutCategoryCheckAction from "../../../src/todo/actions/GetTodoListWithoutCategoryCheckAction";
+import GetTodoListWithoutCategoryCheckOkEvent from "../../../gen/todo/events/GetTodoListWithoutCategoryCheckOkEvent";
 
-export default class AbstractCreateCategoryCommand extends AsynchronousCommand {
+export default class AbstractGetTodoListWithoutCategoryCheckCommand extends AsynchronousCommand {
     constructor(commandData) {
-        super(commandData, "todo.CreateCategoryCommand");
+        super(commandData, "todo.GetTodoListWithoutCategoryCheckCommand");
         this.ok = "ok";
         this.commandData.categoryId = AppState.get_categoryId();
     }
@@ -24,21 +23,19 @@ export default class AbstractCreateCategoryCommand extends AsynchronousCommand {
 	    	
 		switch (this.commandData.outcome) {
 		case this.ok:
-			promises.push(new TriggerAction(new GetTodoListWithoutCategoryCheckAction()).publish());
+			promises.push(new GetTodoListWithoutCategoryCheckOkEvent(this.commandData).publish());
 			break;
 		default:
-			return new Promise((resolve, reject) => {reject('CreateCategoryCommand unhandled outcome: ' + this.commandData.outcome)});
+			return new Promise((resolve, reject) => {reject('GetTodoListWithoutCategoryCheckCommand unhandled outcome: ' + this.commandData.outcome)});
 		}
 		return Promise.all(promises);
     }
     
 	execute() {
 	    return new Promise((resolve, reject) => {
-	    	let payload = {
-	    		categoryId : this.commandData.categoryId
-	    	};
 	
-			AppUtils.httpPost(`${Utils.settings.rootPath}/category/create`, this.commandData.uuid, false, payload).then(() => {
+			AppUtils.httpGet(`${Utils.settings.rootPath}/todos/all?categoryId=${this.commandData.categoryId}`, this.commandData.uuid, false).then((data) => {
+				this.commandData.todoList = data.todoList;
 				this.handleResponse(resolve, reject);
 			}, (error) => {
 				this.commandData.error = error;

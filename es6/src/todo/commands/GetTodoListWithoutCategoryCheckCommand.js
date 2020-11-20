@@ -5,15 +5,15 @@
 
 
 
-import AbstractCreateCategoryCommand from "../../../gen/todo/commands/AbstractCreateCategoryCommand";
+import AbstractGetTodoListWithoutCategoryCheckCommand from "../../../gen/todo/commands/AbstractGetTodoListWithoutCategoryCheckCommand";
 
-export default class CreateCategoryCommand extends AbstractCreateCategoryCommand {
+export default class GetTodoListWithoutCategoryCheckCommand extends AbstractGetTodoListWithoutCategoryCheckCommand {
 
     validateCommandData() {
     	return true;
     }
 
-    handleResponse(resolve) {
+    handleResponse(resolve, reject) {
     	this.commandData.outcome = this.ok;
     	resolve();
     }

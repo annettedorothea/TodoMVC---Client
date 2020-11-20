@@ -1,0 +1,30 @@
+HttpClient 
+
+newtodochanged
+
+scenarios 
+
+	NewTodoChanged
+		GIVEN 
+			init.InitAllWithCreateCategory
+		WHEN
+			todo.NewTodoChanged(newTodo : "new Item ${testId}")
+		THEN
+			expectedState 
+				newTodoWasSet todo.newTodo shouldBe "new Item ${testId}"
+
+	NewTodoChangedWithReturn
+		GIVEN 
+			NewTodoChanged
+		WHEN
+			todo.NewTodoChanged(newTodo : "ENTER")
+		THEN
+			expectedState 
+				/*todoWasCreated todo.todoList shouldBe {
+					createdDateTime: "",
+					description: "new Item ${testId}",
+					done: false,
+					id: "uuid",
+					updatedDateTime: null
+				}*/
+				newTodoWasReset todo.newTodo shouldBe ""

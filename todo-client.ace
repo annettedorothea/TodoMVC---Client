@@ -13,7 +13,7 @@ ACE
 		fromAppState(categoryId)
 			call com.anfelisa.todo.CreateCategory
 			loadingFlag loading 
-		on ok triggers ( GetTodoList )
+		on ok triggers ( GetTodoListWithoutCategoryCheck )
 	
 	GetTodoList 
 		fromAppState(categoryId)
@@ -21,6 +21,12 @@ ACE
 			loadingFlag loading 
 		on ok (set todoList)
 		on categoryDoesNotExist triggers (CreateCategory)
+	
+	GetTodoListWithoutCategoryCheck 
+		fromAppState(categoryId)
+			call com.anfelisa.todo.GetAllTodos  
+			loadingFlag loading 
+		on ok (set todoList)
 	
 	NewTodoChanged (newTodo)
 		on ok (set newTodo)

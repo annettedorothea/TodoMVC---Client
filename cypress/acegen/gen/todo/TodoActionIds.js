@@ -11,6 +11,8 @@ export let createCategory = "todo_createCategory";
 
 export let getTodoList = "todo_getTodoList";
 
+export let getTodoListWithoutCategoryCheck = "todo_getTodoListWithoutCategoryCheck";
+
 export let newTodoChanged = "todo_newTodoChanged";
 
 export let createTodo = "todo_createTodo";

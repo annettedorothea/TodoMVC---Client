@@ -8,6 +8,7 @@
 import InitAction from "../../src/todo/actions/InitAction";
 import CreateCategoryAction from "../../src/todo/actions/CreateCategoryAction";
 import GetTodoListAction from "../../src/todo/actions/GetTodoListAction";
+import GetTodoListWithoutCategoryCheckAction from "../../src/todo/actions/GetTodoListWithoutCategoryCheckAction";
 import NewTodoChangedAction from "../../src/todo/actions/NewTodoChangedAction";
 import CreateTodoAction from "../../src/todo/actions/CreateTodoAction";
 import EditTodoAction from "../../src/todo/actions/EditTodoAction";
@@ -29,6 +30,10 @@ export function createCategory() {
 
 export function getTodoList() {
     new GetTodoListAction().apply();
+}
+
+export function getTodoListWithoutCategoryCheck() {
+    new GetTodoListWithoutCategoryCheckAction().apply();
 }
 
 export function newTodoChanged(newTodo) {

@@ -5,21 +5,21 @@
 
 
 
-import * as ScenarioUtils from "../../src/ScenarioUtils";
-import * as TodoActionIds from "../todo/TodoActionIds";
+import * as ScenarioUtils from "../../../acegen/src/ScenarioUtils";
+import * as TodoActionIds from "../../../acegen/gen/todo/TodoActionIds";
 
 const testId = ScenarioUtils.testId();
 
-context('InitAllWithCreateCategory', () => {
+context('InitOpenFilterWithCreateCategory', () => {
     beforeEach(() => {
     	
     })
 
     it('should change appState', () => {
-    	ScenarioUtils.getCypressFor(TodoActionIds.init, [`#/category_${testId}`]).should(() => {
-    		ScenarioUtils.wait(500).should(() => {
+    	ScenarioUtils.getCypressFor(TodoActionIds.init, [`#/category_${testId}/open`]).should(() => {
+    		ScenarioUtils.wait(1, 3).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            expect(appState.filter, "filterWasSet").to.eql(`all`)
+	            expect(appState.filter, "filterWasSet").to.eql(`open`)
 	            expect(appState.categoryId, "categoryWasSet").to.eql(`category_${testId}`)
 	            expect(appState.todoList, "emptyTodoListWasFetched").to.eql([])
     		})

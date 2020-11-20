@@ -20,9 +20,9 @@ AppUtils.initEventListenersAndActionFactories();
 AppUtils.startApp();
 
 AppUtils.renderNewState = () => {
-    //if (Utils.settings.mode === "dev") {
+    if (Utils.settings && Utils.settings.mode === "dev") {
         localStorage.setItem("appState", JSON.stringify(AppState.getAppState()));
-    //}
+    }
     container.setState(AppState.getAppState());
 }
 

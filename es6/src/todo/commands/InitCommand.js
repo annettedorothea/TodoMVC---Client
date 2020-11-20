@@ -11,9 +11,9 @@ export default class InitCommand extends AbstractInitCommand {
                 this.commandData.categoryId = hashes[1];
             }
             if (hashes.length === 3) {
-                if (hashes[2] === 'active') {
+                if (hashes[2] === 'open') {
                     this.commandData.filter = 'open';
-                } else if (hashes[2] === 'completed') {
+                } else if (hashes[2] === 'done') {
                     this.commandData.filter = 'done';
                 }
             }
