@@ -6,6 +6,7 @@
 
 
 import * as ScenarioUtils from "../../../acegen/src/ScenarioUtils";
+import AppUtils from "../../../../es6/src/app/AppUtils";
 import * as TodoActionIds from "../../../acegen/gen/todo/TodoActionIds";
 
 const testId = ScenarioUtils.testId();
@@ -13,7 +14,7 @@ const testId = ScenarioUtils.testId();
 context('InitAllWithoutCreateCategory', () => {
     beforeEach(() => {
     	ScenarioUtils.getCypressFor(TodoActionIds.init, [`#/category_${testId}`])
-    	
+    	ScenarioUtils.wait(1, 3)
     })
 
     it('should change appState', () => {

@@ -13,9 +13,8 @@ export default class AsynchronousAction extends Action {
 
     constructor(actionData, actionName) {
     	super(actionData, actionName);
-    	   this.asynchronous = true;
+    	this.asynchronous = true;
     }
-	
 
     applyAction() {
         return new Promise((resolve, reject) => {

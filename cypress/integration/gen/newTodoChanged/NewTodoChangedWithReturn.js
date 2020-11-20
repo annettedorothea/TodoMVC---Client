@@ -3,39 +3,35 @@
  ********************************************************************************/
 
 
+
+
 import * as ScenarioUtils from "../../../acegen/src/ScenarioUtils";
+import AppUtils from "../../../../es6/src/app/AppUtils";
 import * as TodoActionIds from "../../../acegen/gen/todo/TodoActionIds";
 
 const testId = ScenarioUtils.testId();
 
 context('NewTodoChangedWithReturn', () => {
     beforeEach(() => {
-        ScenarioUtils.getCypressFor(TodoActionIds.init, [`#/category_${testId}`])
-        ScenarioUtils.getCypressFor(TodoActionIds.newTodoChanged, [`new Item ${testId}`])
-
+    	ScenarioUtils.getCypressFor(TodoActionIds.init, [`#/category_${testId}`])
+    	ScenarioUtils.wait(1, 3)
+    	ScenarioUtils.getCypressFor(TodoActionIds.newTodoChanged, [`new Item ${testId}`])
+    	ScenarioUtils.wait(1, 0)
     })
 
     it('should change appState', () => {
-        ScenarioUtils.getCypressFor(TodoActionIds.newTodoChanged, [`ENTER`]).should(() => {
-            ScenarioUtils.wait(1, 0).should(() => {
-                const appState = JSON.parse(localStorage.getItem('appState'))
-                expect(appState.newTodo, "newTodoWasReset").to.eql(``)
-                expect(appState.todoList[0].description, "description").to.eql(`new Item ${testId}`)
-                expect(appState.todoList[0].done, "done").to.eql(false)
-                expect(appState.todoList[0].updatedDateTime, "updatedDateTime").to.eql(null)
-                expect(appState.todoList[0].createdDateTime, "createdDateTime").to.eql("")
-                expect(appState.todoList[0].id, "id").to.eql("id")
-                expect(appState.todoList, "todoWasCreated").to.eql([{
-                    createdDateTime: "",
-                    description: "new Item ${testId}",
-                    done: false,
-                    id: "uuid",
-                    updatedDateTime: null
-                }])
-            })
+    	localStorage.setItem("uuid", `${testId}`)
+    	AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=${testId}&system-time=${new Date('2020-10-10T14:48:00').toISOString()}`)
+    	ScenarioUtils.getCypressFor(TodoActionIds.newTodoChanged, [`ENTER`]).should(() => {
+    		ScenarioUtils.wait(1, 0).should(() => {
+	            const appState = JSON.parse(localStorage.getItem('appState'))
+	            expect(appState.newTodo, "newTodoWasReset").to.eql(``)
+    		})
         })
     })
 })
+
+
 
 
 /******* S.D.G. *******/

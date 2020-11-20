@@ -6,13 +6,13 @@
 
 
 import * as ScenarioUtils from "../../../acegen/src/ScenarioUtils";
+import AppUtils from "../../../../es6/src/app/AppUtils";
 import * as TodoActionIds from "../../../acegen/gen/todo/TodoActionIds";
 
 const testId = ScenarioUtils.testId();
 
 context('InitDoneFilterWithCreateCategory', () => {
     beforeEach(() => {
-    	
     })
 
     it('should change appState', () => {

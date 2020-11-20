@@ -16,9 +16,11 @@ export default class Action {
             actionData = {};
         }
         this.actionData = AppUtils.deepCopy(actionData);
-        if (Utils.settings === "dev") {
+        if (Utils.settings.mode === "dev") {
         	this.actionData.uuid = localStorage.getItem("uuid");
+        	localStorage.removeItem("uuid");
         	this.actionData.clientSystemTime = localStorage.getItem("clientSystemTime");
+        	localStorage.removeItem("clientSystemTime");
         	if (this.actionData.uuid === null) {
         		this.actionData.uuid = AppUtils.createUUID();
         	}

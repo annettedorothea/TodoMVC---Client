@@ -13,7 +13,7 @@ export default class SynchronousAction extends Action {
 
     constructor(actionData, actionName) {
     	super(actionData, actionName);
-    	   this.asynchronous = false;
+    	this.asynchronous = false;
     }
 
     applyAction() {

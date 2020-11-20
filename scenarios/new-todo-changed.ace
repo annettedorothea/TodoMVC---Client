@@ -18,6 +18,8 @@ scenarios
 			NewTodoChanged
 		WHEN
 			todo.NewTodoChanged(newTodo : "ENTER")
+			uuid "${testId}"
+			serverSystemTime "2020-10-10T14:48:00"
 		THEN
 			expectedState 
 				/*todoWasCreated todo.todoList shouldBe {
