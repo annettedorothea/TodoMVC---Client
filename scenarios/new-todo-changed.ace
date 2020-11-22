@@ -8,25 +8,17 @@ scenarios
 		GIVEN 
 			init.InitAllWithCreateCategory
 		WHEN
-			todo.NewTodoChanged(newTodo : "new Item ${testId}")
+			todo.NewTodoChanged(newTodo : "1st Item ${testId}")
 		THEN
 			expectedState 
-				newTodoWasSet todo.newTodo shouldBe "new Item ${testId}"
+				newTodoWasSet todo.newTodo shouldBe "1st Item ${testId}"
 
-	NewTodoChangedWithReturn
+	NewTodoChangedSecondTime
 		GIVEN 
-			NewTodoChanged
+			newtodokeypressed.CreateFirstTodo
 		WHEN
-			todo.NewTodoChanged(newTodo : "ENTER")
-			uuid "${testId}"
-			serverSystemTime "2020-10-10T14:48:00"
+			todo.NewTodoChanged(newTodo : "2nd Item ${testId}")
 		THEN
 			expectedState 
-				/*todoWasCreated todo.todoList shouldBe {
-					createdDateTime: "",
-					description: "new Item ${testId}",
-					done: false,
-					id: "uuid",
-					updatedDateTime: null
-				}*/
-				newTodoWasReset todo.newTodo shouldBe ""
+				newTodoWasSet todo.newTodo shouldBe "2nd Item ${testId}"
+

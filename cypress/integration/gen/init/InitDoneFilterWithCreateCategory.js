@@ -13,15 +13,20 @@ const testId = ScenarioUtils.testId();
 
 context('InitDoneFilterWithCreateCategory', () => {
     beforeEach(() => {
+    	let nonDeterministicValues;
+    	let nonDeterministicValue;
     })
 
-    it('should change appState', () => {
+    it('filterWasSet categoryWasSet emptyTodoListWasFetched ', () => {
+    	
     	ScenarioUtils.getCypressFor(TodoActionIds.init, [`#/category_${testId}/done`]).should(() => {
     		ScenarioUtils.wait(1, 3).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
 	            expect(appState.filter, "filterWasSet").to.eql(`done`)
 	            expect(appState.categoryId, "categoryWasSet").to.eql(`category_${testId}`)
-	            expect(appState.todoList, "emptyTodoListWasFetched").to.eql([])
+	            expect(appState.todoList, "emptyTodoListWasFetched").to.eql([
+	            ]
+	            )
     		})
         })
     })

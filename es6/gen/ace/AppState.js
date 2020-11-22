@@ -64,6 +64,9 @@ export function merge_todoList(eventData) {
 	if (!appState.todoList) {
 		appState.todoList = {};
 	}
+	if (eventData.categoryId !== undefined) {
+		appState.todoList.categoryId = eventData.categoryId;
+	}
 	if (eventData.id !== undefined) {
 		appState.todoList.id = eventData.id;
 	}
@@ -104,8 +107,8 @@ export function merge_editedTodo(eventData) {
 	if (!appState.editedTodo) {
 		appState.editedTodo = {};
 	}
-	if (eventData.editedDescription !== undefined) {
-		appState.editedTodo.editedDescription = eventData.editedDescription;
+	if (eventData.categoryId !== undefined) {
+		appState.editedTodo.categoryId = eventData.categoryId;
 	}
 	if (eventData.id !== undefined) {
 		appState.editedTodo.id = eventData.id;
@@ -113,20 +116,32 @@ export function merge_editedTodo(eventData) {
 	if (eventData.description !== undefined) {
 		appState.editedTodo.description = eventData.description;
 	}
+	if (eventData.done !== undefined) {
+		appState.editedTodo.done = eventData.done;
+	}
+	if (eventData.createdDateTime !== undefined) {
+		appState.editedTodo.createdDateTime = eventData.createdDateTime;
+	}
+	if (eventData.updatedDateTime !== undefined) {
+		appState.editedTodo.updatedDateTime = eventData.updatedDateTime;
+	}
+	if (eventData.editedDescription !== undefined) {
+		appState.editedTodo.editedDescription = eventData.editedDescription;
+	}
 }
 
-export function get_editedTodo_editedDescription() {
+export function get_editedTodo_categoryId() {
 	if (!appState.editedTodo) {
 		return undefined;
 	}
-	return appState.editedTodo.editedDescription;
+	return appState.editedTodo.categoryId;
 }
 
-export function set_editedTodo_editedDescription(eventData) {
+export function set_editedTodo_categoryId(eventData) {
 	if (!appState.editedTodo) {
 		appState.editedTodo = {};
 	}
-	appState.editedTodo.editedDescription = eventData.editedDescription;
+	appState.editedTodo.categoryId = eventData.categoryId;
 }
 
 export function get_editedTodo_id() {
@@ -155,5 +170,61 @@ export function set_editedTodo_description(eventData) {
 		appState.editedTodo = {};
 	}
 	appState.editedTodo.description = eventData.description;
+}
+
+export function get_editedTodo_done() {
+	if (!appState.editedTodo) {
+		return undefined;
+	}
+	return appState.editedTodo.done;
+}
+
+export function set_editedTodo_done(eventData) {
+	if (!appState.editedTodo) {
+		appState.editedTodo = {};
+	}
+	appState.editedTodo.done = eventData.done;
+}
+
+export function get_editedTodo_createdDateTime() {
+	if (!appState.editedTodo) {
+		return undefined;
+	}
+	return appState.editedTodo.createdDateTime;
+}
+
+export function set_editedTodo_createdDateTime(eventData) {
+	if (!appState.editedTodo) {
+		appState.editedTodo = {};
+	}
+	appState.editedTodo.createdDateTime = eventData.createdDateTime;
+}
+
+export function get_editedTodo_updatedDateTime() {
+	if (!appState.editedTodo) {
+		return undefined;
+	}
+	return appState.editedTodo.updatedDateTime;
+}
+
+export function set_editedTodo_updatedDateTime(eventData) {
+	if (!appState.editedTodo) {
+		appState.editedTodo = {};
+	}
+	appState.editedTodo.updatedDateTime = eventData.updatedDateTime;
+}
+
+export function get_editedTodo_editedDescription() {
+	if (!appState.editedTodo) {
+		return undefined;
+	}
+	return appState.editedTodo.editedDescription;
+}
+
+export function set_editedTodo_editedDescription(eventData) {
+	if (!appState.editedTodo) {
+		appState.editedTodo = {};
+	}
+	appState.editedTodo.editedDescription = eventData.editedDescription;
 }
 

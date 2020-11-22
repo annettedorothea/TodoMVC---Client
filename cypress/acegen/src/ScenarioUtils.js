@@ -3,23 +3,44 @@
  ********************************************************************************/
 
 
-
 import * as ActionIds from "../gen/todo/TodoActionIds"
+import * as TodoActionIds from "../gen/todo/TodoActionIds";
 
 export function getCypressFor(action, args) {
     if (ActionIds.init === action) {
         return cy.visit(`http://127.0.0.1:9999/${args[0]}`)
     }
     if (ActionIds.newTodoChanged === action) {
-        if (args[0] === "ENTER") {
-            return cy.get('#newTodoInput').type(String.fromCharCode(13))
-        }
         return cy.get('#newTodoInput').type(args[0])
+    }
+    if (ActionIds.newTodoKeyPressed === action) {
+        return cy.get('#newTodoInput').type(String.fromCharCode(args[0]))
+    }
+    if (TodoActionIds.toggleTodo === action) {
+        return cy.get(`#${args[0]}`).click()
+    }
+    if (TodoActionIds.deleteTodo === action) {
+        return cy.get(`#delete_${args[0]}`).click({force: true})
+    }
+    if (TodoActionIds.toggleAll === action) {
+        return cy.get(".toggle-all").click()
+    }
+    if (TodoActionIds.clearDone === action) {
+        return cy.get(".clear-completed").click()
+    }
+    if (TodoActionIds.editTodo === action) {
+        return cy.get(".todo-list").find(`#${args[0]}`).parent().parent().dblclick()
+    }
+    if (TodoActionIds.editedTodoChanged === action) {
+        return cy.get('.edit').clear().type(args[0])
+    }
+    if (TodoActionIds.editedTodoKeyPressed === action) {
+        return cy.get('.edit').type(String.fromCharCode(args[0]))
     }
 }
 
 export function wait(numberOfSyncCalls, numberOfAsyncCalls) {
-    return cy.wait(numberOfSyncCalls * 10 + numberOfAsyncCalls * 200)
+    return cy.wait(numberOfSyncCalls * 1 + numberOfAsyncCalls * 50)
 }
 
 export function testId() {
@@ -29,9 +50,7 @@ export function testId() {
         d = Math.floor(d / 16);
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
-
 }
-
 
 
 /******* S.D.G. *******/

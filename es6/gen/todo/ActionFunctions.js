@@ -10,9 +10,11 @@ import CreateCategoryAction from "../../src/todo/actions/CreateCategoryAction";
 import GetTodoListAction from "../../src/todo/actions/GetTodoListAction";
 import GetTodoListWithoutCategoryCheckAction from "../../src/todo/actions/GetTodoListWithoutCategoryCheckAction";
 import NewTodoChangedAction from "../../src/todo/actions/NewTodoChangedAction";
+import NewTodoKeyPressedAction from "../../src/todo/actions/NewTodoKeyPressedAction";
 import CreateTodoAction from "../../src/todo/actions/CreateTodoAction";
 import EditTodoAction from "../../src/todo/actions/EditTodoAction";
 import EditedTodoChangedAction from "../../src/todo/actions/EditedTodoChangedAction";
+import EditedTodoKeyPressedAction from "../../src/todo/actions/EditedTodoKeyPressedAction";
 import UpdateTodoAction from "../../src/todo/actions/UpdateTodoAction";
 import ToggleTodoAction from "../../src/todo/actions/ToggleTodoAction";
 import ToggleAllAction from "../../src/todo/actions/ToggleAllAction";
@@ -40,8 +42,12 @@ export function newTodoChanged(newTodo) {
     new NewTodoChangedAction(newTodo).apply();
 }
 
-export function createTodo(description) {
-    new CreateTodoAction(description).apply();
+export function newTodoKeyPressed(charCode) {
+    new NewTodoKeyPressedAction(charCode).apply();
+}
+
+export function createTodo() {
+    new CreateTodoAction().apply();
 }
 
 export function editTodo(id) {
@@ -50,6 +56,10 @@ export function editTodo(id) {
 
 export function editedTodoChanged(editedDescription) {
     new EditedTodoChangedAction(editedDescription).apply();
+}
+
+export function editedTodoKeyPressed(charCode) {
+    new EditedTodoKeyPressedAction(charCode).apply();
 }
 
 export function updateTodo() {

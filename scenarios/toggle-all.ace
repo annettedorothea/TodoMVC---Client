@@ -1,0 +1,99 @@
+HttpClient 
+
+toggleall
+
+scenarios 
+
+	ToggleAllTodos
+		GIVEN 
+			newtodokeypressed.CreateSecondTodo
+		WHEN
+			todo.ToggleAll
+			nonDeterministicValues 
+				{
+					uuid "${testId}_toggle-all"
+					serverSystemTime "2020-10-10T16:58:37.000Z"
+				}
+		THEN
+			expectedState 
+				allTodosWereSetToDone todo.todoList shouldBe [
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:48:37",
+						description: "1st Item ${testId}",
+						done: true,
+						id: "${testId}",
+						updatedDateTime: "2020-10-10T16:58:37"
+					},
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:58:37",
+						description: "2nd Item ${testId}",
+						done: true,
+						id: "${testId}_2",
+						updatedDateTime: "2020-10-10T16:58:37"
+					}
+				]
+				
+	WhenFirstIsDoneToggleAllTodos
+		GIVEN 
+			toggletodo.ToggleTodo
+		WHEN
+			todo.ToggleAll
+			nonDeterministicValues 
+				{
+					uuid "${testId}_toggle-all"
+					serverSystemTime "2020-10-10T17:58:37.000Z"
+				}
+		THEN
+			expectedState 
+				allTodosWereSetToDone todo.todoList shouldBe [
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:48:37",
+						description: "1st Item ${testId}",
+						done: true,
+						id: "${testId}",
+						updatedDateTime: "2020-10-10T15:58:37"
+					},
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:58:37",
+						description: "2nd Item ${testId}",
+						done: true,
+						id: "${testId}_2",
+						updatedDateTime: "2020-10-10T17:58:37"
+					}
+				]
+				
+	WhenAllAreDoneToggleAllTodos
+		GIVEN 
+			ToggleAllTodos
+		WHEN
+			todo.ToggleAll
+			nonDeterministicValues 
+				{
+					uuid "${testId}_toggle-all-2"
+					serverSystemTime "2020-10-10T17:58:37.000Z"
+				}
+		THEN
+			expectedState 
+				allTodosWereSetToOpen todo.todoList shouldBe [
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:48:37",
+						description: "1st Item ${testId}",
+						done: false,
+						id: "${testId}",
+						updatedDateTime: "2020-10-10T17:58:37"
+					},
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:58:37",
+						description: "2nd Item ${testId}",
+						done: false,
+						id: "${testId}_2",
+						updatedDateTime: "2020-10-10T17:58:37"
+					}
+				]
+				

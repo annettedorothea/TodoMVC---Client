@@ -3,10 +3,6 @@ import {clearDone} from "../../gen/todo/ActionFunctions";
 
 export default class Footer extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const itemCount = this.props.todoList ? this.props.todoList.filter((todo) => todo.done !== true).length : 0;
         const itemsString = itemCount === 1 ? 'item' : 'items';

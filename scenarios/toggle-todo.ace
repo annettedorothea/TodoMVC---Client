@@ -1,0 +1,71 @@
+HttpClient 
+
+toggletodo
+
+scenarios 
+
+	ToggleTodo
+		GIVEN 
+			newtodokeypressed.CreateSecondTodo
+		WHEN
+			todo.ToggleTodo(id : "${testId}")
+			nonDeterministicValues 
+				{
+					uuid "${testId}_toggle"
+					serverSystemTime "2020-10-10T15:58:37.000Z"
+				}
+		THEN
+			expectedState 
+				todoWasSetToDone todo.todoList shouldBe [
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:48:37",
+						description: "1st Item ${testId}",
+						done: true,
+						id: "${testId}",
+						updatedDateTime: "2020-10-10T15:58:37"
+					},
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:58:37",
+						description: "2nd Item ${testId}",
+						done: false,
+						id: "${testId}_2",
+						updatedDateTime: null
+					}
+				]
+				
+	ToggleTodoTwice
+		GIVEN 
+			ToggleTodo
+		WHEN
+			todo.ToggleTodo(id : "${testId}")
+			nonDeterministicValues 
+				{
+					uuid "${testId}_toggle2"
+					serverSystemTime "2020-10-10T15:59:37.000Z"
+				}
+		THEN
+			expectedState 
+				todoWasSetToOpen todo.todoList shouldBe [
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:48:37",
+						description: "1st Item ${testId}",
+						done: false,
+						id: "${testId}",
+						updatedDateTime: "2020-10-10T15:59:37"
+					},
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:58:37",
+						description: "2nd Item ${testId}",
+						done: false,
+						id: "${testId}_2",
+						updatedDateTime: null
+					}
+				]
+				
+				
+				
+				

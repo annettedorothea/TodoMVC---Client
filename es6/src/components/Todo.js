@@ -1,11 +1,16 @@
 import React from 'react';
-import {deleteTodo, editedTodoChanged, editTodo, toggleTodo, updateTodo} from "../../gen/todo/ActionFunctions";
+import {
+    deleteTodo,
+    editedTodoChanged,
+    editTodo,
+    toggleTodo,
+    editedTodoKeyPressed
+} from "../../gen/todo/ActionFunctions";
 
 export default class Todo extends React.Component {
 
     constructor(props) {
         super(props);
-        this.onKeyPress = this.onKeyPress.bind(this);
         this.moveCaretAtEnd = this.moveCaretAtEnd.bind(this);
     }
 
@@ -20,12 +25,6 @@ export default class Todo extends React.Component {
         e.target.value = this.props.description;
     }
 
-    onKeyPress(event) {
-        if (event.charCode === 13) {
-            updateTodo();
-        }
-    }
-
     render() {
         if (this.props.editedTodo && this.props.editedTodo.id === this.props.id) {
             return (
@@ -33,7 +32,7 @@ export default class Todo extends React.Component {
                     <input
                         className="edit"
                         value={this.props.editedTodo.editedDescription}
-                        onKeyPress={this.onKeyPress}
+                        onKeyPress={(event) => editedTodoKeyPressed(event.charCode)}
                         onChange={(event) => editedTodoChanged(event.target.value)}
                         onFocus={this.moveCaretAtEnd}
                         ref={(input) => {
@@ -47,13 +46,22 @@ export default class Todo extends React.Component {
             <li className={this.props.done ? 'completed' : ''}>
                 <div className="view">
                     <input
+                        id={this.props.id}
                         className="toggle"
                         type="checkbox"
                         checked={this.props.done}
                         onChange={() => toggleTodo(this.props.id)}
                     />
-                    <label onDoubleClick={() => editTodo(this.props.id)}>{this.props.description}</label>
-                    <button className="destroy" onClick={() => deleteTodo(this.props.id)}/>
+                    <label
+                        id={`edit_${this.props.id}`}
+                        onDoubleClick={() => editTodo(this.props.id)}>
+                        {this.props.description}
+                    </label>
+                    <button
+                        id={`delete_${this.props.id}`}
+                        className="destroy"
+                        onClick={() => deleteTodo(this.props.id)}
+                    />
                 </div>
             </li>
         );

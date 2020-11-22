@@ -15,11 +15,15 @@ export let getTodoListWithoutCategoryCheck = "todo_getTodoListWithoutCategoryChe
 
 export let newTodoChanged = "todo_newTodoChanged";
 
+export let newTodoKeyPressed = "todo_newTodoKeyPressed";
+
 export let createTodo = "todo_createTodo";
 
 export let editTodo = "todo_editTodo";
 
 export let editedTodoChanged = "todo_editedTodoChanged";
+
+export let editedTodoKeyPressed = "todo_editedTodoKeyPressed";
 
 export let updateTodo = "todo_updateTodo";
 

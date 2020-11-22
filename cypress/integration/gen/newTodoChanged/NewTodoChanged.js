@@ -13,15 +13,20 @@ const testId = ScenarioUtils.testId();
 
 context('NewTodoChanged', () => {
     beforeEach(() => {
-    	ScenarioUtils.getCypressFor(TodoActionIds.init, [`#/category_${testId}`])
-    	ScenarioUtils.wait(1, 3)
+    	let nonDeterministicValues;
+    	let nonDeterministicValue;
+		ScenarioUtils.getCypressFor(TodoActionIds.init, [`#/category_${testId}`]).should(() => {
+		ScenarioUtils.wait(1, 3).should(() => {
+		});
+		});
     })
 
-    it('should change appState', () => {
-    	ScenarioUtils.getCypressFor(TodoActionIds.newTodoChanged, [`new Item ${testId}`]).should(() => {
+    it('newTodoWasSet ', () => {
+    	
+    	ScenarioUtils.getCypressFor(TodoActionIds.newTodoChanged, [`1st Item ${testId}`]).should(() => {
     		ScenarioUtils.wait(1, 0).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            expect(appState.newTodo, "newTodoWasSet").to.eql(`new Item ${testId}`)
+	            expect(appState.newTodo, "newTodoWasSet").to.eql(`1st Item ${testId}`)
     		})
         })
     })

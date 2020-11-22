@@ -1,0 +1,58 @@
+HttpClient 
+
+cleardone
+
+scenarios 
+
+	WhenAllAreOpenClearDone
+		GIVEN 
+			newtodokeypressed.CreateSecondTodo
+		WHEN
+			todo.ClearDone
+		THEN
+			expectedState 
+				nothingWasDeleted todo.todoList shouldBe [
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:48:37",
+						description: "1st Item ${testId}",
+						done: false,
+						id: "${testId}",
+						updatedDateTime: null
+					},
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:58:37",
+						description: "2nd Item ${testId}",
+						done: false,
+						id: "${testId}_2",
+						updatedDateTime: null
+					}
+				]
+				
+	WhenOneIsDoneClearDone
+		GIVEN 
+			toggletodo.ToggleTodo
+		WHEN
+			todo.ClearDone
+		THEN
+			expectedState 
+				firstWasDeleted todo.todoList shouldBe [
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:58:37",
+						description: "2nd Item ${testId}",
+						done: false,
+						id: "${testId}_2",
+						updatedDateTime: null
+					}
+				]
+				
+	WhenAllAreDoneClearDone
+		GIVEN 
+			toggleall.ToggleAllTodos
+		WHEN
+			todo.ClearDone
+		THEN
+			expectedState 
+				allWereDeleted todo.todoList shouldBe [ 	]

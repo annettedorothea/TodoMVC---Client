@@ -3,10 +3,6 @@ import Todo from "./Todo";
 
 export default class TodoList extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     filter(todo, filter) {
         return filter === 'all' || filter === 'done' && todo.done === true || filter === 'open' && todo.done === false;
     }

@@ -1,0 +1,25 @@
+HttpClient 
+
+delete
+
+scenarios 
+
+	DeleteTodo
+		GIVEN 
+			newtodokeypressed.CreateSecondTodo
+		WHEN
+			todo.DeleteTodo(id : "${testId}")
+		THEN
+			expectedState 
+				todoWasDeleted todo.todoList shouldBe [
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:58:37",
+						description: "2nd Item ${testId}",
+						done: false,
+						id: "${testId}_2",
+						updatedDateTime: null
+					}
+				]
+				
+				

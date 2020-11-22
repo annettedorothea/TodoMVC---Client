@@ -31,8 +31,12 @@ ACE
 	NewTodoChanged (newTodo)
 		on ok (set newTodo)
 	
-	CreateTodo (description)
-		fromAppState(categoryId)
+	NewTodoKeyPressed (charCode)
+		on enter triggers ( CreateTodo )
+		on notEnter
+	
+	CreateTodo
+		fromAppState(newTodo as description, categoryId)
 			call com.anfelisa.todo.CreateTodo
 			loadingFlag loading 
 		on ok (set newTodo) triggers ( GetTodoList)
@@ -44,6 +48,10 @@ ACE
 	
 	EditedTodoChanged (editedDescription)
 		on ok ( set editedTodo.editedDescription)
+	
+	EditedTodoKeyPressed (charCode)
+		on enter triggers ( UpdateTodo )
+		on notEnter
 	
 	UpdateTodo
 		fromAppState ( 
@@ -90,6 +98,7 @@ appState {
 	Boolean loading
 	String categoryId
 	List todoList {
+		String categoryId
 		String id
 		String description
 		Boolean done
@@ -98,8 +107,12 @@ appState {
 	}
 	String error
 	editedTodo {
-		String editedDescription
+		String categoryId
 		String id
 		String description
+		Boolean done
+		DateTime createdDateTime
+		DateTime updatedDateTime
+		String editedDescription
 	}
 }

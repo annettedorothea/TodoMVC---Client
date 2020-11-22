@@ -2,7 +2,6 @@ HttpClient
 
 init
 
-
 scenarios 
 
 	InitAllWithCreateCategory 
@@ -53,5 +52,87 @@ scenarios
 				filterWasSet todo.filter shouldBe "all"
 				categoryWasSet todo.categoryId shouldBe "category_${testId}"
 				emptyTodoListWasFetched todo.todoList shouldBe []
+				
+				
+	InitAllWithTwoOpenTodos
+		GIVEN
+			newtodokeypressed.CreateSecondTodo
+		WHEN 
+			todo.Init(hash: "#/category_${testId}")
+		THEN
+			verifications
+				twoTodosAreDisplayed
+
+	InitOpenWithTwoOpenTodos
+		GIVEN
+			newtodokeypressed.CreateSecondTodo
+		WHEN 
+			todo.Init(hash: "#/category_${testId}/open")
+		THEN
+			verifications
+				twoTodosAreDisplayed
+			
+	InitDoneWithTwoOpenTodos
+		GIVEN
+			newtodokeypressed.CreateSecondTodo
+		WHEN 
+			todo.Init(hash: "#/category_${testId}/done")
+		THEN
+			verifications
+				noTodoDisplayed
+			
+	InitAllWithOneOpenTodo
+		GIVEN
+			toggletodo.ToggleTodo
+		WHEN 
+			todo.Init(hash: "#/category_${testId}")
+		THEN
+			verifications
+				twoTodosAreDisplayed
+
+	InitOpenWithOneOpenTodo
+		GIVEN
+			toggletodo.ToggleTodo
+		WHEN 
+			todo.Init(hash: "#/category_${testId}/open")
+		THEN
+			verifications
+				oneTodoDisplayed
+			
+	InitDoneWithOneOpenTodo
+		GIVEN
+			toggletodo.ToggleTodo
+		WHEN 
+			todo.Init(hash: "#/category_${testId}/done")
+		THEN
+			verifications
+				oneTodoDisplayed
+	
+	InitAllWithNoOpenTodo
+		GIVEN
+			toggleall.ToggleAllTodos
+		WHEN 
+			todo.Init(hash: "#/category_${testId}")
+		THEN
+			verifications
+				twoTodosAreDisplayed
+
+	InitOpenWithNoOpenTodo
+		GIVEN
+			toggleall.ToggleAllTodos
+		WHEN 
+			todo.Init(hash: "#/category_${testId}/open")
+		THEN
+			verifications
+				noTodoDisplayed
+			
+	InitDoneWithNoOpenTodo
+		GIVEN
+			toggleall.ToggleAllTodos
+		WHEN 
+			todo.Init(hash: "#/category_${testId}/done")
+		THEN
+			verifications
+				twoTodosAreDisplayed
 			
 			

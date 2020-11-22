@@ -1,0 +1,24 @@
+HttpClient 
+
+edittodo
+
+scenarios 
+
+	EditTodo
+		GIVEN 
+			newtodokeypressed.CreateSecondTodo
+		WHEN
+			todo.EditTodo(id : "${testId}")
+		THEN
+			expectedState 
+				editedTodoWasSet todo.editedTodo shouldBe {
+					categoryId: "category_${testId}",
+					createdDateTime: "2020-10-10T14:48:37",
+					description: "1st Item ${testId}",
+					done: false,
+					id: "${testId}",
+					updatedDateTime: null,
+					editedDescription: "1st Item ${testId}"
+				}
+
+

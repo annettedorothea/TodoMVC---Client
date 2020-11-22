@@ -1,0 +1,40 @@
+HttpClient 
+
+edittodokeypressed
+
+scenarios 
+
+	UpdateFirstTodo
+		GIVEN 
+			edittodochanged.EditTodoChanged
+		WHEN
+			todo.EditedTodoKeyPressed(charCode : 13)
+			nonDeterministicValues 
+				{}, 
+				{
+					uuid "${testId}_update"
+					serverSystemTime "2020-10-10T15:48:37.000Z"
+				}
+		THEN
+			expectedState 
+				editedTodoWasReset todo.editedTodo shouldBe {}
+				todoWasUpdated todo.todoList shouldBe [
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:48:37",
+						description: "EDIT 1st Item ${testId}",
+						done: false,
+						id: "${testId}",
+						updatedDateTime: "2020-10-10T15:48:37"
+					},
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:58:37",
+						description: "2nd Item ${testId}",
+						done: false,
+						id: "${testId}_2",
+						updatedDateTime: null
+					}
+				]
+
+
