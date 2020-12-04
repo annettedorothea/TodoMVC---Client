@@ -2,7 +2,7 @@ import AbstractInitCommand from "../../../gen/todo/commands/AbstractInitCommand"
 
 export default class InitCommand extends AbstractInitCommand {
     execute() {
-        this.commandData.outcome = this.ok;
+        this.addOkOutcome();
         this.commandData.filter = 'all';
         this.commandData.categoryId = "defaultCategory";
         if (this.commandData.hash !== undefined) {

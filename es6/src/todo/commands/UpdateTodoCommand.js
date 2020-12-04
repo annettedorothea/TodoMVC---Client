@@ -6,14 +6,14 @@ export default class UpdateTodoCommand extends AbstractUpdateTodoCommand {
         if (this.commandData.description) {
             return true;
         } else {
-            this.commandData.outcome = this.empty;
+            this.addEmptyOutcome();
             this.commandData.editedTodo = null;
             return false;
         }
     }
 
     handleResponse(resolve) {
-        this.commandData.outcome = this.ok;
+        this.addOkOutcome();
         this.commandData.editedTodo = {};
     	resolve();
     }

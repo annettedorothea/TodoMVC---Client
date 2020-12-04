@@ -2,7 +2,7 @@ import AbstractNewTodoChangedCommand from "../../../gen/todo/commands/AbstractNe
 
 export default class NewTodoChangedCommand extends AbstractNewTodoChangedCommand {
     execute() {
-        this.commandData.outcome = this.ok;
+        this.addOkOutcome();
     }
 }
 

@@ -14,7 +14,7 @@ export default class CreateCategoryCommand extends AbstractCreateCategoryCommand
     }
 
     handleResponse(resolve) {
-    	this.commandData.outcome = this.ok;
+        this.addOkOutcome();
     	resolve();
     }
     handleError(resolve, reject) {

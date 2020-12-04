@@ -6,13 +6,13 @@ export default class CreateTodoCommand extends AbstractCreateTodoCommand {
         if (this.commandData.description) {
             return true;
         } else {
-            this.commandData.outcome = this.empty;
+            this.addEmptyOutcome();
             return false;
         }
     }
 
     handleResponse(resolve) {
-        this.commandData.outcome = this.ok;
+        this.addOkOutcome();
         this.commandData.newTodo = "";
     	resolve();
     }

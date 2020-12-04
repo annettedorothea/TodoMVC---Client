@@ -4,9 +4,9 @@ export default class GetTodoListCommand extends AbstractGetTodoListCommand {
 
     handleResponse(resolve) {
         if (!this.commandData.todoList) {
-            this.commandData.outcome = this.categoryDoesNotExist;
+            this.addCategoryDoesNotExistOutcome()
         } else {
-            this.commandData.outcome = this.ok;
+            this.addOkOutcome();
         }
     	resolve();
     }

@@ -3,7 +3,7 @@ import AbstractDeleteTodoCommand from "../../../gen/todo/commands/AbstractDelete
 export default class DeleteTodoCommand extends AbstractDeleteTodoCommand {
 
     handleResponse(resolve) {
-    	this.commandData.outcome = this.ok;
+        this.addOkOutcome();
     	resolve();
     }
     handleError(resolve, reject) {

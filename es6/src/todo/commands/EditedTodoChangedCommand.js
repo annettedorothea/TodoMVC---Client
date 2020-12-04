@@ -2,7 +2,7 @@ import AbstractEditedTodoChangedCommand from "../../../gen/todo/commands/Abstrac
 
 export default class EditedTodoChangedCommand extends AbstractEditedTodoChangedCommand {
     execute() {
-        this.commandData.outcome = this.ok;
+        this.addOkOutcome();
     }
 }
 
