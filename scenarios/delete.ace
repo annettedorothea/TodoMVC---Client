@@ -11,7 +11,7 @@ scenarios
 			todo.DeleteTodo(id : "${testId}")
 		THEN
 			expectedState 
-				todoWasDeleted todo.todoList shouldBe [
+				todoWasDeleted todo.todos.todoList shouldBe [
 					{
 						categoryId: "category_${testId}",
 						createdDateTime: "2020-10-10T14:58:37",

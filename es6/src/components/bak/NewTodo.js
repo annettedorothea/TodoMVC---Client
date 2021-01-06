@@ -1,5 +1,5 @@
 import React from 'react';
-import {createTodo, newTodoChanged, newTodoKeyPressed} from "../../gen/todo/ActionFunctions";
+import {createTodo, newTodoChanged, newTodoKeyPressed} from "../../../gen/todo/ActionFunctions";
 
 export default class NewTodo extends React.Component {
 

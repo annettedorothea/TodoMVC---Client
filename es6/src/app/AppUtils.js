@@ -32,11 +32,19 @@ export default class AppUtils {
     static createInitialAppState() {
         const initialAppState = {
             filter: "all",
-            newTodo: "",
-            loading: false,
-            todoList: [],
-            editedTodo: null,
-            error: null
+            newTodoInput: {
+                newTodo: "",
+            },
+            spinner: {
+                loading: false,
+            },
+            todos: {
+                todoList: [],
+                editedTodo: null,
+            },
+            error: {
+                errorMessage: null
+            }
         };
         AppState.setInitialAppState(initialAppState);
     }

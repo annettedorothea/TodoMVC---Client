@@ -11,7 +11,7 @@ scenarios
 			todo.NewTodoChanged(newTodo : "1st Item ${testId}")
 		THEN
 			expectedState 
-				newTodoWasSet todo.newTodo shouldBe "1st Item ${testId}"
+				newTodoWasSet todo.newTodoInput.newTodo shouldBe "1st Item ${testId}"
 
 	NewTodoChangedSecondTime
 		GIVEN 
@@ -20,5 +20,5 @@ scenarios
 			todo.NewTodoChanged(newTodo : "2nd Item ${testId}")
 		THEN
 			expectedState 
-				newTodoWasSet todo.newTodo shouldBe "2nd Item ${testId}"
+				newTodoWasSet todo.newTodoInput.newTodo shouldBe "2nd Item ${testId}"
 

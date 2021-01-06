@@ -16,7 +16,7 @@ scenarios
 				}
 		THEN
 			expectedState 
-				allTodosWereSetToDone todo.todoList shouldBe [
+				allTodosWereSetToDone todo.todos.todoList shouldBe [
 					{
 						categoryId: "category_${testId}",
 						createdDateTime: "2020-10-10T14:48:37",
@@ -47,7 +47,7 @@ scenarios
 				}
 		THEN
 			expectedState 
-				allTodosWereSetToDone todo.todoList shouldBe [
+				allTodosWereSetToDone todo.todos.todoList shouldBe [
 					{
 						categoryId: "category_${testId}",
 						createdDateTime: "2020-10-10T14:48:37",
@@ -78,7 +78,7 @@ scenarios
 				}
 		THEN
 			expectedState 
-				allTodosWereSetToOpen todo.todoList shouldBe [
+				allTodosWereSetToOpen todo.todos.todoList shouldBe [
 					{
 						categoryId: "category_${testId}",
 						createdDateTime: "2020-10-10T14:48:37",

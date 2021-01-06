@@ -1,12 +1,12 @@
 import React from 'react';
-import NewTodo from "./NewTodo";
-import TodoList from "./TodoList";
-import Footer from "./Footer";
-import Spinner from "./Spinner";
-import ErrorMessage from "./ErrorMessage";
 import * as AppState from "../../gen/ace/AppState";
-import {toggleAll} from "../../gen/todo/ActionFunctions";
+import {clearDone, toggleAll} from "../../gen/todo/ActionFunctions";
 import Utils from "../../gen/ace/Utils";
+import {TodosComponent} from "../../gen/components/TodosComponent";
+import Footer from "./bak/Footer";
+import {SpinnerComponent} from "../../gen/components/SpinnerComponent";
+import {NewTodoInputComponent} from "../../gen/components/NewTodoInputComponent";
+import {ErrorComponent} from "../../gen/components/ErrorComponent";
 
 export default class Container extends React.Component {
 
@@ -16,9 +16,11 @@ export default class Container extends React.Component {
     }
 
     render() {
+        const itemCount = this.state.todos.todoList ? this.state.todos.todoList.filter((todo) => todo.done !== true).length : 0;
+        const itemsString = itemCount === 1 ? 'item' : 'items';
         return (
             <div>
-                <ErrorMessage {...this.state} />
+                <ErrorComponent {...this.state.error} />
                 <div className="learn-bar body">
                     <aside className="learn">
                         <header>
@@ -72,9 +74,9 @@ export default class Container extends React.Component {
                             <header className="header">
                                 <h1>
                                     <span>todos</span>
-                                    <Spinner {...this.state} />
+                                    <SpinnerComponent {...this.state.spinner} />
                                 </h1>
-                                <NewTodo {...this.state}/>
+                                <NewTodoInputComponent {...this.state.newTodoInput}/>
                             </header>
                             <section className="main">
                                 <input
@@ -84,8 +86,22 @@ export default class Container extends React.Component {
                                     checked={this.state.todoList ? this.state.todoList.filter((todo) => todo.done === false).length === 0 : false}
                                 />
                             </section>
-                            <TodoList {...this.state}/>
-                            <Footer {...this.state}/>
+                            <TodosComponent {...this.state}/>
+                            <footer className="footer">
+                                <span className="todo-count">{itemCount} {itemsString} left</span>
+                                <ul className="filters">
+                                    <li>
+                                        <a href={`#/${this.state.categoryId}`} className={this.state.filter === 'all' ? 'selected' : ''}>All</a>
+                                    </li>
+                                    <li>
+                                        <a href={`#/${this.state.categoryId}/open`} className={this.state.filter === 'open' ? 'selected' : ''}>Active</a>
+                                    </li>
+                                    <li>
+                                        <a href={`#/${this.state.categoryId}/done`} className={this.state.filter === 'done' ? 'selected' : ''}>Completed</a>
+                                    </li>
+                                </ul>
+                                <button className="clear-completed" onClick={() => clearDone()}>Clear completed</button>
+                            </footer>
                         </section>
                     </div>
 

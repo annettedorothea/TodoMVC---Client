@@ -1,5 +1,5 @@
 import React from 'react';
-import {clearDone} from "../../gen/todo/ActionFunctions";
+import {clearDone} from "../../../gen/todo/ActionFunctions";
 
 export default class Footer extends React.Component {
 

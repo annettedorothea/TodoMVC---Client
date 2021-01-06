@@ -12,42 +12,42 @@ ACE
 	CreateCategory
 		fromAppState(categoryId)
 			call com.anfelisa.todo.CreateCategory
-			loadingFlag loading 
+			loadingFlag spinner.loading 
 		on ok triggers ( GetTodoListWithoutCategoryCheck )
 	
 	GetTodoList 
 		fromAppState(categoryId)
 			call com.anfelisa.todo.GetAllTodos  
-			loadingFlag loading 
-		on ok (set todoList)
+			loadingFlag spinner.loading 
+		on ok (set todos.todoList)
 		on categoryDoesNotExist triggers (CreateCategory)
 	
 	GetTodoListWithoutCategoryCheck 
 		fromAppState(categoryId)
 			call com.anfelisa.todo.GetAllTodos  
-			loadingFlag loading 
-		on ok (set todoList)
+			loadingFlag spinner.loading 
+		on ok (set todos.todoList)
 	
 	NewTodoChanged (newTodo)
-		on ok (set newTodo)
+		on ok (set newTodoInput.newTodo)
 	
 	NewTodoKeyPressed (charCode)
 		on enter triggers ( CreateTodo )
 		on notEnter
 	
 	CreateTodo
-		fromAppState(newTodo as description, categoryId)
+		fromAppState(newTodoInput.newTodo as description, categoryId)
 			call com.anfelisa.todo.CreateTodo
-			loadingFlag loading 
-		on ok (set newTodo) triggers ( GetTodoList)
+			loadingFlag spinner.loading 
+		on ok (set newTodoInput.newTodo) triggers ( GetTodoList)
 		on empty
 		
 	EditTodo (id)
-		fromAppState ( todoList )
-		on ok ( set editedTodo)
+		fromAppState ( todos.todoList )
+		on ok ( set todos.editedTodo)
 	
 	EditedTodoChanged (editedDescription)
-		on ok ( set editedTodo.editedDescription)
+		on ok ( set todos.editedTodo.editedDescription)
 	
 	EditedTodoKeyPressed (charCode)
 		on enter triggers ( UpdateTodo )
@@ -55,64 +55,81 @@ ACE
 	
 	UpdateTodo
 		fromAppState ( 
-			editedTodo.id as id, 
-			editedTodo.editedDescription as description
+			todos.editedTodo.id as id, 
+			todos.editedTodo.editedDescription as description
 		)
 			call com.anfelisa.todo.UpdateTodo
-			loadingFlag loading 
+			loadingFlag spinner.loading 
 		on ok (
-			set editedTodo 
+			set todos.editedTodo 
 		) triggers (GetTodoList)
 		on empty (
-			set editedTodo 
+			set todos.editedTodo 
 		)
 	
 	ToggleTodo (id)
 			call com.anfelisa.todo.ToggleTodo
-			loadingFlag loading 
+			loadingFlag spinner.loading 
 		on ok triggers (GetTodoList)
 	
 	ToggleAll 
 		fromAppState(categoryId)
 			call com.anfelisa.todo.ToggleAll 
-			loadingFlag loading 
+			loadingFlag spinner.loading 
 		on ok triggers (GetTodoList)
 	
 	DeleteTodo (id)
 			call com.anfelisa.todo.DeleteTodo 
-			loadingFlag loading 
+			loadingFlag spinner.loading 
 		on ok triggers (GetTodoList)
 	
 	ClearDone
 		fromAppState(categoryId) 
 			call com.anfelisa.todo.ClearDone 
-			loadingFlag loading 
+			loadingFlag spinner.loading 
 		on ok triggers (GetTodoList)
 		
-	DisplayError (error)
-		on ok (set error)
-	
-appState {
-	String filter
-	String newTodo
-	Boolean loading
-	String categoryId
-	List todoList {
-		String categoryId
-		String id
-		String description
-		Boolean done
-		DateTime createdDateTime
-		DateTime updatedDateTime
+	DisplayError (errorMessage)
+		on ok (set error.errorMessage)
+
+
+
+
+
+
+
+
+
+
+ui {
+	filter
+	categoryId
+	newTodoInput {
+		newTodo
 	}
-	String error
-	editedTodo {
-		String categoryId
-		String id
-		String description
-		Boolean done
-		DateTime createdDateTime
-		DateTime updatedDateTime
-		String editedDescription
+	spinner {
+		loading
+	}
+	error {
+		errorMessage
+	}
+	todos {
+		List todoList {
+			categoryId
+			id
+			description
+			done
+			createdDateTime
+			updatedDateTime
+		}
+		editedTodo {
+			categoryId
+			id
+			description
+			done
+			createdDateTime
+			updatedDateTime
+			editedDescription
+		}
 	}
 }
