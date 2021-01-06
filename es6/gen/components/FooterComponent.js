@@ -6,9 +6,9 @@
 
 
 import React from 'react';
-import { uiElement } from "../../../src/components/todos/EditedTodo";
+import { uiElement } from "../../src/components/Footer";
 
-export const EditedTodoComponent = (props) => {
+export const FooterComponent = (props) => {
     return uiElement(props);
 }
 

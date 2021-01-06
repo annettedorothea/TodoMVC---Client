@@ -17,20 +17,46 @@ export function setInitialAppState(initialAppState) {
 	appState = AppUtils.deepCopy(initialAppState);
 }
 
+export function get_footer() {
+	if (!appState.footer) {
+		return undefined;
+	}
+	return AppUtils.deepCopy(appState.footer);
+}
+
+export function set_footer(eventData) {
+	appState.footer = eventData.footer;
+}
+
+export function merge_footer(eventData) {
+	if (!appState.footer) {
+		appState.footer = {};
+	}
+	if (eventData.categoryId !== undefined) {
+		appState.footer.categoryId = eventData.categoryId;
+	}
+}
+
+export function get_footer_categoryId() {
+	if (!appState.footer) {
+		return undefined;
+	}
+	return appState.footer.categoryId;
+}
+
+export function set_footer_categoryId(eventData) {
+	if (!appState.footer) {
+		appState.footer = {};
+	}
+	appState.footer.categoryId = eventData.categoryId;
+}
+
 export function get_filter() {
 	return appState.filter;
 }
 
 export function set_filter(eventData) {
 	appState.filter = eventData.filter;
-}
-
-export function get_categoryId() {
-	return appState.categoryId;
-}
-
-export function set_categoryId(eventData) {
-	appState.categoryId = eventData.categoryId;
 }
 
 export function get_newTodoInput() {

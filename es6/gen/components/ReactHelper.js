@@ -5,7 +5,9 @@
 
 
 
+
 import React from 'react';
+import { FooterComponent } from "./FooterComponent";
 import { NewTodoInputComponent } from "./NewTodoInputComponent";
 import { SpinnerComponent } from "./SpinnerComponent";
 import { ErrorComponent } from "./ErrorComponent";
@@ -13,51 +15,130 @@ import { TodosComponent } from "./TodosComponent";
 import { TodoListItemComponent } from "./todos/TodoListItemComponent";
 import { EditedTodoComponent } from "./todos/EditedTodoComponent";
 
-export const li = (value, options, children) => {
-    return <li {...options} key={options && options.id ? options.id : ""}>{value ? value : children}</li>
+function key() {
+    const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = '';
+    for (let i = 10; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
+
+const normalize = (options) => {
+    if (options && options.class !== undefined) {
+        options.className = options.class
+        delete options.class;
+    }
+    if (!options) {
+    	options = {};
+    }
+    options.key = options.id ? options.id : key();
+    return options;
+}
+
+export const generic = (type, options, children) => {
+    return React.createElement(
+        type,
+        normalize(options),
+        children ? [...children] : undefined
+    )
+}
+
+export const br = () => {
+    return generic("br");
+}
+
+export const hr = () => {
+    return generic("hr");
+}
+
+export const p = (options, children) => {
+    return generic("p", options, children);
 }
 
 export const ul = (options, children) => {
-    return <ul {...options} key={options && options.id ? options.id : ""}>{children}</ul>
+    return generic("ul", options, children);
 }
 
-export const label = (value, options, children) => {
-    return <label {...options} key={options && options.id ? options.id : ""}>{value ? value : children}</label>
+export const ol = (options, children) => {
+    return generic("ol", options, children);
 }
 
-export const button = (value, options, children) => {
-    return <button {...options} key={options && options.id ? options.id : ""}>{value ? value : children}</button>
+export const li = (options, children) => {
+    return generic("li", options, children);
 }
 
-export const div = (value, options, children) => {
-    return <div {...options} key={options && options.id ? options.id : ""}>{value ? value : children}</div>
+export const label = (options, children) => {
+    return generic("label", options, children);
 }
 
-export const pre = (value, options, children) => {
-    return <pre {...options} key={options && options.id ? options.id : ""}>{value ? value : children}</pre>
+export const button = (options, children) => {
+    return generic("button", options, children);
+}
+
+export const div = (options, children) => {
+    return generic("div", options, children);
+}
+
+export const span = (options, children) => {
+    return generic("span", options, children);
+}
+
+export const a = (options, children) => {
+    return generic("a", options, children);
+}
+
+export const h1 = (options, children) => {
+    return generic("h1", options, children);
+}
+
+export const h2 = (options, children) => {
+    return generic("h2", options, children);
+}
+
+export const h3 = (options, children) => {
+    return generic("h3", options, children);
+}
+
+export const h4 = (options, children) => {
+    return generic("h4", options, children);
+}
+
+export const h5 = (options, children) => {
+    return generic("h5", options, children);
+}
+
+export const h6 = (options, children) => {
+    return generic("h6", options, children);
+}
+
+export const pre = (options, children) => {
+    return generic("pre", options, children);
 }
 
 export const input = (options) => {
-    return <input {...options} key={options && options.id ? options.id : ""}/>
+    return <input {...normalize(options)}/>
 }
 
+
+export const footer = (options) => {
+    return <FooterComponent {...normalize(options)} key={key()}/>
+}
 export const newTodoInput = (options) => {
-    return <NewTodoInputComponent {...options} key={options && options.id ? options.id : ""}/>
+    return <NewTodoInputComponent {...normalize(options)} key={key()}/>
 }
 export const spinner = (options) => {
-    return <SpinnerComponent {...options} key={options && options.id ? options.id : ""}/>
+    return <SpinnerComponent {...normalize(options)} key={key()}/>
 }
 export const error = (options) => {
-    return <ErrorComponent {...options} key={options && options.id ? options.id : ""}/>
+    return <ErrorComponent {...normalize(options)} key={key()}/>
 }
 export const todos = (options) => {
-    return <TodosComponent {...options} key={options && options.id ? options.id : ""}/>
+    return <TodosComponent {...normalize(options)} key={key()}/>
 }
 export const todoListItem = (options) => {
-    return <TodoListItemComponent {...options} key={options && options.id ? options.id : ""}/>
+    return <TodoListItemComponent {...normalize(options)} key={key()}/>
 }
 export const editedTodo = (options) => {
-    return <EditedTodoComponent {...options} key={options && options.id ? options.id : ""}/>
+    return <EditedTodoComponent {...normalize(options)} key={key()}/>
 }
 
 

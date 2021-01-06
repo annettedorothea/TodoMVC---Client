@@ -6,10 +6,10 @@
 
 
 import React from 'react';
-import { jsx } from "../../src/components/ContainerNew";
+import { uiElement } from "../../src/components/ContainerNew";
 
 export const ContainerComponent = (props) => {
-    return jsx(props);
+    return uiElement(props);
 }
 
 

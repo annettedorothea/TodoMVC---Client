@@ -6,10 +6,10 @@
 
 
 import React from 'react';
-import { jsx } from "../../src/components/NewTodoInput";
+import { uiElement } from "../../src/components/NewTodoInput";
 
 export const NewTodoInputComponent = (props) => {
-    return jsx(props);
+    return uiElement(props);
 }
 
 

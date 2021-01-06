@@ -6,10 +6,10 @@
 
 
 import React from 'react';
-import { jsx } from "../../src/components/Spinner";
+import { uiElement } from "../../src/components/Spinner";
 
 export const SpinnerComponent = (props) => {
-    return jsx(props);
+    return uiElement(props);
 }
 
 

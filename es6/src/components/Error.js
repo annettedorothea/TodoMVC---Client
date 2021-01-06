@@ -5,9 +5,9 @@
 
 import {pre} from "../../gen/components/ReactHelper";
 
-export function jsx(attributes) {
+export function uiElement(attributes) {
     if (attributes.errorMessage) {
-        return pre(attributes.errorMessage, {className: "error"});
+        return pre({class: "error"}, [attributes.errorMessage]);
     }
     return "";
 }

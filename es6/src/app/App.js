@@ -1,5 +1,6 @@
 import AppUtils from './AppUtils';
 import Container from "../components/Container";
+import {uiElement} from "../components/ContainerNew";
 import * as AppState from "../../gen/ace/AppState";
 
 import React from "react";
@@ -12,7 +13,7 @@ export { dumpAppState } from "./AppUtils";
 AppUtils.createInitialAppState();
 
 export const container = ReactDOM.render(
-    <Container />,
+    uiElement(AppState.getAppState()),
     document.getElementById('root')
 );
 
@@ -23,7 +24,7 @@ AppUtils.renderNewState = () => {
     if (Utils.settings && Utils.settings.mode === "dev") {
         localStorage.setItem("appState", JSON.stringify(AppState.getAppState()));
     }
-    container.setState(AppState.getAppState());
+    //container.setState(AppState.getAppState());
 }
 
 /*       S.D.G.       */

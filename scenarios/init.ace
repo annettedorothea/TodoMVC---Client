@@ -10,7 +10,7 @@ scenarios
 		THEN
 			expectedState 
 				filterWasSet todo.filter shouldBe "all"
-				categoryWasSet todo.categoryId shouldBe "category_${testId}"
+				categoryWasSet todo.footer.categoryId shouldBe "category_${testId}"
 				emptyTodoListWasFetched todo.todos.todoList shouldBe []
 			
 	InitOpenFilter
@@ -21,7 +21,7 @@ scenarios
 		THEN
 			expectedState 
 				filterWasSet todo.filter shouldBe "open"
-				categoryWasSet todo.categoryId shouldBe "category_${testId}"
+				categoryWasSet todo.footer.categoryId shouldBe "category_${testId}"
 				emptyTodoListWasFetched todo.todos.todoList shouldBe []
 			
 	InitOpenFilterWithCreateCategory 
@@ -30,7 +30,7 @@ scenarios
 		THEN
 			expectedState 
 				filterWasSet todo.filter shouldBe "open"
-				categoryWasSet todo.categoryId shouldBe "category_${testId}"
+				categoryWasSet todo.footer.categoryId shouldBe "category_${testId}"
 				emptyTodoListWasFetched todo.todos.todoList shouldBe []
 			
 	InitDoneFilterWithCreateCategory 
@@ -39,7 +39,7 @@ scenarios
 		THEN
 			expectedState 
 				filterWasSet todo.filter shouldBe "done"
-				categoryWasSet todo.categoryId shouldBe "category_${testId}"
+				categoryWasSet todo.footer.categoryId shouldBe "category_${testId}"
 				emptyTodoListWasFetched todo.todos.todoList shouldBe []
 				
 	InitAllWithoutCreateCategory
@@ -50,7 +50,7 @@ scenarios
 		THEN
 			expectedState 
 				filterWasSet todo.filter shouldBe "all"
-				categoryWasSet todo.categoryId shouldBe "category_${testId}"
+				categoryWasSet todo.footer.categoryId shouldBe "category_${testId}"
 				emptyTodoListWasFetched todo.todos.todoList shouldBe []
 				
 				

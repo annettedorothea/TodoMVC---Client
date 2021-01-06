@@ -6,45 +6,42 @@
 import {button, div, editedTodo, input, label, li} from "../../../gen/components/ReactHelper";
 import {deleteTodo, editTodo, toggleTodo} from "../../../gen/todo/ActionFunctions";
 
-export function jsx(attributes) {
+export function uiElement(attributes) {
     if (attributes.editedTodo && attributes.editedTodo.id === attributes.id) {
         return editedTodo({...attributes});
     }
     return li(
-        undefined,
         {
-            className: attributes.done ? 'completed' : '',
+            class: attributes.done ? 'completed' : '',
             id: attributes.id
         },
         [
             div(
-                undefined,
                 {
-                    className: "view",
+                    class: "view",
                     id: attributes.id
                 },
                 [
                     input(
                         {
                             id: attributes.id,
-                            className: "toggle",
+                            class: "toggle",
                             type: "checkbox",
                             checked: attributes.done,
                             onChange: () => toggleTodo(attributes.id)
                         }
                     ),
                     label(
-                        attributes.description,
                         {
                             id: `edit_${attributes.id}`,
                             onDoubleClick: () => editTodo(attributes.id)
-                        }
+                        },
+                        [attributes.description]
                     ),
                     button(
-                        undefined,
                         {
                             id: `delete_${attributes.id}`,
-                            className: "destroy",
+                            class: "destroy",
                             onClick: () => deleteTodo(attributes.id)
                         }
                     )

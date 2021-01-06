@@ -15,7 +15,7 @@ import GetTodoListWithoutCategoryCheckAction from "../../../src/todo/actions/Get
 export default class AbstractCreateCategoryCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.CreateCategoryCommand");
-        this.commandData.categoryId = AppState.get_categoryId();
+        this.commandData.categoryId = AppState.get_footer_categoryId();
         this.commandData.outcomes = [];
     }
 

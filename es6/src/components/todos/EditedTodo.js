@@ -6,17 +6,16 @@
 import {input, li} from "../../../gen/components/ReactHelper";
 import {editedTodoChanged, editedTodoKeyPressed} from "../../../gen/todo/ActionFunctions";
 
-export function jsx(attributes) {
+export function uiElement(attributes) {
 	return li(
-		undefined,
 		{
-			className: 'editing',
+			class: "editing",
 			id: attributes.id
 		},
 		[
 			input(
 				{
-					className: "edit",
+					class: "edit",
 					value: attributes.editedTodo ? attributes.editedTodo.editedDescription : "",
 					onKeyPress: (event) => editedTodoKeyPressed(event.charCode),
 					onChange: (event) => editedTodoChanged(event.target.value),

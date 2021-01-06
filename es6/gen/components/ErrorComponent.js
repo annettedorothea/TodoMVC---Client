@@ -6,10 +6,10 @@
 
 
 import React from 'react';
-import { jsx } from "../../src/components/Error";
+import { uiElement } from "../../src/components/Error";
 
 export const ErrorComponent = (props) => {
-    return jsx(props);
+    return uiElement(props);
 }
 
 

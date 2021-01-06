@@ -83,7 +83,7 @@ export default class Container extends React.Component {
                                     className="toggle-all"
                                     type="checkbox"
                                     onChange={() => toggleAll()}
-                                    checked={this.state.todoList ? this.state.todoList.filter((todo) => todo.done === false).length === 0 : false}
+                                    checked={this.state.todos.todoList ? this.state.todos.todoList.filter((todo) => todo.done === false).length === 0 : false}
                                 />
                             </section>
                             <TodosComponent {...this.state}/>

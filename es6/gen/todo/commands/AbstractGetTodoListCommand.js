@@ -16,7 +16,7 @@ import CreateCategoryAction from "../../../src/todo/actions/CreateCategoryAction
 export default class AbstractGetTodoListCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.GetTodoListCommand");
-        this.commandData.categoryId = AppState.get_categoryId();
+        this.commandData.categoryId = AppState.get_footer_categoryId();
         this.commandData.outcomes = [];
     }
 

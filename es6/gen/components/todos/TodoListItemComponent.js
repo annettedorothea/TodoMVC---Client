@@ -6,10 +6,10 @@
 
 
 import React from 'react';
-import { jsx } from "../../../src/components/todos/TodoListItem";
+import { uiElement } from "../../../src/components/todos/TodoListItem";
 
 export const TodoListItemComponent = (props) => {
-    return jsx(props);
+    return uiElement(props);
 }
 
 

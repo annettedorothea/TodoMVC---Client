@@ -14,7 +14,7 @@ import GetTodoListWithoutCategoryCheckOkEvent from "../../../gen/todo/events/Get
 export default class AbstractGetTodoListWithoutCategoryCheckCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.GetTodoListWithoutCategoryCheckCommand");
-        this.commandData.categoryId = AppState.get_categoryId();
+        this.commandData.categoryId = AppState.get_footer_categoryId();
         this.commandData.outcomes = [];
     }
 

@@ -5,14 +5,14 @@
 
 
 
-import { div } from "../../gen/components/ReactHelper";
+import {div, generic} from "../../gen/components/ReactHelper";
 import React from "react";
 
-export function jsx(attributes) {
+export function uiElement(attributes) {
 	if (attributes.loading) {
-		return div(undefined, {className: "spinner"});
+		return div({class: "spinner"});
 	}
-	return ""
+	return generic("span", {class: "header"}, ["lala"])
 }
 
 

@@ -17,7 +17,7 @@ export default class AbstractCreateTodoCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.CreateTodoCommand");
         this.commandData.description = AppState.get_newTodoInput_newTodo();
-        this.commandData.categoryId = AppState.get_categoryId();
+        this.commandData.categoryId = AppState.get_footer_categoryId();
         this.commandData.outcomes = [];
     }
 

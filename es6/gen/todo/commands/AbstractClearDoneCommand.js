@@ -15,7 +15,7 @@ import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 export default class AbstractClearDoneCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.ClearDoneCommand");
-        this.commandData.categoryId = AppState.get_categoryId();
+        this.commandData.categoryId = AppState.get_footer_categoryId();
         this.commandData.outcomes = [];
     }
 

@@ -3,14 +3,105 @@
  ********************************************************************************/
 
 
+import {
+    div, error, generic, h3, h5, span, a, br, hr, p, ul, li, input, todos, footer
+} from "../../gen/components/ReactHelper";
+import Utils from "../../gen/ace/Utils";
+import {toggleAll} from "../../gen/todo/ActionFunctions";
 
-
-import { div } from "../../gen/components/ReactHelper";
-
-export function jsx(attributes) {
-	return div("container", {}, []);
+export function uiElement(attributes) {
+    const itemCount = attributes.todos.todoList ? attributes.todos.todoList.filter((todo) => todo.done !== true).length : 0;
+    return div({}, [
+        error(attributes.error),
+        div({class: "learn-bar body"},
+            [
+                generic("aside", {class: "learn"},
+                    [
+                        generic("header", {},
+                            [
+                                h3({}, ["ACE"]),
+                                span({class: "source-links"},
+                                    [
+                                        h5({}, ["ACE Example"]),
+                                        a({
+                                            href: "https://github.com/annettedorothea/TodoMVC---Client",
+                                            target: "sourceclient"
+                                        }, ["Source (Client)"]),
+                                        br(),
+                                        a({
+                                            href: "https://github.com/annettedorothea/TodoMVC---Server",
+                                            target: "sourceserver"
+                                        }, ["Source (Server)"]),
+                                    ])
+                            ]),
+                        hr(),
+                        generic("blockquote", {class: "quote speech-bubble"},
+                            [
+                                p({}, "ACE is an architecture that allows you to write an executable timeline during the execution of your application. ACE stands for Action - Command - Event:"),
+                                ul({},
+                                    [
+                                        li({}, ["The action initializes non-deterministic data."]),
+                                        li({}, ["The command contains the business logic and fires events."]),
+                                        li({}, ["The views listen to these events and update themselves accordingly."]),
+                                    ]),
+                                p({}, "Both client and server are implemented based on the ACE architecture. The server was written in Java with Dropwizard; the client uses React."),
+                                generic("footer", {}, [
+                                    a({
+                                        href: "https://github.com/annettedorothea/com.anfelisa.ace.gen",
+                                        target: "ace"
+                                    }, ["ACE Code Generator based on Xtext"]),
+                                ])
+                            ]
+                        ),
+                        generic("footer", {}, [
+                            hr(),
+                            generic("em", {},
+                                [
+                                    "These functions can be executed from JavaScript console:",
+                                    ul({},
+                                        [
+                                            li({}, ["Todo.saveTimeline(<description>, <your name>)"]),
+                                            li({}, ["Todo.replayTimeline(<id>, <pauseInMillis (default and minimum are 100)>)"]),
+                                            li({}, ["Todo.dumpTimeline()"]),
+                                            li({}, ["Todo.dumpAppState()"])
+                                        ]
+                                    ),
+                                    "You can view all saved timelines on ",
+                                    a({
+                                        href: `${Utils.settings ? Utils.settings.aceScenariosBaseUrl : ""}#/${Utils.settings ? Utils.settings.aceScenariosApiKey : ""}`,
+                                        target: "acegen"
+                                    }, ["acegen.de"]),
+                                    "."
+                                ]
+                            )
+                        ])
+                    ]
+                ),
+                div({},
+                    [
+                        generic("section", {class: "main"},
+                            [
+                                input(
+                                    {
+                                        class: "toggle-all",
+                                        type: "checkbox",
+                                        onChange: () => toggleAll(),
+                                        checked: attributes.todos && attributes.todos.todoList ? attributes.todos.todoList.filter((todo) => todo.done === false).length === 0 : false
+                                    }
+                                )
+                            ]
+                        ),
+                        todos({...attributes}),
+                        footer({
+                            categoryId: attributes.footer ? attributes.footer.categoryId: "",
+                            filter: attributes.filter,
+                            itemCount
+                        })
+                    ]
+                )
+            ])
+    ]);
 }
-
 
 
 /******* S.D.G. *******/

@@ -7,13 +7,13 @@ import {input} from "../../gen/components/ReactHelper";
 import {newTodoChanged, newTodoKeyPressed} from "../../gen/todo/ActionFunctions";
 import React from "react";
 
-export function jsx(attributes) {
+export function uiElement(attributes) {
     return input({
         value: attributes.newTodo,
         placeholder: "What needs to be done?",
         onKeyPress: (event) => newTodoKeyPressed(event.charCode),
         onChange: (event) => newTodoChanged(event.target.value),
-        className: "new-todo",
+        class: "new-todo",
         id: "newTodoInput",
     });
 }

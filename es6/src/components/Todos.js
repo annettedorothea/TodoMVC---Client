@@ -11,14 +11,13 @@ function filter(todo, filter) {
 	return filter === 'all' || filter === 'done' && todo.done === true || filter === 'open' && todo.done === false;
 }
 
-export function jsx(attributes) {
+export function uiElement(attributes) {
 	return div(
-		undefined,
-		undefined,
+		{},
 		[
 			ul(
 				{
-					className: "todo-list"
+					class: "todo-list"
 				},
 				[
 					(attributes.todos && attributes.todos.todoList) ? attributes.todos.todoList.filter((todo) => filter(todo, attributes.filter)).map((todoElement) => {

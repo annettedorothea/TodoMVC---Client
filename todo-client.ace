@@ -6,24 +6,24 @@ ACE
 	Init(hash)
 		on ok (
 			set filter 
-			set categoryId
+			set footer.categoryId
 		) triggers (GetTodoList)
 	
 	CreateCategory
-		fromAppState(categoryId)
+		fromAppState(footer.categoryId)
 			call com.anfelisa.todo.CreateCategory
 			loadingFlag spinner.loading 
 		on ok triggers ( GetTodoListWithoutCategoryCheck )
 	
 	GetTodoList 
-		fromAppState(categoryId)
+		fromAppState(footer.categoryId)
 			call com.anfelisa.todo.GetAllTodos  
 			loadingFlag spinner.loading 
 		on ok (set todos.todoList)
 		on categoryDoesNotExist triggers (CreateCategory)
 	
 	GetTodoListWithoutCategoryCheck 
-		fromAppState(categoryId)
+		fromAppState(footer.categoryId)
 			call com.anfelisa.todo.GetAllTodos  
 			loadingFlag spinner.loading 
 		on ok (set todos.todoList)
@@ -36,7 +36,7 @@ ACE
 		on notEnter
 	
 	CreateTodo
-		fromAppState(newTodoInput.newTodo as description, categoryId)
+		fromAppState(newTodoInput.newTodo as description, footer.categoryId)
 			call com.anfelisa.todo.CreateTodo
 			loadingFlag spinner.loading 
 		on ok (set newTodoInput.newTodo) triggers ( GetTodoList)
@@ -73,7 +73,7 @@ ACE
 		on ok triggers (GetTodoList)
 	
 	ToggleAll 
-		fromAppState(categoryId)
+		fromAppState(footer.categoryId)
 			call com.anfelisa.todo.ToggleAll 
 			loadingFlag spinner.loading 
 		on ok triggers (GetTodoList)
@@ -84,7 +84,7 @@ ACE
 		on ok triggers (GetTodoList)
 	
 	ClearDone
-		fromAppState(categoryId) 
+		fromAppState(footer.categoryId) 
 			call com.anfelisa.todo.ClearDone 
 			loadingFlag spinner.loading 
 		on ok triggers (GetTodoList)
@@ -99,11 +99,11 @@ ACE
 
 
 
-
-
 ui {
+	footer {
+		categoryId
+	}
 	filter
-	categoryId
 	newTodoInput {
 		newTodo
 	}
