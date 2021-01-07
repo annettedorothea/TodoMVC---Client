@@ -94,7 +94,7 @@ context('UpdateFirstTodo', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.editedTodoKeyPressed, [13]).should(() => {
     		ScenarioUtils.wait(1, 4).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            expect(appState.editedTodo, "editedTodoWasReset").to.eql({}
+	            expect(appState.todos, "editedTodoWasReset").to.eql({}
 	            )
 	            expect(appState.todoList, "todoWasUpdated").to.eql([
 	            	{ 

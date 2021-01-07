@@ -70,13 +70,8 @@ context('EditTodo', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.editTodo, [`${testId}`]).should(() => {
     		ScenarioUtils.wait(1, 0).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            expect(appState.editedTodo, "editedTodoWasSet").to.eql({ 
-	            	categoryId : `category_${testId}`,
-	            	createdDateTime : `2020-10-10T14:48:37`,
-	            	description : `1st Item ${testId}`,
-	            	done : false,
-	            	id : `${testId}`,
-	            	updatedDateTime : null,
+	            expect(appState.todos, "editedTodoWasSet").to.eql({ 
+	            	editedTodoId : `${testId}`,
 	            	editedDescription : `1st Item ${testId}`
 	            }
 	            )

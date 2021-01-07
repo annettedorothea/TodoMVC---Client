@@ -8,7 +8,14 @@
 import AppUtils from "../../src/app/AppUtils";
 
 export let appState;
-import {setState} from "../components/ContainerComponent";
+
+import {setContainerState} from "../components/ContainerComponent";
+import {setFooterState} from "../components/FooterComponent";
+import {setNewTodoInputState} from "../components/NewTodoInputComponent";
+import {setSpinnerState} from "../components/SpinnerComponent";
+import {setErrorState} from "../components/ErrorComponent";
+import {setTodosState} from "../components/TodosComponent";
+import {setTodoListItemState} from "../components/todos/TodoListItemComponent";
 
 export function getAppState() {
 	return AppUtils.deepCopy(appState);
@@ -27,7 +34,7 @@ export function get_footer() {
 
 export function set_footer(eventData) {
 	appState.footer = eventData.footer;
-	setState(getAppState());
+	setFooterState(AppUtils.deepCopy(appState.footer));
 }
 
 export function merge_footer(eventData) {
@@ -37,7 +44,7 @@ export function merge_footer(eventData) {
 	if (eventData.categoryId !== undefined) {
 		appState.footer.categoryId = eventData.categoryId;
 	}
-	setState(getAppState());
+	setFooterState(AppUtils.deepCopy(appState.footer));
 }
 
 export function get_footer_categoryId() {
@@ -52,7 +59,7 @@ export function set_footer_categoryId(eventData) {
 		appState.footer = {};
 	}
 	appState.footer.categoryId = eventData.categoryId;
-	setState(getAppState());
+	setFooterState(AppUtils.deepCopy(appState.footer));
 }
 
 export function get_filter() {
@@ -61,7 +68,7 @@ export function get_filter() {
 
 export function set_filter(eventData) {
 	appState.filter = eventData.filter;
-	setState(getAppState());
+	setContainerState(getAppState());
 }
 
 export function get_newTodoInput() {
@@ -73,7 +80,7 @@ export function get_newTodoInput() {
 
 export function set_newTodoInput(eventData) {
 	appState.newTodoInput = eventData.newTodoInput;
-	setState(getAppState());
+	setNewTodoInputState(AppUtils.deepCopy(appState.newTodoInput));
 }
 
 export function merge_newTodoInput(eventData) {
@@ -83,7 +90,7 @@ export function merge_newTodoInput(eventData) {
 	if (eventData.newTodo !== undefined) {
 		appState.newTodoInput.newTodo = eventData.newTodo;
 	}
-	setState(getAppState());
+	setNewTodoInputState(AppUtils.deepCopy(appState.newTodoInput));
 }
 
 export function get_newTodoInput_newTodo() {
@@ -98,7 +105,7 @@ export function set_newTodoInput_newTodo(eventData) {
 		appState.newTodoInput = {};
 	}
 	appState.newTodoInput.newTodo = eventData.newTodo;
-	setState(getAppState());
+	setNewTodoInputState(AppUtils.deepCopy(appState.newTodoInput));
 }
 
 export function get_spinner() {
@@ -110,7 +117,7 @@ export function get_spinner() {
 
 export function set_spinner(eventData) {
 	appState.spinner = eventData.spinner;
-	setState(getAppState());
+	setSpinnerState(AppUtils.deepCopy(appState.spinner));
 }
 
 export function merge_spinner(eventData) {
@@ -120,7 +127,7 @@ export function merge_spinner(eventData) {
 	if (eventData.loading !== undefined) {
 		appState.spinner.loading = eventData.loading;
 	}
-	setState(getAppState());
+	setSpinnerState(AppUtils.deepCopy(appState.spinner));
 }
 
 export function get_spinner_loading() {
@@ -135,7 +142,7 @@ export function set_spinner_loading(eventData) {
 		appState.spinner = {};
 	}
 	appState.spinner.loading = eventData.loading;
-	setState(getAppState());
+	setSpinnerState(AppUtils.deepCopy(appState.spinner));
 }
 
 export function get_error() {
@@ -147,7 +154,7 @@ export function get_error() {
 
 export function set_error(eventData) {
 	appState.error = eventData.error;
-	setState(getAppState());
+	setErrorState(AppUtils.deepCopy(appState.error));
 }
 
 export function merge_error(eventData) {
@@ -157,7 +164,7 @@ export function merge_error(eventData) {
 	if (eventData.errorMessage !== undefined) {
 		appState.error.errorMessage = eventData.errorMessage;
 	}
-	setState(getAppState());
+	setErrorState(AppUtils.deepCopy(appState.error));
 }
 
 export function get_error_errorMessage() {
@@ -172,7 +179,7 @@ export function set_error_errorMessage(eventData) {
 		appState.error = {};
 	}
 	appState.error.errorMessage = eventData.errorMessage;
-	setState(getAppState());
+	setErrorState(AppUtils.deepCopy(appState.error));
 }
 
 export function get_todos() {
@@ -184,7 +191,7 @@ export function get_todos() {
 
 export function set_todos(eventData) {
 	appState.todos = eventData.todos;
-	setState(getAppState());
+	setTodosState(AppUtils.deepCopy(appState.todos));
 }
 
 export function merge_todos(eventData) {
@@ -194,10 +201,13 @@ export function merge_todos(eventData) {
 	if (eventData.todoList !== undefined) {
 		appState.todos.todoList = eventData.todoList;
 	}
-	if (eventData.editedTodo !== undefined) {
-		appState.todos.editedTodo = eventData.editedTodo;
+	if (eventData.editedDescription !== undefined) {
+		appState.todos.editedDescription = eventData.editedDescription;
 	}
-	setState(getAppState());
+	if (eventData.editedTodoId !== undefined) {
+		appState.todos.editedTodoId = eventData.editedTodoId;
+	}
+	setTodosState(AppUtils.deepCopy(appState.todos));
 }
 
 export function get_todos_todoList() {
@@ -215,230 +225,36 @@ export function set_todos_todoList(eventData) {
 		appState.todos = {};
 	}
 	appState.todos.todoList = eventData.todoList;
-	setState(getAppState());
+	setTodosState(AppUtils.deepCopy(appState.todos));
 }
 
-export function merge_todos_todoList(eventData) {
+export function get_todos_editedDescription() {
+	if (!appState.todos) {
+		return undefined;
+	}
+	return appState.todos.editedDescription;
+}
+
+export function set_todos_editedDescription(eventData) {
 	if (!appState.todos) {
 		appState.todos = {};
 	}
-	if (!appState.todos.todoList) {
-		appState.todos.todoList = {};
-	}
-	if (eventData.categoryId !== undefined) {
-		appState.todos.todoList.categoryId = eventData.categoryId;
-	}
-	if (eventData.id !== undefined) {
-		appState.todos.todoList.id = eventData.id;
-	}
-	if (eventData.description !== undefined) {
-		appState.todos.todoList.description = eventData.description;
-	}
-	if (eventData.done !== undefined) {
-		appState.todos.todoList.done = eventData.done;
-	}
-	if (eventData.createdDateTime !== undefined) {
-		appState.todos.todoList.createdDateTime = eventData.createdDateTime;
-	}
-	if (eventData.updatedDateTime !== undefined) {
-		appState.todos.todoList.updatedDateTime = eventData.updatedDateTime;
-	}
-	setState(getAppState());
+	appState.todos.editedDescription = eventData.editedDescription;
+	setTodosState(AppUtils.deepCopy(appState.todos));
 }
 
-export function get_todos_editedTodo() {
+export function get_todos_editedTodoId() {
 	if (!appState.todos) {
 		return undefined;
 	}
-	if (!appState.todos.editedTodo) {
-		return undefined;
-	}
-	return AppUtils.deepCopy(appState.todos.editedTodo);
+	return appState.todos.editedTodoId;
 }
 
-export function set_todos_editedTodo(eventData) {
+export function set_todos_editedTodoId(eventData) {
 	if (!appState.todos) {
 		appState.todos = {};
 	}
-	appState.todos.editedTodo = eventData.editedTodo;
-	setState(getAppState());
-}
-
-export function merge_todos_editedTodo(eventData) {
-	if (!appState.todos) {
-		appState.todos = {};
-	}
-	if (!appState.todos.editedTodo) {
-		appState.todos.editedTodo = {};
-	}
-	if (eventData.categoryId !== undefined) {
-		appState.todos.editedTodo.categoryId = eventData.categoryId;
-	}
-	if (eventData.id !== undefined) {
-		appState.todos.editedTodo.id = eventData.id;
-	}
-	if (eventData.description !== undefined) {
-		appState.todos.editedTodo.description = eventData.description;
-	}
-	if (eventData.done !== undefined) {
-		appState.todos.editedTodo.done = eventData.done;
-	}
-	if (eventData.createdDateTime !== undefined) {
-		appState.todos.editedTodo.createdDateTime = eventData.createdDateTime;
-	}
-	if (eventData.updatedDateTime !== undefined) {
-		appState.todos.editedTodo.updatedDateTime = eventData.updatedDateTime;
-	}
-	if (eventData.editedDescription !== undefined) {
-		appState.todos.editedTodo.editedDescription = eventData.editedDescription;
-	}
-	setState(getAppState());
-}
-
-export function get_todos_editedTodo_categoryId() {
-	if (!appState.todos) {
-		return undefined;
-	}
-	if (!appState.todos.editedTodo) {
-		return undefined;
-	}
-	return appState.todos.editedTodo.categoryId;
-}
-
-export function set_todos_editedTodo_categoryId(eventData) {
-	if (!appState.todos) {
-		appState.todos = {};
-	}
-	if (!appState.todos.editedTodo) {
-		appState.todos.editedTodo = {};
-	}
-	appState.todos.editedTodo.categoryId = eventData.categoryId;
-	setState(getAppState());
-}
-
-export function get_todos_editedTodo_id() {
-	if (!appState.todos) {
-		return undefined;
-	}
-	if (!appState.todos.editedTodo) {
-		return undefined;
-	}
-	return appState.todos.editedTodo.id;
-}
-
-export function set_todos_editedTodo_id(eventData) {
-	if (!appState.todos) {
-		appState.todos = {};
-	}
-	if (!appState.todos.editedTodo) {
-		appState.todos.editedTodo = {};
-	}
-	appState.todos.editedTodo.id = eventData.id;
-	setState(getAppState());
-}
-
-export function get_todos_editedTodo_description() {
-	if (!appState.todos) {
-		return undefined;
-	}
-	if (!appState.todos.editedTodo) {
-		return undefined;
-	}
-	return appState.todos.editedTodo.description;
-}
-
-export function set_todos_editedTodo_description(eventData) {
-	if (!appState.todos) {
-		appState.todos = {};
-	}
-	if (!appState.todos.editedTodo) {
-		appState.todos.editedTodo = {};
-	}
-	appState.todos.editedTodo.description = eventData.description;
-	setState(getAppState());
-}
-
-export function get_todos_editedTodo_done() {
-	if (!appState.todos) {
-		return undefined;
-	}
-	if (!appState.todos.editedTodo) {
-		return undefined;
-	}
-	return appState.todos.editedTodo.done;
-}
-
-export function set_todos_editedTodo_done(eventData) {
-	if (!appState.todos) {
-		appState.todos = {};
-	}
-	if (!appState.todos.editedTodo) {
-		appState.todos.editedTodo = {};
-	}
-	appState.todos.editedTodo.done = eventData.done;
-	setState(getAppState());
-}
-
-export function get_todos_editedTodo_createdDateTime() {
-	if (!appState.todos) {
-		return undefined;
-	}
-	if (!appState.todos.editedTodo) {
-		return undefined;
-	}
-	return appState.todos.editedTodo.createdDateTime;
-}
-
-export function set_todos_editedTodo_createdDateTime(eventData) {
-	if (!appState.todos) {
-		appState.todos = {};
-	}
-	if (!appState.todos.editedTodo) {
-		appState.todos.editedTodo = {};
-	}
-	appState.todos.editedTodo.createdDateTime = eventData.createdDateTime;
-	setState(getAppState());
-}
-
-export function get_todos_editedTodo_updatedDateTime() {
-	if (!appState.todos) {
-		return undefined;
-	}
-	if (!appState.todos.editedTodo) {
-		return undefined;
-	}
-	return appState.todos.editedTodo.updatedDateTime;
-}
-
-export function set_todos_editedTodo_updatedDateTime(eventData) {
-	if (!appState.todos) {
-		appState.todos = {};
-	}
-	if (!appState.todos.editedTodo) {
-		appState.todos.editedTodo = {};
-	}
-	appState.todos.editedTodo.updatedDateTime = eventData.updatedDateTime;
-	setState(getAppState());
-}
-
-export function get_todos_editedTodo_editedDescription() {
-	if (!appState.todos) {
-		return undefined;
-	}
-	if (!appState.todos.editedTodo) {
-		return undefined;
-	}
-	return appState.todos.editedTodo.editedDescription;
-}
-
-export function set_todos_editedTodo_editedDescription(eventData) {
-	if (!appState.todos) {
-		appState.todos = {};
-	}
-	if (!appState.todos.editedTodo) {
-		appState.todos.editedTodo = {};
-	}
-	appState.todos.editedTodo.editedDescription = eventData.editedDescription;
-	setState(getAppState());
+	appState.todos.editedTodoId = eventData.editedTodoId;
+	setTodosState(AppUtils.deepCopy(appState.todos));
 }
 

@@ -106,7 +106,7 @@ export function uiElement(attributes) {
 										)
 									]
 								),
-								todos({...attributes}),
+								todos({...attributes.todos, filter: attributes.filter}),
 								footer({
 									categoryId: attributes.footer ? attributes.footer.categoryId: "",
 									filter: attributes.filter,

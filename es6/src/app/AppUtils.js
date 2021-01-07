@@ -39,8 +39,7 @@ export default class AppUtils {
                 loading: false,
             },
             todos: {
-                todoList: [],
-                editedTodo: null,
+                todoList: []
             },
             error: {
                 errorMessage: null

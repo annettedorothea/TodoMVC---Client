@@ -3,12 +3,34 @@
  ********************************************************************************/
 
 
-import {button, div, editedTodo, input, label, li} from "../../../gen/components/ReactHelper";
-import {deleteTodo, editTodo, toggleTodo} from "../../../gen/todo/ActionFunctions";
+import {button, div, input, label, li} from "../../../gen/components/ReactHelper";
+import {
+    deleteTodo,
+    editedTodoChanged,
+    editedTodoKeyPressed,
+    editTodo,
+    toggleTodo
+} from "../../../gen/todo/ActionFunctions";
 
 export function uiElement(attributes) {
-    if (attributes.editedTodo && attributes.editedTodo.id === attributes.id) {
-        return editedTodo({...attributes});
+    if (attributes.editedTodoId === attributes.id) {
+        return li(
+            {
+                class: "editing",
+                id: attributes.id
+            },
+            [
+                input(
+                    {
+                        class: "edit",
+                        value: attributes.editedDescription,
+                        onKeyPress: (event) => editedTodoKeyPressed(event.charCode),
+                        onChange: (event) => editedTodoChanged(event.target.value),
+                        id: attributes.id
+                    }
+                )
+            ]
+        );
     }
     return li(
         {

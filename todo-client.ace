@@ -44,10 +44,13 @@ ACE
 		
 	EditTodo (id)
 		fromAppState ( todos.todoList )
-		on ok ( set todos.editedTodo)
+		on ok ( 
+			set todos.editedDescription 
+			set todos.editedTodoId 
+		)
 	
 	EditedTodoChanged (editedDescription)
-		on ok ( set todos.editedTodo.editedDescription)
+		on ok ( set todos.editedDescription)
 	
 	EditedTodoKeyPressed (charCode)
 		on enter triggers ( UpdateTodo )
@@ -55,16 +58,18 @@ ACE
 	
 	UpdateTodo
 		fromAppState ( 
-			todos.editedTodo.id as id, 
-			todos.editedTodo.editedDescription as description
+			todos.editedTodoId as id, 
+			todos.editedDescription as description
 		)
 			call com.anfelisa.todo.UpdateTodo
 			loadingFlag spinner.loading 
 		on ok (
-			set todos.editedTodo 
+			set todos.editedDescription 
+			set todos.editedTodoId 
 		) triggers (GetTodoList)
 		on empty (
-			set todos.editedTodo 
+			set todos.editedDescription 
+			set todos.editedTodoId 
 		)
 	
 	ToggleTodo (id)
@@ -97,6 +102,12 @@ ACE
 
 
 
+
+
+
+
+
+
 ui {
 	footer {
 		categoryId
@@ -120,14 +131,7 @@ ui {
 			createdDateTime
 			updatedDateTime
 		}
-		editedTodo {
-			categoryId
-			id
-			description
-			done
-			createdDateTime
-			updatedDateTime
-			editedDescription
-		}
+		editedDescription
+		editedTodoId
 	}
 }

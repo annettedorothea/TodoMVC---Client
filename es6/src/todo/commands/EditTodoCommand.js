@@ -3,8 +3,8 @@ import AbstractEditTodoCommand from "../../../gen/todo/commands/AbstractEditTodo
 export default class EditTodoCommand extends AbstractEditTodoCommand {
     execute() {
         const todo = this.commandData.todoList.filter(todo => todo.id === this.commandData.id);
-        this.commandData.editedTodo = todo[0];
-        this.commandData.editedTodo.editedDescription = this.commandData.editedTodo.description;
+        this.commandData.editedTodoId = todo[0].id;
+        this.commandData.editedDescription = todo[0].description;
         this.addOkOutcome();
     }
 }

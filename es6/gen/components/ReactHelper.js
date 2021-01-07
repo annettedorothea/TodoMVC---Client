@@ -12,7 +12,6 @@ import { SpinnerComponent } from "./SpinnerComponent";
 import { ErrorComponent } from "./ErrorComponent";
 import { TodosComponent } from "./TodosComponent";
 import { TodoListItemComponent } from "./todos/TodoListItemComponent";
-import { EditedTodoComponent } from "./todos/EditedTodoComponent";
 
 const normalize = (options) => {
     if (options && options.class !== undefined) {
@@ -127,9 +126,6 @@ export const todos = (options) => {
 }
 export const todoListItem = (options) => {
     return <TodoListItemComponent {...normalize(options)}/>
-}
-export const editedTodo = (options) => {
-    return <EditedTodoComponent {...normalize(options)}/>
 }
 
 

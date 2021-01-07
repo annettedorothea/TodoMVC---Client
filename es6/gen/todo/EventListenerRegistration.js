@@ -17,10 +17,13 @@ export default class EventListenerRegistrationTodo {
 		ACEController.registerListener('todo.GetTodoListWithoutCategoryCheckOkEvent', AppState.set_todos_todoList);
 		ACEController.registerListener('todo.NewTodoChangedOkEvent', AppState.set_newTodoInput_newTodo);
 		ACEController.registerListener('todo.CreateTodoOkEvent', AppState.set_newTodoInput_newTodo);
-		ACEController.registerListener('todo.EditTodoOkEvent', AppState.set_todos_editedTodo);
-		ACEController.registerListener('todo.EditedTodoChangedOkEvent', AppState.set_todos_editedTodo_editedDescription);
-		ACEController.registerListener('todo.UpdateTodoOkEvent', AppState.set_todos_editedTodo);
-		ACEController.registerListener('todo.UpdateTodoEmptyEvent', AppState.set_todos_editedTodo);
+		ACEController.registerListener('todo.EditTodoOkEvent', AppState.set_todos_editedDescription);
+		ACEController.registerListener('todo.EditTodoOkEvent', AppState.set_todos_editedTodoId);
+		ACEController.registerListener('todo.EditedTodoChangedOkEvent', AppState.set_todos_editedDescription);
+		ACEController.registerListener('todo.UpdateTodoOkEvent', AppState.set_todos_editedDescription);
+		ACEController.registerListener('todo.UpdateTodoOkEvent', AppState.set_todos_editedTodoId);
+		ACEController.registerListener('todo.UpdateTodoEmptyEvent', AppState.set_todos_editedDescription);
+		ACEController.registerListener('todo.UpdateTodoEmptyEvent', AppState.set_todos_editedTodoId);
 		ACEController.registerListener('todo.DisplayErrorOkEvent', AppState.set_error_errorMessage);
 	}
 

@@ -17,8 +17,8 @@ import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 export default class AbstractUpdateTodoCommand extends AsynchronousCommand {
     constructor(commandData) {
         super(commandData, "todo.UpdateTodoCommand");
-        this.commandData.id = AppState.get_todos_editedTodo_id();
-        this.commandData.description = AppState.get_todos_editedTodo_editedDescription();
+        this.commandData.id = AppState.get_todos_editedTodoId();
+        this.commandData.description = AppState.get_todos_editedDescription();
         this.commandData.outcomes = [];
     }
 

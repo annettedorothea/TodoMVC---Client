@@ -11,13 +11,8 @@ scenarios
 			todo.EditTodo(id : "${testId}")
 		THEN
 			expectedState 
-				editedTodoWasSet todo.todos.editedTodo shouldBe {
-					categoryId: "category_${testId}",
-					createdDateTime: "2020-10-10T14:48:37",
-					description: "1st Item ${testId}",
-					done: false,
-					id: "${testId}",
-					updatedDateTime: null,
+				editedTodoWasSet todo.todos shouldBe {
+					editedTodoId: "${testId}",
 					editedDescription: "1st Item ${testId}"
 				}
 

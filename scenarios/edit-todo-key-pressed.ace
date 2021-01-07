@@ -17,7 +17,7 @@ scenarios
 				}
 		THEN
 			expectedState 
-				editedTodoWasReset todo.todos.editedTodo shouldBe {}
+				editedTodoWasReset todo.todos shouldBe {}
 				todoWasUpdated todo.todos.todoList shouldBe [
 					{
 						categoryId: "category_${testId}",

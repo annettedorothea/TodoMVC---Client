@@ -12,6 +12,7 @@ function filter(todo, filter) {
 }
 
 export function uiElement(attributes) {
+	console.log("uiElement", attributes);
 	return div(
 		{},
 		[
@@ -20,11 +21,12 @@ export function uiElement(attributes) {
 					class: "todo-list"
 				},
 				[
-					(attributes.todos && attributes.todos.todoList) ? attributes.todos.todoList.filter((todo) => filter(todo, attributes.filter)).map((todoElement) => {
+					(attributes.todoList) ? attributes.todoList.filter((todo) => filter(todo, attributes.filter)).map((todoElement) => {
 						return todoListItem(
 							{
 								...todoElement,
-								editedTodo: attributes.todos.editedTodo
+								editedTodoId: attributes.editedTodoId,
+								editedDescription: attributes.editedDescription,
 							}
 						)
 					}) : []

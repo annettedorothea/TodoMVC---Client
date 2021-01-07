@@ -10,22 +10,20 @@ import React, {useState} from 'react';
 import { uiElement } from "../../src/components/Container";
 import * as AppState from "../ace/AppState";
 
-export const setState = (newState) => {
-    console.log("setState newState", newState);
-    if (listeners.setMyState) {
-        listeners.setMyState(newState);
+export const setContainerState = (newState) => {
+    if (functions.setState) {
+        functions.setState(newState);
     }
 }
 
-let listeners = {};
+let functions = {};
 
 export const ContainerComponent = (props) => {
-    const [state, setMyState] = useState(AppState.getAppState());
-    listeners.setMyState = setMyState;
-    console.log("ContainerComponent state", state);
-    return uiElement(state);
+    const [state, setState] = useState(AppState.getAppState());
+    functions.setState = setState;
+    return uiElement({...props, ...state});
 }
-		
+
 
 
 /******* S.D.G. *******/
