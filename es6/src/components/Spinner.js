@@ -12,7 +12,7 @@ export function uiElement(attributes) {
 	if (attributes.loading) {
 		return div({class: "spinner"});
 	}
-	return generic("span", {class: "header"}, ["lala"])
+	return ""
 }
 
 

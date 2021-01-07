@@ -5,13 +5,27 @@
 
 
 
-import React from 'react';
-import { uiElement } from "../../src/components/ContainerNew";
 
-export const ContainerComponent = (props) => {
-    return uiElement(props);
+import React, {useState} from 'react';
+import { uiElement } from "../../src/components/Container";
+import * as AppState from "../ace/AppState";
+
+export const setState = (newState) => {
+    console.log("setState newState", newState);
+    if (listeners.setMyState) {
+        listeners.setMyState(newState);
+    }
 }
 
+let listeners = {};
+
+export const ContainerComponent = (props) => {
+    const [state, setMyState] = useState(AppState.getAppState());
+    listeners.setMyState = setMyState;
+    console.log("ContainerComponent state", state);
+    return uiElement(state);
+}
+		
 
 
 /******* S.D.G. *******/

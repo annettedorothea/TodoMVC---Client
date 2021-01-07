@@ -5,7 +5,6 @@
 
 
 
-
 import React from 'react';
 import { FooterComponent } from "./FooterComponent";
 import { NewTodoInputComponent } from "./NewTodoInputComponent";
@@ -15,22 +14,14 @@ import { TodosComponent } from "./TodosComponent";
 import { TodoListItemComponent } from "./todos/TodoListItemComponent";
 import { EditedTodoComponent } from "./todos/EditedTodoComponent";
 
-function key() {
-    const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let result = '';
-    for (let i = 10; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-    return result;
-}
-
 const normalize = (options) => {
     if (options && options.class !== undefined) {
         options.className = options.class
         delete options.class;
     }
-    if (!options) {
-    	options = {};
+    if (options) {
+    	options.key = options.id;
     }
-    options.key = options.id ? options.id : key();
     return options;
 }
 
@@ -120,25 +111,25 @@ export const input = (options) => {
 
 
 export const footer = (options) => {
-    return <FooterComponent {...normalize(options)} key={key()}/>
+    return <FooterComponent {...normalize(options)}/>
 }
 export const newTodoInput = (options) => {
-    return <NewTodoInputComponent {...normalize(options)} key={key()}/>
+    return <NewTodoInputComponent {...normalize(options)}/>
 }
 export const spinner = (options) => {
-    return <SpinnerComponent {...normalize(options)} key={key()}/>
+    return <SpinnerComponent {...normalize(options)}/>
 }
 export const error = (options) => {
-    return <ErrorComponent {...normalize(options)} key={key()}/>
+    return <ErrorComponent {...normalize(options)}/>
 }
 export const todos = (options) => {
-    return <TodosComponent {...normalize(options)} key={key()}/>
+    return <TodosComponent {...normalize(options)}/>
 }
 export const todoListItem = (options) => {
-    return <TodoListItemComponent {...normalize(options)} key={key()}/>
+    return <TodoListItemComponent {...normalize(options)}/>
 }
 export const editedTodo = (options) => {
-    return <EditedTodoComponent {...normalize(options)} key={key()}/>
+    return <EditedTodoComponent {...normalize(options)}/>
 }
 
 

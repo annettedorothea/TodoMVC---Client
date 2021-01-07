@@ -8,6 +8,7 @@
 import AppUtils from "../../src/app/AppUtils";
 
 export let appState;
+import {setState} from "../components/ContainerComponent";
 
 export function getAppState() {
 	return AppUtils.deepCopy(appState);
@@ -26,6 +27,7 @@ export function get_footer() {
 
 export function set_footer(eventData) {
 	appState.footer = eventData.footer;
+	setState(getAppState());
 }
 
 export function merge_footer(eventData) {
@@ -35,6 +37,7 @@ export function merge_footer(eventData) {
 	if (eventData.categoryId !== undefined) {
 		appState.footer.categoryId = eventData.categoryId;
 	}
+	setState(getAppState());
 }
 
 export function get_footer_categoryId() {
@@ -49,6 +52,7 @@ export function set_footer_categoryId(eventData) {
 		appState.footer = {};
 	}
 	appState.footer.categoryId = eventData.categoryId;
+	setState(getAppState());
 }
 
 export function get_filter() {
@@ -57,6 +61,7 @@ export function get_filter() {
 
 export function set_filter(eventData) {
 	appState.filter = eventData.filter;
+	setState(getAppState());
 }
 
 export function get_newTodoInput() {
@@ -68,6 +73,7 @@ export function get_newTodoInput() {
 
 export function set_newTodoInput(eventData) {
 	appState.newTodoInput = eventData.newTodoInput;
+	setState(getAppState());
 }
 
 export function merge_newTodoInput(eventData) {
@@ -77,6 +83,7 @@ export function merge_newTodoInput(eventData) {
 	if (eventData.newTodo !== undefined) {
 		appState.newTodoInput.newTodo = eventData.newTodo;
 	}
+	setState(getAppState());
 }
 
 export function get_newTodoInput_newTodo() {
@@ -91,6 +98,7 @@ export function set_newTodoInput_newTodo(eventData) {
 		appState.newTodoInput = {};
 	}
 	appState.newTodoInput.newTodo = eventData.newTodo;
+	setState(getAppState());
 }
 
 export function get_spinner() {
@@ -102,6 +110,7 @@ export function get_spinner() {
 
 export function set_spinner(eventData) {
 	appState.spinner = eventData.spinner;
+	setState(getAppState());
 }
 
 export function merge_spinner(eventData) {
@@ -111,6 +120,7 @@ export function merge_spinner(eventData) {
 	if (eventData.loading !== undefined) {
 		appState.spinner.loading = eventData.loading;
 	}
+	setState(getAppState());
 }
 
 export function get_spinner_loading() {
@@ -125,6 +135,7 @@ export function set_spinner_loading(eventData) {
 		appState.spinner = {};
 	}
 	appState.spinner.loading = eventData.loading;
+	setState(getAppState());
 }
 
 export function get_error() {
@@ -136,6 +147,7 @@ export function get_error() {
 
 export function set_error(eventData) {
 	appState.error = eventData.error;
+	setState(getAppState());
 }
 
 export function merge_error(eventData) {
@@ -145,6 +157,7 @@ export function merge_error(eventData) {
 	if (eventData.errorMessage !== undefined) {
 		appState.error.errorMessage = eventData.errorMessage;
 	}
+	setState(getAppState());
 }
 
 export function get_error_errorMessage() {
@@ -159,6 +172,7 @@ export function set_error_errorMessage(eventData) {
 		appState.error = {};
 	}
 	appState.error.errorMessage = eventData.errorMessage;
+	setState(getAppState());
 }
 
 export function get_todos() {
@@ -170,6 +184,7 @@ export function get_todos() {
 
 export function set_todos(eventData) {
 	appState.todos = eventData.todos;
+	setState(getAppState());
 }
 
 export function merge_todos(eventData) {
@@ -182,6 +197,7 @@ export function merge_todos(eventData) {
 	if (eventData.editedTodo !== undefined) {
 		appState.todos.editedTodo = eventData.editedTodo;
 	}
+	setState(getAppState());
 }
 
 export function get_todos_todoList() {
@@ -199,6 +215,7 @@ export function set_todos_todoList(eventData) {
 		appState.todos = {};
 	}
 	appState.todos.todoList = eventData.todoList;
+	setState(getAppState());
 }
 
 export function merge_todos_todoList(eventData) {
@@ -226,6 +243,7 @@ export function merge_todos_todoList(eventData) {
 	if (eventData.updatedDateTime !== undefined) {
 		appState.todos.todoList.updatedDateTime = eventData.updatedDateTime;
 	}
+	setState(getAppState());
 }
 
 export function get_todos_editedTodo() {
@@ -243,6 +261,7 @@ export function set_todos_editedTodo(eventData) {
 		appState.todos = {};
 	}
 	appState.todos.editedTodo = eventData.editedTodo;
+	setState(getAppState());
 }
 
 export function merge_todos_editedTodo(eventData) {
@@ -273,6 +292,7 @@ export function merge_todos_editedTodo(eventData) {
 	if (eventData.editedDescription !== undefined) {
 		appState.todos.editedTodo.editedDescription = eventData.editedDescription;
 	}
+	setState(getAppState());
 }
 
 export function get_todos_editedTodo_categoryId() {
@@ -293,6 +313,7 @@ export function set_todos_editedTodo_categoryId(eventData) {
 		appState.todos.editedTodo = {};
 	}
 	appState.todos.editedTodo.categoryId = eventData.categoryId;
+	setState(getAppState());
 }
 
 export function get_todos_editedTodo_id() {
@@ -313,6 +334,7 @@ export function set_todos_editedTodo_id(eventData) {
 		appState.todos.editedTodo = {};
 	}
 	appState.todos.editedTodo.id = eventData.id;
+	setState(getAppState());
 }
 
 export function get_todos_editedTodo_description() {
@@ -333,6 +355,7 @@ export function set_todos_editedTodo_description(eventData) {
 		appState.todos.editedTodo = {};
 	}
 	appState.todos.editedTodo.description = eventData.description;
+	setState(getAppState());
 }
 
 export function get_todos_editedTodo_done() {
@@ -353,6 +376,7 @@ export function set_todos_editedTodo_done(eventData) {
 		appState.todos.editedTodo = {};
 	}
 	appState.todos.editedTodo.done = eventData.done;
+	setState(getAppState());
 }
 
 export function get_todos_editedTodo_createdDateTime() {
@@ -373,6 +397,7 @@ export function set_todos_editedTodo_createdDateTime(eventData) {
 		appState.todos.editedTodo = {};
 	}
 	appState.todos.editedTodo.createdDateTime = eventData.createdDateTime;
+	setState(getAppState());
 }
 
 export function get_todos_editedTodo_updatedDateTime() {
@@ -393,6 +418,7 @@ export function set_todos_editedTodo_updatedDateTime(eventData) {
 		appState.todos.editedTodo = {};
 	}
 	appState.todos.editedTodo.updatedDateTime = eventData.updatedDateTime;
+	setState(getAppState());
 }
 
 export function get_todos_editedTodo_editedDescription() {
@@ -413,5 +439,6 @@ export function set_todos_editedTodo_editedDescription(eventData) {
 		appState.todos.editedTodo = {};
 	}
 	appState.todos.editedTodo.editedDescription = eventData.editedDescription;
+	setState(getAppState());
 }
 

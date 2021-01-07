@@ -3,28 +3,51 @@
  ********************************************************************************/
 
 
-
-
-import { generic, span, ul } from "../../gen/components/ReactHelper";
+import {generic, span, ul, li, a, button} from "../../gen/components/ReactHelper";
+import {clearDone} from "../../gen/todo/ActionFunctions";
 
 export function uiElement(attributes) {
-	const itemsString = attributes.itemCount === 1 ? 'item' : 'items';
-	return generic("footer", {class: "footer"},
-		[
-			span({class: "todo-count"},
-				[
-					`${attributes.itemCount} ${itemsString} left`,
-					ul({class:"filters"},
-						[
-
-						]
-					)
-				]
-			)
-		]
-	);
+    const itemsString = attributes.itemCount === 1 ? 'item' : 'items';
+    return generic("footer", {class: "footer"},
+        [
+            span({class: "todo-count"},
+                [
+                    `${attributes.itemCount} ${itemsString} left`
+                ]
+            ),
+            ul({class: "filters"},
+                [
+                    li({},
+                        [
+                            a({
+                                    href: `#/${attributes.categoryId}`,
+                                    class: attributes.filter === 'all' ? 'selected' : ''
+                                },
+                                ["All"]
+                            ),
+                            a({
+                                    href: `#/${attributes.categoryId}/open`,
+                                    class: attributes.filter === 'open' ? 'selected' : ''
+                                },
+                                ["Active"]
+                            ),
+                            a({
+                                    href: `#/${attributes.categoryId}/done`,
+                                    class: attributes.filter === 'done' ? 'selected' : ''
+                                },
+                                ["Completed"]
+                            )
+                        ]
+                    )
+                ]
+            ),
+            button({
+                class:"clear-completed",
+                onClick: () => clearDone()
+            }, ["Clear completed"])
+        ]
+    );
 }
-
 
 
 /******* S.D.G. *******/
