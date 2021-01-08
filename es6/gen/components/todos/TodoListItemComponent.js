@@ -8,18 +8,9 @@
 import React, {useState} from 'react';
 import { uiElement } from "../../../src/components/todos/TodoListItem";
 
-export const setTodoListItemState = (newState) => {
-    if (functions.setState) {
-        functions.setState(newState);
-    }
-}
-
-let functions = {};
 
 export const TodoListItemComponent = (props) => {
-    const [state, setState] = useState();
-    functions.setState = setState;
-    return uiElement({...props, ...state});
+	return uiElement({...props});
 }
 
 

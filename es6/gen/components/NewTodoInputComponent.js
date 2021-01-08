@@ -17,9 +17,9 @@ export const setNewTodoInputState = (newState) => {
 let functions = {};
 
 export const NewTodoInputComponent = (props) => {
-    const [state, setState] = useState();
-    functions.setState = setState;
-    return uiElement({...props, ...state});
+	const [state, setState] = useState();
+	functions.setState = setState;
+	return uiElement({...props, ...state});
 }
 
 

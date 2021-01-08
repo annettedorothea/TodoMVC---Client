@@ -17,9 +17,9 @@ export const setTodosState = (newState) => {
 let functions = {};
 
 export const TodosComponent = (props) => {
-    const [state, setState] = useState();
-    functions.setState = setState;
-    return uiElement({...props, ...state});
+	const [state, setState] = useState();
+	functions.setState = setState;
+	return uiElement({...props, ...state});
 }
 
 

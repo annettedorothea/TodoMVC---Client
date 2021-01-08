@@ -91,7 +91,7 @@ export default class Utils {
             version: M[1]
         };
     }
-
+    
 }
 
 

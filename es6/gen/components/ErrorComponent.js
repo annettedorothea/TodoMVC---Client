@@ -17,9 +17,9 @@ export const setErrorState = (newState) => {
 let functions = {};
 
 export const ErrorComponent = (props) => {
-    const [state, setState] = useState();
-    functions.setState = setState;
-    return uiElement({...props, ...state});
+	const [state, setState] = useState();
+	functions.setState = setState;
+	return uiElement({...props, ...state});
 }
 
 

@@ -17,9 +17,9 @@ export const setFooterState = (newState) => {
 let functions = {};
 
 export const FooterComponent = (props) => {
-    const [state, setState] = useState();
-    functions.setState = setState;
-    return uiElement({...props, ...state});
+	const [state, setState] = useState();
+	functions.setState = setState;
+	return uiElement({...props, ...state});
 }
 
 

@@ -15,7 +15,6 @@ import {setNewTodoInputState} from "../components/NewTodoInputComponent";
 import {setSpinnerState} from "../components/SpinnerComponent";
 import {setErrorState} from "../components/ErrorComponent";
 import {setTodosState} from "../components/TodosComponent";
-import {setTodoListItemState} from "../components/todos/TodoListItemComponent";
 
 export function getAppState() {
 	return AppUtils.deepCopy(appState);
@@ -34,7 +33,9 @@ export function get_footer() {
 
 export function set_footer(eventData) {
 	appState.footer = eventData.footer;
+	const newAppState = getAppState();
 	setFooterState(AppUtils.deepCopy(appState.footer));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function merge_footer(eventData) {
@@ -44,7 +45,9 @@ export function merge_footer(eventData) {
 	if (eventData.categoryId !== undefined) {
 		appState.footer.categoryId = eventData.categoryId;
 	}
+	const newAppState = getAppState();
 	setFooterState(AppUtils.deepCopy(appState.footer));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_footer_categoryId() {
@@ -59,7 +62,9 @@ export function set_footer_categoryId(eventData) {
 		appState.footer = {};
 	}
 	appState.footer.categoryId = eventData.categoryId;
+	const newAppState = getAppState();
 	setFooterState(AppUtils.deepCopy(appState.footer));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_filter() {
@@ -68,7 +73,9 @@ export function get_filter() {
 
 export function set_filter(eventData) {
 	appState.filter = eventData.filter;
-	setContainerState(getAppState());
+	const newAppState = getAppState();
+	setContainerState(newAppState);
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_newTodoInput() {
@@ -80,7 +87,9 @@ export function get_newTodoInput() {
 
 export function set_newTodoInput(eventData) {
 	appState.newTodoInput = eventData.newTodoInput;
+	const newAppState = getAppState();
 	setNewTodoInputState(AppUtils.deepCopy(appState.newTodoInput));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function merge_newTodoInput(eventData) {
@@ -90,7 +99,9 @@ export function merge_newTodoInput(eventData) {
 	if (eventData.newTodo !== undefined) {
 		appState.newTodoInput.newTodo = eventData.newTodo;
 	}
+	const newAppState = getAppState();
 	setNewTodoInputState(AppUtils.deepCopy(appState.newTodoInput));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_newTodoInput_newTodo() {
@@ -105,7 +116,9 @@ export function set_newTodoInput_newTodo(eventData) {
 		appState.newTodoInput = {};
 	}
 	appState.newTodoInput.newTodo = eventData.newTodo;
+	const newAppState = getAppState();
 	setNewTodoInputState(AppUtils.deepCopy(appState.newTodoInput));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_spinner() {
@@ -117,7 +130,9 @@ export function get_spinner() {
 
 export function set_spinner(eventData) {
 	appState.spinner = eventData.spinner;
+	const newAppState = getAppState();
 	setSpinnerState(AppUtils.deepCopy(appState.spinner));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function merge_spinner(eventData) {
@@ -127,7 +142,9 @@ export function merge_spinner(eventData) {
 	if (eventData.loading !== undefined) {
 		appState.spinner.loading = eventData.loading;
 	}
+	const newAppState = getAppState();
 	setSpinnerState(AppUtils.deepCopy(appState.spinner));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_spinner_loading() {
@@ -142,7 +159,9 @@ export function set_spinner_loading(eventData) {
 		appState.spinner = {};
 	}
 	appState.spinner.loading = eventData.loading;
+	const newAppState = getAppState();
 	setSpinnerState(AppUtils.deepCopy(appState.spinner));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_error() {
@@ -154,7 +173,9 @@ export function get_error() {
 
 export function set_error(eventData) {
 	appState.error = eventData.error;
+	const newAppState = getAppState();
 	setErrorState(AppUtils.deepCopy(appState.error));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function merge_error(eventData) {
@@ -164,7 +185,9 @@ export function merge_error(eventData) {
 	if (eventData.errorMessage !== undefined) {
 		appState.error.errorMessage = eventData.errorMessage;
 	}
+	const newAppState = getAppState();
 	setErrorState(AppUtils.deepCopy(appState.error));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_error_errorMessage() {
@@ -179,7 +202,9 @@ export function set_error_errorMessage(eventData) {
 		appState.error = {};
 	}
 	appState.error.errorMessage = eventData.errorMessage;
+	const newAppState = getAppState();
 	setErrorState(AppUtils.deepCopy(appState.error));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_todos() {
@@ -191,7 +216,9 @@ export function get_todos() {
 
 export function set_todos(eventData) {
 	appState.todos = eventData.todos;
+	const newAppState = getAppState();
 	setTodosState(AppUtils.deepCopy(appState.todos));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function merge_todos(eventData) {
@@ -207,7 +234,9 @@ export function merge_todos(eventData) {
 	if (eventData.editedTodoId !== undefined) {
 		appState.todos.editedTodoId = eventData.editedTodoId;
 	}
+	const newAppState = getAppState();
 	setTodosState(AppUtils.deepCopy(appState.todos));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_todos_todoList() {
@@ -225,7 +254,9 @@ export function set_todos_todoList(eventData) {
 		appState.todos = {};
 	}
 	appState.todos.todoList = eventData.todoList;
+	const newAppState = getAppState();
 	setTodosState(AppUtils.deepCopy(appState.todos));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_todos_editedDescription() {
@@ -240,7 +271,9 @@ export function set_todos_editedDescription(eventData) {
 		appState.todos = {};
 	}
 	appState.todos.editedDescription = eventData.editedDescription;
+	const newAppState = getAppState();
 	setTodosState(AppUtils.deepCopy(appState.todos));
+	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_todos_editedTodoId() {
@@ -255,6 +288,8 @@ export function set_todos_editedTodoId(eventData) {
 		appState.todos = {};
 	}
 	appState.todos.editedTodoId = eventData.editedTodoId;
+	const newAppState = getAppState();
 	setTodosState(AppUtils.deepCopy(appState.todos));
+	AppUtils.stateUpdated(newAppState);
 }
 
