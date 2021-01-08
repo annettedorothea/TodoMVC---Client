@@ -1,5 +1,5 @@
 import AppUtils from './AppUtils';
-import {ContainerComponent, setState} from "../../gen/components/ContainerComponent";
+import {ContainerComponent} from "../../gen/components/ContainerComponent";
 import * as AppState from "../../gen/ace/AppState";
 
 import React from "react";
@@ -11,7 +11,7 @@ export { dumpAppState } from "./AppUtils";
 
 AppUtils.createInitialAppState();
 
-export const container = ReactDOM.render(
+ReactDOM.render(
     <ContainerComponent />,
     document.getElementById('root')
 );

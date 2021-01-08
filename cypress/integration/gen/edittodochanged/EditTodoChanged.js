@@ -69,15 +69,13 @@ context('EditTodoChanged', () => {
 		});
     })
 
-    it('editedTodoWasChanged ', () => {
+    it('editedDescriptionWasChanged ', () => {
     	
     	ScenarioUtils.getCypressFor(TodoActionIds.editedTodoChanged, [`EDIT 1st Item ${testId}`]).should(() => {
     		ScenarioUtils.wait(1, 0).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            expect(appState.todos, "editedTodoWasChanged").to.eql({ 
-	            	editedDescription : `EDIT 1st Item ${testId}`
-	            }
-	            )
+	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@7a09183b (name: todos) (list: false, hash: false, storage: false)
+	            expect(appState.todos.editedDescription, "editedDescriptionWasChanged").to.eql(`EDIT 1st Item ${testId}`)
     		})
         })
     })

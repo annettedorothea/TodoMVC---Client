@@ -46,7 +46,7 @@ export function uiElement(attributes) {
                 [
                     input(
                         {
-                            id: attributes.id,
+                            id: `checkbox_${attributes.id}`,
                             class: "toggle",
                             type: "checkbox",
                             checked: attributes.done,

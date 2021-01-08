@@ -64,7 +64,7 @@ context('InitAllWithOneOpenTodo', () => {
 		nonDeterministicValues.push(nonDeterministicValue);
 		AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=${testId}_toggle&system-time=${new Date('2020-10-10T15:58:37.000Z').toISOString()}`)
 		localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
-		ScenarioUtils.getCypressFor(TodoActionIds.toggleTodo, [`${testId}`]).should(() => {
+		ScenarioUtils.getCypressFor(TodoActionIds.toggleTodo, [`checkbox_${testId}`]).should(() => {
 		ScenarioUtils.wait(0, 4).should(() => {
 		});
 		});

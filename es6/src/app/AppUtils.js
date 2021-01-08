@@ -168,6 +168,12 @@ export default class AppUtils {
         return JSON.parse(JSON.stringify(object));
     }
 
+    static stateUpdated(appState) {
+        if (Utils.settings && Utils.settings.mode === "dev") {
+            localStorage.setItem("appState", JSON.stringify(appState));
+        }
+    }
+
 }
 
 /*       S.D.G.       */

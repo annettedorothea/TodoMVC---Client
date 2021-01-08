@@ -17,7 +17,8 @@ scenarios
 				}
 		THEN
 			expectedState 
-				editedTodoWasReset todo.todos shouldBe {}
+				editedTodoIdWasReset todo.todos.editedTodoId shouldBe null
+				editedDescriptionWasReset todo.todos.editedDescription shouldBe ""
 				todoWasUpdated todo.todos.todoList shouldBe [
 					{
 						categoryId: "category_${testId}",
@@ -36,5 +37,7 @@ scenarios
 						updatedDateTime: null
 					}
 				]
+
+
 
 

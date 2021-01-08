@@ -8,7 +8,7 @@ scenarios
 		GIVEN 
 			newtodokeypressed.CreateSecondTodo
 		WHEN
-			todo.ToggleTodo(id : "${testId}")
+			todo.ToggleTodo(id : "checkbox_${testId}")
 			nonDeterministicValues 
 				{
 					uuid "${testId}_toggle"
@@ -39,7 +39,7 @@ scenarios
 		GIVEN 
 			ToggleTodo
 		WHEN
-			todo.ToggleTodo(id : "${testId}")
+			todo.ToggleTodo(id : "checkbox_${testId}")
 			nonDeterministicValues 
 				{
 					uuid "${testId}_toggle2"

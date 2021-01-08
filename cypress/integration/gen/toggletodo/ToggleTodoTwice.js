@@ -63,7 +63,7 @@ context('ToggleTodoTwice', () => {
 		nonDeterministicValues.push(nonDeterministicValue);
 		AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=${testId}_toggle&system-time=${new Date('2020-10-10T15:58:37.000Z').toISOString()}`)
 		localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
-		ScenarioUtils.getCypressFor(TodoActionIds.toggleTodo, [`${testId}`]).should(() => {
+		ScenarioUtils.getCypressFor(TodoActionIds.toggleTodo, [`checkbox_${testId}`]).should(() => {
 		ScenarioUtils.wait(0, 4).should(() => {
 		});
 		});
@@ -93,10 +93,11 @@ context('ToggleTodoTwice', () => {
     	AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=${testId}_toggle2&system-time=${new Date('2020-10-10T15:59:37.000Z').toISOString()}`)
     	localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
     	
-    	ScenarioUtils.getCypressFor(TodoActionIds.toggleTodo, [`${testId}`]).should(() => {
+    	ScenarioUtils.getCypressFor(TodoActionIds.toggleTodo, [`checkbox_${testId}`]).should(() => {
     		ScenarioUtils.wait(0, 4).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            expect(appState.todoList, "todoWasSetToOpen").to.eql([
+	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@791220e2 (name: todos) (list: false, hash: false, storage: false)
+	            expect(appState.todos.todoList, "todoWasSetToOpen").to.eql([
 	            	{ 
 	            		categoryId : `category_${testId}`,
 	            		createdDateTime : `2020-10-10T14:48:37`,

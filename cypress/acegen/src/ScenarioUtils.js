@@ -29,7 +29,7 @@ export function getCypressFor(action, args) {
         return cy.get(".clear-completed").click()
     }
     if (TodoActionIds.editTodo === action) {
-        return cy.get(".todo-list").find(`#${args[0]}`).parent().parent().dblclick()
+        return cy.get(".todo-list").find(`#${args[0]}`).dblclick()
     }
     if (TodoActionIds.editedTodoChanged === action) {
         return cy.get('.edit').clear().type(args[0])

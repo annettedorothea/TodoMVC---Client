@@ -70,7 +70,8 @@ context('WhenAllAreOpenClearDone', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.clearDone, ).should(() => {
     		ScenarioUtils.wait(0, 4).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            expect(appState.todoList, "nothingWasDeleted").to.eql([
+	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@791220e2 (name: todos) (list: false, hash: false, storage: false)
+	            expect(appState.todos.todoList, "nothingWasDeleted").to.eql([
 	            	{ 
 	            		categoryId : `category_${testId}`,
 	            		createdDateTime : `2020-10-10T14:48:37`,

@@ -73,7 +73,7 @@ context('UpdateFirstTodo', () => {
 		});
     })
 
-    it('editedTodoWasReset todoWasUpdated ', () => {
+    it('editedTodoIdWasReset editedDescriptionWasReset todoWasUpdated ', () => {
 		let nonDeterministicValues;
 		let nonDeterministicValue;
     	nonDeterministicValues = JSON.parse(localStorage.getItem('nonDeterministicValues'));
@@ -94,9 +94,12 @@ context('UpdateFirstTodo', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.editedTodoKeyPressed, [13]).should(() => {
     		ScenarioUtils.wait(1, 4).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            expect(appState.todos, "editedTodoWasReset").to.eql({}
-	            )
-	            expect(appState.todoList, "todoWasUpdated").to.eql([
+	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@4616f24 (name: todos) (list: false, hash: false, storage: false)
+	            expect(appState.todos.editedTodoId, "editedTodoIdWasReset").to.eql(null)
+	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@4616f24 (name: todos) (list: false, hash: false, storage: false)
+	            expect(appState.todos.editedDescription, "editedDescriptionWasReset").to.eql(``)
+	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@4616f24 (name: todos) (list: false, hash: false, storage: false)
+	            expect(appState.todos.todoList, "todoWasUpdated").to.eql([
 	            	{ 
 	            		categoryId : `category_${testId}`,
 	            		createdDateTime : `2020-10-10T14:48:37`,

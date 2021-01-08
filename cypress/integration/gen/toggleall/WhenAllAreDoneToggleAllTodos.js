@@ -96,7 +96,8 @@ context('WhenAllAreDoneToggleAllTodos', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.toggleAll, ).should(() => {
     		ScenarioUtils.wait(0, 4).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            expect(appState.todoList, "allTodosWereSetToOpen").to.eql([
+	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@791220e2 (name: todos) (list: false, hash: false, storage: false)
+	            expect(appState.todos.todoList, "allTodosWereSetToOpen").to.eql([
 	            	{ 
 	            		categoryId : `category_${testId}`,
 	            		createdDateTime : `2020-10-10T14:48:37`,

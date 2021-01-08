@@ -68,7 +68,8 @@ context('CreateSecondTodo', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.newTodoKeyPressed, [13]).should(() => {
     		ScenarioUtils.wait(1, 4).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            expect(appState.todoList, "todoWasCreatedAndReturedInTodoList").to.eql([
+	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@791220e2 (name: todos) (list: false, hash: false, storage: false)
+	            expect(appState.todos.todoList, "todoWasCreatedAndReturedInTodoList").to.eql([
 	            	{ 
 	            		categoryId : `category_${testId}`,
 	            		createdDateTime : `2020-10-10T14:48:37`,
@@ -87,7 +88,8 @@ context('CreateSecondTodo', () => {
 	            	}
 	            ]
 	            )
-	            expect(appState.newTodo, "newTodoWasReset").to.eql(``)
+	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@62467878 (name: newTodoInput) (list: false, hash: false, storage: false)
+	            expect(appState.newTodoInput.newTodo, "newTodoWasReset").to.eql(``)
     		})
         })
     })

@@ -47,7 +47,7 @@ scenarios
 						updatedDateTime: null
 					}
 				]
-				
+
 	WhenAllAreDoneClearDone
 		GIVEN 
 			toggleall.ToggleAllTodos
@@ -55,4 +55,10 @@ scenarios
 			todo.ClearDone
 		THEN
 			expectedState 
-				allWereDeleted todo.todos.todoList shouldBe [ 	]
+				allWereDeleted todo.todos.todoList shouldBe []
+				
+	
+	
+				
+				
+				

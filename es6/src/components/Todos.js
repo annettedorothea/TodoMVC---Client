@@ -12,7 +12,6 @@ function filter(todo, filter) {
 }
 
 export function uiElement(attributes) {
-	console.log("uiElement", attributes);
 	return div(
 		{},
 		[
