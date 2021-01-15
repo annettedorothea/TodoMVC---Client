@@ -74,7 +74,6 @@ context('EditTodoChanged', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.editedTodoChanged, [`EDIT 1st Item ${testId}`]).should(() => {
     		ScenarioUtils.wait(1, 0).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@7a09183b (name: todos) (list: false, hash: false, storage: false)
 	            expect(appState.todos.editedDescription, "editedDescriptionWasChanged").to.eql(`EDIT 1st Item ${testId}`)
     		})
         })

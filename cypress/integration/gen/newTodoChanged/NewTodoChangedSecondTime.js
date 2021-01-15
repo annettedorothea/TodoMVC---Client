@@ -48,7 +48,6 @@ context('NewTodoChangedSecondTime', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.newTodoChanged, [`2nd Item ${testId}`]).should(() => {
     		ScenarioUtils.wait(1, 0).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@62467878 (name: newTodoInput) (list: false, hash: false, storage: false)
 	            expect(appState.newTodoInput.newTodo, "newTodoWasSet").to.eql(`2nd Item ${testId}`)
     		})
         })

@@ -70,7 +70,6 @@ context('DeleteTodo', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.deleteTodo, [`${testId}`]).should(() => {
     		ScenarioUtils.wait(0, 4).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@791220e2 (name: todos) (list: false, hash: false, storage: false)
 	            expect(appState.todos.todoList, "todoWasDeleted").to.eql([
 	            	{ 
 	            		categoryId : `category_${testId}`,

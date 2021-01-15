@@ -70,9 +70,7 @@ context('EditTodo', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.editTodo, [`${testId}`]).should(() => {
     		ScenarioUtils.wait(1, 0).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@128f3cbd (name: todos) (list: false, hash: false, storage: false)
 	            expect(appState.todos.editedTodoId, "editedTodoIdWasSet").to.eql(`${testId}`)
-	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@128f3cbd (name: todos) (list: false, hash: false, storage: false)
 	            expect(appState.todos.editedDescription, "editedDescriptionWasSet").to.eql(`1st Item ${testId}`)
     		})
         })

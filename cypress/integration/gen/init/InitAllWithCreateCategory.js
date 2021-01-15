@@ -22,11 +22,8 @@ context('InitAllWithCreateCategory', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.init, [`#/category_${testId}`]).should(() => {
     		ScenarioUtils.wait(1, 3).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            //de.acegen.aceGen.impl.HttpClientImpl@2f21f349 (react16_8: true, name: todo, uiPresent: true)
 	            expect(appState.filter, "filterWasSet").to.eql(`all`)
-	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@4a790e1f (name: footer) (list: false, hash: false, storage: false)
 	            expect(appState.footer.categoryId, "categoryWasSet").to.eql(`category_${testId}`)
-	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@791220e2 (name: todos) (list: false, hash: false, storage: false)
 	            expect(appState.todos.todoList, "emptyTodoListWasFetched").to.eql([
 	            ]
 	            )

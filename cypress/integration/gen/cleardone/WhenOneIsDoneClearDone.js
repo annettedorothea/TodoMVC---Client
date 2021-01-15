@@ -84,7 +84,6 @@ context('WhenOneIsDoneClearDone', () => {
     	ScenarioUtils.getCypressFor(TodoActionIds.clearDone, ).should(() => {
     		ScenarioUtils.wait(0, 4).should(() => {
 	            const appState = JSON.parse(localStorage.getItem('appState'))
-	            //de.acegen.aceGen.impl.SingleClientAttributeImpl@791220e2 (name: todos) (list: false, hash: false, storage: false)
 	            expect(appState.todos.todoList, "firstWasDeleted").to.eql([
 	            	{ 
 	            		categoryId : `category_${testId}`,
