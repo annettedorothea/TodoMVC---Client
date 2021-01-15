@@ -45,6 +45,9 @@ export function merge_footer(eventData) {
 	if (eventData.categoryId !== undefined) {
 		appState.footer.categoryId = eventData.categoryId;
 	}
+	if (eventData.itemCount !== undefined) {
+		appState.footer.itemCount = eventData.itemCount;
+	}
 	const newAppState = getAppState();
 	setFooterState(AppUtils.deepCopy(appState.footer));
 	AppUtils.stateUpdated(newAppState);
@@ -62,6 +65,23 @@ export function set_footer_categoryId(eventData) {
 		appState.footer = {};
 	}
 	appState.footer.categoryId = eventData.categoryId;
+	const newAppState = getAppState();
+	setFooterState(AppUtils.deepCopy(appState.footer));
+	AppUtils.stateUpdated(newAppState);
+}
+
+export function get_footer_itemCount() {
+	if (!appState.footer) {
+		return undefined;
+	}
+	return appState.footer.itemCount;
+}
+
+export function set_footer_itemCount(eventData) {
+	if (!appState.footer) {
+		appState.footer = {};
+	}
+	appState.footer.itemCount = eventData.itemCount;
 	const newAppState = getAppState();
 	setFooterState(AppUtils.deepCopy(appState.footer));
 	AppUtils.stateUpdated(newAppState);

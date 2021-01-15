@@ -19,7 +19,10 @@ ACE
 		fromAppState(footer.categoryId)
 			call com.anfelisa.todo.GetAllTodos  
 			loadingFlag spinner.loading 
-		on ok (set todos.todoList)
+		on ok (
+			set todos.todoList
+			set footer.itemCount
+		)
 		on categoryDoesNotExist triggers (CreateCategory)
 	
 	GetTodoListWithoutCategoryCheck 
@@ -111,6 +114,7 @@ ACE
 ui {
 	footer {
 		categoryId
+		itemCount
 	}
 	filter
 	newTodoInput {
