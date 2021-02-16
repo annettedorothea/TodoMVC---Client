@@ -3,17 +3,16 @@
  ********************************************************************************/
 
 
-import * as ActionIds from "../gen/todo/TodoActionIds"
 import * as TodoActionIds from "../gen/todo/TodoActionIds";
 
 export function getCypressFor(action, args) {
-    if (ActionIds.init === action) {
+    if (TodoActionIds.init === action) {
         return cy.visit(`http://127.0.0.1:9999/${args[0]}`)
     }
-    if (ActionIds.newTodoChanged === action) {
+    if (TodoActionIds.newTodoChanged === action) {
         return cy.get('#newTodoInput').type(args[0])
     }
-    if (ActionIds.newTodoKeyPressed === action) {
+    if (TodoActionIds.newTodoKeyPressed === action) {
         return cy.get('#newTodoInput').type(String.fromCharCode(args[0]))
     }
     if (TodoActionIds.toggleTodo === action) {
