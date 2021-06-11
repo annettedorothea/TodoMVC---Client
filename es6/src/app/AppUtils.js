@@ -176,5 +176,31 @@ export default class AppUtils {
 
 }
 
+// for Selenium tests
+export function getAppState() {
+    return AppState.getAppState();
+}
+
+export function addNonDeterministicValueClient(value) {
+    let nonDeterministicValues = JSON.parse(localStorage.getItem('nonDeterministicValues'));
+    if (!nonDeterministicValues) {
+        nonDeterministicValues = [];
+    }
+    nonDeterministicValues.push(JSON.parse(value));
+    localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
+}
+
+export function addNonDeterministicValueServer(uuid, key, value) {
+    if (key === "system-time") {
+        AppUtils.httpPut(`/api/test/non-deterministic/system-time?uuid=${uuid}&system-time=${value}`);
+    } else {
+        AppUtils.httpPut(`/api/test/non-deterministic/value?uuid=${uuid}&key=${key}&value=${value}`);
+    }
+}
+
+export function getValueFromLocalStorage(key) {
+    return localStorage.getItem(key);
+}
+
 /*       S.D.G.       */
 

@@ -11,7 +11,7 @@ scenarios
 			todo.EditTodo(id : "${testId}")
 		THEN
 			expectedState 
-				editedTodoIdWasSet todo.todos.editedTodoId shouldBe "${testId}"
-				editedDescriptionWasSet todo.todos.editedDescription shouldBe "1st Item ${testId}"
+				editedTodoIdWasSet todo.container.todos.editedTodoId shouldBe "${testId}"
+				editedDescriptionWasSet todo.container.todos.editedDescription shouldBe "1st Item ${testId}"
 
 

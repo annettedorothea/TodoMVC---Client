@@ -8,11 +8,15 @@ import Utils from "../../gen/ace/Utils";
 
 export * from "../../gen/ace/Timeline";
 export { dumpAppState } from "./AppUtils";
+export {getAppState} from "./AppUtils";
+export {addNonDeterministicValueClient} from "./AppUtils";
+export {addNonDeterministicValueServer} from "./AppUtils";
+export {getValueFromLocalStorage} from "./AppUtils";
 
 AppUtils.createInitialAppState();
 
 ReactDOM.render(
-    <ContainerComponent />,
+    <ContainerComponent {...AppState.getAppState()} />,
     document.getElementById('root')
 );
 
@@ -23,7 +27,6 @@ AppUtils.renderNewState = () => {
     if (Utils.settings && Utils.settings.mode === "dev") {
         localStorage.setItem("appState", JSON.stringify(AppState.getAppState()));
     }
-    //setState(AppState.getAppState());
 }
 
 /*       S.D.G.       */

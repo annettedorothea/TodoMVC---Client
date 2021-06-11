@@ -1,59 +1,59 @@
-HttpClient React_16.8
+HttpClient
 
 todo 
 
 ACE 
 	Init(hash)
 		on ok (
-			set filter 
-			set footer.categoryId
+			set container.filter 
+			set container.footer.categoryId
 		) triggers (GetTodoList)
 	
 	CreateCategory
-		fromAppState(footer.categoryId)
+		fromAppState(container.footer.categoryId)
 			call com.anfelisa.todo.CreateCategory
-			loadingFlag spinner.loading 
+			loadingFlag container.spinner.loading 
 		on ok triggers ( GetTodoListWithoutCategoryCheck )
 	
 	GetTodoList 
-		fromAppState(footer.categoryId)
+		fromAppState(container.footer.categoryId)
 			call com.anfelisa.todo.GetAllTodos  
-			loadingFlag spinner.loading 
+			loadingFlag container.spinner.loading 
 		on ok (
-			set todos.todoList
-			set footer.itemCount
+			set container.todos.todoList
+			set container.footer.itemCount
 		)
 		on categoryDoesNotExist triggers (CreateCategory)
 	
 	GetTodoListWithoutCategoryCheck 
-		fromAppState(footer.categoryId)
+		fromAppState(container.footer.categoryId)
 			call com.anfelisa.todo.GetAllTodos  
-			loadingFlag spinner.loading 
-		on ok (set todos.todoList)
+			loadingFlag container.spinner.loading 
+		on ok (set container.todos.todoList)
 	
 	NewTodoChanged (newTodo)
-		on ok (set newTodoInput.newTodo)
+		on ok (set container.newTodoInput.newTodo)
 	
 	NewTodoKeyPressed (charCode)
 		on enter triggers ( CreateTodo )
 		on notEnter
 	
 	CreateTodo
-		fromAppState(newTodoInput.newTodo as description, footer.categoryId)
+		fromAppState(container.newTodoInput.newTodo as description, container.footer.categoryId)
 			call com.anfelisa.todo.CreateTodo
-			loadingFlag spinner.loading 
-		on ok (set newTodoInput.newTodo) triggers ( GetTodoList)
+			loadingFlag container.spinner.loading 
+		on ok (set container.newTodoInput.newTodo) triggers ( GetTodoList)
 		on empty
 		
 	EditTodo (id)
-		fromAppState ( todos.todoList )
+		fromAppState ( container.todos.todoList )
 		on ok ( 
-			set todos.editedDescription 
-			set todos.editedTodoId 
+			set container.todos.editedDescription 
+			set container.todos.editedTodoId 
 		)
 	
 	EditedTodoChanged (editedDescription)
-		on ok ( set todos.editedDescription)
+		on ok ( set container.todos.editedDescription)
 	
 	EditedTodoKeyPressed (charCode)
 		on enter triggers ( UpdateTodo )
@@ -61,44 +61,44 @@ ACE
 	
 	UpdateTodo
 		fromAppState ( 
-			todos.editedTodoId as id, 
-			todos.editedDescription as description
+			container.todos.editedTodoId as id, 
+			container.todos.editedDescription as description
 		)
 			call com.anfelisa.todo.UpdateTodo
-			loadingFlag spinner.loading 
+			loadingFlag container.spinner.loading 
 		on ok (
-			set todos.editedDescription 
-			set todos.editedTodoId 
+			set container.todos.editedDescription 
+			set container.todos.editedTodoId 
 		) triggers (GetTodoList)
 		on empty (
-			set todos.editedDescription 
-			set todos.editedTodoId 
+			set container.todos.editedDescription 
+			set container.todos.editedTodoId 
 		)
 	
 	ToggleTodo (id)
 			call com.anfelisa.todo.ToggleTodo
-			loadingFlag spinner.loading 
+			loadingFlag container.spinner.loading 
 		on ok triggers (GetTodoList)
 	
 	ToggleAll 
-		fromAppState(footer.categoryId)
+		fromAppState(container.footer.categoryId)
 			call com.anfelisa.todo.ToggleAll 
-			loadingFlag spinner.loading 
+			loadingFlag container.spinner.loading 
 		on ok triggers (GetTodoList)
 	
 	DeleteTodo (id)
 			call com.anfelisa.todo.DeleteTodo 
-			loadingFlag spinner.loading 
+			loadingFlag container.spinner.loading 
 		on ok triggers (GetTodoList)
 	
 	ClearDone
-		fromAppState(footer.categoryId) 
+		fromAppState(container.footer.categoryId) 
 			call com.anfelisa.todo.ClearDone 
-			loadingFlag spinner.loading 
+			loadingFlag container.spinner.loading 
 		on ok triggers (GetTodoList)
 		
 	DisplayError (errorMessage)
-		on ok (set error.errorMessage)
+		on ok (set container.error.errorMessage)
 
 
 
@@ -111,7 +111,8 @@ ACE
 
 
 
-ui {
+
+ui React_16.8 container {
 	footer {
 		categoryId
 		itemCount

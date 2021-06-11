@@ -11,6 +11,6 @@ scenarios
 			todo.EditedTodoChanged(editedDescription : "EDIT 1st Item ${testId}")
 		THEN
 			expectedState 
-				editedDescriptionWasChanged todo.todos.editedDescription shouldBe "EDIT 1st Item ${testId}"
+				editedDescriptionWasChanged todo.container.todos.editedDescription shouldBe "EDIT 1st Item ${testId}"
 
 

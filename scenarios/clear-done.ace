@@ -11,7 +11,7 @@ scenarios
 			todo.ClearDone
 		THEN
 			expectedState 
-				nothingWasDeleted todo.todos.todoList shouldBe [
+				nothingWasDeleted todo.container.todos.todoList shouldBe [
 					{
 						categoryId: "category_${testId}",
 						createdDateTime: "2020-10-10T14:48:37",
@@ -37,7 +37,7 @@ scenarios
 			todo.ClearDone
 		THEN
 			expectedState 
-				firstWasDeleted todo.todos.todoList shouldBe [
+				firstWasDeleted todo.container.todos.todoList shouldBe [
 					{
 						categoryId: "category_${testId}",
 						createdDateTime: "2020-10-10T14:58:37",
@@ -55,7 +55,7 @@ scenarios
 			todo.ClearDone
 		THEN
 			expectedState 
-				allWereDeleted todo.todos.todoList shouldBe []
+				allWereDeleted todo.container.todos.todoList shouldBe []
 				
 	
 	
