@@ -9,7 +9,7 @@ scenarios
 			newtodokeypressed.CreateSecondTodo
 		WHEN
 			todo.ToggleAll
-			nonDeterministicValues 
+			squishyValues 
 				{
 					uuid "${testId}_toggle-all"
 					serverSystemTime "2020-10-10T16:58:37.000Z"
@@ -40,7 +40,7 @@ scenarios
 			toggletodo.ToggleTodo
 		WHEN
 			todo.ToggleAll
-			nonDeterministicValues 
+			squishyValues 
 				{
 					uuid "${testId}_toggle-all"
 					serverSystemTime "2020-10-10T17:58:37.000Z"
@@ -71,7 +71,7 @@ scenarios
 			ToggleAllTodos
 		WHEN
 			todo.ToggleAll
-			nonDeterministicValues 
+			squishyValues 
 				{
 					uuid "${testId}_toggle-all-2"
 					serverSystemTime "2020-10-10T17:58:37.000Z"

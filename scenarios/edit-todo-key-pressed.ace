@@ -9,7 +9,7 @@ scenarios
 			edittodochanged.EditTodoChanged
 		WHEN
 			todo.EditedTodoKeyPressed(charCode : 13)
-			nonDeterministicValues 
+			squishyValues 
 				{}, 
 				{
 					uuid "${testId}_update"

@@ -9,7 +9,7 @@ scenarios
 			newtodochanged.NewTodoChanged
 		WHEN
 			todo.NewTodoKeyPressed(charCode : 13)
-			nonDeterministicValues 
+			squishyValues 
 				{}, 
 				{
 					uuid "${testId}"
@@ -32,7 +32,7 @@ scenarios
 			newtodochanged.NewTodoChangedSecondTime
 		WHEN
 			todo.NewTodoKeyPressed(charCode : 13)
-			nonDeterministicValues 
+			squishyValues 
 				{}, 
 				{
 					uuid "${testId}_2"
