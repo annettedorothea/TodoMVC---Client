@@ -10,22 +10,25 @@ DSL and code generator.
 
 See [TodoMVC---Server](https://github.com/annettedorothea/TodoMVC---Server) for the server project.
 
-## Installation
+## Setup
 
-- Install npm on your system.
-- Create a settings.json file in the root directory of the project:
-```
-{
-  "aceScenariosApiKey": "336ace6-a52f-11e8-98d0-529269fb1489",
-  "aceScenariosBaseUrl": "https://acegen.de/",
-  "clientVersion": "<version>",
-  "rootPath": "<root path as configured in your dropwizard yml file of the server, e.g. api>",
-  "timelineSize": <timeline size, e.g. 32>
-}
-```
-- Run ```npm install```. 
-- Start the server with ```npm start```.
-- Install the [de.acegen](https://github.com/annettedorothea/de.acegen) Ecplise plugin from [http://acegen.de](http://acegen.de).
+- You need npm
+- Run ```npm install```
+- Start the client with ```npm start```
+
+## Run E2E tests
+
+- Start the [TodoMVC---Server](https://github.com/annettedorothea/TodoMVC---Server)
+- Start the client
+- Run ```npm test```
+
+## View with DSL
+
+- Get latest Ecplise
+- Install the [de.acegen](https://github.com/annettedorothea/de.acegen) Ecplise plugin from [http://acegen.de](http://acegen.de)
+- Create a project by choosing File - Import - Projects from Folder or Archive with the project root
+- Open [todo-client.ace](./todo-client.ace)
+
 
 ## Replay
 
