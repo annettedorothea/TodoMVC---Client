@@ -5,8 +5,8 @@
   "repository": "https://github.com/annettedorothea/TodoMVC---Client",
   "scripts": {
     "uglify": "uglifyjs lib/todo.0.7.0.js --compress --mangle --output lib/todo.0.7.0.min.js",
-    "build": "browserify --entry es6/src/app/App.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --outfile lib/todo.0.7.0.js --debug --standalone Todo",
-    "start": "watchify --entry es6/src/app/App.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --outfile lib/todo.0.7.0.js --debug --standalone Todo & live-server --watch=lib/todo.0.7.0.js --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'",
+    "build": "browserify --entry es6/gen/app/App.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --outfile lib/todo.0.7.0.js --debug --standalone Todo",
+    "start": "watchify --entry es6/gen/app/App.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --outfile lib/todo.0.7.0.js --debug --standalone Todo & live-server --watch=lib/todo.0.7.0.js --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'",
     "test": "jasmine"
   },
   "author": "Annette Pohl",

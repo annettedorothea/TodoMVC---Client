@@ -13,7 +13,7 @@ export default class GetTodoListWithoutCategoryCheckCommand extends AbstractGetT
     	return true;
     }
 
-    handleResponse(resolve, reject) {
+    handleResponse(resolve) {
         this.addOkOutcome();
     	resolve();
     }

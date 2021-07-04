@@ -6,7 +6,6 @@ export default class GetTodoListCommand extends AbstractGetTodoListCommand {
         if (!this.commandData.todoList) {
             this.addCategoryDoesNotExistOutcome()
         } else {
-            this.commandData.itemCount = this.commandData.todoList.filter((todo) => todo.done !== true).length;
             this.addOkOutcome();
         }
     	resolve();

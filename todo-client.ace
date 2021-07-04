@@ -2,6 +2,8 @@ HttpClient
 
 todo 
 
+
+
 ACE 
 	Init(hash)
 		on ok (
@@ -97,22 +99,10 @@ ACE
 			loadingFlag container.spinner.loading 
 		on ok triggers (GetTodoList)
 		
-	DisplayError (errorMessage)
-		on ok (set container.error.errorMessage)
 
 
 
-
-
-
-
-
-
-
-
-
-
-ui React_16.8 container {
+ui JSX container {
 	footer {
 		categoryId
 		itemCount
@@ -124,9 +114,6 @@ ui React_16.8 container {
 	spinner {
 		loading
 	}
-	error {
-		errorMessage
-	}
 	todos {
 		List todoList {
 			categoryId
@@ -136,6 +123,7 @@ ui React_16.8 container {
 			createdDateTime
 			updatedDateTime
 		}
+		itemCount
 		editedDescription
 		editedTodoId
 	}
