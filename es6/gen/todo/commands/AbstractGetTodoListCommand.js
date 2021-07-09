@@ -11,6 +11,7 @@ import * as Utils from "../../ace/Utils";
 import * as AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
 import GetTodoListOkEvent from "../../../gen/todo/events/GetTodoListOkEvent";
+import CalculateItemCountAction from "../../../src/todo/actions/CalculateItemCountAction";
 import CreateCategoryAction from "../../../src/todo/actions/CreateCategoryAction";
 
 export default class AbstractGetTodoListCommand extends AsynchronousCommand {
@@ -32,6 +33,7 @@ export default class AbstractGetTodoListCommand extends AsynchronousCommand {
 	    
 		if (this.commandData.outcomes.includes("ok")) {
 			promises.push(new GetTodoListOkEvent(this.commandData).publish());
+			promises.push(new TriggerAction(new CalculateItemCountAction()).publish());
 		}
 		if (this.commandData.outcomes.includes("categoryDoesNotExist")) {
 			promises.push(new TriggerAction(new CreateCategoryAction()).publish());

@@ -15,6 +15,7 @@ import EditTodoOkEvent from "./events/EditTodoOkEvent";
 import EditedTodoChangedOkEvent from "./events/EditedTodoChangedOkEvent";
 import UpdateTodoOkEvent from "./events/UpdateTodoOkEvent";
 import UpdateTodoEmptyEvent from "./events/UpdateTodoEmptyEvent";
+import CalculateItemCountOkEvent from "./events/CalculateItemCountOkEvent";
 
 export default class EventFactoryRegistrationTodo {
 
@@ -37,6 +38,8 @@ export default class EventFactoryRegistrationTodo {
 			(eventData) => new UpdateTodoOkEvent(eventData));
 		ACEController.registerFactory('todo.UpdateTodoEmptyEvent', 
 			(eventData) => new UpdateTodoEmptyEvent(eventData));
+		ACEController.registerFactory('todo.CalculateItemCountOkEvent', 
+			(eventData) => new CalculateItemCountOkEvent(eventData));
 	}
 
 }

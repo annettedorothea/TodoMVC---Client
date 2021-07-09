@@ -6,10 +6,12 @@
 
 
 import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
+import TriggerAction from "../../../gen/ace/TriggerAction";
 import * as Utils from "../../ace/Utils";
 import * as AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
 import GetTodoListWithoutCategoryCheckOkEvent from "../../../gen/todo/events/GetTodoListWithoutCategoryCheckOkEvent";
+import CalculateItemCountAction from "../../../src/todo/actions/CalculateItemCountAction";
 
 export default class AbstractGetTodoListWithoutCategoryCheckCommand extends AsynchronousCommand {
     constructor(commandData) {
@@ -27,6 +29,7 @@ export default class AbstractGetTodoListWithoutCategoryCheckCommand extends Asyn
 	    
 		if (this.commandData.outcomes.includes("ok")) {
 			promises.push(new GetTodoListWithoutCategoryCheckOkEvent(this.commandData).publish());
+			promises.push(new TriggerAction(new CalculateItemCountAction()).publish());
 		}
 		return Promise.all(promises);
     }

@@ -28,6 +28,8 @@ module.exports = {
 	
 	updateTodo : "todo_updateTodo",
 	
+	calculateItemCount : "todo_calculateItemCount",
+	
 	toggleTodo : "todo_toggleTodo",
 	
 	toggleAll : "todo_toggleAll",

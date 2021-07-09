@@ -14,7 +14,6 @@ export default class EventListenerRegistrationTodo {
 		ACEController.registerListener('todo.InitOkEvent', AppState.set_container_filter);
 		ACEController.registerListener('todo.InitOkEvent', AppState.set_container_footer_categoryId);
 		ACEController.registerListener('todo.GetTodoListOkEvent', AppState.set_container_todos_todoList);
-		ACEController.registerListener('todo.GetTodoListOkEvent', AppState.set_container_footer_itemCount);
 		ACEController.registerListener('todo.GetTodoListWithoutCategoryCheckOkEvent', AppState.set_container_todos_todoList);
 		ACEController.registerListener('todo.NewTodoChangedOkEvent', AppState.set_container_newTodoInput_newTodo);
 		ACEController.registerListener('todo.CreateTodoOkEvent', AppState.set_container_newTodoInput_newTodo);
@@ -25,6 +24,7 @@ export default class EventListenerRegistrationTodo {
 		ACEController.registerListener('todo.UpdateTodoOkEvent', AppState.set_container_todos_editedTodoId);
 		ACEController.registerListener('todo.UpdateTodoEmptyEvent', AppState.set_container_todos_editedDescription);
 		ACEController.registerListener('todo.UpdateTodoEmptyEvent', AppState.set_container_todos_editedTodoId);
+		ACEController.registerListener('todo.CalculateItemCountOkEvent', AppState.set_container_footer_itemCount);
 	}
 
 }

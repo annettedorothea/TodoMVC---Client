@@ -39,6 +39,10 @@ export function startReplay() {
 export function createInitialAppState() {
     const initialAppState = {
         container: {
+            footer: {
+                categoryId: "",
+                itemCount: 0
+            },
             filter: "all",
             newTodoInput: {
                 newTodo: "",
@@ -49,9 +53,6 @@ export function createInitialAppState() {
             todos: {
                 todoList: []
             },
-            error: {
-                errorMessage: null
-            }
         }
     };
     AppState.setInitialAppState(initialAppState);

@@ -252,9 +252,6 @@ export function merge_container_todos(eventData) {
 	if (eventData.todoList !== undefined) {
 		appState.container.todos.todoList = eventData.todoList;
 	}
-	if (eventData.itemCount !== undefined) {
-		appState.container.todos.itemCount = eventData.itemCount;
-	}
 	if (eventData.editedDescription !== undefined) {
 		appState.container.todos.editedDescription = eventData.editedDescription;
 	}
@@ -286,28 +283,6 @@ export function set_container_todos_todoList(eventData) {
 		appState.container.todos = {};
 	}
 	appState.container.todos.todoList = eventData.todoList;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
-}
-
-export function get_container_todos_itemCount() {
-	if (!appState.container) {
-		return undefined;
-	}
-	if (!appState.container.todos) {
-		return undefined;
-	}
-	return appState.container.todos.itemCount;
-}
-
-export function set_container_todos_itemCount(eventData) {
-	if (!appState.container) {
-		appState.container = {};
-	}
-	if (!appState.container.todos) {
-		appState.container.todos = {};
-	}
-	appState.container.todos.itemCount = eventData.itemCount;
 	const newAppState = getAppState();
 	AppUtils.stateUpdated(newAppState);
 }

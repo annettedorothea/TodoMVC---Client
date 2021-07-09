@@ -15,21 +15,12 @@ import { Todos } from "./container/Todos";
 import * as Utils from "../../gen/ace/Utils";
 import {toggleAll} from "../../gen/todo/ActionFunctions";
 
-export let setContainerState = (appState) => {
-	console.log("setContainerState", appState);
-};
+export let setContainerState;
 
 export const Container = (props) => {
 
-	console.log("props", props);
 	const [container, setContainer] = useState(props.container);
 	setContainerState = setContainer;
-
-	let itemCount = 0;
-	if (container.todos && container.todos.todoList && container.todos.todoList) {
-		itemCount = container.todos.todoList.filter(i => i.done === false).length;
-		console.log("itemCount", itemCount);
-	}
 
 	return <div>
 		<div className="learn-bar body">
@@ -103,7 +94,7 @@ export const Container = (props) => {
 					<Footer
 						categoryId={container.footer ? container.footer.categoryId: ""}
 						filter={container.filter}
-						itemCount={itemCount}
+						itemCount={container.footer.itemCount}
 					/>
 				</section>
 			</div>

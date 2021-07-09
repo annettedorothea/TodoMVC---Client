@@ -23,15 +23,16 @@ ACE
 			loadingFlag container.spinner.loading 
 		on ok (
 			set container.todos.todoList
-			set container.footer.itemCount
-		)
+		) triggers (CalculateItemCount)
 		on categoryDoesNotExist triggers (CreateCategory)
 	
 	GetTodoListWithoutCategoryCheck 
 		fromAppState(container.footer.categoryId)
 			call com.anfelisa.todo.GetAllTodos  
 			loadingFlag container.spinner.loading 
-		on ok (set container.todos.todoList)
+		on ok (
+			set container.todos.todoList
+		) triggers (CalculateItemCount)
 	
 	NewTodoChanged (newTodo)
 		on ok (set container.newTodoInput.newTodo)
@@ -76,6 +77,10 @@ ACE
 			set container.todos.editedDescription 
 			set container.todos.editedTodoId 
 		)
+		
+	CalculateItemCount
+		fromAppState (container.todos.todoList)
+		on ok (set container.footer.itemCount)
 	
 	ToggleTodo (id)
 			call com.anfelisa.todo.ToggleTodo
@@ -123,7 +128,6 @@ ui JSX container {
 			createdDateTime
 			updatedDateTime
 		}
-		itemCount
 		editedDescription
 		editedTodoId
 	}

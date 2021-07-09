@@ -16,6 +16,7 @@ import EditTodoAction from "../../src/todo/actions/EditTodoAction";
 import EditedTodoChangedAction from "../../src/todo/actions/EditedTodoChangedAction";
 import EditedTodoKeyPressedAction from "../../src/todo/actions/EditedTodoKeyPressedAction";
 import UpdateTodoAction from "../../src/todo/actions/UpdateTodoAction";
+import CalculateItemCountAction from "../../src/todo/actions/CalculateItemCountAction";
 import ToggleTodoAction from "../../src/todo/actions/ToggleTodoAction";
 import ToggleAllAction from "../../src/todo/actions/ToggleAllAction";
 import DeleteTodoAction from "../../src/todo/actions/DeleteTodoAction";
@@ -63,6 +64,10 @@ export function editedTodoKeyPressed(charCode) {
 
 export function updateTodo() {
     new UpdateTodoAction().apply();
+}
+
+export function calculateItemCount() {
+    new CalculateItemCountAction().apply();
 }
 
 export function toggleTodo(id) {
