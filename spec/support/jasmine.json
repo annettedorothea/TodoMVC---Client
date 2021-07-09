@@ -1,7 +1,7 @@
 {
   "spec_dir": "spec",
   "spec_files": [
-    "**/*.scenario.js"
+    "**/WhenAllAreDoneClearDone.scenario.js"
   ],
   "helpers": [
     "helpers/**/*.js"

@@ -6,56 +6,57 @@
 
 
 import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
+import Event from "../../../gen/ace/Event";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import * as Utils from "../../ace/Utils";
 import * as AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
-import CreateTodoOkEvent from "../../../gen/todo/events/CreateTodoOkEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractCreateTodoCommand extends AsynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.CreateTodoCommand");
-        this.commandData.description = AppState.get_container_newTodoInput_newTodo();
-        this.commandData.categoryId = AppState.get_container_footer_categoryId();
-        this.commandData.outcomes = [];
-    }
-
-	addOkOutcome() {
-		this.commandData.outcomes.push("ok");
-	}
-	addEmptyOutcome() {
-		this.commandData.outcomes.push("empty");
-	}
-
-    publishEvents() {
-		let promises = [];
-	    
-		if (this.commandData.outcomes.includes("ok")) {
-			promises.push(new CreateTodoOkEvent(this.commandData).publish());
-			promises.push(new TriggerAction(new GetTodoListAction()).publish());
-		}
-		return Promise.all(promises);
+    constructor() {
+        super("todo.CreateTodoCommand");
     }
     
-	execute() {
+    initCommandData(data) {
+        data.description = AppState.get_container_newTodoInput_newTodo();
+        data.categoryId = AppState.get_container_footer_categoryId();
+        data.outcomes = [];
+    }
+
+	addOkOutcome(data) {
+		data.outcomes.push("ok");
+	}
+	addEmptyOutcome(data) {
+		data.outcomes.push("empty");
+	}
+
+	execute(data) {
 	    return new Promise((resolve, reject) => {
 	    	let payload = {
-	    		description : this.commandData.description,
-	    		categoryId : this.commandData.categoryId
+	    		description : data.description,
+	    		categoryId : data.categoryId
 	    	};
-	
-			AppUtils.httpPost(`${Utils.settings.rootPath}/todos/create`, this.commandData.uuid, false, payload).then(() => {
-				this.handleResponse(resolve, reject);
-			}, (message) => {
-				this.commandData.message = message;
-				this.handleError(resolve, reject);
+			AppUtils.httpPost(`${Utils.settings.rootPath}/todos/create`, data.uuid, false, payload).then(() => {
+				this.handleResponse(data, resolve, reject);
+			}, (error) => {
+				data.error = error;
+				this.handleError(data, resolve, reject);
 			});
 	    });
 	}
 
-}
+    publishEvents(data) {
+		if (data.outcomes.includes("ok")) {
+			new Event('todo.CreateTodoOkEvent').publish(data);
+			new TriggerAction().publish(
+				new GetTodoListAction(), 
+				{}
+			)
+		}
+    }
 
+}
 
 
 

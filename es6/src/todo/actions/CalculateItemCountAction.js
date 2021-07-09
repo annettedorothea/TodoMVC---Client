@@ -10,7 +10,6 @@ import AbstractCalculateItemCountAction from "../../../gen/todo/actions/Abstract
 export default class CalculateItemCountAction extends AbstractCalculateItemCountAction {
 
     initActionData() {
-    	//add not replayable data to action data in order to freeze for replay (e.g. time or date)
     }
 
 }

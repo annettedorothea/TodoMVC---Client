@@ -10,12 +10,12 @@ import EditedTodoKeyPressedCommand from "../../../src/todo/commands/EditedTodoKe
 
 export default class AbstractEditedTodoKeyPressedAction extends Action {
 
-    constructor( charCode) {
-        super({charCode}, 'todo.EditedTodoKeyPressedAction');
+    constructor() {
+        super('todo.EditedTodoKeyPressedAction');
 	}
 		
 	getCommand() {
-		return new EditedTodoKeyPressedCommand(this.actionData);
+		return new EditedTodoKeyPressedCommand();
 	}
 
 

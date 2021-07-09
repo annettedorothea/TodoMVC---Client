@@ -12,12 +12,12 @@ import * as AppState from "../../ace/AppState";
 export default class AbstractClearDoneAction extends Action {
 
     constructor() {
-        super({}, 'todo.ClearDoneAction');
+        super('todo.ClearDoneAction');
 		this.postCall = this.postCall.bind(this);
 	}
 		
 	getCommand() {
-		return new ClearDoneCommand(this.actionData);
+		return new ClearDoneCommand();
 	}
 
 	preCall() {

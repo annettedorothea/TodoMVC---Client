@@ -10,21 +10,27 @@ import TriggerAction from "../../../gen/ace/TriggerAction";
 import UpdateTodoAction from "../../../src/todo/actions/UpdateTodoAction";
 
 export default class AbstractEditedTodoKeyPressedCommand extends SynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.EditedTodoKeyPressedCommand");
-        this.commandData.outcomes = [];
+    constructor() {
+        super("todo.EditedTodoKeyPressedCommand");
     }
 
-	addEnterOutcome() {
-		this.commandData.outcomes.push("enter");
+    initCommandData(data) {
+        data.outcomes = [];
+    }
+
+	addEnterOutcome(data) {
+		data.outcomes.push("enter");
 	}
-	addNotEnterOutcome() {
-		this.commandData.outcomes.push("notEnter");
+	addNotEnterOutcome(data) {
+		data.outcomes.push("notEnter");
 	}
 
-    publishEvents() {
-		if (this.commandData.outcomes.includes("enter")) {
-			new TriggerAction(new UpdateTodoAction()).publish();
+    publishEvents(data) {
+		if (data.outcomes.includes("enter")) {
+			new TriggerAction().publish(
+				new UpdateTodoAction(), 
+				{}
+			)
 		}
     }
 }

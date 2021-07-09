@@ -8,7 +8,6 @@ import * as Utils from "../../gen/ace/Utils";
 import React from "react";
 import ReactDOM from "react-dom";
 import EventListenerRegistrationTodo from "../../gen/todo/EventListenerRegistration";
-import EventFactoryRegistrationTodo from "../../gen/todo/EventFactoryRegistration";
 import {init} from "../../gen/todo/ActionFunctions";
 import {Container, setContainerState} from "../components/Container";
 
@@ -17,9 +16,8 @@ export function dumpAppState() {
 }
 
 
-export function initEventListenersAndFactories() {
+export function initEventListeners() {
     EventListenerRegistrationTodo.init();
-    EventFactoryRegistrationTodo.init();
 }
 
 export function startApp() {

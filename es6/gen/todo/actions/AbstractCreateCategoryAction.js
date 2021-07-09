@@ -12,12 +12,12 @@ import * as AppState from "../../ace/AppState";
 export default class AbstractCreateCategoryAction extends Action {
 
     constructor() {
-        super({}, 'todo.CreateCategoryAction');
+        super('todo.CreateCategoryAction');
 		this.postCall = this.postCall.bind(this);
 	}
 		
 	getCommand() {
-		return new CreateCategoryCommand(this.actionData);
+		return new CreateCategoryCommand();
 	}
 
 	preCall() {

@@ -6,60 +6,60 @@
 
 
 import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
+import Event from "../../../gen/ace/Event";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import * as Utils from "../../ace/Utils";
 import * as AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
-import UpdateTodoOkEvent from "../../../gen/todo/events/UpdateTodoOkEvent";
-import UpdateTodoEmptyEvent from "../../../gen/todo/events/UpdateTodoEmptyEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractUpdateTodoCommand extends AsynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.UpdateTodoCommand");
-        this.commandData.id = AppState.get_container_todos_editedTodoId();
-        this.commandData.description = AppState.get_container_todos_editedDescription();
-        this.commandData.outcomes = [];
-    }
-
-	addOkOutcome() {
-		this.commandData.outcomes.push("ok");
-	}
-	addEmptyOutcome() {
-		this.commandData.outcomes.push("empty");
-	}
-
-    publishEvents() {
-		let promises = [];
-	    
-		if (this.commandData.outcomes.includes("ok")) {
-			promises.push(new UpdateTodoOkEvent(this.commandData).publish());
-			promises.push(new TriggerAction(new GetTodoListAction()).publish());
-		}
-		if (this.commandData.outcomes.includes("empty")) {
-			promises.push(new UpdateTodoEmptyEvent(this.commandData).publish());
-		}
-		return Promise.all(promises);
+    constructor() {
+        super("todo.UpdateTodoCommand");
     }
     
-	execute() {
+    initCommandData(data) {
+        data.id = AppState.get_container_todos_editedTodoId();
+        data.description = AppState.get_container_todos_editedDescription();
+        data.outcomes = [];
+    }
+
+	addOkOutcome(data) {
+		data.outcomes.push("ok");
+	}
+	addEmptyOutcome(data) {
+		data.outcomes.push("empty");
+	}
+
+	execute(data) {
 	    return new Promise((resolve, reject) => {
 	    	let payload = {
-	    		id : this.commandData.id,
-	    		description : this.commandData.description
+	    		id : data.id,
+	    		description : data.description
 	    	};
-	
-			AppUtils.httpPut(`${Utils.settings.rootPath}/todos/update`, this.commandData.uuid, false, payload).then(() => {
-				this.handleResponse(resolve, reject);
-			}, (message) => {
-				this.commandData.message = message;
-				this.handleError(resolve, reject);
+			AppUtils.httpPut(`${Utils.settings.rootPath}/todos/update`, data.uuid, false, payload).then(() => {
+				this.handleResponse(data, resolve, reject);
+			}, (error) => {
+				data.error = error;
+				this.handleError(data, resolve, reject);
 			});
 	    });
 	}
 
-}
+    publishEvents(data) {
+		if (data.outcomes.includes("ok")) {
+			new Event('todo.UpdateTodoOkEvent').publish(data);
+			new TriggerAction().publish(
+				new GetTodoListAction(), 
+				{}
+			)
+		}
+		if (data.outcomes.includes("empty")) {
+			new Event('todo.UpdateTodoEmptyEvent').publish(data);
+		}
+    }
 
+}
 
 
 

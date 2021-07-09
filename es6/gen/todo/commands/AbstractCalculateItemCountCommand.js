@@ -6,23 +6,26 @@
 
 
 import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
+import Event from "../../../gen/ace/Event";
 import * as AppState from "../../ace/AppState";
-import CalculateItemCountOkEvent from "../../../gen/todo/events/CalculateItemCountOkEvent";
 
 export default class AbstractCalculateItemCountCommand extends SynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.CalculateItemCountCommand");
-        this.commandData.outcomes = [];
-        this.commandData.todoList = AppState.get_container_todos_todoList();
+    constructor() {
+        super("todo.CalculateItemCountCommand");
     }
 
-	addOkOutcome() {
-		this.commandData.outcomes.push("ok");
+    initCommandData(data) {
+        data.todoList = AppState.get_container_todos_todoList();
+        data.outcomes = [];
+    }
+
+	addOkOutcome(data) {
+		data.outcomes.push("ok");
 	}
 
-    publishEvents() {
-		if (this.commandData.outcomes.includes("ok")) {
-			new CalculateItemCountOkEvent(this.commandData).publish();
+    publishEvents(data) {
+		if (data.outcomes.includes("ok")) {
+			new Event('todo.CalculateItemCountOkEvent').publish(data);
 		}
     }
 }

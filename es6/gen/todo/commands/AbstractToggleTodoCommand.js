@@ -12,38 +12,39 @@ import * as AppUtils from "../../../src/app/AppUtils";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractToggleTodoCommand extends AsynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.ToggleTodoCommand");
-        this.commandData.outcomes = [];
-    }
-
-	addOkOutcome() {
-		this.commandData.outcomes.push("ok");
-	}
-
-    publishEvents() {
-		let promises = [];
-	    
-		if (this.commandData.outcomes.includes("ok")) {
-			promises.push(new TriggerAction(new GetTodoListAction()).publish());
-		}
-		return Promise.all(promises);
+    constructor() {
+        super("todo.ToggleTodoCommand");
     }
     
-	execute() {
+    initCommandData(data) {
+        data.outcomes = [];
+    }
+
+	addOkOutcome(data) {
+		data.outcomes.push("ok");
+	}
+
+	execute(data) {
 	    return new Promise((resolve, reject) => {
-	
-			AppUtils.httpPut(`${Utils.settings.rootPath}/todos/toggle?id=${this.commandData.id}`, this.commandData.uuid, false).then(() => {
-				this.handleResponse(resolve, reject);
-			}, (message) => {
-				this.commandData.message = message;
-				this.handleError(resolve, reject);
+			AppUtils.httpPut(`${Utils.settings.rootPath}/todos/toggle?id=${data.id}`, data.uuid, false).then(() => {
+				this.handleResponse(data, resolve, reject);
+			}, (error) => {
+				data.error = error;
+				this.handleError(data, resolve, reject);
 			});
 	    });
 	}
 
-}
+    publishEvents(data) {
+		if (data.outcomes.includes("ok")) {
+			new TriggerAction().publish(
+				new GetTodoListAction(), 
+				{}
+			)
+		}
+    }
 
+}
 
 
 

@@ -8,6 +8,7 @@
 
 import * as AppUtils from "../../src/app/AppUtils";
 import * as AppState from "../ace/AppState";
+import * as ACEController from "../ace/ACEController";
 
 export * from "../ace/Timeline";
 
@@ -16,9 +17,12 @@ export function dumpAppState() {
 }
 
 AppUtils.createInitialAppState();
-AppUtils.initEventListenersAndFactories();
-AppUtils.renderApp();
+ACEController.addItemToTimeLine({
+	appState: AppState.getAppState()
+});
+AppUtils.initEventListeners();
 AppUtils.startApp();
+AppUtils.renderApp();
 
 // for Selenium tests
 export function getAppState() {

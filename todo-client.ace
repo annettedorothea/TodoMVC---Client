@@ -4,6 +4,8 @@ todo
 
 
 
+
+
 ACE 
 	Init(hash)
 		on ok (
@@ -23,7 +25,7 @@ ACE
 			loadingFlag container.spinner.loading 
 		on ok (
 			set container.todos.todoList
-		) triggers (CalculateItemCount)
+		) triggers ( delayInMillis 100 CalculateItemCount) 
 		on categoryDoesNotExist triggers (CreateCategory)
 	
 	GetTodoListWithoutCategoryCheck 

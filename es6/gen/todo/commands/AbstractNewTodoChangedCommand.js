@@ -6,21 +6,24 @@
 
 
 import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
-import NewTodoChangedOkEvent from "../../../gen/todo/events/NewTodoChangedOkEvent";
+import Event from "../../../gen/ace/Event";
 
 export default class AbstractNewTodoChangedCommand extends SynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.NewTodoChangedCommand");
-        this.commandData.outcomes = [];
+    constructor() {
+        super("todo.NewTodoChangedCommand");
     }
 
-	addOkOutcome() {
-		this.commandData.outcomes.push("ok");
+    initCommandData(data) {
+        data.outcomes = [];
+    }
+
+	addOkOutcome(data) {
+		data.outcomes.push("ok");
 	}
 
-    publishEvents() {
-		if (this.commandData.outcomes.includes("ok")) {
-			new NewTodoChangedOkEvent(this.commandData).publish();
+    publishEvents(data) {
+		if (data.outcomes.includes("ok")) {
+			new Event('todo.NewTodoChangedOkEvent').publish(data);
 		}
     }
 }

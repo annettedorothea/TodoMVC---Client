@@ -10,12 +10,12 @@ import NewTodoKeyPressedCommand from "../../../src/todo/commands/NewTodoKeyPress
 
 export default class AbstractNewTodoKeyPressedAction extends Action {
 
-    constructor( charCode) {
-        super({charCode}, 'todo.NewTodoKeyPressedAction');
+    constructor() {
+        super('todo.NewTodoKeyPressedAction');
 	}
 		
 	getCommand() {
-		return new NewTodoKeyPressedCommand(this.actionData);
+		return new NewTodoKeyPressedCommand();
 	}
 
 

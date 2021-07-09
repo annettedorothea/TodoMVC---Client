@@ -12,38 +12,39 @@ import * as AppUtils from "../../../src/app/AppUtils";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractDeleteTodoCommand extends AsynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.DeleteTodoCommand");
-        this.commandData.outcomes = [];
-    }
-
-	addOkOutcome() {
-		this.commandData.outcomes.push("ok");
-	}
-
-    publishEvents() {
-		let promises = [];
-	    
-		if (this.commandData.outcomes.includes("ok")) {
-			promises.push(new TriggerAction(new GetTodoListAction()).publish());
-		}
-		return Promise.all(promises);
+    constructor() {
+        super("todo.DeleteTodoCommand");
     }
     
-	execute() {
+    initCommandData(data) {
+        data.outcomes = [];
+    }
+
+	addOkOutcome(data) {
+		data.outcomes.push("ok");
+	}
+
+	execute(data) {
 	    return new Promise((resolve, reject) => {
-	
-			AppUtils.httpDelete(`${Utils.settings.rootPath}/todos/delete?id=${this.commandData.id}`, this.commandData.uuid, false).then(() => {
-				this.handleResponse(resolve, reject);
-			}, (message) => {
-				this.commandData.message = message;
-				this.handleError(resolve, reject);
+			AppUtils.httpDelete(`${Utils.settings.rootPath}/todos/delete?id=${data.id}`, data.uuid, false).then(() => {
+				this.handleResponse(data, resolve, reject);
+			}, (error) => {
+				data.error = error;
+				this.handleError(data, resolve, reject);
 			});
 	    });
 	}
 
-}
+    publishEvents(data) {
+		if (data.outcomes.includes("ok")) {
+			new TriggerAction().publish(
+				new GetTodoListAction(), 
+				{}
+			)
+		}
+    }
 
+}
 
 
 

@@ -10,12 +10,12 @@ import EditTodoCommand from "../../../src/todo/commands/EditTodoCommand";
 
 export default class AbstractEditTodoAction extends Action {
 
-    constructor( id) {
-        super({id}, 'todo.EditTodoAction');
+    constructor() {
+        super('todo.EditTodoAction');
 	}
 		
 	getCommand() {
-		return new EditTodoCommand(this.actionData);
+		return new EditTodoCommand();
 	}
 
 

@@ -5,22 +5,29 @@
 
 
 
+
 import * as ACEController from "./ACEController";
 import Command from "./Command";
 
 export default class AsynchronousCommand extends Command {
-    executeCommand() {
-        ACEController.addItemToTimeLine({command: this});
+    executeCommand(data) {
+		this.initCommandData(data);
+        ACEController.addItemToTimeLine({
+			command: {
+				commandName: this.commandName,
+				data
+			}
+        });
         return new Promise((resolve, reject) => {
-			if (this.validateCommandData()) {
-			    this.execute().then(() => {
-			        this.publishEvents();
+			if (this.validateCommandData(data)) {
+			    this.execute(data).then((data) => {
+			        this.publishEvents(data);
 			        resolve();
 			    }, (error) => {
 			        reject(error);
 			    });
 			} else {
-		        this.publishEvents();
+		        this.publishEvents(data);
 				resolve();
 			}
         });

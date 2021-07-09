@@ -5,32 +5,34 @@
 
 
 
-import * as AppUtils from "../../src/app/AppUtils";
 import * as ACEController from "./ACEController";
 
 export default class Event {
-    constructor(eventData, eventName) {
+    constructor(eventName) {
         this.eventName = eventName;
-        this.eventData = AppUtils.deepCopy(eventData);
     }
 
-    publish() {
-		ACEController.addItemToTimeLine({event: this});
-        this.notifyListeners();
+    publish(data) {
+		ACEController.addItemToTimeLine({
+            event: {
+                eventName: this.eventName,
+                data
+            }});
+        this.notifyListeners(data);
     }
 
-    replay() {
-        this.notifyListeners();
+    replay(data) {
+        this.notifyListeners(data);
     }
 
-    notifyListeners() {
+    notifyListeners(data) {
         let i, listener;
         if (this.eventName !== undefined) {
             const listenersForEvent = ACEController.listeners[this.eventName];
             if (listenersForEvent !== undefined) {
                 for (i = 0; i < listenersForEvent.length; i += 1) {
                     listener = listenersForEvent[i];
-					listener(AppUtils.deepCopy(this.eventData));
+					listener(data);
                 }
             }
         }

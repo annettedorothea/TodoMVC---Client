@@ -5,48 +5,52 @@
 
 
 
+
 import * as ACEController from "./ACEController";
 import * as AppUtils from "../../src/app/AppUtils";
 import * as Utils from "./Utils";
+import * as AppState from "./AppState";
 
 export default class Action {
-    constructor(actionData, actionName) {
+
+    constructor(actionName) {
         this.actionName = actionName;
-        if (actionData === undefined) {
-            actionData = {};
-        }
-        this.actionData = AppUtils.deepCopy(actionData);
+    }
+
+    apply(data) {
+		ACEController.addItemToTimeLine({
+		    appState: AppState.getAppState()
+		});
+        ACEController.addItemToTimeLine({
+            action: {
+                actionName: this.actionName,
+                data
+            }
+        });
         if (Utils.settings.mode === "dev") {
-        	let nonDeterministicValues = JSON.parse(localStorage.getItem("nonDeterministicValues"));
-        	if (nonDeterministicValues) {
-        		const nonDeterministicValue = nonDeterministicValues.shift();
-        		if (nonDeterministicValue) {
-	        		this.actionData.uuid = nonDeterministicValue.uuid;
-	        		this.actionData.clientSystemTime = nonDeterministicValue.clientSystemTime;
-	        	}
-        		localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
-        	}
-        	if (!this.actionData.uuid) {
-        		this.actionData.uuid = AppUtils.createUUID();
-        	}
-        	if (!this.actionData.clientSystemTime) {
-				this.actionData.clientSystemTime = new Date();
-			}
-		} else {
-			this.actionData.uuid = AppUtils.createUUID();
-			this.actionData.clientSystemTime = new Date();
-		}
-    }
-
-    initActionData() {
-    }
-
-    getCommand() {
-        throw "no command defined for " + this.actionName;
-    }
-
-    apply() {
-        ACEController.addActionToQueue(this);
+            let nonDeterministicValues = JSON.parse(localStorage.getItem("nonDeterministicValues"));
+            if (nonDeterministicValues) {
+                const nonDeterministicValue = nonDeterministicValues.shift();
+                if (nonDeterministicValue) {
+                    data.uuid = nonDeterministicValue.uuid;
+                    data.clientSystemTime = nonDeterministicValue.clientSystemTime;
+                }
+                localStorage.setItem('nonDeterministicValues', JSON.stringify(nonDeterministicValues));
+            }
+            if (!data.uuid) {
+                data.uuid = AppUtils.createUUID();
+            }
+            if (!data.clientSystemTime) {
+                data.clientSystemTime = new Date();
+            }
+        } else {
+            data.uuid = AppUtils.createUUID();
+            data.clientSystemTime = new Date();
+        }
+        ACEController.addActionToQueue({
+            action: this,
+            data
+        });
     }
 }
 

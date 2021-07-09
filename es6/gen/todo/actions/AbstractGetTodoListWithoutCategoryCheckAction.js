@@ -12,12 +12,12 @@ import * as AppState from "../../ace/AppState";
 export default class AbstractGetTodoListWithoutCategoryCheckAction extends Action {
 
     constructor() {
-        super({}, 'todo.GetTodoListWithoutCategoryCheckAction');
+        super('todo.GetTodoListWithoutCategoryCheckAction');
 		this.postCall = this.postCall.bind(this);
 	}
 		
 	getCommand() {
-		return new GetTodoListWithoutCategoryCheckCommand(this.actionData);
+		return new GetTodoListWithoutCategoryCheckCommand();
 	}
 
 	preCall() {

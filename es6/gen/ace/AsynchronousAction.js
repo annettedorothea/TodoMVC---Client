@@ -5,38 +5,37 @@
 
 
 
-import * as ACEController from "./ACEController";
+
 import Action from "./Action";
 
 export default class AsynchronousAction extends Action {
 
-    constructor(actionData, actionName) {
-    	super(actionData, actionName);
-    	this.asynchronous = true;
+    constructor(actionName) {
+        super(actionName);
+        this.asynchronous = true;
     }
 
-    applyAction() {
+    applyAction(data) {
         return new Promise((resolve, reject) => {
-            ACEController.addItemToTimeLine({action: this});
-        	this.preCall();
-            this.initActionData();
+            this.preCall();
+            this.initActionData(data);
             let command = this.getCommand();
-            command.executeCommand().then(() => {
-			    this.postCall();
-			    resolve();
-			}, (error) => {
-			    this.postCall();
-			    reject(error);
-			});
+            command.executeCommand(data).then(() => {
+                this.postCall();
+                resolve();
+            }, (error) => {
+                this.postCall();
+                reject(error);
+            });
         });
     }
-    
+
     preCall() {
     }
-    
+
     postCall() {
     }
-    
+
 }
 
 

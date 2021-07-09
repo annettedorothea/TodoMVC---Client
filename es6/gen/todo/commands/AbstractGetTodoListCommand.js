@@ -6,56 +6,61 @@
 
 
 import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
+import Event from "../../../gen/ace/Event";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import * as Utils from "../../ace/Utils";
 import * as AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
-import GetTodoListOkEvent from "../../../gen/todo/events/GetTodoListOkEvent";
 import CalculateItemCountAction from "../../../src/todo/actions/CalculateItemCountAction";
 import CreateCategoryAction from "../../../src/todo/actions/CreateCategoryAction";
 
 export default class AbstractGetTodoListCommand extends AsynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.GetTodoListCommand");
-        this.commandData.categoryId = AppState.get_container_footer_categoryId();
-        this.commandData.outcomes = [];
-    }
-
-	addOkOutcome() {
-		this.commandData.outcomes.push("ok");
-	}
-	addCategoryDoesNotExistOutcome() {
-		this.commandData.outcomes.push("categoryDoesNotExist");
-	}
-
-    publishEvents() {
-		let promises = [];
-	    
-		if (this.commandData.outcomes.includes("ok")) {
-			promises.push(new GetTodoListOkEvent(this.commandData).publish());
-			promises.push(new TriggerAction(new CalculateItemCountAction()).publish());
-		}
-		if (this.commandData.outcomes.includes("categoryDoesNotExist")) {
-			promises.push(new TriggerAction(new CreateCategoryAction()).publish());
-		}
-		return Promise.all(promises);
+    constructor() {
+        super("todo.GetTodoListCommand");
     }
     
-	execute() {
+    initCommandData(data) {
+        data.categoryId = AppState.get_container_footer_categoryId();
+        data.outcomes = [];
+    }
+
+	addOkOutcome(data) {
+		data.outcomes.push("ok");
+	}
+	addCategoryDoesNotExistOutcome(data) {
+		data.outcomes.push("categoryDoesNotExist");
+	}
+
+	execute(data) {
 	    return new Promise((resolve, reject) => {
-	
-			AppUtils.httpGet(`${Utils.settings.rootPath}/todos/all?categoryId=${this.commandData.categoryId}`, this.commandData.uuid, false).then((data) => {
-				this.commandData.todoList = data.todoList;
-				this.handleResponse(resolve, reject);
-			}, (message) => {
-				this.commandData.message = message;
-				this.handleError(resolve, reject);
+			AppUtils.httpGet(`${Utils.settings.rootPath}/todos/all?categoryId=${data.categoryId}`, data.uuid, false).then((response) => {
+				data.todoList = response.todoList;
+				this.handleResponse(data, resolve, reject);
+			}, (error) => {
+				data.error = error;
+				this.handleError(data, resolve, reject);
 			});
 	    });
 	}
 
-}
+    publishEvents(data) {
+		if (data.outcomes.includes("ok")) {
+			new Event('todo.GetTodoListOkEvent').publish(data);
+			new TriggerAction().publishWithDelay(
+				new CalculateItemCountAction(), 
+				{},
+				100
+			)
+		}
+		if (data.outcomes.includes("categoryDoesNotExist")) {
+			new TriggerAction().publish(
+				new CreateCategoryAction(), 
+				{}
+			)
+		}
+    }
 
+}
 
 
 

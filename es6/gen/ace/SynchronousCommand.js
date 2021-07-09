@@ -9,10 +9,16 @@ import * as ACEController from "./ACEController";
 import Command from "./Command";
 
 export default class SynchronousCommand extends Command {
-    executeCommand() {
-		ACEController.addItemToTimeLine({command: this});
-	    this.execute();
-		this.publishEvents();
+    executeCommand(data) {
+		this.initCommandData(data);
+        ACEController.addItemToTimeLine({
+			command: {
+				commandName: this.commandName,
+				data
+			}
+        });
+	    this.execute(data);
+		this.publishEvents(data);
     }
 
 }

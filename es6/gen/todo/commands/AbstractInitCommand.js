@@ -6,24 +6,30 @@
 
 
 import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
+import Event from "../../../gen/ace/Event";
 import TriggerAction from "../../../gen/ace/TriggerAction";
-import InitOkEvent from "../../../gen/todo/events/InitOkEvent";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractInitCommand extends SynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.InitCommand");
-        this.commandData.outcomes = [];
+    constructor() {
+        super("todo.InitCommand");
     }
 
-	addOkOutcome() {
-		this.commandData.outcomes.push("ok");
+    initCommandData(data) {
+        data.outcomes = [];
+    }
+
+	addOkOutcome(data) {
+		data.outcomes.push("ok");
 	}
 
-    publishEvents() {
-		if (this.commandData.outcomes.includes("ok")) {
-			new InitOkEvent(this.commandData).publish();
-			new TriggerAction(new GetTodoListAction()).publish();
+    publishEvents(data) {
+		if (data.outcomes.includes("ok")) {
+			new Event('todo.InitOkEvent').publish(data);
+			new TriggerAction().publish(
+				new GetTodoListAction(), 
+				{}
+			)
 		}
     }
 }

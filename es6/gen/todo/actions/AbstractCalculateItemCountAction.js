@@ -11,11 +11,11 @@ import CalculateItemCountCommand from "../../../src/todo/commands/CalculateItemC
 export default class AbstractCalculateItemCountAction extends Action {
 
     constructor() {
-        super({}, 'todo.CalculateItemCountAction');
+        super('todo.CalculateItemCountAction');
 	}
 		
 	getCommand() {
-		return new CalculateItemCountCommand(this.actionData);
+		return new CalculateItemCountCommand();
 	}
 
 

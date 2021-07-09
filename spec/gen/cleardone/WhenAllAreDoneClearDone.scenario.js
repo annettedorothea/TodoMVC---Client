@@ -63,7 +63,7 @@ describe("cleardone.WhenAllAreDoneClearDone", function () {
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.toggleAll);
 
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.clearDone);
-		
+
 		appState = await ScenarioUtils.getAppState(driver);
     });
 
@@ -72,6 +72,7 @@ describe("cleardone.WhenAllAreDoneClearDone", function () {
     });
     
 	it("allWereDeleted", async () => {
+		console.log("appState", appState);
 		expect(appState.container.todos.todoList, "allWereDeleted").toEqual([
 		]
 		)

@@ -5,23 +5,22 @@
 
 
 
-import * as ACEController from "./ACEController";
 import Action from "./Action";
 
 export default class SynchronousAction extends Action {
 
-    constructor(actionData, actionName) {
-    	super(actionData, actionName);
+    constructor(actionName) {
+    	super(actionName);
     	this.asynchronous = false;
     }
 
-    applyAction() {
-	    ACEController.addItemToTimeLine({action: this});
-        this.initActionData();
+    applyAction(data) {
+        this.initActionData(data);
 	    let command = this.getCommand();
-	    command.executeCommand();
+	    command.executeCommand(data);
     }
 }
+
 
 
 

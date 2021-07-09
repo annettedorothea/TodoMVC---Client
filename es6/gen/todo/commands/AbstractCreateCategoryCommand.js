@@ -13,42 +13,43 @@ import * as AppState from "../../ace/AppState";
 import GetTodoListWithoutCategoryCheckAction from "../../../src/todo/actions/GetTodoListWithoutCategoryCheckAction";
 
 export default class AbstractCreateCategoryCommand extends AsynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.CreateCategoryCommand");
-        this.commandData.categoryId = AppState.get_container_footer_categoryId();
-        this.commandData.outcomes = [];
-    }
-
-	addOkOutcome() {
-		this.commandData.outcomes.push("ok");
-	}
-
-    publishEvents() {
-		let promises = [];
-	    
-		if (this.commandData.outcomes.includes("ok")) {
-			promises.push(new TriggerAction(new GetTodoListWithoutCategoryCheckAction()).publish());
-		}
-		return Promise.all(promises);
+    constructor() {
+        super("todo.CreateCategoryCommand");
     }
     
-	execute() {
+    initCommandData(data) {
+        data.categoryId = AppState.get_container_footer_categoryId();
+        data.outcomes = [];
+    }
+
+	addOkOutcome(data) {
+		data.outcomes.push("ok");
+	}
+
+	execute(data) {
 	    return new Promise((resolve, reject) => {
 	    	let payload = {
-	    		categoryId : this.commandData.categoryId
+	    		categoryId : data.categoryId
 	    	};
-	
-			AppUtils.httpPost(`${Utils.settings.rootPath}/category/create`, this.commandData.uuid, false, payload).then(() => {
-				this.handleResponse(resolve, reject);
-			}, (message) => {
-				this.commandData.message = message;
-				this.handleError(resolve, reject);
+			AppUtils.httpPost(`${Utils.settings.rootPath}/category/create`, data.uuid, false, payload).then(() => {
+				this.handleResponse(data, resolve, reject);
+			}, (error) => {
+				data.error = error;
+				this.handleError(data, resolve, reject);
 			});
 	    });
 	}
 
-}
+    publishEvents(data) {
+		if (data.outcomes.includes("ok")) {
+			new TriggerAction().publish(
+				new GetTodoListWithoutCategoryCheckAction(), 
+				{}
+			)
+		}
+    }
 
+}
 
 
 

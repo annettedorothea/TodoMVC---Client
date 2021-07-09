@@ -11,13 +11,13 @@ import * as AppState from "../../ace/AppState";
 
 export default class AbstractToggleTodoAction extends Action {
 
-    constructor( id) {
-        super({id}, 'todo.ToggleTodoAction');
+    constructor() {
+        super('todo.ToggleTodoAction');
 		this.postCall = this.postCall.bind(this);
 	}
 		
 	getCommand() {
-		return new ToggleTodoCommand(this.actionData);
+		return new ToggleTodoCommand();
 	}
 
 	preCall() {

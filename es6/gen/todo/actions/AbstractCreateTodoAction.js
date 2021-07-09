@@ -12,12 +12,12 @@ import * as AppState from "../../ace/AppState";
 export default class AbstractCreateTodoAction extends Action {
 
     constructor() {
-        super({}, 'todo.CreateTodoAction');
+        super('todo.CreateTodoAction');
 		this.postCall = this.postCall.bind(this);
 	}
 		
 	getCommand() {
-		return new CreateTodoCommand(this.actionData);
+		return new CreateTodoCommand();
 	}
 
 	preCall() {

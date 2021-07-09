@@ -8,9 +8,9 @@
 import AbstractCalculateItemCountCommand from "../../../gen/todo/commands/AbstractCalculateItemCountCommand";
 
 export default class CalculateItemCountCommand extends AbstractCalculateItemCountCommand {
-    execute() {
-        this.commandData.itemCount = this.commandData.todoList.filter(i => i.done === false).length;
-    	this.addOkOutcome();
+    execute(data) {
+        data.itemCount = data.todoList.filter(i => i.done === false).length;
+    	this.addOkOutcome(data);
     }
 }
 

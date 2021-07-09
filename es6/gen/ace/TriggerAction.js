@@ -5,53 +5,37 @@
 
 
 
-import Event from "./Event";
 import * as ACEController from "./ACEController";
 
-export default class TriggerAction extends Event {
-    constructor(action) {
-        super(action, 'TriggerAction');
-        this.eventData = action;
-    }
+export default class TriggerAction {
 
-	publish() {
-	    ACEController.addItemToTimeLine({event: this});
-	    this.notifyListeners();
+	publish(action, data) {
+		ACEController.addItemToTimeLine({
+            event: {
+                eventName: 'TriggerAction',
+                action: {
+                	actionName: action.actionName,
+                	data
+                }
+            }});
+        action.apply(data);
 	}
 	
-	publishWithDelay(delayInMillis) {
+	publishWithDelay(action, data, delayInMillis) {
     	setTimeout(() => {
-			ACEController.addItemToTimeLine({event: this});
-			this.notifyListeners();
+    		this.publish(action, data);
 		}, delayInMillis);
 	}
 
-	publishWithDelayTakeLatest(delayInMillis) {
-		const existingTimeout = ACEController.delayedActions[this.eventData.actionName];
+	publishWithDelayTakeLatest(action, data, delayInMillis) {
+		const existingTimeout = ACEController.delayedActions[action.actionName];
 		if (existingTimeout) {
 			clearTimeout(existingTimeout);
 		}
-		ACEController.delayedActions[this.eventData.actionName] = setTimeout(() => {
-			ACEController.delayedActions[this.eventData.actionName] = undefined;
-			ACEController.addItemToTimeLine({event: this});
-			this.notifyListeners();
+		ACEController.delayedActions[action.actionName] = setTimeout(() => {
+			ACEController.delayedActions[action.actionName] = undefined;
+    		this.publish(action, data);
 		}, delayInMillis);
-	}
-
-	replay() {
-	}
-	
-	notifyListeners() {
-		let i, listener;
-		if (this.eventName !== undefined) {
-			const listenersForEvent = ACEController.listeners[this.eventName];
-			if (listenersForEvent !== undefined) {
-				for (i = 0; i < listenersForEvent.length; i += 1) {
-					listener = listenersForEvent[i];
-					listener(this.eventData);
-				}
-			}
-		}
 	}
 
 }

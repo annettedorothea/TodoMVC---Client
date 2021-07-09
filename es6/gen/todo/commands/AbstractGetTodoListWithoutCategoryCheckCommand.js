@@ -6,49 +6,50 @@
 
 
 import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
+import Event from "../../../gen/ace/Event";
 import TriggerAction from "../../../gen/ace/TriggerAction";
 import * as Utils from "../../ace/Utils";
 import * as AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
-import GetTodoListWithoutCategoryCheckOkEvent from "../../../gen/todo/events/GetTodoListWithoutCategoryCheckOkEvent";
 import CalculateItemCountAction from "../../../src/todo/actions/CalculateItemCountAction";
 
 export default class AbstractGetTodoListWithoutCategoryCheckCommand extends AsynchronousCommand {
-    constructor(commandData) {
-        super(commandData, "todo.GetTodoListWithoutCategoryCheckCommand");
-        this.commandData.categoryId = AppState.get_container_footer_categoryId();
-        this.commandData.outcomes = [];
-    }
-
-	addOkOutcome() {
-		this.commandData.outcomes.push("ok");
-	}
-
-    publishEvents() {
-		let promises = [];
-	    
-		if (this.commandData.outcomes.includes("ok")) {
-			promises.push(new GetTodoListWithoutCategoryCheckOkEvent(this.commandData).publish());
-			promises.push(new TriggerAction(new CalculateItemCountAction()).publish());
-		}
-		return Promise.all(promises);
+    constructor() {
+        super("todo.GetTodoListWithoutCategoryCheckCommand");
     }
     
-	execute() {
+    initCommandData(data) {
+        data.categoryId = AppState.get_container_footer_categoryId();
+        data.outcomes = [];
+    }
+
+	addOkOutcome(data) {
+		data.outcomes.push("ok");
+	}
+
+	execute(data) {
 	    return new Promise((resolve, reject) => {
-	
-			AppUtils.httpGet(`${Utils.settings.rootPath}/todos/all?categoryId=${this.commandData.categoryId}`, this.commandData.uuid, false).then((data) => {
-				this.commandData.todoList = data.todoList;
-				this.handleResponse(resolve, reject);
-			}, (message) => {
-				this.commandData.message = message;
-				this.handleError(resolve, reject);
+			AppUtils.httpGet(`${Utils.settings.rootPath}/todos/all?categoryId=${data.categoryId}`, data.uuid, false).then((response) => {
+				data.todoList = response.todoList;
+				this.handleResponse(data, resolve, reject);
+			}, (error) => {
+				data.error = error;
+				this.handleError(data, resolve, reject);
 			});
 	    });
 	}
 
-}
+    publishEvents(data) {
+		if (data.outcomes.includes("ok")) {
+			new Event('todo.GetTodoListWithoutCategoryCheckOkEvent').publish(data);
+			new TriggerAction().publish(
+				new CalculateItemCountAction(), 
+				{}
+			)
+		}
+    }
 
+}
 
 
 

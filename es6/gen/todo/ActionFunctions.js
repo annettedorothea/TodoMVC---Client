@@ -23,67 +23,67 @@ import DeleteTodoAction from "../../src/todo/actions/DeleteTodoAction";
 import ClearDoneAction from "../../src/todo/actions/ClearDoneAction";
 
 export function init(hash) {
-    new InitAction(hash).apply();
+    new InitAction().apply({hash});
 }
 
 export function createCategory() {
-    new CreateCategoryAction().apply();
+    new CreateCategoryAction().apply({});
 }
 
 export function getTodoList() {
-    new GetTodoListAction().apply();
+    new GetTodoListAction().apply({});
 }
 
 export function getTodoListWithoutCategoryCheck() {
-    new GetTodoListWithoutCategoryCheckAction().apply();
+    new GetTodoListWithoutCategoryCheckAction().apply({});
 }
 
 export function newTodoChanged(newTodo) {
-    new NewTodoChangedAction(newTodo).apply();
+    new NewTodoChangedAction().apply({newTodo});
 }
 
 export function newTodoKeyPressed(charCode) {
-    new NewTodoKeyPressedAction(charCode).apply();
+    new NewTodoKeyPressedAction().apply({charCode});
 }
 
 export function createTodo() {
-    new CreateTodoAction().apply();
+    new CreateTodoAction().apply({});
 }
 
 export function editTodo(id) {
-    new EditTodoAction(id).apply();
+    new EditTodoAction().apply({id});
 }
 
 export function editedTodoChanged(editedDescription) {
-    new EditedTodoChangedAction(editedDescription).apply();
+    new EditedTodoChangedAction().apply({editedDescription});
 }
 
 export function editedTodoKeyPressed(charCode) {
-    new EditedTodoKeyPressedAction(charCode).apply();
+    new EditedTodoKeyPressedAction().apply({charCode});
 }
 
 export function updateTodo() {
-    new UpdateTodoAction().apply();
+    new UpdateTodoAction().apply({});
 }
 
 export function calculateItemCount() {
-    new CalculateItemCountAction().apply();
+    new CalculateItemCountAction().apply({});
 }
 
 export function toggleTodo(id) {
-    new ToggleTodoAction(id).apply();
+    new ToggleTodoAction().apply({id});
 }
 
 export function toggleAll() {
-    new ToggleAllAction().apply();
+    new ToggleAllAction().apply({});
 }
 
 export function deleteTodo(id) {
-    new DeleteTodoAction(id).apply();
+    new DeleteTodoAction().apply({id});
 }
 
 export function clearDone() {
-    new ClearDoneAction().apply();
+    new ClearDoneAction().apply({});
 }
 
 

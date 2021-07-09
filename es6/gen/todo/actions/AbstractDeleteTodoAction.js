@@ -11,13 +11,13 @@ import * as AppState from "../../ace/AppState";
 
 export default class AbstractDeleteTodoAction extends Action {
 
-    constructor( id) {
-        super({id}, 'todo.DeleteTodoAction');
+    constructor() {
+        super('todo.DeleteTodoAction');
 		this.postCall = this.postCall.bind(this);
 	}
 		
 	getCommand() {
-		return new DeleteTodoCommand(this.actionData);
+		return new DeleteTodoCommand();
 	}
 
 	preCall() {
