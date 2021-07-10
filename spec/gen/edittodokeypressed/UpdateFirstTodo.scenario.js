@@ -24,51 +24,51 @@ describe("edittodokeypressed.UpdateFirstTodo", function () {
     			    .build();
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}`]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`1st Item ${testId}`]);
-		await ScenarioUtils.addNonDeterministicValueClient(
+		await ScenarioUtils.addSquishyValueClient(
 			driver,
 			{
 				uuid: ``
 			}
 		);
-		await ScenarioUtils.addNonDeterministicValueClient(
+		await ScenarioUtils.addSquishyValueClient(
 			driver,
 			{
 				uuid: `${testId}`
 			}
 		);
-		await ScenarioUtils.addNonDeterministicValueServer(driver, `${testId}`, "system-time", new Date('2020-10-10T14:48:37.000Z').toISOString());
+		await ScenarioUtils.addSquishyValueServer(driver, `${testId}`, "system-time", new Date('2020-10-10T14:48:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`2nd Item ${testId}`]);
-		await ScenarioUtils.addNonDeterministicValueClient(
+		await ScenarioUtils.addSquishyValueClient(
 			driver,
 			{
 				uuid: ``
 			}
 		);
-		await ScenarioUtils.addNonDeterministicValueClient(
+		await ScenarioUtils.addSquishyValueClient(
 			driver,
 			{
 				uuid: `${testId}_2`
 			}
 		);
-		await ScenarioUtils.addNonDeterministicValueServer(driver, `${testId}_2`, "system-time", new Date('2020-10-10T14:58:37.000Z').toISOString());
+		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_2`, "system-time", new Date('2020-10-10T14:58:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.editTodo, [`${testId}`]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.editedTodoChanged, [`EDIT 1st Item ${testId}`]);
 
-		await ScenarioUtils.addNonDeterministicValueClient(
+		await ScenarioUtils.addSquishyValueClient(
 			driver,
 			{
 				uuid: ``
 			}
 		);
-		await ScenarioUtils.addNonDeterministicValueClient(
+		await ScenarioUtils.addSquishyValueClient(
 			driver,
 			{
 				uuid: `${testId}_update`
 			}
 		);
-		await ScenarioUtils.addNonDeterministicValueServer(driver, `${testId}_update`, "system-time", new Date('2020-10-10T15:48:37.000Z').toISOString());
+		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_update`, "system-time", new Date('2020-10-10T15:48:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.editedTodoKeyPressed, [13]);
 		
 		appState = await ScenarioUtils.getAppState(driver);

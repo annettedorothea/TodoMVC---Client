@@ -25,19 +25,19 @@ describe("newtodokeypressed.CreateFirstTodo", function () {
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}`]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`1st Item ${testId}`]);
 
-		await ScenarioUtils.addNonDeterministicValueClient(
+		await ScenarioUtils.addSquishyValueClient(
 			driver,
 			{
 				uuid: ``
 			}
 		);
-		await ScenarioUtils.addNonDeterministicValueClient(
+		await ScenarioUtils.addSquishyValueClient(
 			driver,
 			{
 				uuid: `${testId}`
 			}
 		);
-		await ScenarioUtils.addNonDeterministicValueServer(driver, `${testId}`, "system-time", new Date('2020-10-10T14:48:37.000Z').toISOString());
+		await ScenarioUtils.addSquishyValueServer(driver, `${testId}`, "system-time", new Date('2020-10-10T14:48:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		
 		appState = await ScenarioUtils.getAppState(driver);

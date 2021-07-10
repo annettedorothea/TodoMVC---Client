@@ -13,8 +13,6 @@ module.exports = {
     },
 
     invokeAction: async function (driver, action, args) {
-        console.log("invokeAction action", action);
-        console.log("invokeAction args", args);
         if (TodoActionIds.init === action) {
             await driver.get('http://127.0.0.1:9999/' + args[0]);
             await this.waitInMillis(500);
@@ -68,7 +66,6 @@ module.exports = {
     },
 
     getAppState: async function (driver) {
-        console.log("getAppState");
         return await driver.executeScript('return Todo.getAppState()');
     },
 
@@ -81,13 +78,13 @@ module.exports = {
         });
     },
 
-    addNonDeterministicValueClient: async function (driver, value) {
+    addSquishyValueClient: async function (driver, value) {
         const jsonValue = JSON.stringify(value);
-        await driver.executeScript(`Todo.addNonDeterministicValueClient('${jsonValue}')`);
+        await driver.executeScript(`Todo.addSquishyValueClient('${jsonValue}')`);
     },
 
-    addNonDeterministicValueServer: async function (driver, uuid, key, value) {
-        await driver.executeScript(`Todo.addNonDeterministicValueServer("${uuid}", "${key}", "${value}")`);
+    addSquishyValueServer: async function (driver, uuid, key, value) {
+        await driver.executeScript(`Todo.addSquishyValueServer("${uuid}", "${key}", "${value}")`);
     },
 
     defaultTimeout: 30 * 1000,

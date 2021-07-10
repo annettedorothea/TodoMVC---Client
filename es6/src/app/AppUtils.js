@@ -162,9 +162,6 @@ let container;
 
 export function stateUpdated(appState) {
     setContainerState(appState.container);
-    if (Utils.settings && Utils.settings.mode === "dev") {
-        localStorage.setItem("appState", JSON.stringify(appState));
-    }
 }
 
 export function renderApp() {
