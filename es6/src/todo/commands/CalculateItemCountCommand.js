@@ -11,6 +11,7 @@ export default class CalculateItemCountCommand extends AbstractCalculateItemCoun
     execute(data) {
         data.itemCount = data.todoList.filter(i => i.done === false).length;
     	this.addOkOutcome(data);
+    	return data;
     }
 }
 
