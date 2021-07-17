@@ -9,7 +9,8 @@ import AbstractUpdateTodoAction from "../../../gen/todo/actions/AbstractUpdateTo
 
 export default class UpdateTodoAction extends AbstractUpdateTodoAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

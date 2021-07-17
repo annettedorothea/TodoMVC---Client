@@ -5,9 +5,9 @@
 
 
 
-import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
-import Event from "../../../gen/ace/Event";
-import TriggerAction from "../../../gen/ace/TriggerAction";
+import AsynchronousCommand from "../../ace/AsynchronousCommand";
+import Event from "../../ace/Event";
+import TriggerAction from "../../ace/TriggerAction";
 import * as Utils from "../../ace/Utils";
 import * as AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
@@ -49,13 +49,16 @@ export default class AbstractUpdateTodoCommand extends AsynchronousCommand {
     publishEvents(data) {
 		if (data.outcomes.includes("ok")) {
 			new Event('todo.UpdateTodoOkEvent').publish(data);
+			AppUtils.stateUpdated(AppState.getAppState());
 			new TriggerAction().publish(
 				new GetTodoListAction(), 
-				{}
+					{
+					}
 			)
 		}
 		if (data.outcomes.includes("empty")) {
 			new Event('todo.UpdateTodoEmptyEvent').publish(data);
+			AppUtils.stateUpdated(AppState.getAppState());
 		}
     }
 

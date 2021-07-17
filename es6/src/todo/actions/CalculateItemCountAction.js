@@ -9,7 +9,8 @@ import AbstractCalculateItemCountAction from "../../../gen/todo/actions/Abstract
 
 export default class CalculateItemCountAction extends AbstractCalculateItemCountAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

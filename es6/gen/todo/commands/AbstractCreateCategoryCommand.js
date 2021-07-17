@@ -5,8 +5,8 @@
 
 
 
-import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
-import TriggerAction from "../../../gen/ace/TriggerAction";
+import AsynchronousCommand from "../../ace/AsynchronousCommand";
+import TriggerAction from "../../ace/TriggerAction";
 import * as Utils from "../../ace/Utils";
 import * as AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
@@ -44,7 +44,8 @@ export default class AbstractCreateCategoryCommand extends AsynchronousCommand {
 		if (data.outcomes.includes("ok")) {
 			new TriggerAction().publish(
 				new GetTodoListWithoutCategoryCheckAction(), 
-				{}
+					{
+					}
 			)
 		}
     }

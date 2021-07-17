@@ -9,7 +9,8 @@ import AbstractClearDoneAction from "../../../gen/todo/actions/AbstractClearDone
 
 export default class ClearDoneAction extends AbstractClearDoneAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

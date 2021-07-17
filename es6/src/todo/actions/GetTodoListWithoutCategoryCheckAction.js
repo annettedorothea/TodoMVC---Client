@@ -9,7 +9,8 @@ import AbstractGetTodoListWithoutCategoryCheckAction from "../../../gen/todo/act
 
 export default class GetTodoListWithoutCategoryCheckAction extends AbstractGetTodoListWithoutCategoryCheckAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

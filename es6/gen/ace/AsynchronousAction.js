@@ -18,7 +18,7 @@ export default class AsynchronousAction extends Action {
     applyAction(data) {
         return new Promise((resolve, reject) => {
             this.preCall();
-            this.initActionData(data);
+            data = this.initActionData(data);
             let command = this.getCommand();
             command.executeCommand(data).then(() => {
                 this.postCall();

@@ -9,7 +9,8 @@ import AbstractCreateCategoryAction from "../../../gen/todo/actions/AbstractCrea
 
 export default class CreateCategoryAction extends AbstractCreateCategoryAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

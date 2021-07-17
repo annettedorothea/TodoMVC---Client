@@ -8,6 +8,7 @@
 import Action from "../../ace/AsynchronousAction";
 import GetTodoListWithoutCategoryCheckCommand from "../../../src/todo/commands/GetTodoListWithoutCategoryCheckCommand";
 import * as AppState from "../../ace/AppState";
+import * as AppUtils from "../../../src/app/AppUtils";
 
 export default class AbstractGetTodoListWithoutCategoryCheckAction extends Action {
 
@@ -22,10 +23,12 @@ export default class AbstractGetTodoListWithoutCategoryCheckAction extends Actio
 
 	preCall() {
 		AppState.set_container_spinner_loading({loading: true});
+		AppUtils.stateUpdated(AppState.getAppState());
 	}
 	
 	postCall() {
 		AppState.set_container_spinner_loading({loading: false});
+		AppUtils.stateUpdated(AppState.getAppState());
 	}
 
 }

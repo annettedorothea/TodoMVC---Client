@@ -5,8 +5,10 @@
 
 
 
-import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
-import Event from "../../../gen/ace/Event";
+import SynchronousCommand from "../../ace/SynchronousCommand";
+import Event from "../../ace/Event";
+import * as AppUtils from "../../../src/app/AppUtils";
+import * as AppState from "../../ace/AppState";
 
 export default class AbstractNewTodoChangedCommand extends SynchronousCommand {
     constructor() {
@@ -24,6 +26,7 @@ export default class AbstractNewTodoChangedCommand extends SynchronousCommand {
     publishEvents(data) {
 		if (data.outcomes.includes("ok")) {
 			new Event('todo.NewTodoChangedOkEvent').publish(data);
+			AppUtils.stateUpdated(AppState.getAppState());
 		}
     }
 }

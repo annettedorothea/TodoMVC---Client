@@ -5,8 +5,8 @@
 
 
 
-import AsynchronousCommand from "../../../gen/ace/AsynchronousCommand";
-import TriggerAction from "../../../gen/ace/TriggerAction";
+import AsynchronousCommand from "../../ace/AsynchronousCommand";
+import TriggerAction from "../../ace/TriggerAction";
 import * as Utils from "../../ace/Utils";
 import * as AppUtils from "../../../src/app/AppUtils";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
@@ -39,7 +39,8 @@ export default class AbstractDeleteTodoCommand extends AsynchronousCommand {
 		if (data.outcomes.includes("ok")) {
 			new TriggerAction().publish(
 				new GetTodoListAction(), 
-				{}
+					{
+					}
 			)
 		}
     }

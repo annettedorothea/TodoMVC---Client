@@ -5,9 +5,11 @@
 
 
 
-import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
-import Event from "../../../gen/ace/Event";
-import TriggerAction from "../../../gen/ace/TriggerAction";
+import SynchronousCommand from "../../ace/SynchronousCommand";
+import Event from "../../ace/Event";
+import * as AppUtils from "../../../src/app/AppUtils";
+import TriggerAction from "../../ace/TriggerAction";
+import * as AppState from "../../ace/AppState";
 import GetTodoListAction from "../../../src/todo/actions/GetTodoListAction";
 
 export default class AbstractInitCommand extends SynchronousCommand {
@@ -26,9 +28,11 @@ export default class AbstractInitCommand extends SynchronousCommand {
     publishEvents(data) {
 		if (data.outcomes.includes("ok")) {
 			new Event('todo.InitOkEvent').publish(data);
+			AppUtils.stateUpdated(AppState.getAppState());
 			new TriggerAction().publish(
 				new GetTodoListAction(), 
-				{}
+					{
+					}
 			)
 		}
     }

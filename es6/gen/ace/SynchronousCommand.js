@@ -17,7 +17,7 @@ export default class SynchronousCommand extends Command {
 				data
 			}
         });
-	    this.execute(data);
+	    data = this.execute(data);
 		this.publishEvents(data);
     }
 

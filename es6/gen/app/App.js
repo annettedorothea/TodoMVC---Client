@@ -56,7 +56,7 @@ export function addSquishyValueServer(uuid, key, value) {
     })
 }
 
-export async function getValueFromLocalStorage(key) {
+export function getValueFromLocalStorage(key) {
     return localStorage.getItem(key);
 }
 

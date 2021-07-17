@@ -9,7 +9,8 @@ import AbstractEditedTodoChangedAction from "../../../gen/todo/actions/AbstractE
 
 export default class EditedTodoChangedAction extends AbstractEditedTodoChangedAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

@@ -9,7 +9,8 @@ import AbstractToggleTodoAction from "../../../gen/todo/actions/AbstractToggleTo
 
 export default class ToggleTodoAction extends AbstractToggleTodoAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

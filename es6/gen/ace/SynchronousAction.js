@@ -15,7 +15,7 @@ export default class SynchronousAction extends Action {
     }
 
     applyAction(data) {
-        this.initActionData(data);
+        data = this.initActionData(data);
 	    let command = this.getCommand();
 	    command.executeCommand(data);
     }

@@ -5,8 +5,8 @@
 
 
 
-import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
-import TriggerAction from "../../../gen/ace/TriggerAction";
+import SynchronousCommand from "../../ace/SynchronousCommand";
+import TriggerAction from "../../ace/TriggerAction";
 import CreateTodoAction from "../../../src/todo/actions/CreateTodoAction";
 
 export default class AbstractNewTodoKeyPressedCommand extends SynchronousCommand {
@@ -29,7 +29,8 @@ export default class AbstractNewTodoKeyPressedCommand extends SynchronousCommand
 		if (data.outcomes.includes("enter")) {
 			new TriggerAction().publish(
 				new CreateTodoAction(), 
-				{}
+					{
+					}
 			)
 		}
     }

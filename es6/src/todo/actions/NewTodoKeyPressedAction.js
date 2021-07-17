@@ -9,7 +9,8 @@ import AbstractNewTodoKeyPressedAction from "../../../gen/todo/actions/AbstractN
 
 export default class NewTodoKeyPressedAction extends AbstractNewTodoKeyPressedAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

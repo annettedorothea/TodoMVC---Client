@@ -8,6 +8,7 @@
 import Action from "../../ace/AsynchronousAction";
 import ToggleTodoCommand from "../../../src/todo/commands/ToggleTodoCommand";
 import * as AppState from "../../ace/AppState";
+import * as AppUtils from "../../../src/app/AppUtils";
 
 export default class AbstractToggleTodoAction extends Action {
 
@@ -22,10 +23,12 @@ export default class AbstractToggleTodoAction extends Action {
 
 	preCall() {
 		AppState.set_container_spinner_loading({loading: true});
+		AppUtils.stateUpdated(AppState.getAppState());
 	}
 	
 	postCall() {
 		AppState.set_container_spinner_loading({loading: false});
+		AppUtils.stateUpdated(AppState.getAppState());
 	}
 
 }

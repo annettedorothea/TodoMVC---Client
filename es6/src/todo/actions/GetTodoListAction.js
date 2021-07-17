@@ -9,7 +9,8 @@ import AbstractGetTodoListAction from "../../../gen/todo/actions/AbstractGetTodo
 
 export default class GetTodoListAction extends AbstractGetTodoListAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

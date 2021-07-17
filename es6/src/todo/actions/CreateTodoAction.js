@@ -9,7 +9,8 @@ import AbstractCreateTodoAction from "../../../gen/todo/actions/AbstractCreateTo
 
 export default class CreateTodoAction extends AbstractCreateTodoAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

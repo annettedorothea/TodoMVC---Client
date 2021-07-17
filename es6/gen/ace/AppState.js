@@ -32,8 +32,6 @@ export function set_container_footer(eventData) {
 		appState.container = {};
 	}
 	appState.container.footer = eventData.footer;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function merge_container_footer(eventData) {
@@ -49,8 +47,6 @@ export function merge_container_footer(eventData) {
 	if (eventData.itemCount !== undefined) {
 		appState.container.footer.itemCount = eventData.itemCount;
 	}
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_footer_categoryId() {
@@ -71,8 +67,6 @@ export function set_container_footer_categoryId(eventData) {
 		appState.container.footer = {};
 	}
 	appState.container.footer.categoryId = eventData.categoryId;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_footer_itemCount() {
@@ -93,8 +87,6 @@ export function set_container_footer_itemCount(eventData) {
 		appState.container.footer = {};
 	}
 	appState.container.footer.itemCount = eventData.itemCount;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_filter() {
@@ -109,8 +101,6 @@ export function set_container_filter(eventData) {
 		appState.container = {};
 	}
 	appState.container.filter = eventData.filter;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_newTodoInput() {
@@ -128,8 +118,6 @@ export function set_container_newTodoInput(eventData) {
 		appState.container = {};
 	}
 	appState.container.newTodoInput = eventData.newTodoInput;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function merge_container_newTodoInput(eventData) {
@@ -142,8 +130,6 @@ export function merge_container_newTodoInput(eventData) {
 	if (eventData.newTodo !== undefined) {
 		appState.container.newTodoInput.newTodo = eventData.newTodo;
 	}
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_newTodoInput_newTodo() {
@@ -164,8 +150,6 @@ export function set_container_newTodoInput_newTodo(eventData) {
 		appState.container.newTodoInput = {};
 	}
 	appState.container.newTodoInput.newTodo = eventData.newTodo;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_spinner() {
@@ -183,8 +167,6 @@ export function set_container_spinner(eventData) {
 		appState.container = {};
 	}
 	appState.container.spinner = eventData.spinner;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function merge_container_spinner(eventData) {
@@ -197,8 +179,6 @@ export function merge_container_spinner(eventData) {
 	if (eventData.loading !== undefined) {
 		appState.container.spinner.loading = eventData.loading;
 	}
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_spinner_loading() {
@@ -219,8 +199,6 @@ export function set_container_spinner_loading(eventData) {
 		appState.container.spinner = {};
 	}
 	appState.container.spinner.loading = eventData.loading;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_todos() {
@@ -238,8 +216,6 @@ export function set_container_todos(eventData) {
 		appState.container = {};
 	}
 	appState.container.todos = eventData.todos;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function merge_container_todos(eventData) {
@@ -258,8 +234,6 @@ export function merge_container_todos(eventData) {
 	if (eventData.editedTodoId !== undefined) {
 		appState.container.todos.editedTodoId = eventData.editedTodoId;
 	}
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_todos_todoList() {
@@ -283,8 +257,6 @@ export function set_container_todos_todoList(eventData) {
 		appState.container.todos = {};
 	}
 	appState.container.todos.todoList = eventData.todoList;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_todos_editedDescription() {
@@ -305,8 +277,6 @@ export function set_container_todos_editedDescription(eventData) {
 		appState.container.todos = {};
 	}
 	appState.container.todos.editedDescription = eventData.editedDescription;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 
 export function get_container_todos_editedTodoId() {
@@ -327,7 +297,5 @@ export function set_container_todos_editedTodoId(eventData) {
 		appState.container.todos = {};
 	}
 	appState.container.todos.editedTodoId = eventData.editedTodoId;
-	const newAppState = getAppState();
-	AppUtils.stateUpdated(newAppState);
 }
 

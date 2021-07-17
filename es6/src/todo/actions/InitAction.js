@@ -9,7 +9,8 @@ import AbstractInitAction from "../../../gen/todo/actions/AbstractInitAction";
 
 export default class InitAction extends AbstractInitAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }

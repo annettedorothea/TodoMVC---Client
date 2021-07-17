@@ -5,8 +5,9 @@
 
 
 
-import SynchronousCommand from "../../../gen/ace/SynchronousCommand";
-import Event from "../../../gen/ace/Event";
+import SynchronousCommand from "../../ace/SynchronousCommand";
+import Event from "../../ace/Event";
+import * as AppUtils from "../../../src/app/AppUtils";
 import * as AppState from "../../ace/AppState";
 
 export default class AbstractCalculateItemCountCommand extends SynchronousCommand {
@@ -26,6 +27,7 @@ export default class AbstractCalculateItemCountCommand extends SynchronousComman
     publishEvents(data) {
 		if (data.outcomes.includes("ok")) {
 			new Event('todo.CalculateItemCountOkEvent').publish(data);
+			AppUtils.stateUpdated(AppState.getAppState());
 		}
     }
 }

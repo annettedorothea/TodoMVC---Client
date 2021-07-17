@@ -9,7 +9,8 @@ import AbstractEditTodoAction from "../../../gen/todo/actions/AbstractEditTodoAc
 
 export default class EditTodoAction extends AbstractEditTodoAction {
 
-    initActionData() {
+    initActionData(data) {
+    	return data;
     }
 
 }
