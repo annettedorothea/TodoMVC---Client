@@ -14,6 +14,7 @@ See [TodoMVC---Server](https://github.com/annettedorothea/TodoMVC---Server) for 
 
 - You need npm
 - Run ```npm install```
+- Build the client with ```npm build```
 - Start the client with ```npm start```
 
 ## Run E2E tests
