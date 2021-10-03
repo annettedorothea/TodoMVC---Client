@@ -14,7 +14,6 @@ import * as R from 'ramda'
 let appState = {};
 
 export function get(path) {
-    console.log("appState", appState);
     const lens = R.lensPath(path);
     return R.view(lens, appState);
 }
