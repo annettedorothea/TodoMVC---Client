@@ -17,7 +17,7 @@ scenarios
 				}
 		THEN
 			expectedState 
-				todoWasCreatedAndReturedInTodoList todo.container.todos.todoList shouldBe [{
+				todoWasCreatedAndReturedInTodoList todo.container.todos.todoList should be [{
 					categoryId: "category_${testId}",
 					createdDateTime: "2020-10-10T14:48:37",
 					description: "1st Item ${testId}",
@@ -25,7 +25,7 @@ scenarios
 					id: "${testId}",
 					updatedDateTime: null
 				}]
-				newTodoWasReset todo.container.newTodoInput.newTodo shouldBe ""
+				newTodoWasReset todo.container.newTodoInput.newTodo should be ""
 
 	CreateSecondTodo
 		GIVEN 
@@ -40,7 +40,7 @@ scenarios
 				}
 		THEN
 			expectedState 
-				todoWasCreatedAndReturedInTodoList todo.container.todos.todoList shouldBe [
+				todoWasCreatedAndReturedInTodoList todo.container.todos.todoList should be [
 					{
 						categoryId: "category_${testId}",
 						createdDateTime: "2020-10-10T14:48:37",
@@ -58,7 +58,7 @@ scenarios
 						updatedDateTime: null
 					}
 				]
-				newTodoWasReset todo.container.newTodoInput.newTodo shouldBe ""
+				newTodoWasReset todo.container.newTodoInput.newTodo should be ""
 				
 				
 				

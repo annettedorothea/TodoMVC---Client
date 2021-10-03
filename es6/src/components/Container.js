@@ -22,6 +22,10 @@ export const Container = (props) => {
 	const [container, setContainer] = useState(props.container);
 	setContainerState = setContainer;
 
+	if (!container) {
+		return null;
+	}
+
 	return <div>
 		<div className="learn-bar body">
 			<aside className="learn">

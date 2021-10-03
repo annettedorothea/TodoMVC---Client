@@ -4,34 +4,103 @@
 
 
 import * as AppState from "../../gen/ace/AppState";
-import * as Utils from "../../gen/ace/Utils";
 import React from "react";
 import ReactDOM from "react-dom";
 import EventListenerRegistrationTodo from "../../gen/todo/EventListenerRegistration";
 import {init} from "../../gen/todo/ActionFunctions";
 import {Container, setContainerState} from "../components/Container";
+import * as R from 'ramda'
 
-export function dumpAppState() {
-    console.info(AppState.getAppState());
+let appState = {};
+
+export function get(path) {
+    console.log("appState", appState);
+    const lens = R.lensPath(path);
+    return R.view(lens, appState);
 }
 
-
-export function initEventListeners() {
-    EventListenerRegistrationTodo.init();
+export function getHash() {
+    return location.hash;
 }
 
-export function startApp() {
-    window.onhashchange = () => {
-        init(window.location.hash.substring(1));
-    };
-    Utils.loadSettings().then(() => {
-        init(window.location.hash.substring(1));
-    });
+export function getStorage(path) {
+    return localStorage.getItem(R.last(path));
 }
 
-export function startReplay() {
-    window.onhashchange = () => {
-    };
+function normalizeData(data, path, attributes) {
+    const value = data[R.last(path)];
+    if (!value) {
+        return value;
+    }
+    if (attributes) {
+        return R.pick(attributes, data[R.last(path)]);
+    } else {
+        return data[R.last(path)]
+    }
+}
+
+function verifyGroups(groupVerifications) {
+    if (!groupVerifications) {
+        return true;
+    }
+    for(let i=0; i<groupVerifications.length; i++) {
+        const groupVerification = groupVerifications[i];
+        const groupInAppState = get(groupVerification.path)
+        if (groupInAppState && groupInAppState.group !== groupVerification.group) {
+            return false;
+        }
+    }
+    return true;
+}
+
+export function set(data, path, groupVerifications, attributes) {
+    if (verifyGroups(groupVerifications) === false) {
+        return;
+    }
+    const normalizedData = normalizeData(data, path, attributes);
+    const lens = R.lensPath(path);
+    appState = R.set(lens, normalizedData, appState);
+}
+
+export function setHash(data, path) {
+    location.hash = data[R.last(path)];
+}
+
+export function setStorage(data, path) {
+    const lastParam = R.last(path);
+    if (data[lastParam]) {
+        localStorage.setItem(lastParam, data[lastParam]);
+    } else {
+        localStorage.removeItem(lastParam);
+    }
+}
+
+export function merge(data, path, groupVerifications, attributes) {
+    if (verifyGroups(groupVerifications) === false) {
+        return;
+    }
+    if (attributes) {
+        const lens = R.lensPath(path);
+        const appStateValue = R.view(lens, appState);
+        const normalizedData = normalizeData(data, path, attributes);
+        const mergedData = R.mergeDeepRight(appStateValue, normalizedData);
+        appState = R.set(lens, mergedData, appState);
+    } else {
+        set(data, path, attributes);
+    }
+}
+
+export function mergeHash(data, path) {
+    if (data[R.last(path)]) {
+        location.hash = data[R.last(path)];
+    }
+}
+
+export function mergeStorage(data, path) {
+    const lastParam = R.last(path);
+    if (data[lastParam]) {
+        localStorage.setItem(lastParam, data[lastParam]);
+    }
 }
 
 export function createInitialAppState() {
@@ -53,7 +122,61 @@ export function createInitialAppState() {
             },
         }
     };
-    AppState.setInitialAppState(initialAppState);
+}
+
+export function setInitialAppState(initialAppState) {
+    appState = initialAppState;
+}
+
+
+export let settings;
+
+function loadSettings() {
+    return httpGet("settings.json").then((loadedSettings) => {
+        settings = loadedSettings;
+        if (!settings.clientVersion) {
+            settings.clientVersion = "";
+        }
+        if (!settings.aceScenariosApiKey) {
+            settings.aceScenariosApiKey = "";
+        }
+        if (!settings.aceScenariosBaseUrl) {
+            settings.aceScenariosBaseUrl = "";
+        }
+        if (!settings.rootPath) {
+            settings.rootPath = "";
+        }
+        if (!settings.timelineSize) {
+            settings.timelineSize = 0;
+        }
+        if (!settings.mode) {
+            settings.mode = "live";
+        }
+        if (settings.rootPath.startsWith("/")) {
+            settings.rootPath = settings.rootPath.substring(1);
+        }
+        if (settings.rootPath.endsWith("/")) {
+            settings.rootPath = settings.rootPath.substring(0, settings.rootPath.length - 1);
+        }
+    });
+}
+
+export function initEventListeners() {
+    EventListenerRegistrationTodo.init();
+}
+
+export function startApp() {
+    window.onhashchange = () => {
+        init(window.location.hash.substring(1));
+    };
+    loadSettings().then(() => {
+        init(window.location.hash.substring(1));
+    });
+}
+
+export function startReplay() {
+    window.onhashchange = () => {
+    };
 }
 
 function createHeaders(authorize) {
@@ -155,18 +278,16 @@ export function displayUnexpectedError(error) {
 }
 
 export function deepCopy(object) {
-    return JSON.parse(JSON.stringify(object));
+    return R.clone(object);
 }
 
-let container;
-
-export function stateUpdated(appState) {
+export function stateUpdated() {
     setContainerState(appState.container);
 }
 
 export function renderApp() {
-    container = <Container {...AppState.getAppState()} />;
-    container = ReactDOM.render(
+    let container = <Container {...AppState.getAppState()} />;
+    ReactDOM.render(
         container,
         document.getElementById('root')
     );

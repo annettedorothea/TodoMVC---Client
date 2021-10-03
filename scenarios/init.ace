@@ -9,9 +9,9 @@ scenarios
 			todo.Init(hash: "#/category_${testId}")
 		THEN
 			expectedState 
-				filterWasSet todo.container.filter shouldBe "all"
-				categoryWasSet todo.container.footer.categoryId shouldBe "category_${testId}"
-				emptyTodoListWasFetched todo.container.todos.todoList shouldBe []
+				filterWasSet todo.container.filter should be "all"
+				categoryWasSet todo.container.footer.categoryId should be "category_${testId}"
+				emptyTodoListWasFetched todo.container.todos.todoList should be []
 			
 	InitOpenFilter
 		GIVEN 
@@ -20,27 +20,27 @@ scenarios
 			todo.Init(hash: "#/category_${testId}/open")
 		THEN
 			expectedState 
-				filterWasSet todo.container.filter shouldBe "open"
-				categoryWasSet todo.container.footer.categoryId shouldBe "category_${testId}"
-				emptyTodoListWasFetched todo.container.todos.todoList shouldBe []
+				filterWasSet todo.container.filter should be "open"
+				categoryWasSet todo.container.footer.categoryId should be "category_${testId}"
+				emptyTodoListWasFetched todo.container.todos.todoList should be []
 			
 	InitOpenFilterWithCreateCategory 
 		WHEN 
 			todo.Init(hash: "#/category_${testId}/open")
 		THEN
 			expectedState 
-				filterWasSet todo.container.filter shouldBe "open"
-				categoryWasSet todo.container.footer.categoryId shouldBe "category_${testId}"
-				emptyTodoListWasFetched todo.container.todos.todoList shouldBe []
+				filterWasSet todo.container.filter should be "open"
+				categoryWasSet todo.container.footer.categoryId should be "category_${testId}"
+				emptyTodoListWasFetched todo.container.todos.todoList should be []
 			
 	InitDoneFilterWithCreateCategory 
 		WHEN 
 			todo.Init(hash: "#/category_${testId}/done")
 		THEN
 			expectedState 
-				filterWasSet todo.container.filter shouldBe "done"
-				categoryWasSet todo.container.footer.categoryId shouldBe "category_${testId}"
-				emptyTodoListWasFetched todo.container.todos.todoList shouldBe []
+				filterWasSet todo.container.filter should be "done"
+				categoryWasSet todo.container.footer.categoryId should be "category_${testId}"
+				emptyTodoListWasFetched todo.container.todos.todoList should be []
 				
 	InitAllWithoutCreateCategory
 		GIVEN 
@@ -49,9 +49,9 @@ scenarios
 			todo.Init(hash: "#/category_${testId}")
 		THEN
 			expectedState 
-				filterWasSet todo.container.filter shouldBe "all"
-				categoryWasSet todo.container.footer.categoryId shouldBe "category_${testId}"
-				emptyTodoListWasFetched todo.container.todos.todoList shouldBe []
+				filterWasSet todo.container.filter should be "all"
+				categoryWasSet todo.container.footer.categoryId should be "category_${testId}"
+				emptyTodoListWasFetched todo.container.todos.todoList should be []
 				
 				
 	InitAllWithTwoOpenTodos
