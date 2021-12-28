@@ -7,6 +7,9 @@ const {By, until} = require('selenium-webdriver');
 
 const TodoActionIds = require("../gen/actionIds/todo/TodoActionIds");
 
+const browserParam = process.env.SELENIUM_BROWSER;
+const browser = browserParam ? browserParam : "chrome"
+
 module.exports = {
     tearDown: async function (driver) {
         await driver.quit();
@@ -14,7 +17,7 @@ module.exports = {
 
     invokeAction: async function (driver, action, args) {
         if (TodoActionIds.init === action) {
-            await driver.get('http://127.0.0.1:9999/' + args[0]);
+            await driver.get('http://127.0.0.1:8080/' + args[0]);
             await this.waitInMillis(500);
         }
         if (TodoActionIds.newTodoChanged === action) {
@@ -89,7 +92,7 @@ module.exports = {
 
     defaultTimeout: 30 * 1000,
 
-    browserName: "firefox"
+    browserName: browser
     //browserName: "chrome"
     //browserName: "safari" // execute: safaridriver --enable
 
@@ -97,8 +100,25 @@ module.exports = {
 
 async function waitClearSendKeys(driver, id, value) {
     await driver.wait(until.elementLocated(By.id(id)), 5000);
-    await driver.findElement(By.id(id)).clear();
-    await driver.findElement(By.id(id)).sendKeys(value);
+    const element = await driver.findElement(By.id(id));
+    if (value.length === 0) {
+        let text = await element.getAttribute("value")
+        while(text.length > 0) {
+            await driver.findElement(By.id(id)).sendKeys(Key.BACK_SPACE);
+            text = await element.getAttribute("value")
+        }
+    } else {
+        const element = await driver.findElement(By.id(id));
+        await element.clear();
+        if (browser === "firefox") {
+            const valueAsString = value.toString();
+            for (let i=0; i<valueAsString.length; i++) {
+                await element.sendKeys(valueAsString.charAt(i));
+            }
+        } else {
+            await element.sendKeys(value);
+        }
+    }
 }
 
 async function click(driver, css) {

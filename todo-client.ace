@@ -11,6 +11,7 @@ ACE
 		on ok (
 			set container.filter 
 			set container.footer.categoryId
+			set container.newTodoInput.newTodo
 		) triggers (GetTodoList)
 	
 	CreateCategory
@@ -80,9 +81,15 @@ ACE
 			set container.todos.editedTodoId 
 		)
 		
+
+
+
+
 	CalculateItemCount
 		fromAppState (container.todos.todoList)
-		on ok (set container.footer.itemCount)
+		on ok (
+			set container.footer.itemCount
+		)
 	
 	ToggleTodo (id)
 			call com.anfelisa.todo.ToggleTodo

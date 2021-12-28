@@ -1,13 +1,15 @@
 {
   "name": "todo",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "",
   "repository": "https://github.com/annettedorothea/TodoMVC---Client",
   "scripts": {
-    "uglify": "uglifyjs lib/todo.0.8.0.js --compress --mangle --output lib/todo.0.8.0.min.js",
-    "build": "browserify --entry es6/src/index.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --outfile lib/todo.0.8.0.js --debug --standalone Todo",
-    "start": "watchify --entry es6/src/index.js --transform [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --outfile lib/todo.0.8.0.js --debug --standalone Todo & live-server --watch=lib/todo.0.8.0.js --host=127.0.0.1 --port=9999 --proxy='/api/':'http://localhost:8096/api/' --proxy='/replay/':'http://localhost:8098/replay/' --browser='Google Chrome'",
-    "test": "jasmine"
+    "test": "jasmine",
+    "test-firefox": "jasmine SELENIUM_BROWSER=firefox",
+    "test-chrome": "jasmine SELENIUM_BROWSER=chrome",
+    "test-safari": "jasmine SELENIUM_BROWSER=safari",
+    "start": "webpack serve --config ./webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "author": "Annette Pohl",
   "license": "ISC",
@@ -18,17 +20,19 @@
     "react-dom": "^16.14.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/preset-react": "^7.12.10",
-    "babelify": "^10.0.0",
-    "browserify": "^16.5.2",
-    "chromedriver": "^93.0.1",
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-react": "^7.14.5",
+    "acorn": "^8.5.0",
+    "babel-loader": "^8.2.3",
+    "chromedriver": "^96.0.0",
     "geckodriver": "^2.0.0",
     "jasmine": "^3.7.0",
-    "live-server": "^1.2.1",
+    "react-hot-loader": "^4.13.0",
     "selenium-webdriver": "^4.0.0-beta.3",
-    "uglify-js": "^3.12.4",
-    "watchify": "^3.11.1"
+    "webpack": "^5.59.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.3.1",
+    "webpack-merge": "^5.8.0"
   }
 }

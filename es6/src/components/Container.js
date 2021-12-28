@@ -12,7 +12,7 @@ import { NewTodoInput } from "./container/NewTodoInput";
 import { Spinner } from "./container/Spinner";
 import { Todos } from "./container/Todos";
 
-import * as Utils from "../../gen/ace/Utils";
+import * as AppUtils from "../AppUtils";
 import {toggleAll} from "../../gen/todo/ActionFunctions";
 
 export let setContainerState;
@@ -70,7 +70,7 @@ export const Container = (props) => {
 							<li>Todo.dumpTimeline()</li>
 							<li>Todo.dumpAppState()</li>
 							You can view all saved timelines on <a
-							href={`${Utils.settings ? Utils.settings.aceScenariosBaseUrl : ""}#/${Utils.settings ? Utils.settings.aceScenariosApiKey : ""}`}
+							href={`${AppUtils.settings ? AppUtils.settings.aceScenariosBaseUrl : ""}#/${AppUtils.settings ? AppUtils.settings.aceScenariosApiKey : ""}`}
 							target="acegen"
 						>acegen.de</a>.
 						</ul>

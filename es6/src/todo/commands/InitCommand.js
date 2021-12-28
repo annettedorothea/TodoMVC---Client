@@ -23,6 +23,7 @@ export default class InitCommand extends AbstractInitCommand {
                     data.filter = 'done';
                 }
             }
+            data.newTodo = "";
         }
     	this.addOkOutcome(data);
     	return data;
