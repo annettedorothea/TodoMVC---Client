@@ -27,13 +27,14 @@ See [TodoMVC---Server](https://github.com/annettedorothea/TodoMVC---Server) for 
 
 - Get latest Ecplise
 - Install the [de.acegen](https://github.com/annettedorothea/de.acegen) Ecplise plugin from [http://acegen.de](http://acegen.de)
-- Create a project by choosing File - Import - Projects from Folder or Archive with the project root
+- Create a project by choosing File - Import - Projects from Folder or Archive with the project root for this and the [server project](https://github.com/annettedorothea/TodoMVC---Server)
+- add the server project as referenced project in the build path (right click the client project and choose Build Path)
 - Open [todo-client.ace](./todo-client.ace)
 
 
 ## Replay
 
-These functions can be executed from JavaScript console:
+These functions can be executed from JavaScript console (even [here](https://todo.acegen.de/#) without installing anything):
 
 - Todo.saveTimeline("&lt;description&gt;", "&lt;your name&gt;")
 - Todo.replayTimeline("&lt;id&gt;", &lt;pauseInMillis (default is 0)&gt;)
