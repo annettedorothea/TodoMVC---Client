@@ -8,7 +8,7 @@ scenarios
 		GIVEN 
 			newtodochanged.NewTodoChanged
 		WHEN
-			todo.NewTodoKeyPressed(charCode : 13)
+			todo.NewTodoKeyPressed(keyCode : 13)
 			squishyValues 
 				{}, 
 				{
@@ -27,11 +27,21 @@ scenarios
 				}]
 				newTodoWasReset todo.container.newTodoInput.newTodo should be ""
 
+	EscTodoCreation
+		GIVEN 
+			newtodochanged.NewTodoChanged
+		WHEN
+			todo.NewTodoKeyPressed(keyCode : 27)
+		THEN
+			expectedState 
+				todoWasNotCreatedAndReturedInTodoList todo.container.todos.todoList should be []
+				newTodoWasReset todo.container.newTodoInput.newTodo should be ""
+
 	CreateSecondTodo
 		GIVEN 
 			newtodochanged.NewTodoChangedSecondTime
 		WHEN
-			todo.NewTodoKeyPressed(charCode : 13)
+			todo.NewTodoKeyPressed(keyCode : 13)
 			squishyValues 
 				{}, 
 				{

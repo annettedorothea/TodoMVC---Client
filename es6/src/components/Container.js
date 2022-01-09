@@ -69,7 +69,7 @@ export const Container = (props) => {
 							</li>
 							<li>Todo.dumpTimeline()</li>
 							<li>Todo.dumpAppState()</li>
-							You can view all saved timelines on <a
+							You can view all the saved timelines on <a
 							href={`${AppUtils.settings ? AppUtils.settings.aceScenariosBaseUrl : ""}#/${AppUtils.settings ? AppUtils.settings.aceScenariosApiKey : ""}`}
 							target="acegen"
 						>acegen.de</a>.

@@ -8,7 +8,7 @@ scenarios
 		GIVEN 
 			edittodochanged.EditTodoChanged
 		WHEN
-			todo.EditedTodoKeyPressed(charCode : 13)
+			todo.EditedTodoKeyPressed(keyCode : 13)
 			squishyValues 
 				{}, 
 				{
@@ -37,6 +37,34 @@ scenarios
 						updatedDateTime: null
 					}
 				]
+
+
+	EscUpdateFirstTodo
+		GIVEN 
+			edittodochanged.EditTodoChanged
+		WHEN
+			todo.EditedTodoKeyPressed(keyCode : 27)
+		THEN
+			expectedState 
+				editedTodoIdWasReset todo.container.todos.editedTodoId should be null
+				editedDescriptionWasReset todo.container.todos.editedDescription should be ""
+				todoWasNotUpdated todo.container.todos.todoList should be [
+{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:48:37",
+						description: "1st Item ${testId}",
+						done: false,
+						id: "${testId}",
+						updatedDateTime: null
+					},
+					{
+						categoryId: "category_${testId}",
+						createdDateTime: "2020-10-10T14:58:37",
+						description: "2nd Item ${testId}",
+						done: false,
+						id: "${testId}_2",
+						updatedDateTime: null
+					}				]
 
 
 

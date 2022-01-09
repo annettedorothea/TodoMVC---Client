@@ -42,8 +42,8 @@ export function newTodoChanged(newTodo) {
     return new NewTodoChangedAction().apply({newTodo});
 }
 
-export function newTodoKeyPressed(charCode) {
-    return new NewTodoKeyPressedAction().apply({charCode});
+export function newTodoKeyPressed(keyCode) {
+    return new NewTodoKeyPressedAction().apply({keyCode});
 }
 
 export function createTodo() {
@@ -58,8 +58,8 @@ export function editedTodoChanged(editedDescription) {
     return new EditedTodoChangedAction().apply({editedDescription});
 }
 
-export function editedTodoKeyPressed(charCode) {
-    return new EditedTodoKeyPressedAction().apply({charCode});
+export function editedTodoKeyPressed(keyCode) {
+    return new EditedTodoKeyPressedAction().apply({keyCode});
 }
 
 export function updateTodo() {

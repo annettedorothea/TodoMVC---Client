@@ -40,8 +40,9 @@ ACE
 	NewTodoChanged (newTodo)
 		on ok (set container.newTodoInput.newTodo)
 	
-	NewTodoKeyPressed (charCode)
+	NewTodoKeyPressed (keyCode)
 		on enter triggers ( CreateTodo )
+		on esc (set container.newTodoInput.newTodo)
 		on notEnter
 	
 	CreateTodo
@@ -61,8 +62,12 @@ ACE
 	EditedTodoChanged (editedDescription)
 		on ok ( set container.todos.editedDescription)
 	
-	EditedTodoKeyPressed (charCode)
+	EditedTodoKeyPressed (keyCode)
 		on enter triggers ( UpdateTodo )
+		on esc (
+			set container.todos.editedDescription 
+			set container.todos.editedTodoId 
+		) 
 		on notEnter
 	
 	UpdateTodo

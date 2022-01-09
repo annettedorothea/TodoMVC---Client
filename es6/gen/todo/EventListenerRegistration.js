@@ -47,6 +47,12 @@ export default class EventListenerRegistrationTodo {
 					["container", "newTodoInput", "newTodo"]
 				)
 			});
+		ACEController.registerListener('todo.NewTodoKeyPressedEscEvent', (data) => {
+				AppState.set(
+					data, 
+					["container", "newTodoInput", "newTodo"]
+				)
+			});
 		ACEController.registerListener('todo.CreateTodoOkEvent', (data) => {
 				AppState.set(
 					data, 
@@ -69,6 +75,18 @@ export default class EventListenerRegistrationTodo {
 				AppState.set(
 					data, 
 					["container", "todos", "editedDescription"]
+				)
+			});
+		ACEController.registerListener('todo.EditedTodoKeyPressedEscEvent', (data) => {
+				AppState.set(
+					data, 
+					["container", "todos", "editedDescription"]
+				)
+			});
+		ACEController.registerListener('todo.EditedTodoKeyPressedEscEvent', (data) => {
+				AppState.set(
+					data, 
+					["container", "todos", "editedTodoId"]
 				)
 			});
 		ACEController.registerListener('todo.UpdateTodoOkEvent', (data) => {

@@ -23,6 +23,9 @@ export default class AbstractNewTodoKeyPressedCommand extends SynchronousCommand
 	addEnterOutcome(data) {
 		data.outcomes.push("enter");
 	}
+	addEscOutcome(data) {
+		data.outcomes.push("esc");
+	}
 	addNotEnterOutcome(data) {
 		data.outcomes.push("notEnter");
 	}
@@ -40,6 +43,9 @@ export default class AbstractNewTodoKeyPressedCommand extends SynchronousCommand
 						}
 					}
 				);
+			}
+			if (data.outcomes.includes("esc")) {
+				events.push(new Event('todo.NewTodoKeyPressedEscEvent'));
 			}
 			
 			this.publish(events, data).then(() => {

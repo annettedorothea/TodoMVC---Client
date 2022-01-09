@@ -9,8 +9,11 @@ import AbstractNewTodoKeyPressedCommand from "../../../gen/todo/commands/Abstrac
 
 export default class NewTodoKeyPressedCommand extends AbstractNewTodoKeyPressedCommand {
     execute(data) {
-        if (data.charCode === 13) {
+        if (data.keyCode === 13) {
             this.addEnterOutcome(data);
+        } else if (data.keyCode === 27) {
+            this.addEscOutcome(data);
+            data.newTodo = "";
         } else {
             this.addNotEnterOutcome(data);
         }

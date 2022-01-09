@@ -5,24 +5,32 @@
 
 
 
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {
 	deleteTodo,
 	editedTodoChanged,
 	editedTodoKeyPressed,
-	editTodo,
+	editTodo, newTodoChanged,
 	toggleTodo
 } from "../../../../gen/todo/ActionFunctions";
 
 
 export const TodoListItem = (props) => {
 	if (props.editedTodoId === props.id) {
+		const [editedDescription, setEditedDescription] = useState(props.editedDescription);
+		useEffect(() => {
+			setEditedDescription(props.editedDescription)
+		}, [props.editedDescription]);
+		const onChange = (e) => {
+			setEditedDescription(e.target.value);
+			editedTodoChanged(e.target.value);
+		}
 		return <li className="editing" id={props.id}>
 			<input
 				className="edit"
-				value={props.editedDescription}
-				onKeyPress={(event) => editedTodoKeyPressed(event.charCode)}
-				onChange={(event) => editedTodoChanged(event.target.value)}
+				value={editedDescription}
+				onKeyUp={(event) => editedTodoKeyPressed(event.keyCode)}
+				onChange={onChange}
 				id="editedTodo"
 			/>
 		</li>

@@ -9,8 +9,12 @@ import AbstractEditedTodoKeyPressedCommand from "../../../gen/todo/commands/Abst
 
 export default class EditedTodoKeyPressedCommand extends AbstractEditedTodoKeyPressedCommand {
     execute(data) {
-        if (data.charCode === 13) {
+        if (data.keyCode === 13) {
             this.addEnterOutcome(data);
+        } else if (data.keyCode === 27) {
+            this.addEscOutcome(data);
+            data.editedTodoId = null;
+            data.editedDescription = "";
         } else {
             this.addNotEnterOutcome(data);
         }
