@@ -25,10 +25,10 @@ See [TodoMVC---Server](https://github.com/annettedorothea/TodoMVC---Server) for 
 
 ## View with DSL
 
-- Get latest Ecplise
+- Get the latest Ecplise
 - Install the [de.acegen](https://github.com/annettedorothea/de.acegen) Ecplise plugin from [http://acegen.de](http://acegen.de)
 - Create a project by choosing File - Import - Projects from Folder or Archive with the project root for this and the [server project](https://github.com/annettedorothea/TodoMVC---Server)
-- add the server project as referenced project in the build path (right click the client project and choose Build Path)
+- Add the server project as referenced project in the build path (right click the client project and choose Build Path)
 - Open [todo-client.ace](./todo-client.ace)
 
 
@@ -41,7 +41,7 @@ These functions can be executed from JavaScript console (even [here](https://tod
 - Todo.dumpTimeline()
 - Todo.dumpAppState()
 
-You can view all saved timelines on 
+You can view all the saved timelines on 
 [acegen.de](https://acegen.de/#/336ace6-a52f-11e8-98d0-529269fb1489/scenarios).
 
 ## License
