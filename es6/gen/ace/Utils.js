@@ -16,9 +16,14 @@ export function saveTimeline(description, creator) {
     return getServerInfo().then((serverInfo) => {
         const browser = getBrowserInfo();
         const uuid = AppUtils.createUUID();
+		const currentAppState = {
+		    appState: AppState.get([])
+		};
+		const currentTimeline = AppUtils.deepCopy(ACEController.timeline);
+		currentTimeline.push(AppUtils.deepCopy(currentAppState));
         const data = {
             description,
-            timeline: JSON.stringify(ACEController.timeline),
+            timeline: JSON.stringify(currentTimeline),
             creator,
             clientVersion: AppUtils.settings.clientVersion,
             device: browser.name + " " + browser.version,

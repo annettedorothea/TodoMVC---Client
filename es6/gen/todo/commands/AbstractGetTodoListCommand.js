@@ -78,7 +78,6 @@ export default class AbstractGetTodoListCommand extends AsynchronousCommand {
 	
 	}
 
-
 }
 
 

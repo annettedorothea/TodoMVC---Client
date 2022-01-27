@@ -45,7 +45,7 @@ export function startReplay(timeline, pauseInMillis) {
 	let appStateWasSet = false;
     for (let i = 0; i < timeline.length; i++) {
         let item = timeline[i];
-        if (item.event && appStateWasSet && item.event.eventName !== "TriggerAction") {
+        if (item.event && appStateWasSet) {
             events.push({
             	event: new Event(item.event.eventName),
             	data: item.event.data

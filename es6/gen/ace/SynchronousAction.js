@@ -6,6 +6,9 @@
 
 
 import Action from "./Action";
+import * as ACEController from "./ACEController";
+import * as AppState from "../../src/AppState";
+
 
 export default class SynchronousAction extends Action {
 
@@ -13,13 +16,29 @@ export default class SynchronousAction extends Action {
     	super(actionName, callback);
     	this.asynchronous = false;
     }
+    
+	apply(data) {
+	    ACEController.addItemToTimeLine({
+	        appState: AppState.get([])
+	    });
+	    ACEController.addItemToTimeLine({
+	        action: {
+	            actionName: this.actionName,
+	            data
+	        }
+	    });
+	    this.initSquishy(data);
+	    try {
+	        this.applyAction(data);
+	    } catch (error) {
+	        AppUtils.displayUnexpectedError(error);
+	    }
+	}
 
     applyAction(data) {
-    	return new Promise((resolve) => {
-	        data = this.initActionData(data);
-		    let command = this.getCommand();
-		    command.executeCommand(data).then(resolve);
-    	});
+        data = this.initActionData(data);
+	    let command = this.getCommand();
+	    command.executeCommand(data);
     }
 }
 

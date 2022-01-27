@@ -61,7 +61,6 @@ export default class AbstractToggleTodoCommand extends AsynchronousCommand {
 	
 	}
 
-
 }
 
 

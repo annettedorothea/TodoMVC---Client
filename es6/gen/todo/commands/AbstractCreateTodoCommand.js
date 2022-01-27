@@ -77,7 +77,6 @@ export default class AbstractCreateTodoCommand extends AsynchronousCommand {
 	
 	}
 
-
 }
 
 

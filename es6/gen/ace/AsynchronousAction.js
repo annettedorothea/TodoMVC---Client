@@ -7,12 +7,35 @@
 
 
 import Action from "./Action";
+import * as ACEController from "./ACEController";
+import * as AppState from "../../src/AppState";
 
 export default class AsynchronousAction extends Action {
 
     constructor(actionName, callback) {
         super(actionName, callback);
         this.asynchronous = true;
+    }
+
+    apply(data) {
+        return new Promise((resolve) => {
+            ACEController.addItemToTimeLine({
+                appState: AppState.get([])
+            });
+            ACEController.addItemToTimeLine({
+                action: {
+                    actionName: this.actionName,
+                    data
+                }
+            });
+            this.initSquishy(data);
+            this.applyAction(data).then(
+                resolve,
+                (error) => {
+                    AppUtils.displayUnexpectedError(error);
+                }
+            );
+        });
     }
 
     applyAction(data) {

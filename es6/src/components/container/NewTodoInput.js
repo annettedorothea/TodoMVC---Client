@@ -10,19 +10,11 @@ import {newTodoChanged, newTodoKeyPressed} from "../../../gen/todo/ActionFunctio
 
 
 export const NewTodoInput = (props) => {
-	const [newTodo, setNewTodo] = useState(props.newTodo);
-	useEffect(() => {
-		setNewTodo(props.newTodo)
-	}, [props.newTodo]);
-	const onChange = (e) => {
-		setNewTodo(e.target.value);
-		newTodoChanged(e.target.value);
-	}
 	return <input
-		value={newTodo}
+		value={props.newTodo}
 		placeholder="What needs to be done?"
 		onKeyUp={(event) => newTodoKeyPressed(event.keyCode)}
-		onChange={onChange}
+		onChange={e => newTodoChanged(e.target.value)}
 		className="new-todo"
 		id="newTodoInput"
 	/>

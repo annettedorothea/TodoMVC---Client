@@ -66,7 +66,6 @@ export default class AbstractGetTodoListWithoutCategoryCheckCommand extends Asyn
 	
 	}
 
-
 }
 
 

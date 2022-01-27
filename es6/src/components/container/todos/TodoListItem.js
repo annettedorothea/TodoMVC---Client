@@ -17,20 +17,12 @@ import {
 
 export const TodoListItem = (props) => {
 	if (props.editedTodoId === props.id) {
-		const [editedDescription, setEditedDescription] = useState(props.editedDescription);
-		useEffect(() => {
-			setEditedDescription(props.editedDescription)
-		}, [props.editedDescription]);
-		const onChange = (e) => {
-			setEditedDescription(e.target.value);
-			editedTodoChanged(e.target.value);
-		}
 		return <li className="editing" id={props.id}>
 			<input
 				className="edit"
-				value={editedDescription}
+				value={props.editedDescription}
 				onKeyUp={(event) => editedTodoKeyPressed(event.keyCode)}
-				onChange={onChange}
+				onChange={(event) => editedTodoChanged(event.target.value)}
 				id="editedTodo"
 			/>
 		</li>

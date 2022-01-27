@@ -13,15 +13,13 @@ export default class Event {
     }
 
     publish(data) {
-        return new Promise((resolve) => {
-            ACEController.addItemToTimeLine({
-                event: {
-                    eventName: this.eventName,
-                    data
-                }});
-            this.notifyListeners(data);
-            resolve();
+        ACEController.addItemToTimeLine({
+            event: {
+                eventName: this.eventName,
+                data
+            }
         });
+        this.notifyListeners(data);
     }
 
     replay(data) {

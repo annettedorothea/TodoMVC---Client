@@ -65,7 +65,6 @@ export default class AbstractClearDoneCommand extends AsynchronousCommand {
 	
 	}
 
-
 }
 
 

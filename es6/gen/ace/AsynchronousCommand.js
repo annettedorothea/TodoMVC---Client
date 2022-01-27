@@ -10,6 +10,7 @@ import * as ACEController from "./ACEController";
 import Command from "./Command";
 
 export default class AsynchronousCommand extends Command {
+    
     executeCommand(data) {
 		this.initCommandData(data);
         ACEController.addItemToTimeLine({
@@ -35,6 +36,40 @@ export default class AsynchronousCommand extends Command {
     	return true;
     }
 
+	createEventPromise(event, data) {
+		return new Promise(resolve => {
+			event.publish(data);
+			resolve();
+		})
+	}
+	
+	publish(events, data) {
+		if (events.length === 0) {
+			return new Promise(resolve => resolve());
+		}
+		return this.createEventPromise(events.shift(), data)
+			.then(event => events.length === 0 ? event : this.publish(events, data));
+	}
+	
+	createActionPromise(actionToBeTriggered) {
+		return new Promise(resolve => {
+			if (actionToBeTriggered.action.asynchronous) {
+				actionToBeTriggered.action.apply(actionToBeTriggered.data).then(resolve);
+			} else {
+				actionToBeTriggered.action.apply(actionToBeTriggered.data);
+				resolve();
+			}
+		})
+	}
+	
+	trigger(actionsToBeTriggered) {
+		if (actionsToBeTriggered.length === 0) {
+			return new Promise(resolve => resolve());
+		}
+		return this.createActionPromise(actionsToBeTriggered.shift())
+			.then(actionToBeTriggered => actionsToBeTriggered.length === 0 ? actionToBeTriggered : this.trigger(actionsToBeTriggered));
+	}
+	
 }
 
 

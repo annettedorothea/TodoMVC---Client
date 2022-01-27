@@ -16,7 +16,7 @@ export default class Command {
     
 	triggerWithDelay(action, data, delayInMillis) {
 		setTimeout(() => {
-			action.apply(data).then();
+			action.apply(data);
 		}, delayInMillis);
 	}
 	
@@ -27,36 +27,8 @@ export default class Command {
 		}
 		delayedActions[action.actionName] = setTimeout(() => {
 			delayedActions[action.actionName] = undefined;
-			action.apply(data).then();
+			action.apply(data);
 		}, delayInMillis);
-	}
-	
-	createEventPromise(event, data) {
-		return new Promise(resolve => {
-			event.publish(data).then(resolve);
-		})
-	}
-	
-	publish(events, data) {
-		if (events.length === 0) {
-			return new Promise(resolve => resolve());
-		}
-		return this.createEventPromise(events.shift(), data)
-			.then(event => events.length === 0 ? event : this.publish(events, data));
-	}
-	
-	createActionPromise(actionToBeTriggered) {
-		return new Promise(resolve => {
-			actionToBeTriggered.action.apply(actionToBeTriggered.data).then(resolve);
-		})
-	}
-	
-	trigger(actionsToBeTriggered) {
-		if (actionsToBeTriggered.length === 0) {
-			return new Promise(resolve => resolve());
-		}
-		return this.createActionPromise(actionsToBeTriggered.shift())
-			.then(actionToBeTriggered => actionsToBeTriggered.length === 0 ? actionToBeTriggered : this.trigger(actionsToBeTriggered));
 	}
 	
 

@@ -9,6 +9,7 @@ import * as ACEController from "./ACEController";
 import Command from "./Command";
 
 export default class SynchronousCommand extends Command {
+    
     executeCommand(data) {
 		this.initCommandData(data);
         ACEController.addItemToTimeLine({
@@ -18,10 +19,20 @@ export default class SynchronousCommand extends Command {
 			}
         });
 	    data = this.execute(data);
-	    return new Promise((resolve) => {
-	    	this.publishEvents(data).then(resolve);
-	    });
+	    this.publishEvents(data)
     }
+
+	publish(events, data) {
+		events.forEach(
+			event => event.publish(data)
+		)
+	}
+
+	trigger(actionsToBeTriggered) {
+		actionsToBeTriggered.forEach(
+		    actionToBeTriggered => this.triggerWithDelay(actionToBeTriggered.action, actionToBeTriggered.data, 1)
+		)
+	}
 
 }
 
