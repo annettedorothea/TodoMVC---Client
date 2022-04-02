@@ -8,7 +8,6 @@
 const ScenarioUtils = require("../../src/ScenarioUtils");
 const TodoActionIds  = require("../../gen/actionIds/todo/TodoActionIds");
 const Verifications = require("../../src/init/InitDoneWithOneOpenTodoVerifications");
-const { Builder } = require('selenium-webdriver');
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;
 
@@ -21,9 +20,7 @@ let verifications = {};
     
 describe("init.InitDoneWithOneOpenTodo", function () {
     beforeAll(async function () {
-    	driver = new Builder()
-    			    .forBrowser(ScenarioUtils.browserName)
-    			    .build();
+    	driver = ScenarioUtils.createDriver();
     	let appState;
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}`]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`1st Item ${testId}`]);
