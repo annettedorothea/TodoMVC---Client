@@ -37,13 +37,15 @@ export default class AbstractGetTodoListCommand extends AsynchronousCommand {
 			AppUtils.httpGet(
 					`${AppUtils.settings.rootPath}/todos/all?${data.categoryId ? `categoryId=${data.categoryId}` : ""}`, 
 					data.uuid, 
-					false).then((response) => {
-				data.todoList = response.todoList;
-				this.handleResponse(data, resolve, reject);
-			}, (error) => {
-				data.error = error;
-				this.handleError(data, resolve, reject);
-			});
+					false)
+				.then((response) => {
+					data.todoList = response.todoList;
+					this.handleResponse(data, resolve, reject);
+				}, (error) => {
+					data.error = error;
+					this.handleError(data, resolve, reject);
+				})
+				.catch(x => reject(x));
 	    });
 	}
 	

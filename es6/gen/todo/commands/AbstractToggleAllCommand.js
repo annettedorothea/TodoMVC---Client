@@ -33,12 +33,14 @@ export default class AbstractToggleAllCommand extends AsynchronousCommand {
 			AppUtils.httpPut(
 					`${AppUtils.settings.rootPath}/todos/toggle-all?${data.categoryId ? `categoryId=${data.categoryId}` : ""}`, 
 					data.uuid, 
-					false).then(() => {
-				this.handleResponse(data, resolve, reject);
-			}, (error) => {
-				data.error = error;
-				this.handleError(data, resolve, reject);
-			});
+					false)
+				.then(() => {
+					this.handleResponse(data, resolve, reject);
+				}, (error) => {
+					data.error = error;
+					this.handleError(data, resolve, reject);
+				})
+				.catch(x => reject(x));
 	    });
 	}
 	

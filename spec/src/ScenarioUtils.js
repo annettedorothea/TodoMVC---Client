@@ -20,7 +20,7 @@ module.exports = {
 
     invokeAction: async function (driver, action, args) {
         if (TodoActionIds.init === action) {
-            await driver.get('http://127.0.0.1:8081/' + args[0]);
+            await driver.get('http://127.0.0.1:8080/' + args[0]);
             await this.waitInMillis(500);
         }
         if (TodoActionIds.newTodoChanged === action) {

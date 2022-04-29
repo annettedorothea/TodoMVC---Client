@@ -33,12 +33,14 @@ export default class AbstractClearDoneCommand extends AsynchronousCommand {
 			AppUtils.httpDelete(
 					`${AppUtils.settings.rootPath}/todos/clear-done?${data.categoryId ? `categoryId=${data.categoryId}` : ""}`, 
 					data.uuid, 
-					false).then(() => {
-				this.handleResponse(data, resolve, reject);
-			}, (error) => {
-				data.error = error;
-				this.handleError(data, resolve, reject);
-			});
+					false)
+				.then(() => {
+					this.handleResponse(data, resolve, reject);
+				}, (error) => {
+					data.error = error;
+					this.handleError(data, resolve, reject);
+				})
+				.catch(x => reject(x));
 	    });
 	}
 	
