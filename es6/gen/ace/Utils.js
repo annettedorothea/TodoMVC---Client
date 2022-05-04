@@ -6,6 +6,7 @@
 
 
 import * as AppUtils from "../../src/AppUtils";
+import * as AppState from "../../src/AppState";
 import * as ACEController from "./ACEController";
 
 function getServerInfo() {
