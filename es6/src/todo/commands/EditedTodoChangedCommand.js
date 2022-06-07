@@ -9,6 +9,8 @@ import AbstractEditedTodoChangedCommand from "../../../gen/todo/commands/Abstrac
 
 export default class EditedTodoChangedCommand extends AbstractEditedTodoChangedCommand {
     execute(data) {
+        const todo = data.todoList.find(todo => todo.id === data.id);
+        todo.descriptionInput.editedDescription = data.value
     	this.addOkOutcome(data);
     	return data;
     }

@@ -9,7 +9,6 @@ import AsynchronousCommand from "../../ace/AsynchronousCommand";
 import Event from "../../ace/Event";
 import * as AppUtils from "../../../src/AppUtils";
 import * as AppState from "../../../src/AppState";
-import CalculateItemCountAction from "../../../src/todo/actions/CalculateItemCountAction";
 
 export default class AbstractGetTodoListWithoutCategoryCheckCommand extends AsynchronousCommand {
     constructor() {
@@ -17,8 +16,16 @@ export default class AbstractGetTodoListWithoutCategoryCheckCommand extends Asyn
     }
     
     initCommandData(data) {
-        data.categoryId = AppState.get(
-        	["container", "footer", "categoryId"]
+        data.categoryId = AppState.getLocation(
+        	["container", "footer", "filter", "categoryId"]
+        )
+        ;
+        data.filter = AppState.getLocation(
+        	["container", "footer", "filter", "value"]
+        )
+        ;
+        data.lastTodoList = AppState.get(
+        	["container", "todos", "todoList"]
         )
         ;
         data.outcomes = [];
@@ -51,13 +58,6 @@ export default class AbstractGetTodoListWithoutCategoryCheckCommand extends Asyn
 			const actionsToBeTriggered = [];
 			if (data.outcomes.includes("ok")) {
 				events.push(new Event('todo.GetTodoListWithoutCategoryCheckOkEvent'));
-				actionsToBeTriggered.push(
-					{
-						action: new CalculateItemCountAction(), 
-						data: {
-						}
-					}
-				);
 			}
 			
 			this.publish(events, data).then(() => {

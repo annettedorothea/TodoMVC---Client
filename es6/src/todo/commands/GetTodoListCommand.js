@@ -3,14 +3,46 @@
  ********************************************************************************/
 
 
-
-
 import AbstractGetTodoListCommand from "../../../gen/todo/commands/AbstractGetTodoListCommand";
+
+export const allDone = (todoList) => {
+    return todoList.filter(todo => todo.done === false).length === 0
+}
+
+export const filter = (todoList, filter) => {
+    return todoList.filter(todo => filter === 'all' || filter === 'done' && todo.done === true || filter === 'open' && todo.done === false)
+}
+
+export const calculateItemCount = (todoList) => {
+    if (!todoList) {
+        return 0;
+    } else {
+        return todoList.filter(i => i.done === false).length;
+    }
+
+}
+
+export const initReadonly = (todoList, lastTodoList) => {
+    todoList.map(todo => {
+        if (!lastTodoList) {
+            todo.readOnly = true;
+            todo.descriptionInput = {
+                editedDescription: todo.description
+            }
+        } else {
+            const lastTodo = lastTodoList.find(i => i.id === todo.id);
+            todo.readOnly = lastTodo? lastTodo.readOnly : true;
+            todo.descriptionInput = {
+                editedDescription: todo.description
+            }
+        }
+    })
+}
 
 export default class GetTodoListCommand extends AbstractGetTodoListCommand {
 
-    validateCommandData() {
-    	return true;
+    validateCommandData(data) {
+        return true;
     }
 
     handleResponse(data, resolve) {
@@ -18,15 +50,18 @@ export default class GetTodoListCommand extends AbstractGetTodoListCommand {
             this.addCategoryDoesNotExistOutcome(data)
         } else {
             this.addOkOutcome(data);
+            data.checked = allDone(data.todoList)
+            data.itemCount = calculateItemCount(data.todoList)
+            data.todoList = filter(data.todoList, data.filter)
+            initReadonly(data.todoList, data.lastTodoList);
         }
-    	resolve(data);
+        resolve(data);
     }
+
     handleError(data, resolve, reject) {
-    	reject(data.error);
+        reject(data.error);
     }
 }
-
-
 
 
 /******* S.D.G. *******/

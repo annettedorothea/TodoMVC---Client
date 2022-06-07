@@ -17,12 +17,8 @@ export default class AbstractUpdateTodoCommand extends AsynchronousCommand {
     }
     
     initCommandData(data) {
-        data.id = AppState.get(
-        	["container", "todos", "editedTodoId"]
-        )
-        ;
-        data.description = AppState.get(
-        	["container", "todos", "editedDescription"]
+        data.todoList = AppState.get(
+        	["container", "todos", "todoList"]
         )
         ;
         data.outcomes = [];

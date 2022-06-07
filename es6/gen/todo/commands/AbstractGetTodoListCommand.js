@@ -9,7 +9,6 @@ import AsynchronousCommand from "../../ace/AsynchronousCommand";
 import Event from "../../ace/Event";
 import * as AppUtils from "../../../src/AppUtils";
 import * as AppState from "../../../src/AppState";
-import CalculateItemCountAction from "../../../src/todo/actions/CalculateItemCountAction";
 import CreateCategoryAction from "../../../src/todo/actions/CreateCategoryAction";
 
 export default class AbstractGetTodoListCommand extends AsynchronousCommand {
@@ -18,8 +17,16 @@ export default class AbstractGetTodoListCommand extends AsynchronousCommand {
     }
     
     initCommandData(data) {
-        data.categoryId = AppState.get(
-        	["container", "footer", "categoryId"]
+        data.categoryId = AppState.getLocation(
+        	["container", "footer", "filter", "categoryId"]
+        )
+        ;
+        data.filter = AppState.getLocation(
+        	["container", "footer", "filter", "value"]
+        )
+        ;
+        data.lastTodoList = AppState.get(
+        	["container", "todos", "todoList"]
         )
         ;
         data.outcomes = [];
@@ -55,11 +62,6 @@ export default class AbstractGetTodoListCommand extends AsynchronousCommand {
 			const actionsToBeTriggered = [];
 			if (data.outcomes.includes("ok")) {
 				events.push(new Event('todo.GetTodoListOkEvent'));
-				this.triggerWithDelay(new CalculateItemCountAction(), 
-					{
-					},
-					100
-				);
 			}
 			if (data.outcomes.includes("categoryDoesNotExist")) {
 				events.push(new Event('todo.GetTodoListCategoryDoesNotExistEvent'));

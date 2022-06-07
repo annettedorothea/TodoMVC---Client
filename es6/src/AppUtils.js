@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import EventListenerRegistrationTodo from "../gen/todo/EventListenerRegistration";
 import {init} from "../gen/todo/ActionFunctions";
-import {Container} from "./components/Container";
 import * as R from 'ramda'
 import * as AppState from "./AppState";
+import {ContainerContainer} from "../gen/components/ContainerContainer";
 
 
 
@@ -47,10 +47,10 @@ export function initEventListeners() {
 
 export function startApp() {
     window.onhashchange = () => {
-        init(window.location.hash.substring(1));
+        init();
     };
     loadSettings().then(() => {
-        init(window.location.hash.substring(1));
+        init();
     });
 }
 
@@ -162,7 +162,7 @@ export function deepCopy(object) {
 }
 
 export function renderApp() {
-    let container = <Container {...AppState.appState} />;
+    let container = <ContainerContainer {...AppState.appState} />;
     ReactDOM.render(
         container,
         document.getElementById('root')

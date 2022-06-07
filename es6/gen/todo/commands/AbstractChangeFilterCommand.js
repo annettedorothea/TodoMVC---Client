@@ -10,16 +10,12 @@
 	import * as AppUtils from "../../../src/AppUtils";
 	import * as AppState from "../../../src/AppState";
 	
-	export default class AbstractCalculateItemCountCommand extends SynchronousCommand {
+	export default class AbstractChangeFilterCommand extends SynchronousCommand {
 	    constructor() {
-	        super("todo.CalculateItemCountCommand");
+	        super("todo.ChangeFilterCommand");
 	    }
 	
 	    initCommandData(data) {
-	        data.todoList = AppState.get(
-	        	["container", "todos", "todoList"]
-	        )
-	        ;
 	        data.outcomes = [];
 	    }
 
@@ -31,7 +27,7 @@
 			const events = [];
 			const actionsToBeTriggered = [];
 			if (data.outcomes.includes("ok")) {
-				events.push(new Event('todo.CalculateItemCountOkEvent'));
+				events.push(new Event('todo.ChangeFilterOkEvent'));
 			}
 			
 			this.publish(events, data);

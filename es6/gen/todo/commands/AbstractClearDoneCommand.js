@@ -17,8 +17,8 @@ export default class AbstractClearDoneCommand extends AsynchronousCommand {
     }
     
     initCommandData(data) {
-        data.categoryId = AppState.get(
-        	["container", "footer", "categoryId"]
+        data.categoryId = AppState.getLocation(
+        	["container", "footer", "filter", "categoryId"]
         )
         ;
         data.outcomes = [];

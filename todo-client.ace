@@ -3,146 +3,194 @@ HttpClient
 todo 
 
 
-
-
-
 ACE 
-	Init(hash)
+	Init
+		fromAppState(
+			container.footer.filter.categoryId,
+			container.footer.filter.value
+		)
 		on ok (
-			set container.filter 
-			set container.footer.categoryId
-			set container.newTodoInput.newTodo
+			set container.header.newTodo
+			set container.main.toggleAll.checked
 		) triggers (GetTodoList)
 	
 	CreateCategory
-		fromAppState(container.footer.categoryId)
+		fromAppState(container.footer.filter.categoryId)
 			call com.anfelisa.todo.CreateCategory
-			loadingFlag container.spinner.loading 
+			loadingFlag container.header.heading.spinner.loading 
 		on ok triggers ( GetTodoListWithoutCategoryCheck )
 	
 	GetTodoList 
-		fromAppState(container.footer.categoryId)
+		fromAppState(
+			container.footer.filter.categoryId,
+			container.footer.filter.value as filter,
+			container.todos.todoList as lastTodoList
+		)
 			call com.anfelisa.todo.GetAllTodos  
-			loadingFlag container.spinner.loading 
+			loadingFlag container.header.heading.spinner.loading 
 		on ok (
 			set container.todos.todoList
-		) triggers ( delayInMillis 100 CalculateItemCount) 
+			set container.main.toggleAll.checked
+			set container.footer.itemCount
+		)
 		on categoryDoesNotExist triggers (CreateCategory)
 	
 	GetTodoListWithoutCategoryCheck 
-		fromAppState(container.footer.categoryId)
+		fromAppState(
+			container.footer.filter.categoryId,
+			container.footer.filter.value as filter,
+			container.todos.todoList as lastTodoList
+		)
 			call com.anfelisa.todo.GetAllTodos  
-			loadingFlag container.spinner.loading 
+			loadingFlag container.header.heading.spinner.loading 
 		on ok (
 			set container.todos.todoList
-		) triggers (CalculateItemCount)
+			set container.main.toggleAll.checked
+			set container.footer.itemCount
+		)
 	
-	NewTodoChanged (newTodo)
-		on ok (set container.newTodoInput.newTodo)
+	NewTodoChanged (value)
+		on ok (set container.header.newTodo.value)
 	
 	NewTodoKeyPressed (keyCode)
 		on enter triggers ( CreateTodo )
-		on esc (set container.newTodoInput.newTodo)
+		on esc (set container.header.newTodo.value)
 		on notEnter
 	
 	CreateTodo
-		fromAppState(container.newTodoInput.newTodo as description, container.footer.categoryId)
+		fromAppState(container.header.newTodo.value as description, container.footer.filter.categoryId)
 			call com.anfelisa.todo.CreateTodo
-			loadingFlag container.spinner.loading 
-		on ok (set container.newTodoInput.newTodo) triggers ( GetTodoList)
+			loadingFlag container.header.heading.spinner.loading 
+		on ok (set container.header.newTodo.value) triggers ( GetTodoList)
 		on empty
 		
 	EditTodo (id)
 		fromAppState ( container.todos.todoList )
 		on ok ( 
-			set container.todos.editedDescription 
-			set container.todos.editedTodoId 
+			set container.todos.todoList 
 		)
 	
-	EditedTodoChanged (editedDescription)
-		on ok ( set container.todos.editedDescription)
+	EditedTodoChanged (value, id)
+		fromAppState ( container.todos.todoList )
+		on ok ( set container.todos.todoList )
 	
-	EditedTodoKeyPressed (keyCode)
-		on enter triggers ( UpdateTodo )
+	EditedTodoKeyPressed (keyCode, id)
+		fromAppState ( container.todos.todoList )
+		on enter (
+			set container.todos.todoList  
+		) triggers ( UpdateTodo )
 		on esc (
-			set container.todos.editedDescription 
-			set container.todos.editedTodoId 
+			set container.todos.todoList  
 		) 
 		on notEnter
 	
-	UpdateTodo
-		fromAppState ( 
-			container.todos.editedTodoId as id, 
-			container.todos.editedDescription as description
-		)
+	UpdateTodo (id)
+		fromAppState ( container.todos.todoList )
 			call com.anfelisa.todo.UpdateTodo
-			loadingFlag container.spinner.loading 
-		on ok (
-			set container.todos.editedDescription 
-			set container.todos.editedTodoId 
-		) triggers (GetTodoList)
+			loadingFlag container.header.heading.spinner.loading 
+		on ok triggers (GetTodoList)
 		on empty (
-			set container.todos.editedDescription 
-			set container.todos.editedTodoId 
+			set container.todos.todoList 
 		)
 		
-
-
-
-
-	CalculateItemCount
-		fromAppState (container.todos.todoList)
-		on ok (
-			set container.footer.itemCount
-		)
-	
 	ToggleTodo (id)
 			call com.anfelisa.todo.ToggleTodo
-			loadingFlag container.spinner.loading 
+			loadingFlag container.header.heading.spinner.loading 
 		on ok triggers (GetTodoList)
 	
 	ToggleAll 
-		fromAppState(container.footer.categoryId)
+		fromAppState(container.footer.filter.categoryId)
 			call com.anfelisa.todo.ToggleAll 
-			loadingFlag container.spinner.loading 
+			loadingFlag container.header.heading.spinner.loading 
 		on ok triggers (GetTodoList)
 	
 	DeleteTodo (id)
 			call com.anfelisa.todo.DeleteTodo 
-			loadingFlag container.spinner.loading 
+			loadingFlag container.header.heading.spinner.loading 
 		on ok triggers (GetTodoList)
 	
 	ClearDone
-		fromAppState(container.footer.categoryId) 
+		fromAppState(container.footer.filter.categoryId) 
 			call com.anfelisa.todo.ClearDone 
-			loadingFlag container.spinner.loading 
+			loadingFlag container.header.heading.spinner.loading 
 		on ok triggers (GetTodoList)
 		
-
+	ChangeFilter (value)
+		on ok (set container.footer.filter.value)
 
 
 ui JSX container {
-	footer {
-		categoryId
-		itemCount
+	header {
+		heading {
+			spinner {
+				loading
+			}
+		}
+		newTodo TextInput {
+			value
+			actions {
+				"onChange" NewTodoChanged
+				"onKeyUp" NewTodoKeyPressed
+			}
+		}
 	}
-	filter
-	newTodoInput {
-		newTodo
-	}
-	spinner {
-		loading
+	main {
+		toggleAll CheckBox {
+			checked
+			actions {
+				"onChange" ToggleAll
+			}
+		}
 	}
 	todos {
 		List todoList {
 			categoryId
 			id
 			description
+			readOnly
 			done
 			createdDateTime
 			updatedDateTime
+			doneCheckbox CheckBox {
+				done
+				id
+				actions {
+					"onChange" ToggleTodo
+				}
+			}
+			descriptionInput TextInput {
+				description
+				editedDescription
+				readOnly
+				id
+				actions {
+					"onChange" EditedTodoChanged
+					"onKeyUp" EditedTodoKeyPressed
+					"onDoubleClick" EditTodo
+				}
+			}
+			deleteTodo Button {
+				id
+				actions {
+					"onClick" DeleteTodo
+				}
+			}
 		}
-		editedDescription
-		editedTodoId
+	}
+	footer {
+		itemCount
+		filter Select {
+			value location
+			categoryId location
+			options "all" "open" "done"
+			actions {
+				"onChange" ChangeFilter
+			}
+		}
+		clearDone Button {
+			actions {
+				"onClick" ClearDone
+			}
+		}
 	}
 }

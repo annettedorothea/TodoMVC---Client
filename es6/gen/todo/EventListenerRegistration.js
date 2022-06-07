@@ -14,19 +14,14 @@ export default class EventListenerRegistrationTodo {
 		ACEController.registerListener('todo.InitOkEvent', (data) => {
 				AppState.set(
 					data, 
-					["container", "filter"]
+					["container", "header", "newTodo"], 
+					["value"]
 				)
 			});
 		ACEController.registerListener('todo.InitOkEvent', (data) => {
 				AppState.set(
 					data, 
-					["container", "footer", "categoryId"]
-				)
-			});
-		ACEController.registerListener('todo.InitOkEvent', (data) => {
-				AppState.set(
-					data, 
-					["container", "newTodoInput", "newTodo"]
+					["container", "main", "toggleAll", "checked"]
 				)
 			});
 		ACEController.registerListener('todo.GetTodoListOkEvent', (data) => {
@@ -35,88 +30,88 @@ export default class EventListenerRegistrationTodo {
 					["container", "todos", "todoList"]
 				)
 			});
+		ACEController.registerListener('todo.GetTodoListOkEvent', (data) => {
+				AppState.set(
+					data, 
+					["container", "main", "toggleAll", "checked"]
+				)
+			});
+		ACEController.registerListener('todo.GetTodoListOkEvent', (data) => {
+				AppState.set(
+					data, 
+					["container", "footer", "itemCount"]
+				)
+			});
 		ACEController.registerListener('todo.GetTodoListWithoutCategoryCheckOkEvent', (data) => {
 				AppState.set(
 					data, 
 					["container", "todos", "todoList"]
 				)
 			});
+		ACEController.registerListener('todo.GetTodoListWithoutCategoryCheckOkEvent', (data) => {
+				AppState.set(
+					data, 
+					["container", "main", "toggleAll", "checked"]
+				)
+			});
+		ACEController.registerListener('todo.GetTodoListWithoutCategoryCheckOkEvent', (data) => {
+				AppState.set(
+					data, 
+					["container", "footer", "itemCount"]
+				)
+			});
 		ACEController.registerListener('todo.NewTodoChangedOkEvent', (data) => {
 				AppState.set(
 					data, 
-					["container", "newTodoInput", "newTodo"]
+					["container", "header", "newTodo", "value"]
 				)
 			});
 		ACEController.registerListener('todo.NewTodoKeyPressedEscEvent', (data) => {
 				AppState.set(
 					data, 
-					["container", "newTodoInput", "newTodo"]
+					["container", "header", "newTodo", "value"]
 				)
 			});
 		ACEController.registerListener('todo.CreateTodoOkEvent', (data) => {
 				AppState.set(
 					data, 
-					["container", "newTodoInput", "newTodo"]
+					["container", "header", "newTodo", "value"]
 				)
 			});
 		ACEController.registerListener('todo.EditTodoOkEvent', (data) => {
 				AppState.set(
 					data, 
-					["container", "todos", "editedDescription"]
-				)
-			});
-		ACEController.registerListener('todo.EditTodoOkEvent', (data) => {
-				AppState.set(
-					data, 
-					["container", "todos", "editedTodoId"]
+					["container", "todos", "todoList"]
 				)
 			});
 		ACEController.registerListener('todo.EditedTodoChangedOkEvent', (data) => {
 				AppState.set(
 					data, 
-					["container", "todos", "editedDescription"]
+					["container", "todos", "todoList"]
+				)
+			});
+		ACEController.registerListener('todo.EditedTodoKeyPressedEnterEvent', (data) => {
+				AppState.set(
+					data, 
+					["container", "todos", "todoList"]
 				)
 			});
 		ACEController.registerListener('todo.EditedTodoKeyPressedEscEvent', (data) => {
 				AppState.set(
 					data, 
-					["container", "todos", "editedDescription"]
-				)
-			});
-		ACEController.registerListener('todo.EditedTodoKeyPressedEscEvent', (data) => {
-				AppState.set(
-					data, 
-					["container", "todos", "editedTodoId"]
-				)
-			});
-		ACEController.registerListener('todo.UpdateTodoOkEvent', (data) => {
-				AppState.set(
-					data, 
-					["container", "todos", "editedDescription"]
-				)
-			});
-		ACEController.registerListener('todo.UpdateTodoOkEvent', (data) => {
-				AppState.set(
-					data, 
-					["container", "todos", "editedTodoId"]
+					["container", "todos", "todoList"]
 				)
 			});
 		ACEController.registerListener('todo.UpdateTodoEmptyEvent', (data) => {
 				AppState.set(
 					data, 
-					["container", "todos", "editedDescription"]
+					["container", "todos", "todoList"]
 				)
 			});
-		ACEController.registerListener('todo.UpdateTodoEmptyEvent', (data) => {
-				AppState.set(
+		ACEController.registerListener('todo.ChangeFilterOkEvent', (data) => {
+				AppState.setLocation(
 					data, 
-					["container", "todos", "editedTodoId"]
-				)
-			});
-		ACEController.registerListener('todo.CalculateItemCountOkEvent', (data) => {
-				AppState.set(
-					data, 
-					["container", "footer", "itemCount"]
+					["container", "footer", "filter", "value"]
 				)
 			});
 	}

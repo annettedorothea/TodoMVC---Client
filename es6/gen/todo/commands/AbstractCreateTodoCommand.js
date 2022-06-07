@@ -18,11 +18,11 @@ export default class AbstractCreateTodoCommand extends AsynchronousCommand {
     
     initCommandData(data) {
         data.description = AppState.get(
-        	["container", "newTodoInput", "newTodo"]
+        	["container", "header", "newTodo", "value"]
         )
         ;
-        data.categoryId = AppState.get(
-        	["container", "footer", "categoryId"]
+        data.categoryId = AppState.getLocation(
+        	["container", "footer", "filter", "categoryId"]
         )
         ;
         data.outcomes = [];

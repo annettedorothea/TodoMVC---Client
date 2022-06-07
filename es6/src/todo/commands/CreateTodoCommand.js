@@ -20,7 +20,7 @@ export default class CreateTodoCommand extends AbstractCreateTodoCommand {
 
     handleResponse(data, resolve) {
         this.addOkOutcome(data);
-        data.newTodo = "";
+        data.value = "";
     	resolve(data);
     }
     handleError(data, resolve, reject) {

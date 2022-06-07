@@ -6,16 +6,16 @@
 
 
 import Action from "../../ace/SynchronousAction";
-import CalculateItemCountCommand from "../../../src/todo/commands/CalculateItemCountCommand";
+import ChangeFilterCommand from "../../../src/todo/commands/ChangeFilterCommand";
 
-export default class AbstractCalculateItemCountAction extends Action {
+export default class AbstractChangeFilterAction extends Action {
 
     constructor() {
-        super('todo.CalculateItemCountAction');
+        super('todo.ChangeFilterAction');
 	}
 		
 	getCommand() {
-		return new CalculateItemCountCommand();
+		return new ChangeFilterCommand();
 	}
 
 

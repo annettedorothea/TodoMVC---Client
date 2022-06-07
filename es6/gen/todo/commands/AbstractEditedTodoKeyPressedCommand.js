@@ -17,6 +17,10 @@
 	    }
 	
 	    initCommandData(data) {
+	        data.todoList = AppState.get(
+	        	["container", "todos", "todoList"]
+	        )
+	        ;
 	        data.outcomes = [];
 	    }
 
@@ -39,6 +43,7 @@
 					{
 						action: new UpdateTodoAction(), 
 						data: {
+							id: data.id
 						}
 					}
 				);

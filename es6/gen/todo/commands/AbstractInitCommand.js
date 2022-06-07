@@ -17,6 +17,14 @@
 	    }
 	
 	    initCommandData(data) {
+	        data.categoryId = AppState.getLocation(
+	        	["container", "footer", "filter", "categoryId"]
+	        )
+	        ;
+	        data.value = AppState.getLocation(
+	        	["container", "footer", "filter", "value"]
+	        )
+	        ;
 	        data.outcomes = [];
 	    }
 

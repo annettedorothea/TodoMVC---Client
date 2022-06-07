@@ -10,20 +10,18 @@ import AbstractUpdateTodoCommand from "../../../gen/todo/commands/AbstractUpdate
 export default class UpdateTodoCommand extends AbstractUpdateTodoCommand {
 
     validateCommandData(data) {
-        if (data.description) {
+        const todo = data.todoList.find(todo => todo.id === data.id);
+        if (todo.descriptionInput.editedDescription) {
+            data.description = todo.descriptionInput.editedDescription
             return true;
         } else {
             this.addEmptyOutcome(data);
-            data.editedTodoId = null;
-            data.editedDescription = "";
             return false;
         }
     }
 
     handleResponse(data, resolve) {
         this.addOkOutcome(data);
-        data.editedTodoId = null;
-        data.editedDescription = "";
     	resolve(data);
     }
     handleError(data, resolve, reject) {

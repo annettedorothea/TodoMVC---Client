@@ -16,6 +16,10 @@
 	    }
 	
 	    initCommandData(data) {
+	        data.todoList = AppState.get(
+	        	["container", "todos", "todoList"]
+	        )
+	        ;
 	        data.outcomes = [];
 	    }
 

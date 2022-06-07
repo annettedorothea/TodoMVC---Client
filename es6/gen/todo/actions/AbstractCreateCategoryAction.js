@@ -23,7 +23,7 @@ export default class AbstractCreateCategoryAction extends Action {
 	preCall() {
 		AppState.set(
 			{loading: true}, 
-			["container", "spinner", "loading"]
+			["container", "header", "heading", "spinner", "loading"]
 		)
 		AppState.stateUpdated();
 	}
@@ -31,7 +31,7 @@ export default class AbstractCreateCategoryAction extends Action {
 	postCall() {
 		AppState.set(
 			{loading: false}, 
-			["container", "spinner", "loading"]
+			["container", "header", "heading", "spinner", "loading"]
 		)
 		AppState.stateUpdated();
 	}

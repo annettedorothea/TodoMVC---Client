@@ -6,16 +6,21 @@
 
 
 import AbstractGetTodoListWithoutCategoryCheckCommand from "../../../gen/todo/commands/AbstractGetTodoListWithoutCategoryCheckCommand";
+import {allDone, calculateItemCount, filter, initReadonly} from "./GetTodoListCommand";
 
 export default class GetTodoListWithoutCategoryCheckCommand extends AbstractGetTodoListWithoutCategoryCheckCommand {
 
-    validateCommandData() {
+    validateCommandData(data) {
     	return true;
     }
 
     handleResponse(data, resolve) {
     	this.addOkOutcome(data);
-    	resolve(data);
+        data.checked = allDone(data.todoList)
+        data.itemCount = calculateItemCount(data.todoList)
+        data.todoList = filter(data.todoList, data.filter)
+        initReadonly(data.todoList, data.lastTodoList);
+        resolve(data);
     }
     handleError(data, resolve, reject) {
     	reject(data.error);

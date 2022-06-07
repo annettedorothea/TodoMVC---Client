@@ -13,7 +13,7 @@ export default class NewTodoKeyPressedCommand extends AbstractNewTodoKeyPressedC
             this.addEnterOutcome(data);
         } else if (data.keyCode === 27) {
             this.addEscOutcome(data);
-            data.newTodo = "";
+            data.value = "";
         } else {
             this.addNotEnterOutcome(data);
         }

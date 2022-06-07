@@ -3,34 +3,18 @@
  ********************************************************************************/
 
 
-
-
 import AbstractInitCommand from "../../../gen/todo/commands/AbstractInitCommand";
 
 export default class InitCommand extends AbstractInitCommand {
     execute(data) {
-        data.filter = 'all';
-        data.categoryId = "defaultCategory";
-        if (data.hash !== undefined) {
-            let hashes = data.hash.split("/");
-            if (hashes.length >= 2) {
-                data.categoryId = hashes[1];
-            }
-            if (hashes.length === 3) {
-                if (hashes[2] === 'open') {
-                    data.filter = 'open';
-                } else if (hashes[2] === 'done') {
-                    data.filter = 'done';
-                }
-            }
-            data.newTodo = "";
-        }
-    	this.addOkOutcome(data);
-    	return data;
+        data.newTodo = {
+            value: ""
+        };
+        data.checked = false;
+        this.addOkOutcome(data);
+        return data;
     }
 }
-
-
 
 
 /******* S.D.G. *******/

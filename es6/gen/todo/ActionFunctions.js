@@ -16,14 +16,14 @@ import EditTodoAction from "../../src/todo/actions/EditTodoAction";
 import EditedTodoChangedAction from "../../src/todo/actions/EditedTodoChangedAction";
 import EditedTodoKeyPressedAction from "../../src/todo/actions/EditedTodoKeyPressedAction";
 import UpdateTodoAction from "../../src/todo/actions/UpdateTodoAction";
-import CalculateItemCountAction from "../../src/todo/actions/CalculateItemCountAction";
 import ToggleTodoAction from "../../src/todo/actions/ToggleTodoAction";
 import ToggleAllAction from "../../src/todo/actions/ToggleAllAction";
 import DeleteTodoAction from "../../src/todo/actions/DeleteTodoAction";
 import ClearDoneAction from "../../src/todo/actions/ClearDoneAction";
+import ChangeFilterAction from "../../src/todo/actions/ChangeFilterAction";
 
-export function init(hash) {
-    return new InitAction().apply({hash});
+export function init() {
+    return new InitAction().apply({});
 }
 
 export function createCategory() {
@@ -38,8 +38,8 @@ export function getTodoListWithoutCategoryCheck() {
     return new GetTodoListWithoutCategoryCheckAction().apply({});
 }
 
-export function newTodoChanged(newTodo) {
-    return new NewTodoChangedAction().apply({newTodo});
+export function newTodoChanged(value) {
+    return new NewTodoChangedAction().apply({value});
 }
 
 export function newTodoKeyPressed(keyCode) {
@@ -54,20 +54,16 @@ export function editTodo(id) {
     return new EditTodoAction().apply({id});
 }
 
-export function editedTodoChanged(editedDescription) {
-    return new EditedTodoChangedAction().apply({editedDescription});
+export function editedTodoChanged(value, id) {
+    return new EditedTodoChangedAction().apply({value, id});
 }
 
-export function editedTodoKeyPressed(keyCode) {
-    return new EditedTodoKeyPressedAction().apply({keyCode});
+export function editedTodoKeyPressed(keyCode, id) {
+    return new EditedTodoKeyPressedAction().apply({keyCode, id});
 }
 
-export function updateTodo() {
-    return new UpdateTodoAction().apply({});
-}
-
-export function calculateItemCount() {
-    return new CalculateItemCountAction().apply({});
+export function updateTodo(id) {
+    return new UpdateTodoAction().apply({id});
 }
 
 export function toggleTodo(id) {
@@ -84,6 +80,10 @@ export function deleteTodo(id) {
 
 export function clearDone() {
     return new ClearDoneAction().apply({});
+}
+
+export function changeFilter(value) {
+    return new ChangeFilterAction().apply({value});
 }
 
 
