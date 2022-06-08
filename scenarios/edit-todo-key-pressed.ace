@@ -8,33 +8,27 @@ scenarios
 		GIVEN 
 			edittodochanged.EditTodoChanged
 		WHEN
-			todo.EditedTodoKeyPressed(keyCode : 13)
-			squishyValues 
-				{}, 
-				{
-					uuid "${testId}_update"
-					serverSystemTime "2020-10-10T15:48:37.000Z"
-				}
+			todo.EditedTodoKeyPressed(keyCode : 13, id: "${testId}")
 		THEN
 			expectedState 
-				editedTodoIdWasReset todo.container.todos.editedTodoId should be null
-				editedDescriptionWasReset todo.container.todos.editedDescription should be ""
 				todoWasUpdated todo.container.todos.todoList should be [
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:48:37",
 						description: "EDIT 1st Item ${testId}",
+						descriptionInput: { 
+							editedDescription: 'EDIT 1st Item ${testId}'
+						},
 						done: false,
 						id: "${testId}",
-						updatedDateTime: "2020-10-10T15:48:37"
+						readOnly: true
 					},
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:58:37",
 						description: "2nd Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '2nd Item ${testId}'
+						},
 						done: false,
 						id: "${testId}_2",
-						updatedDateTime: null
+						readOnly: true
 					}
 				]
 
@@ -43,28 +37,29 @@ scenarios
 		GIVEN 
 			edittodochanged.EditTodoChanged
 		WHEN
-			todo.EditedTodoKeyPressed(keyCode : 27)
+			todo.EditedTodoKeyPressed(keyCode : 27, id: "${testId}")
 		THEN
 			expectedState 
-				editedTodoIdWasReset todo.container.todos.editedTodoId should be null
-				editedDescriptionWasReset todo.container.todos.editedDescription should be ""
-				todoWasNotUpdated todo.container.todos.todoList should be [
-{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:48:37",
+				todoWasNozUpdated todo.container.todos.todoList should be [
+					{
 						description: "1st Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '1st Item ${testId}'
+						},
 						done: false,
 						id: "${testId}",
-						updatedDateTime: null
+						readOnly: true
 					},
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:58:37",
 						description: "2nd Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '2nd Item ${testId}'
+						},
 						done: false,
 						id: "${testId}_2",
-						updatedDateTime: null
-					}				]
+						readOnly: true
+					}
+				]
 
 
 

@@ -8,6 +8,7 @@ const chrome = require('selenium-webdriver/chrome');
 
 
 const TodoActionIds = require("../gen/actionIds/todo/TodoActionIds");
+const InitActionIds = require("../gen/actionIds/init/InitActionIds");
 
 const browserParam = process.env.SELENIUM_BROWSER;
 const headless = process.env.HEADLESS;
@@ -19,7 +20,7 @@ module.exports = {
     },
 
     invokeAction: async function (driver, action, args) {
-        if (TodoActionIds.init === action) {
+        if (InitActionIds.setHash === action) {
             await driver.get('http://127.0.0.1:8080/' + args[0]);
             await this.waitInMillis(500);
         }
@@ -41,7 +42,7 @@ module.exports = {
             await this.waitInMillis(500);
         }
         if (TodoActionIds.toggleTodo === action) {
-            await click(driver, "#" + args[0]);
+            await click(driver, "#checkbox_" + args[0]);
             await this.waitInMillis(500);
         }
         if (TodoActionIds.clearDone === action) {
@@ -57,15 +58,15 @@ module.exports = {
             await this.waitInMillis(500);
         }
         if (TodoActionIds.editedTodoChanged === action) {
-            await waitClearSendKeys(driver, "editedTodo", args[0]);
+            await waitClearSendKeys(driver, "editedTodo_" + args[1], args[0]);
         }
         if (TodoActionIds.editedTodoKeyPressed === action) {
-            await driver.wait(until.elementLocated(By.id("editedTodo")), 5000);
+            await driver.wait(until.elementLocated(By.id("editedTodo_" + args[1])), 5000);
             if (args[0] === 13) {
-                await pressEnter(driver, "editedTodo", this.browserName)
+                await pressEnter(driver, "editedTodo_" + args[1], this.browserName)
             }
             if (args[0] === 27) {
-                await pressEsc(driver, "editedTodo", this.browserName)
+                await pressEsc(driver, "editedTodo_" + args[1], this.browserName)
             }
             await this.waitInMillis(500);
         }

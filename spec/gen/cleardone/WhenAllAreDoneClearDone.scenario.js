@@ -7,6 +7,7 @@
 
 const ScenarioUtils = require("../../src/ScenarioUtils");
 const TodoActionIds  = require("../../gen/actionIds/todo/TodoActionIds");
+const InitActionIds  = require("../../gen/actionIds/init/InitActionIds");
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;
 
@@ -21,7 +22,7 @@ describe("cleardone.WhenAllAreDoneClearDone", function () {
     beforeAll(async function () {
     	driver = ScenarioUtils.createDriver();
     	let appState;
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}`]);
+		await ScenarioUtils.invokeAction(driver, InitActionIds.setHash, [`#/category_${testId}`]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`1st Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
 			driver,
@@ -35,7 +36,6 @@ describe("cleardone.WhenAllAreDoneClearDone", function () {
 				uuid: `${testId}`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}`, "system-time", new Date('2020-10-10T14:48:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`2nd Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
@@ -50,15 +50,7 @@ describe("cleardone.WhenAllAreDoneClearDone", function () {
 				uuid: `${testId}_2`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_2`, "system-time", new Date('2020-10-10T14:58:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
-		await ScenarioUtils.addSquishyValueClient(
-			driver,
-			{
-				uuid: `${testId}_toggle-all`
-			}
-		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_toggle-all`, "system-time", new Date('2020-10-10T16:58:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.toggleAll);
 
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.clearDone);

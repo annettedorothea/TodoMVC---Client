@@ -4,7 +4,7 @@ cleardone
 
 scenarios 
 
-	WhenAllAreOpenClearDone
+	ClearDone
 		GIVEN 
 			newtodokeypressed.CreateSecondTodo
 		WHEN
@@ -13,38 +13,39 @@ scenarios
 			expectedState 
 				nothingWasDeleted todo.container.todos.todoList should be [
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:48:37",
 						description: "1st Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '1st Item ${testId}'
+						},
 						done: false,
 						id: "${testId}",
-						updatedDateTime: null
+						readOnly: true
 					},
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:58:37",
 						description: "2nd Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '2nd Item ${testId}'
+						},
 						done: false,
 						id: "${testId}_2",
-						updatedDateTime: null
+						readOnly: true
 					}
 				]
-				
-	WhenOneIsDoneClearDone
-		GIVEN 
-			toggletodo.ToggleTodo
-		WHEN
+		AND WHEN 
+			todo.ToggleTodo(id : "${testId}")
+		AND WHEN
 			todo.ClearDone
 		THEN
 			expectedState 
 				firstWasDeleted todo.container.todos.todoList should be [
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:58:37",
 						description: "2nd Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '2nd Item ${testId}'
+						},
 						done: false,
 						id: "${testId}_2",
-						updatedDateTime: null
+						readOnly: true
 					}
 				]
 

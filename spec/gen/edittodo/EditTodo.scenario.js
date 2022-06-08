@@ -7,6 +7,7 @@
 
 const ScenarioUtils = require("../../src/ScenarioUtils");
 const TodoActionIds  = require("../../gen/actionIds/todo/TodoActionIds");
+const InitActionIds  = require("../../gen/actionIds/init/InitActionIds");
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;
 
@@ -21,7 +22,7 @@ describe("edittodo.EditTodo", function () {
     beforeAll(async function () {
     	driver = ScenarioUtils.createDriver();
     	let appState;
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}`]);
+		await ScenarioUtils.invokeAction(driver, InitActionIds.setHash, [`#/category_${testId}`]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`1st Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
 			driver,
@@ -35,7 +36,6 @@ describe("edittodo.EditTodo", function () {
 				uuid: `${testId}`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}`, "system-time", new Date('2020-10-10T14:48:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`2nd Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
@@ -50,24 +50,41 @@ describe("edittodo.EditTodo", function () {
 				uuid: `${testId}_2`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_2`, "system-time", new Date('2020-10-10T14:58:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.editTodo, [`${testId}`]);
 		await ScenarioUtils.waitInMillis(10);
 		
 		appState = await ScenarioUtils.getAppState(driver);
-		appStates.editedTodoIdWasSet = appState;
-		appStates.editedDescriptionWasSet = appState;
+		appStates.todoItemWasSetToEditable = appState;
 		
 		
     });
 
-	it("editedTodoIdWasSet", async () => {
-		expect(appStates.editedTodoIdWasSet.container.todos.editedTodoId, "editedTodoIdWasSet").toEqual(`${testId}`)
-	});
-	it("editedDescriptionWasSet", async () => {
-		expect(appStates.editedDescriptionWasSet.container.todos.editedDescription, "editedDescriptionWasSet").toEqual(`1st Item ${testId}`)
+	it("todoItemWasSetToEditable", async () => {
+		expect(appStates.todoItemWasSetToEditable.container.todos.todoList, "todoItemWasSetToEditable").toEqual([
+			{ 
+				description : `1st Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `1st Item ${testId}`
+				},
+				
+				done : false,
+				id : `${testId}`,
+				readOnly : false
+			},
+			{ 
+				description : `2nd Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `2nd Item ${testId}`
+				},
+				
+				done : false,
+				id : `${testId}_2`,
+				readOnly : true
+			}
+		]
+		)
 	});
 	
 

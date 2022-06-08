@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import EventListenerRegistrationTodo from "../gen/todo/EventListenerRegistration";
+import EventListenerRegistrationInit from "../gen/init/EventListenerRegistration";
 import {init} from "../gen/todo/ActionFunctions";
 import * as R from 'ramda'
 import * as AppState from "./AppState";
 import {ContainerContainer} from "../gen/components/ContainerContainer";
+import {setHash} from "../gen/init/ActionFunctions";
 
 
 
@@ -43,6 +45,7 @@ function loadSettings() {
 
 export function initEventListeners() {
     EventListenerRegistrationTodo.init();
+    EventListenerRegistrationInit.init();
 }
 
 export function startApp() {

@@ -18,7 +18,7 @@ let driver;
 let appStates = {};
 let verifications = {};
     
-describe("toggleall.ToggleAllTodos", function () {
+describe("toggleall.ToggleAllTodosFlow", function () {
     beforeAll(async function () {
     	driver = ScenarioUtils.createDriver();
     	let appState;
@@ -59,10 +59,109 @@ describe("toggleall.ToggleAllTodos", function () {
 		appStates.allTodosWereSetToDone = appState;
 		
 		
+		await ScenarioUtils.invokeAction(driver, TodoActionIds.toggleAll);
+		await ScenarioUtils.waitInMillis(10);
+		
+		appState = await ScenarioUtils.getAppState(driver);
+		appStates.allTodosWereSetToOpen = appState;
+		
+		
+		await ScenarioUtils.invokeAction(driver, TodoActionIds.toggleTodo, [`${testId}`]);
+		await ScenarioUtils.waitInMillis(10);
+		
+		appState = await ScenarioUtils.getAppState(driver);
+		appStates.oneTodoWasSetToDone = appState;
+		
+		
+		await ScenarioUtils.invokeAction(driver, TodoActionIds.toggleAll);
+		await ScenarioUtils.waitInMillis(10);
+		
+		appState = await ScenarioUtils.getAppState(driver);
+		appStates.allTodosWereSetToDoneAgain = appState;
+		
+		
     });
 
 	it("allTodosWereSetToDone", async () => {
 		expect(appStates.allTodosWereSetToDone.container.todos.todoList, "allTodosWereSetToDone").toEqual([
+			{ 
+				description : `1st Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `1st Item ${testId}`
+				},
+				
+				done : true,
+				id : `${testId}`,
+				readOnly : true
+			},
+			{ 
+				description : `2nd Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `2nd Item ${testId}`
+				},
+				
+				done : true,
+				id : `${testId}_2`,
+				readOnly : true
+			}
+		]
+		)
+	});
+	
+	it("allTodosWereSetToOpen", async () => {
+		expect(appStates.allTodosWereSetToOpen.container.todos.todoList, "allTodosWereSetToOpen").toEqual([
+			{ 
+				description : `1st Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `1st Item ${testId}`
+				},
+				
+				done : false,
+				id : `${testId}`,
+				readOnly : true
+			},
+			{ 
+				description : `2nd Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `2nd Item ${testId}`
+				},
+				
+				done : false,
+				id : `${testId}_2`,
+				readOnly : true
+			}
+		]
+		)
+	});
+	
+	it("oneTodoWasSetToDone", async () => {
+		expect(appStates.oneTodoWasSetToDone.container.todos.todoList, "oneTodoWasSetToDone").toEqual([
+			{ 
+				description : `1st Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `1st Item ${testId}`
+				},
+				
+				done : true,
+				id : `${testId}`,
+				readOnly : true
+			},
+			{ 
+				description : `2nd Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `2nd Item ${testId}`
+				},
+				
+				done : false,
+				id : `${testId}_2`,
+				readOnly : true
+			}
+		]
+		)
+	});
+	
+	it("allTodosWereSetToDoneAgain", async () => {
+		expect(appStates.allTodosWereSetToDoneAgain.container.todos.todoList, "allTodosWereSetToDoneAgain").toEqual([
 			{ 
 				description : `1st Item ${testId}`,
 				descriptionInput : { 

@@ -13,12 +13,13 @@ scenarios
 			expectedState 
 				todoWasDeleted todo.container.todos.todoList should be [
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:58:37",
 						description: "2nd Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '2nd Item ${testId}'
+						},
 						done: false,
 						id: "${testId}_2",
-						updatedDateTime: null
+						readOnly: true
 					}
 				]
 				

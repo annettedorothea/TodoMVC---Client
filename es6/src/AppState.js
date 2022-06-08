@@ -67,6 +67,9 @@ export function setLocation(data, path) {
         hashParts.push(data[R.last(path)])
         location.hash = hashParts.join('/')
     }
+    if (R.last(path) === "hash") {
+        location.hash = data.hash
+    }
 }
 
 export function setStorage(data, path) {

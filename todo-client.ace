@@ -149,8 +149,6 @@ ui JSX container {
 			description
 			readOnly
 			done
-			createdDateTime
-			updatedDateTime
 			doneCheckbox CheckBox {
 				done
 				id
@@ -193,4 +191,5 @@ ui JSX container {
 			}
 		}
 	}
+	hash location
 }

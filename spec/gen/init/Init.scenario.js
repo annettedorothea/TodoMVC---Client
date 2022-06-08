@@ -6,7 +6,7 @@
 
 
 const ScenarioUtils = require("../../src/ScenarioUtils");
-const TodoActionIds  = require("../../gen/actionIds/todo/TodoActionIds");
+const InitActionIds  = require("../../gen/actionIds/init/InitActionIds");
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;
 
@@ -17,29 +17,20 @@ let driver;
 let appStates = {};
 let verifications = {};
     
-describe("init.InitOpenFilter", function () {
+describe("init.Init", function () {
     beforeAll(async function () {
     	driver = ScenarioUtils.createDriver();
     	let appState;
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}`]);
 
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}/open`]);
+		await ScenarioUtils.invokeAction(driver, InitActionIds.setHash, [`#/category_${testId}`]);
 		await ScenarioUtils.waitInMillis(10);
 		
 		appState = await ScenarioUtils.getAppState(driver);
-		appStates.filterWasSet = appState;
-		appStates.categoryWasSet = appState;
 		appStates.emptyTodoListWasFetched = appState;
 		
 		
     });
 
-	it("filterWasSet", async () => {
-		expect(appStates.filterWasSet.container.filter, "filterWasSet").toEqual(`open`)
-	});
-	it("categoryWasSet", async () => {
-		expect(appStates.categoryWasSet.container.footer.categoryId, "categoryWasSet").toEqual(`category_${testId}`)
-	});
 	it("emptyTodoListWasFetched", async () => {
 		expect(appStates.emptyTodoListWasFetched.container.todos.todoList, "emptyTodoListWasFetched").toEqual([
 		]

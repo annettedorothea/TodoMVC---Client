@@ -7,6 +7,7 @@
 
 const ScenarioUtils = require("../../src/ScenarioUtils");
 const TodoActionIds  = require("../../gen/actionIds/todo/TodoActionIds");
+const InitActionIds  = require("../../gen/actionIds/init/InitActionIds");
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;
 
@@ -17,11 +18,11 @@ let driver;
 let appStates = {};
 let verifications = {};
     
-describe("cleardone.WhenOneIsDoneClearDone", function () {
+describe("cleardone.ClearDone", function () {
     beforeAll(async function () {
     	driver = ScenarioUtils.createDriver();
     	let appState;
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}`]);
+		await ScenarioUtils.invokeAction(driver, InitActionIds.setHash, [`#/category_${testId}`]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`1st Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
 			driver,
@@ -35,7 +36,6 @@ describe("cleardone.WhenOneIsDoneClearDone", function () {
 				uuid: `${testId}`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}`, "system-time", new Date('2020-10-10T14:48:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`2nd Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
@@ -50,17 +50,18 @@ describe("cleardone.WhenOneIsDoneClearDone", function () {
 				uuid: `${testId}_2`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_2`, "system-time", new Date('2020-10-10T14:58:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
-		await ScenarioUtils.addSquishyValueClient(
-			driver,
-			{
-				uuid: `${testId}_toggle`
-			}
-		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_toggle`, "system-time", new Date('2020-10-10T15:58:37.000Z').toISOString());
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.toggleTodo, [`checkbox_${testId}`]);
 
+		await ScenarioUtils.invokeAction(driver, TodoActionIds.clearDone);
+		await ScenarioUtils.waitInMillis(10);
+		
+		appState = await ScenarioUtils.getAppState(driver);
+		appStates.nothingWasDeleted = appState;
+		
+		
+		await ScenarioUtils.invokeAction(driver, TodoActionIds.toggleTodo, [`${testId}`]);
+		await ScenarioUtils.waitInMillis(10);
+		
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.clearDone);
 		await ScenarioUtils.waitInMillis(10);
 		
@@ -70,15 +71,44 @@ describe("cleardone.WhenOneIsDoneClearDone", function () {
 		
     });
 
+	it("nothingWasDeleted", async () => {
+		expect(appStates.nothingWasDeleted.container.todos.todoList, "nothingWasDeleted").toEqual([
+			{ 
+				description : `1st Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `1st Item ${testId}`
+				},
+				
+				done : false,
+				id : `${testId}`,
+				readOnly : true
+			},
+			{ 
+				description : `2nd Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `2nd Item ${testId}`
+				},
+				
+				done : false,
+				id : `${testId}_2`,
+				readOnly : true
+			}
+		]
+		)
+	});
+	
+	
 	it("firstWasDeleted", async () => {
 		expect(appStates.firstWasDeleted.container.todos.todoList, "firstWasDeleted").toEqual([
 			{ 
-				categoryId : `category_${testId}`,
-				createdDateTime : `2020-10-10T14:58:37`,
 				description : `2nd Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `2nd Item ${testId}`
+				},
+				
 				done : false,
 				id : `${testId}_2`,
-				updatedDateTime : null
+				readOnly : true
 			}
 		]
 		)

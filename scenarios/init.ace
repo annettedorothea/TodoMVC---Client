@@ -2,137 +2,76 @@ HttpClient
 
 init
 
+
+ACE
+	SetHash(hash)
+		on ok (
+			set todo.container.hash
+		)
+
 scenarios 
 
-	InitAllWithCreateCategory 
+	Init
 		WHEN 
-			todo.Init(hash: "#/category_${testId}")
+			SetHash(hash: "#/category_${testId}")
 		THEN
 			expectedState 
-				filterWasSet todo.container.filter should be "all"
-				categoryWasSet todo.container.footer.categoryId should be "category_${testId}"
 				emptyTodoListWasFetched todo.container.todos.todoList should be []
-			
-	InitOpenFilter
-		GIVEN 
-			InitAllWithCreateCategory
-		WHEN 
-			todo.Init(hash: "#/category_${testId}/open")
-		THEN
-			expectedState 
-				filterWasSet todo.container.filter should be "open"
-				categoryWasSet todo.container.footer.categoryId should be "category_${testId}"
-				emptyTodoListWasFetched todo.container.todos.todoList should be []
-			
-	InitOpenFilterWithCreateCategory 
-		WHEN 
-			todo.Init(hash: "#/category_${testId}/open")
-		THEN
-			expectedState 
-				filterWasSet todo.container.filter should be "open"
-				categoryWasSet todo.container.footer.categoryId should be "category_${testId}"
-				emptyTodoListWasFetched todo.container.todos.todoList should be []
-			
-	InitDoneFilterWithCreateCategory 
-		WHEN 
-			todo.Init(hash: "#/category_${testId}/done")
-		THEN
-			expectedState 
-				filterWasSet todo.container.filter should be "done"
-				categoryWasSet todo.container.footer.categoryId should be "category_${testId}"
-				emptyTodoListWasFetched todo.container.todos.todoList should be []
-				
-	InitAllWithoutCreateCategory
-		GIVEN 
-			InitAllWithCreateCategory
-		WHEN 
-			todo.Init(hash: "#/category_${testId}")
-		THEN
-			expectedState 
-				filterWasSet todo.container.filter should be "all"
-				categoryWasSet todo.container.footer.categoryId should be "category_${testId}"
-				emptyTodoListWasFetched todo.container.todos.todoList should be []
-				
-				
-	InitAllWithTwoOpenTodos
-		GIVEN
-			newtodokeypressed.CreateSecondTodo
-		WHEN 
-			todo.Init(hash: "#/category_${testId}")
-		THEN
-			verifications
-				twoTodosAreDisplayed
 
-	InitOpenWithTwoOpenTodos
-		GIVEN
+	FilterAllOpen
+		GIVEN	
 			newtodokeypressed.CreateSecondTodo
 		WHEN 
-			todo.Init(hash: "#/category_${testId}/open")
+			SetHash(hash: "#/category_${testId}")
 		THEN
-			verifications
+			verifications 
 				twoTodosAreDisplayed
-			
-	InitDoneWithTwoOpenTodos
-		GIVEN
-			newtodokeypressed.CreateSecondTodo
-		WHEN 
-			todo.Init(hash: "#/category_${testId}/done")
+		AND WHEN 
+			SetHash(hash: "#/category_${testId}/open")
 		THEN
-			verifications
+			verifications 
+				twoTodosAreDisplayed
+		AND WHEN 
+			SetHash(hash: "#/category_${testId}/done")
+		THEN
+			verifications 
 				noTodoDisplayed
-			
-	InitAllWithOneOpenTodo
-		GIVEN
-			toggletodo.ToggleTodo
-		WHEN 
-			todo.Init(hash: "#/category_${testId}")
-		THEN
-			verifications
-				twoTodosAreDisplayed
 
-	InitOpenWithOneOpenTodo
-		GIVEN
+	FilterOneOpen
+		GIVEN	
 			toggletodo.ToggleTodo
 		WHEN 
-			todo.Init(hash: "#/category_${testId}/open")
+			SetHash(hash: "#/category_${testId}")
 		THEN
-			verifications
-				oneTodoDisplayed
-			
-	InitDoneWithOneOpenTodo
-		GIVEN
-			toggletodo.ToggleTodo
-		WHEN 
-			todo.Init(hash: "#/category_${testId}/done")
+			verifications 
+				twoTodosAreDisplayed
+		AND WHEN 
+			SetHash(hash: "#/category_${testId}/open")
 		THEN
-			verifications
+			verifications 
 				oneTodoDisplayed
-	
-	InitAllWithNoOpenTodo
-		GIVEN
+		AND WHEN 
+			SetHash(hash: "#/category_${testId}/done")
+		THEN
+			verifications 
+				oneTodoDisplayed
+
+	FilterNoneOpen
+		GIVEN	
 			toggleall.ToggleAllTodos
 		WHEN 
-			todo.Init(hash: "#/category_${testId}")
+			SetHash(hash: "#/category_${testId}")
 		THEN
-			verifications
+			verifications 
 				twoTodosAreDisplayed
-
-	InitOpenWithNoOpenTodo
-		GIVEN
-			toggleall.ToggleAllTodos
-		WHEN 
-			todo.Init(hash: "#/category_${testId}/open")
+		AND WHEN 
+			SetHash(hash: "#/category_${testId}/open")
 		THEN
-			verifications
+			verifications 
 				noTodoDisplayed
-			
-	InitDoneWithNoOpenTodo
-		GIVEN
-			toggleall.ToggleAllTodos
-		WHEN 
-			todo.Init(hash: "#/category_${testId}/done")
+		AND WHEN 
+			SetHash(hash: "#/category_${testId}/done")
 		THEN
-			verifications
+			verifications 
 				twoTodosAreDisplayed
-			
-			
+

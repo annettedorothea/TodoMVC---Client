@@ -6,8 +6,9 @@
 
 
 const ScenarioUtils = require("../../src/ScenarioUtils");
+const InitActionIds  = require("../../gen/actionIds/init/InitActionIds");
 const TodoActionIds  = require("../../gen/actionIds/todo/TodoActionIds");
-const Verifications = require("../../src/init/InitDoneWithTwoOpenTodosVerifications");
+const Verifications = require("../../src/init/FilterOneOpenVerifications");
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;
 
@@ -18,11 +19,11 @@ let driver;
 let appStates = {};
 let verifications = {};
     
-describe("init.InitDoneWithTwoOpenTodos", function () {
+describe("init.FilterOneOpen", function () {
     beforeAll(async function () {
     	driver = ScenarioUtils.createDriver();
     	let appState;
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}`]);
+		await ScenarioUtils.invokeAction(driver, InitActionIds.setHash, [`#/category_${testId}`]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`1st Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
 			driver,
@@ -36,7 +37,6 @@ describe("init.InitDoneWithTwoOpenTodos", function () {
 				uuid: `${testId}`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}`, "system-time", new Date('2020-10-10T14:48:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`2nd Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
@@ -51,21 +51,43 @@ describe("init.InitDoneWithTwoOpenTodos", function () {
 				uuid: `${testId}_2`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_2`, "system-time", new Date('2020-10-10T14:58:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
+		await ScenarioUtils.invokeAction(driver, TodoActionIds.toggleTodo, [`${testId}`]);
 
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}/done`]);
+		await ScenarioUtils.invokeAction(driver, InitActionIds.setHash, [`#/category_${testId}`]);
 		await ScenarioUtils.waitInMillis(10);
 		
 		appState = await ScenarioUtils.getAppState(driver);
 		
-		verifications.noTodoDisplayed = await Verifications.noTodoDisplayed(driver, testId);
+		verifications.twoTodosAreDisplayed = await Verifications.twoTodosAreDisplayed(driver, testId);
+		
+		await ScenarioUtils.invokeAction(driver, InitActionIds.setHash, [`#/category_${testId}/open`]);
+		await ScenarioUtils.waitInMillis(10);
+		
+		appState = await ScenarioUtils.getAppState(driver);
+		
+		verifications.oneTodoDisplayed = await Verifications.oneTodoDisplayed(driver, testId);
+		
+		await ScenarioUtils.invokeAction(driver, InitActionIds.setHash, [`#/category_${testId}/done`]);
+		await ScenarioUtils.waitInMillis(10);
+		
+		appState = await ScenarioUtils.getAppState(driver);
+		
+		verifications.oneTodoDisplayed = await Verifications.oneTodoDisplayed(driver, testId);
 		
     });
 
 	
-	it("noTodoDisplayed", async () => {
-		expect(verifications.noTodoDisplayed, "verifications.noTodoDisplayed").toBeTrue();
+	it("twoTodosAreDisplayed", async () => {
+		expect(verifications.twoTodosAreDisplayed, "verifications.twoTodosAreDisplayed").toBeTrue();
+	});
+	
+	it("oneTodoDisplayed", async () => {
+		expect(verifications.oneTodoDisplayed, "verifications.oneTodoDisplayed").toBeTrue();
+	});
+	
+	it("oneTodoDisplayed", async () => {
+		expect(verifications.oneTodoDisplayed, "verifications.oneTodoDisplayed").toBeTrue();
 	});
 
     afterAll(async function () {

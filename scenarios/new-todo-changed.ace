@@ -6,19 +6,19 @@ scenarios
 
 	NewTodoChanged
 		GIVEN 
-			init.InitAllWithCreateCategory
+			init.Init
 		WHEN
-			todo.NewTodoChanged(newTodo : "1st Item ${testId}")
+			todo.NewTodoChanged(value : "1st Item ${testId}")
 		THEN
 			expectedState 
-				newTodoWasSet todo.container.newTodoInput.newTodo should be "1st Item ${testId}"
+				newTodoWasSet todo.container.header.newTodo.value should be "1st Item ${testId}"
 
 	NewTodoChangedSecondTime
 		GIVEN 
 			newtodokeypressed.CreateFirstTodo
 		WHEN
-			todo.NewTodoChanged(newTodo : "2nd Item ${testId}")
+			todo.NewTodoChanged(value : "2nd Item ${testId}")
 		THEN
 			expectedState 
-				newTodoWasSet todo.container.newTodoInput.newTodo should be "2nd Item ${testId}"
+				newTodoWasSet todo.container.header.newTodo.value should be "2nd Item ${testId}"
 

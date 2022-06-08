@@ -8,61 +8,79 @@ scenarios
 		GIVEN 
 			newtodokeypressed.CreateSecondTodo
 		WHEN
-			todo.ToggleTodo(id : "checkbox_${testId}")
-			squishyValues 
-				{
-					uuid "${testId}_toggle"
-					serverSystemTime "2020-10-10T15:58:37.000Z"
-				}
+			todo.ToggleTodo(id : "${testId}")
 		THEN
 			expectedState 
 				todoWasSetToDone todo.container.todos.todoList should be [
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:48:37",
 						description: "1st Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '1st Item ${testId}'
+						},
 						done: true,
 						id: "${testId}",
-						updatedDateTime: "2020-10-10T15:58:37"
+						readOnly: true
 					},
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:58:37",
 						description: "2nd Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '2nd Item ${testId}'
+						},
 						done: false,
 						id: "${testId}_2",
-						updatedDateTime: null
+						readOnly: true
 					}
 				]
-				
-	ToggleTodoTwice
+	
+	ToggleTodoFlow
 		GIVEN 
-			ToggleTodo
+			newtodokeypressed.CreateSecondTodo
 		WHEN
-			todo.ToggleTodo(id : "checkbox_${testId}")
-			squishyValues 
-				{
-					uuid "${testId}_toggle2"
-					serverSystemTime "2020-10-10T15:59:37.000Z"
-				}
+			todo.ToggleTodo(id : "${testId}")
+		THEN
+			expectedState 
+				todoWasSetToDone todo.container.todos.todoList should be [
+					{
+						description: "1st Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '1st Item ${testId}'
+						},
+						done: true,
+						id: "${testId}",
+						readOnly: true
+					},
+					{
+						description: "2nd Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '2nd Item ${testId}'
+						},
+						done: false,
+						id: "${testId}_2",
+						readOnly: true
+					}
+				]
+		AND WHEN
+			todo.ToggleTodo(id : "${testId}")
 		THEN
 			expectedState 
 				todoWasSetToOpen todo.container.todos.todoList should be [
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:48:37",
 						description: "1st Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '1st Item ${testId}'
+						},
 						done: false,
 						id: "${testId}",
-						updatedDateTime: "2020-10-10T15:59:37"
+						readOnly: true
 					},
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:58:37",
 						description: "2nd Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '2nd Item ${testId}'
+						},
 						done: false,
 						id: "${testId}_2",
-						updatedDateTime: null
+						readOnly: true
 					}
 				]
 				

@@ -8,9 +8,29 @@ scenarios
 		GIVEN 
 			edittodo.EditTodo
 		WHEN
-			todo.EditedTodoChanged(editedDescription : "EDIT 1st Item ${testId}")
+			todo.EditedTodoChanged(value : "EDIT 1st Item ${testId}", id: "${testId}")
 		THEN
 			expectedState 
-				editedDescriptionWasChanged todo.container.todos.editedDescription should be "EDIT 1st Item ${testId}"
+				editedDescriptionWasChanged todo.container.todos.todoList should be [
+					{
+						description: "1st Item ${testId}",
+						descriptionInput: { 
+							editedDescription: 'EDIT 1st Item ${testId}'
+						},
+						done: false,
+						id: "${testId}",
+						readOnly: false
+					},
+					{
+						description: "2nd Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '2nd Item ${testId}'
+						},
+						done: false,
+						id: "${testId}_2",
+						readOnly: true
+					}
+				]
+
 
 

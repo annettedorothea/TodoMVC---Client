@@ -13,19 +13,19 @@ scenarios
 				{}, 
 				{
 					uuid "${testId}"
-					serverSystemTime "2020-10-10T14:48:37.000Z"
 				}
 		THEN
 			expectedState 
 				todoWasCreatedAndReturedInTodoList todo.container.todos.todoList should be [{
-					categoryId: "category_${testId}",
-					createdDateTime: "2020-10-10T14:48:37",
 					description: "1st Item ${testId}",
+					descriptionInput: { 
+						editedDescription: '1st Item ${testId}'
+					},
 					done: false,
 					id: "${testId}",
-					updatedDateTime: null
+					readOnly: true
 				}]
-				newTodoWasReset todo.container.newTodoInput.newTodo should be ""
+				newTodoWasReset todo.container.header.newTodo.value should be ""
 
 	EscTodoCreation
 		GIVEN 
@@ -35,7 +35,7 @@ scenarios
 		THEN
 			expectedState 
 				todoWasNotCreatedAndReturedInTodoList todo.container.todos.todoList should be []
-				newTodoWasReset todo.container.newTodoInput.newTodo should be ""
+				newTodoWasReset todo.container.header.newTodo.value should be ""
 
 	CreateSecondTodo
 		GIVEN 
@@ -46,29 +46,30 @@ scenarios
 				{}, 
 				{
 					uuid "${testId}_2"
-					serverSystemTime "2020-10-10T14:58:37.000Z"
 				}
 		THEN
 			expectedState 
 				todoWasCreatedAndReturedInTodoList todo.container.todos.todoList should be [
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:48:37",
 						description: "1st Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '1st Item ${testId}'
+						},
 						done: false,
 						id: "${testId}",
-						updatedDateTime: null
+						readOnly: true
 					},
 					{
-						categoryId: "category_${testId}",
-						createdDateTime: "2020-10-10T14:58:37",
 						description: "2nd Item ${testId}",
+						descriptionInput: { 
+							editedDescription: '2nd Item ${testId}'
+						},
 						done: false,
 						id: "${testId}_2",
-						updatedDateTime: null
+						readOnly: true
 					}
 				]
-				newTodoWasReset todo.container.newTodoInput.newTodo should be ""
+				newTodoWasReset todo.container.header.newTodo.value should be ""
 				
 				
 				

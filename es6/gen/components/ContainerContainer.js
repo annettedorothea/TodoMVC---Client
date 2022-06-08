@@ -12,6 +12,7 @@ import { HeaderContainer } from "./container/HeaderContainer";
 import { MainContainer } from "./container/MainContainer";
 import { TodosContainer } from "./container/TodosContainer";
 import { FooterContainer } from "./container/FooterContainer";
+import * as AppState from "../../src/AppState";
 
 export let setContainerState;
 

@@ -7,6 +7,7 @@
 
 const ScenarioUtils = require("../../src/ScenarioUtils");
 const TodoActionIds  = require("../../gen/actionIds/todo/TodoActionIds");
+const InitActionIds  = require("../../gen/actionIds/init/InitActionIds");
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;
 
@@ -21,7 +22,7 @@ describe("edittodokeypressed.EscUpdateFirstTodo", function () {
     beforeAll(async function () {
     	driver = ScenarioUtils.createDriver();
     	let appState;
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}`]);
+		await ScenarioUtils.invokeAction(driver, InitActionIds.setHash, [`#/category_${testId}`]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`1st Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
 			driver,
@@ -35,7 +36,6 @@ describe("edittodokeypressed.EscUpdateFirstTodo", function () {
 				uuid: `${testId}`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}`, "system-time", new Date('2020-10-10T14:48:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`2nd Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
@@ -50,45 +50,40 @@ describe("edittodokeypressed.EscUpdateFirstTodo", function () {
 				uuid: `${testId}_2`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_2`, "system-time", new Date('2020-10-10T14:58:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.editTodo, [`${testId}`]);
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.editedTodoChanged, [`EDIT 1st Item ${testId}`]);
+		await ScenarioUtils.invokeAction(driver, TodoActionIds.editedTodoChanged, [`EDIT 1st Item ${testId}`,`${testId}`]);
 
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.editedTodoKeyPressed, [27]);
+		await ScenarioUtils.invokeAction(driver, TodoActionIds.editedTodoKeyPressed, [27,`${testId}`]);
 		await ScenarioUtils.waitInMillis(10);
 		
 		appState = await ScenarioUtils.getAppState(driver);
-		appStates.editedTodoIdWasReset = appState;
-		appStates.editedDescriptionWasReset = appState;
-		appStates.todoWasNotUpdated = appState;
+		appStates.todoWasNozUpdated = appState;
 		
 		
     });
 
-	it("editedTodoIdWasReset", async () => {
-		expect(appStates.editedTodoIdWasReset.container.todos.editedTodoId, "editedTodoIdWasReset").toEqual(null)
-	});
-	it("editedDescriptionWasReset", async () => {
-		expect(appStates.editedDescriptionWasReset.container.todos.editedDescription, "editedDescriptionWasReset").toEqual(``)
-	});
-	it("todoWasNotUpdated", async () => {
-		expect(appStates.todoWasNotUpdated.container.todos.todoList, "todoWasNotUpdated").toEqual([
+	it("todoWasNozUpdated", async () => {
+		expect(appStates.todoWasNozUpdated.container.todos.todoList, "todoWasNozUpdated").toEqual([
 			{ 
-				categoryId : `category_${testId}`,
-				createdDateTime : `2020-10-10T14:48:37`,
 				description : `1st Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `1st Item ${testId}`
+				},
+				
 				done : false,
 				id : `${testId}`,
-				updatedDateTime : null
+				readOnly : true
 			},
 			{ 
-				categoryId : `category_${testId}`,
-				createdDateTime : `2020-10-10T14:58:37`,
 				description : `2nd Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `2nd Item ${testId}`
+				},
+				
 				done : false,
 				id : `${testId}_2`,
-				updatedDateTime : null
+				readOnly : true
 			}
 		]
 		)

@@ -7,6 +7,7 @@
 
 const ScenarioUtils = require("../../src/ScenarioUtils");
 const TodoActionIds  = require("../../gen/actionIds/todo/TodoActionIds");
+const InitActionIds  = require("../../gen/actionIds/init/InitActionIds");
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = ScenarioUtils.defaultTimeout;
 
@@ -21,7 +22,7 @@ describe("edittodokeypressed.UpdateFirstTodo", function () {
     beforeAll(async function () {
     	driver = ScenarioUtils.createDriver();
     	let appState;
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.init, [`#/category_${testId}`]);
+		await ScenarioUtils.invokeAction(driver, InitActionIds.setHash, [`#/category_${testId}`]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`1st Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
 			driver,
@@ -35,7 +36,6 @@ describe("edittodokeypressed.UpdateFirstTodo", function () {
 				uuid: `${testId}`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}`, "system-time", new Date('2020-10-10T14:48:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoChanged, [`2nd Item ${testId}`]);
 		await ScenarioUtils.addSquishyValueClient(
@@ -50,58 +50,40 @@ describe("edittodokeypressed.UpdateFirstTodo", function () {
 				uuid: `${testId}_2`
 			}
 		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_2`, "system-time", new Date('2020-10-10T14:58:37.000Z').toISOString());
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.newTodoKeyPressed, [13]);
 		await ScenarioUtils.invokeAction(driver, TodoActionIds.editTodo, [`${testId}`]);
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.editedTodoChanged, [`EDIT 1st Item ${testId}`]);
+		await ScenarioUtils.invokeAction(driver, TodoActionIds.editedTodoChanged, [`EDIT 1st Item ${testId}`,`${testId}`]);
 
-		await ScenarioUtils.addSquishyValueClient(
-			driver,
-			{
-				uuid: ``
-			}
-		);
-		await ScenarioUtils.addSquishyValueClient(
-			driver,
-			{
-				uuid: `${testId}_update`
-			}
-		);
-		await ScenarioUtils.addSquishyValueServer(driver, `${testId}_update`, "system-time", new Date('2020-10-10T15:48:37.000Z').toISOString());
-		await ScenarioUtils.invokeAction(driver, TodoActionIds.editedTodoKeyPressed, [13]);
+		await ScenarioUtils.invokeAction(driver, TodoActionIds.editedTodoKeyPressed, [13,`${testId}`]);
 		await ScenarioUtils.waitInMillis(10);
 		
 		appState = await ScenarioUtils.getAppState(driver);
-		appStates.editedTodoIdWasReset = appState;
-		appStates.editedDescriptionWasReset = appState;
 		appStates.todoWasUpdated = appState;
 		
 		
     });
 
-	it("editedTodoIdWasReset", async () => {
-		expect(appStates.editedTodoIdWasReset.container.todos.editedTodoId, "editedTodoIdWasReset").toEqual(null)
-	});
-	it("editedDescriptionWasReset", async () => {
-		expect(appStates.editedDescriptionWasReset.container.todos.editedDescription, "editedDescriptionWasReset").toEqual(``)
-	});
 	it("todoWasUpdated", async () => {
 		expect(appStates.todoWasUpdated.container.todos.todoList, "todoWasUpdated").toEqual([
 			{ 
-				categoryId : `category_${testId}`,
-				createdDateTime : `2020-10-10T14:48:37`,
 				description : `EDIT 1st Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `EDIT 1st Item ${testId}`
+				},
+				
 				done : false,
 				id : `${testId}`,
-				updatedDateTime : `2020-10-10T15:48:37`
+				readOnly : true
 			},
 			{ 
-				categoryId : `category_${testId}`,
-				createdDateTime : `2020-10-10T14:58:37`,
 				description : `2nd Item ${testId}`,
+				descriptionInput : { 
+					editedDescription : `2nd Item ${testId}`
+				},
+				
 				done : false,
 				id : `${testId}_2`,
-				updatedDateTime : null
+				readOnly : true
 			}
 		]
 		)

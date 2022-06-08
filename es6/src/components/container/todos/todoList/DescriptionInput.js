@@ -19,6 +19,7 @@ export const DescriptionInput = (props) => {
     }
     return <input
         className="edit"
+        id={`editedTodo_${props.id}`}
         value={props.editedDescription}
         onChange={(event) => editedTodoChanged(event.target.value, props.id)}
         onKeyUp={(event) => editedTodoKeyPressed(event.keyCode, props.id)}
