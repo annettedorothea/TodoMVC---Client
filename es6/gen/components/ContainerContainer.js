@@ -25,11 +25,11 @@ export const ContainerContainer = () => {
 		return null;
 	}
 	
-	return <Container {...props}>
-		{ props.header && <HeaderContainer {...props.header }   /> }
-		{ props.main && <MainContainer {...props.main }   /> }
-		{ props.todos && <TodosContainer {...props.todos }   /> }
-		{ props.footer && <FooterContainer {...props.footer }   /> }
+	return <Container {...props} >
+		<HeaderContainer {...props.header }    />
+		<MainContainer {...props.main }    />
+		<TodosContainer {...props.todos }    />
+		<FooterContainer {...props.footer }    />
 	</Container> 
 }
 

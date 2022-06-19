@@ -9,12 +9,13 @@ import React from "react";
 
 import { Main } from "../../../src/components/container/Main";
 import { ToggleAll } from "../../../src/components/container/main/ToggleAll";
+import { toggleAll } from "../../todo/ActionFunctions";
 
 
 export const MainContainer = ( props ) => {
 	
-	return <Main {...props}>
-		<ToggleAll {...props.toggleAll }   />
+	return <Main {...props} >
+		<ToggleAll {...props.toggleAll }   onChange={toggleAll}  />
 	</Main> 
 }
 

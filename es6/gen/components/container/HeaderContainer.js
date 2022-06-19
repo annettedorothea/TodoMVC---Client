@@ -10,13 +10,15 @@ import React from "react";
 import { Header } from "../../../src/components/container/Header";
 import { HeadingContainer } from "./header/HeadingContainer";
 import { NewTodo } from "../../../src/components/container/header/NewTodo";
+import { newTodoChanged } from "../../todo/ActionFunctions";
+import { newTodoKeyPressed } from "../../todo/ActionFunctions";
 
 
 export const HeaderContainer = ( props ) => {
 	
-	return <Header {...props}>
-		{ props.heading && <HeadingContainer {...props.heading }   /> }
-		<NewTodo {...props.newTodo }   />
+	return <Header {...props} >
+		<HeadingContainer {...props.heading }    />
+		<NewTodo {...props.newTodo }   onChange={newTodoChanged} onKeyUp={newTodoKeyPressed}  />
 	</Header> 
 }
 

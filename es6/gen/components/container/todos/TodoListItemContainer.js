@@ -11,14 +11,19 @@ import { TodoListItem } from "../../../../src/components/container/todos/TodoLis
 import { DoneCheckbox } from "../../../../src/components/container/todos/todoList/DoneCheckbox";
 import { DescriptionInput } from "../../../../src/components/container/todos/todoList/DescriptionInput";
 import { DeleteTodo } from "../../../../src/components/container/todos/todoList/DeleteTodo";
+import { toggleTodo } from "../../../todo/ActionFunctions";
+import { editedTodoChanged } from "../../../todo/ActionFunctions";
+import { editedTodoKeyPressed } from "../../../todo/ActionFunctions";
+import { editTodo } from "../../../todo/ActionFunctions";
+import { deleteTodo } from "../../../todo/ActionFunctions";
 
 
 export const TodoListItemContainer = ( props ) => {
 	
-	return <TodoListItem {...props}>
-		<DoneCheckbox {...props.doneCheckbox }  done={props.done} id={props.id}  />
-		<DescriptionInput {...props.descriptionInput }  description={props.description} readOnly={props.readOnly} id={props.id}  />
-		<DeleteTodo {...props.deleteTodo }  id={props.id}  />
+	return <TodoListItem {...props} >
+		<DoneCheckbox {...props.doneCheckbox }  done={props.done} id={props.id}  onChange={toggleTodo}  />
+		<DescriptionInput {...props.descriptionInput }  description={props.description} readOnly={props.readOnly} id={props.id}  onChange={editedTodoChanged} onKeyUp={editedTodoKeyPressed} onDoubleClick={editTodo}  />
+		<DeleteTodo {...props.deleteTodo }  id={props.id}  onClick={deleteTodo}  />
 	</TodoListItem> 
 }
 

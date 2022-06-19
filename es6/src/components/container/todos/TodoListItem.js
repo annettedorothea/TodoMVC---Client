@@ -7,9 +7,6 @@
 
 import React from "react";
 
-import {deleteTodo, editedTodoChanged, editTodo, toggleTodo} from "../../../../gen/todo/ActionFunctions";
-import { editedTodoKeyPressed } from "../../../../gen/todo/ActionFunctions";
-
 export const TodoListItem = (props) => {
 	if (!props.readOnly) {
 		return <li className="editing" id={props.id}>

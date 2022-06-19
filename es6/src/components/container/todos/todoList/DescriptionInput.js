@@ -5,14 +5,11 @@
 
 import React from "react";
 
-import {editedTodoChanged, editTodo} from "../../../../../gen/todo/ActionFunctions";
-import {editedTodoKeyPressed} from "../../../../../gen/todo/ActionFunctions";
-
 export const DescriptionInput = (props) => {
     if (props.readOnly) {
         return <label
             id={`edit_${props.id}`}
-            onDoubleClick={() => editTodo(props.id)}
+            onDoubleClick={() => props.onDoubleClick(props.id)}
         >
             {props.description}
         </label>
@@ -21,8 +18,8 @@ export const DescriptionInput = (props) => {
         className="edit"
         id={`editedTodo_${props.id}`}
         value={props.editedDescription}
-        onChange={(event) => editedTodoChanged(event.target.value, props.id)}
-        onKeyUp={(event) => editedTodoKeyPressed(event.keyCode, props.id)}
+        onChange={(event) => props.onChange(event.target.value, props.id)}
+        onKeyUp={(event) => props.onKeyUp(event.keyCode, props.id)}
     />
 }
 

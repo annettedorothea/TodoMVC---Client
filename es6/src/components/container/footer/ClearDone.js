@@ -5,12 +5,10 @@
 
 import React from "react";
 
-import {clearDone} from "../../../../gen/todo/ActionFunctions";
-
 export const ClearDone = (props) => {
     return <button
         className="clear-completed"
-        onClick={clearDone}
+        onClick={props.onClick}
     >
         Clear completed
     </button>

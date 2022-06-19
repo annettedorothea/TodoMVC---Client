@@ -5,13 +5,11 @@
 
 import React from "react";
 
-import {toggleAll} from "../../../../gen/todo/ActionFunctions";
-
 export const ToggleAll = (props) => {
-    return 						<input
+    return <input
         className="toggle-all"
         type="checkbox"
-        onChange={toggleAll}
+        onChange={props.onChange}
         checked={props.checked}
     />
 

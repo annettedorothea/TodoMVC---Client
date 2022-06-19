@@ -5,18 +5,16 @@
 
 import React from "react";
 
-import {changeFilter} from "../../../../gen/todo/ActionFunctions";
-
 export const Filter = (props) => {
     return <ul className="filters">
         <li>
-            <a onClick={() => changeFilter("all")} className={props.value === 'all' ? 'selected' : ''}>All</a>
+            <a onClick={() => props.onChange("all")} className={props.value === 'all' ? 'selected' : ''}>All</a>
         </li>
         <li>
-            <a onClick={() => changeFilter("open")} className={props.value === 'open' ? 'selected' : ''}>Active</a>
+            <a onClick={() => props.onChange("open")} className={props.value === 'open' ? 'selected' : ''}>Active</a>
         </li>
         <li>
-            <a onClick={() => changeFilter("done")} className={props.value === 'done' ? 'selected' : ''}>Completed</a>
+            <a onClick={() => props.onChange("done")} className={props.value === 'done' ? 'selected' : ''}>Completed</a>
         </li>
     </ul>
 

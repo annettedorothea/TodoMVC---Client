@@ -13,8 +13,8 @@ import { TodoListItemContainer } from "./todos/TodoListItemContainer";
 
 export const TodosContainer = ( props ) => {
 	
-	return <Todos {...props}>
-		{ props.todoList ? props.todoList.map(i => <TodoListItemContainer {...i} key={i.id}   />) : [] }
+	return <Todos {...props} >
+		{ props.todoList ? props.todoList.map((item, index) => <TodoListItemContainer {...item} key={item.id} index={index}    />) : [] }
 	</Todos> 
 }
 

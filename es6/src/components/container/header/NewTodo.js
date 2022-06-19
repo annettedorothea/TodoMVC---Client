@@ -7,17 +7,14 @@
 
 import React from "react";
 
-import { newTodoChanged } from "../../../../gen/todo/ActionFunctions";
-import { newTodoKeyPressed } from "../../../../gen/todo/ActionFunctions";
-
 export const NewTodo = (props) => {
 	return <input
 		value={props.value}
 		placeholder="What needs to be done?"
 		className="new-todo"
 		id="newTodoInput"
-		onChange={(event) => newTodoChanged(event.target.value)}
-		onKeyUp={(event) => newTodoKeyPressed(event.keyCode)}
+		onChange={(event) => props.onChange(event.target.value)}
+		onKeyUp={(event) => props.onKeyUp(event.keyCode)}
 	/>
 }
 

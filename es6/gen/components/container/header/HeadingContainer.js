@@ -13,8 +13,8 @@ import { SpinnerContainer } from "./heading/SpinnerContainer";
 
 export const HeadingContainer = ( props ) => {
 	
-	return <Heading {...props}>
-		{ props.spinner && <SpinnerContainer {...props.spinner }   /> }
+	return <Heading {...props} >
+		<SpinnerContainer {...props.spinner }    />
 	</Heading> 
 }
 
