@@ -27,20 +27,28 @@ export default class AbstractToggleAllCommand extends AsynchronousCommand {
 	addOkOutcome(data) {
 		data.outcomes.push("ok");
 	}
+	
+	allMandatoryValuesAreSet(data) {
+		return true;
+	}
 
 	execute(data) {
 	    return new Promise((resolve, reject) => {
-			AppUtils.httpPut(
-					`${AppUtils.settings.rootPath}/todos/toggle-all?${data.categoryId ? `categoryId=${data.categoryId}` : ""}`, 
-					data.uuid, 
-					false)
-				.then(() => {
-					this.handleResponse(data, resolve, reject);
-				}, (error) => {
-					data.error = error;
-					this.handleError(data, resolve, reject);
-				})
-				.catch(x => reject(x));
+	    	if (this.allMandatoryValuesAreSet(data)) {
+				AppUtils.httpPut(
+						`${AppUtils.settings.rootPath}/todos/toggle-all?${data.categoryId ? `categoryId=${data.categoryId}` : ""}`, 
+						data.uuid, 
+						false)
+					.then(() => {
+						this.handleResponse(data, resolve, reject);
+					}, (error) => {
+						data.error = error;
+						this.handleError(data, resolve, reject);
+					})
+					.catch(x => reject(x));
+			} else {
+				resolve(data);
+			}
 	    });
 	}
 	

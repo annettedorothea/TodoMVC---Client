@@ -21,17 +21,17 @@ export default class AbstractGetTodoListAction extends Action {
 	}
 
 	preCall() {
-		AppState.set(
-			{loading: true}, 
-			["container", "header", "heading", "spinner", "loading"]
+		AppState.merge(
+			{display: true}, 
+			["container", "header", "heading", "spinner", "display"]
 		)
 		AppState.stateUpdated();
 	}
 	
 	postCall() {
-		AppState.set(
-			{loading: false}, 
-			["container", "header", "heading", "spinner", "loading"]
+		AppState.merge(
+			{display: false}, 
+			["container", "header", "heading", "spinner", "display"]
 		)
 		AppState.stateUpdated();
 	}

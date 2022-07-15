@@ -9,7 +9,7 @@ import React from "react";
 
 
 export const Spinner = (props) => {
-	if (props.loading) {
+	if (props.display) {
 		return <div className="spinner"/>
 	}
 	return null;

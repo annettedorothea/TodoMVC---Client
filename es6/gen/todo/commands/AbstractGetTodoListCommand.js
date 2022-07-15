@@ -38,21 +38,29 @@ export default class AbstractGetTodoListCommand extends AsynchronousCommand {
 	addCategoryDoesNotExistOutcome(data) {
 		data.outcomes.push("categoryDoesNotExist");
 	}
+	
+	allMandatoryValuesAreSet(data) {
+		return true;
+	}
 
 	execute(data) {
 	    return new Promise((resolve, reject) => {
-			AppUtils.httpGet(
-					`${AppUtils.settings.rootPath}/todos/all?${data.categoryId ? `categoryId=${data.categoryId}` : ""}`, 
-					data.uuid, 
-					false)
-				.then((response) => {
-					data.todoList = response.todoList;
-					this.handleResponse(data, resolve, reject);
-				}, (error) => {
-					data.error = error;
-					this.handleError(data, resolve, reject);
-				})
-				.catch(x => reject(x));
+	    	if (this.allMandatoryValuesAreSet(data)) {
+				AppUtils.httpGet(
+						`${AppUtils.settings.rootPath}/todos/all?${data.categoryId ? `categoryId=${data.categoryId}` : ""}`, 
+						data.uuid, 
+						false)
+					.then((response) => {
+						data.todoList = response.todoList;
+						this.handleResponse(data, resolve, reject);
+					}, (error) => {
+						data.error = error;
+						this.handleError(data, resolve, reject);
+					})
+					.catch(x => reject(x));
+			} else {
+				resolve(data);
+			}
 	    });
 	}
 	

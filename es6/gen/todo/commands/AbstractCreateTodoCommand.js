@@ -34,25 +34,33 @@ export default class AbstractCreateTodoCommand extends AsynchronousCommand {
 	addEmptyOutcome(data) {
 		data.outcomes.push("empty");
 	}
+	
+	allMandatoryValuesAreSet(data) {
+		return true;
+	}
 
 	execute(data) {
 	    return new Promise((resolve, reject) => {
-	    	let payload = {
-	    		description : data.description,
-	    		categoryId : data.categoryId
-	    	};
-			AppUtils.httpPost(
-					`${AppUtils.settings.rootPath}/todos/create`, 
-					data.uuid, 
-					false,
-					 payload)
-				.then(() => {
-					this.handleResponse(data, resolve, reject);
-				}, (error) => {
-					data.error = error;
-					this.handleError(data, resolve, reject);
-				})
-				.catch(x => reject(x));
+	    	if (this.allMandatoryValuesAreSet(data)) {
+		    	let payload = {
+		    		description : data.description,
+		    		categoryId : data.categoryId
+		    	};
+				AppUtils.httpPost(
+						`${AppUtils.settings.rootPath}/todos/create`, 
+						data.uuid, 
+						false,
+						 payload)
+					.then(() => {
+						this.handleResponse(data, resolve, reject);
+					}, (error) => {
+						data.error = error;
+						this.handleError(data, resolve, reject);
+					})
+					.catch(x => reject(x));
+			} else {
+				resolve(data);
+			}
 	    });
 	}
 	

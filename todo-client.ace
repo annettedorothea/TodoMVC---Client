@@ -17,7 +17,7 @@ ACE
 	CreateCategory
 		fromAppState(container.footer.filter.categoryId)
 			call com.anfelisa.todo.CreateCategory
-			loadingFlag container.header.heading.spinner.loading 
+			set loading container.header.heading.spinner.display 
 		on ok triggers ( GetTodoListWithoutCategoryCheck )
 	
 	GetTodoList 
@@ -27,7 +27,7 @@ ACE
 			container.todos.todoList as lastTodoList
 		)
 			call com.anfelisa.todo.GetAllTodos  
-			loadingFlag container.header.heading.spinner.loading 
+			set loading container.header.heading.spinner.display 
 		on ok (
 			set container.todos.todoList
 			set container.main.toggleAll.checked
@@ -42,7 +42,7 @@ ACE
 			container.todos.todoList as lastTodoList
 		)
 			call com.anfelisa.todo.GetAllTodos  
-			loadingFlag container.header.heading.spinner.loading 
+			set loading container.header.heading.spinner.display 
 		on ok (
 			set container.todos.todoList
 			set container.main.toggleAll.checked
@@ -60,7 +60,7 @@ ACE
 	CreateTodo
 		fromAppState(container.header.newTodo.value as description, container.footer.filter.categoryId)
 			call com.anfelisa.todo.CreateTodo
-			loadingFlag container.header.heading.spinner.loading 
+			set loading container.header.heading.spinner.display 
 		on ok (set container.header.newTodo.value) triggers ( GetTodoList)
 		on empty
 		
@@ -87,7 +87,7 @@ ACE
 	UpdateTodo (id)
 		fromAppState ( container.todos.todoList )
 			call com.anfelisa.todo.UpdateTodo
-			loadingFlag container.header.heading.spinner.loading 
+			set loading container.header.heading.spinner.display 
 		on ok triggers (GetTodoList)
 		on empty (
 			set container.todos.todoList 
@@ -95,24 +95,24 @@ ACE
 		
 	ToggleTodo (id)
 			call com.anfelisa.todo.ToggleTodo
-			loadingFlag container.header.heading.spinner.loading 
+			set loading container.header.heading.spinner.display 
 		on ok triggers (GetTodoList)
 	
 	ToggleAll 
 		fromAppState(container.footer.filter.categoryId)
 			call com.anfelisa.todo.ToggleAll 
-			loadingFlag container.header.heading.spinner.loading 
+			set loading container.header.heading.spinner.display 
 		on ok triggers (GetTodoList)
 	
 	DeleteTodo (id)
 			call com.anfelisa.todo.DeleteTodo 
-			loadingFlag container.header.heading.spinner.loading 
+			set loading container.header.heading.spinner.display 
 		on ok triggers (GetTodoList)
 	
 	ClearDone
 		fromAppState(container.footer.filter.categoryId) 
 			call com.anfelisa.todo.ClearDone 
-			loadingFlag container.header.heading.spinner.loading 
+			set loading container.header.heading.spinner.display 
 		on ok triggers (GetTodoList)
 		
 	ChangeFilter (value)
@@ -123,7 +123,7 @@ ui JSX container {
 	header {
 		heading {
 			spinner {
-				loading
+				display
 			}
 		}
 		newTodo TextInput {

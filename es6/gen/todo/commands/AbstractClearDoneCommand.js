@@ -27,20 +27,28 @@ export default class AbstractClearDoneCommand extends AsynchronousCommand {
 	addOkOutcome(data) {
 		data.outcomes.push("ok");
 	}
+	
+	allMandatoryValuesAreSet(data) {
+		return true;
+	}
 
 	execute(data) {
 	    return new Promise((resolve, reject) => {
-			AppUtils.httpDelete(
-					`${AppUtils.settings.rootPath}/todos/clear-done?${data.categoryId ? `categoryId=${data.categoryId}` : ""}`, 
-					data.uuid, 
-					false)
-				.then(() => {
-					this.handleResponse(data, resolve, reject);
-				}, (error) => {
-					data.error = error;
-					this.handleError(data, resolve, reject);
-				})
-				.catch(x => reject(x));
+	    	if (this.allMandatoryValuesAreSet(data)) {
+				AppUtils.httpDelete(
+						`${AppUtils.settings.rootPath}/todos/clear-done?${data.categoryId ? `categoryId=${data.categoryId}` : ""}`, 
+						data.uuid, 
+						false)
+					.then(() => {
+						this.handleResponse(data, resolve, reject);
+					}, (error) => {
+						data.error = error;
+						this.handleError(data, resolve, reject);
+					})
+					.catch(x => reject(x));
+			} else {
+				resolve(data);
+			}
 	    });
 	}
 	

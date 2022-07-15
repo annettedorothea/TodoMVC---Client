@@ -27,24 +27,32 @@ export default class AbstractCreateCategoryCommand extends AsynchronousCommand {
 	addOkOutcome(data) {
 		data.outcomes.push("ok");
 	}
+	
+	allMandatoryValuesAreSet(data) {
+		return true;
+	}
 
 	execute(data) {
 	    return new Promise((resolve, reject) => {
-	    	let payload = {
-	    		categoryId : data.categoryId
-	    	};
-			AppUtils.httpPost(
-					`${AppUtils.settings.rootPath}/category/create`, 
-					data.uuid, 
-					false,
-					 payload)
-				.then(() => {
-					this.handleResponse(data, resolve, reject);
-				}, (error) => {
-					data.error = error;
-					this.handleError(data, resolve, reject);
-				})
-				.catch(x => reject(x));
+	    	if (this.allMandatoryValuesAreSet(data)) {
+		    	let payload = {
+		    		categoryId : data.categoryId
+		    	};
+				AppUtils.httpPost(
+						`${AppUtils.settings.rootPath}/category/create`, 
+						data.uuid, 
+						false,
+						 payload)
+					.then(() => {
+						this.handleResponse(data, resolve, reject);
+					}, (error) => {
+						data.error = error;
+						this.handleError(data, resolve, reject);
+					})
+					.catch(x => reject(x));
+			} else {
+				resolve(data);
+			}
 	    });
 	}
 	

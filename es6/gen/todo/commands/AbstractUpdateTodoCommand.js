@@ -30,25 +30,33 @@ export default class AbstractUpdateTodoCommand extends AsynchronousCommand {
 	addEmptyOutcome(data) {
 		data.outcomes.push("empty");
 	}
+	
+	allMandatoryValuesAreSet(data) {
+		return true;
+	}
 
 	execute(data) {
 	    return new Promise((resolve, reject) => {
-	    	let payload = {
-	    		id : data.id,
-	    		description : data.description
-	    	};
-			AppUtils.httpPut(
-					`${AppUtils.settings.rootPath}/todos/update`, 
-					data.uuid, 
-					false,
-					 payload)
-				.then(() => {
-					this.handleResponse(data, resolve, reject);
-				}, (error) => {
-					data.error = error;
-					this.handleError(data, resolve, reject);
-				})
-				.catch(x => reject(x));
+	    	if (this.allMandatoryValuesAreSet(data)) {
+		    	let payload = {
+		    		id : data.id,
+		    		description : data.description
+		    	};
+				AppUtils.httpPut(
+						`${AppUtils.settings.rootPath}/todos/update`, 
+						data.uuid, 
+						false,
+						 payload)
+					.then(() => {
+						this.handleResponse(data, resolve, reject);
+					}, (error) => {
+						data.error = error;
+						this.handleError(data, resolve, reject);
+					})
+					.catch(x => reject(x));
+			} else {
+				resolve(data);
+			}
 	    });
 	}
 	
