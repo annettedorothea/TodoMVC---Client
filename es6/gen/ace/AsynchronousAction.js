@@ -33,6 +33,12 @@ export default class AsynchronousAction extends Action {
             this.applyAction(data).then(
                 resolve,
                 (error) => {
+					ACEController.addItemToTimeLine({
+						error: {
+							actionName: this.actionName,
+							error
+						}
+					});
                     AppUtils.displayUnexpectedError(error);
                 }
             );
@@ -44,8 +50,7 @@ export default class AsynchronousAction extends Action {
             this.preCall();
             data = this.initActionData(data);
             let command = this.getCommand();
-            command.executeCommand(data).then(() => {
-                this.postCall();
+            command.executeCommand(data, this.postCall).then(() => {
                 resolve();
             }, (error) => {
                 this.postCall();

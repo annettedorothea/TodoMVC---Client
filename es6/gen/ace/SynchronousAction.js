@@ -31,6 +31,12 @@ export default class SynchronousAction extends Action {
 	    try {
 	        this.applyAction(data);
 	    } catch (error) {
+			ACEController.addItemToTimeLine({
+				error: {
+					actionName: this.actionName,
+					error
+				}
+			});
 	        AppUtils.displayUnexpectedError(error);
 	    }
 	}
