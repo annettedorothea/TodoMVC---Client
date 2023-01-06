@@ -33,7 +33,6 @@ export default class SynchronousAction extends Action {
 	    } catch (error) {
 			ACEController.addItemToTimeLine({
 				error: {
-					actionName: this.actionName,
 					error
 				}
 			});

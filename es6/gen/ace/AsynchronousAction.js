@@ -35,7 +35,6 @@ export default class AsynchronousAction extends Action {
                 (error) => {
 					ACEController.addItemToTimeLine({
 						error: {
-							actionName: this.actionName,
 							error
 						}
 					});
